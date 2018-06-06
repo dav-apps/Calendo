@@ -24,7 +24,7 @@
             ],
             "styles": [
               "node_modules/icheck/skins/square/blue.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap/scss/bootstrap.scss",
               "src/styles.scss"
             ],
             "scripts": [
