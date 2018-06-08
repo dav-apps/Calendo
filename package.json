@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng build --prod --aot",
+    "build": "ng build --prod --aot",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
