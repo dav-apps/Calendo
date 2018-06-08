@@ -1,7 +1,15 @@
-<nav class="navbar navbar-expand navbar-dark bg-primary" style="height: 60px">
-	<a class="navbar-brand ml-3" routerLink="/" style="font-size: 25px; font-family: Roboto;">Calendo</a>
-	<div class="collapse navbar-collapse d-flex justify-content-center">
-		<ul class="navbar-nav text-white" style="height: 60px; font-family: Roboto; font-size: 20px;">
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary" style="font-family: Roboto;">
+	<a class="navbar-brand ml-3" routerLink="/" style="font-size: 25px;">Calendo</a>
+	<div>
+		<calendo-user-menu class="mr-3" *ngIf="isWindowSmall"></calendo-user-menu>
+	
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-items" aria-controls="navbar-items" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</div>
+
+	<div class="collapse navbar-collapse" id="navbar-items" [ngClass]="isWindowSmall ? '' : 'd-flex justify-content-center'" [ngbCollapse]="!isCollapsed" style="font-size: 20px;">
+		<ul class="navbar-nav text-white">
 			<li class="nav-item mx-3 my-auto">
 				<a routerLink="/" routerLinkActive="active" class="nav-link">Start</a>
 			</li>
@@ -13,8 +21,9 @@
 			</li>
 		</ul>
 	</div>
+	<calendo-user-menu class="mr-2" *ngIf="!isWindowSmall"></calendo-user-menu>
 </nav>
 
-<div class="container">
+<div class="container" (window:resize)="onResize($event)">
 	<router-outlet></router-outlet>
 </div>

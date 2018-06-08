@@ -3,6 +3,8 @@ import * as moment from 'moment';
 declare var $: any;
 import fontawesome from '@fortawesome/fontawesome'
 import solid from '@fortawesome/fontawesome-free-solid'
+import * as Dav from 'dav-npm';
+import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
 
 @Component({
    selector: "calendo-start-page",
@@ -12,10 +14,28 @@ import solid from '@fortawesome/fontawesome-free-solid'
    ]
 })
 export class StartPageComponent{
-   appointments: string = "invisible";
+   user: Dav.DavUser;
 
-   constructor(){
+   constructor(private router: Router,
+               private activatedRoute: ActivatedRoute){
       fontawesome.library.add(solid);
+
+      this.activatedRoute.queryParams.subscribe(async params => {
+         if(params["jwt"]){
+            // Login with the jwt
+            this.user = new Dav.DavUser();
+            await this.user.Login(params["jwt"]);
+         }else{
+            this.user = new Dav.DavUser(() => {
+               // Check if the user is logged in
+               if(this.user.IsLoggedIn){
+                  console.log("Logged in");
+               }else{
+                  console.log("Not logged in");
+               }
+            });
+         }
+      });
    }
 
    ngOnInit(){

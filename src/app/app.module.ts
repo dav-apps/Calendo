@@ -5,11 +5,13 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
+import { UserMenuComponent } from './components/user-menu.component/user-menu.component';
 
 @NgModule({
   	declarations: [
 		AppComponent,
-		StartPageComponent
+		StartPageComponent,
+		UserMenuComponent
   	],
   	imports: [
 		BrowserModule,
