@@ -2519,8 +2519,8 @@
       "dev": true
     },
     "dav-npm": {
-      "version": "git+ssh://git@github.com/Dav2070/dav-npm.git#9ace123c3d0504c58a354f21706cdeedad205a50",
-      "from": "git+ssh://git@github.com/Dav2070/dav-npm.git",
+      "version": "git+https://github.com/Dav2070/dav-npm.git#62200e5b394f49b389a5685b5c939db30d4c2ead",
+      "from": "git+https://github.com/Dav2070/dav-npm.git",
       "requires": {
         "axios": "^0.18.0",
         "localforage": "^1.7.1"
