@@ -34,6 +34,10 @@ export class UserMenuComponent{
       });
    }
 
+   Logout(){
+      console.log("Logout clicked")
+   }
+
    ShowLoginPage(){
       Dav.ShowLoginPage(environment.apiKey, environment.baseUrl);
    }
