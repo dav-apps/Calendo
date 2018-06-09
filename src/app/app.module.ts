@@ -6,6 +6,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
 import { UserMenuComponent } from './components/user-menu.component/user-menu.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   	declarations: [
@@ -20,7 +22,8 @@ import { UserMenuComponent } from './components/user-menu.component/user-menu.co
 		], {
 			useHash: false
 		}),
-		NgbModule.forRoot()
+		NgbModule.forRoot(),
+		ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   	],
   	providers: [],
   	bootstrap: [AppComponent]
