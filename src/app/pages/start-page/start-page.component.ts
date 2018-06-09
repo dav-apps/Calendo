@@ -4,7 +4,6 @@ declare var $: any;
 import fontawesome from '@fortawesome/fontawesome'
 import solid from '@fortawesome/fontawesome-free-solid'
 import * as Dav from 'dav-npm';
-import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
 
 @Component({
    selector: "calendo-start-page",
@@ -16,26 +15,8 @@ import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
 export class StartPageComponent{
    user: Dav.DavUser;
 
-   constructor(private router: Router,
-               private activatedRoute: ActivatedRoute){
+   constructor(){
       fontawesome.library.add(solid);
-
-      this.activatedRoute.queryParams.subscribe(async params => {
-         if(params["jwt"]){
-            // Login with the jwt
-            this.user = new Dav.DavUser();
-            await this.user.Login(params["jwt"]);
-         }else{
-            this.user = new Dav.DavUser(() => {
-               // Check if the user is logged in
-               if(this.user.IsLoggedIn){
-                  console.log("Logged in");
-               }else{
-                  console.log("Not logged in");
-               }
-            });
-         }
-      });
    }
 
    ngOnInit(){
@@ -46,6 +27,14 @@ export class StartPageComponent{
             increaseArea: '10%'
          });
       }, 10);
+
+      this.user = new Dav.DavUser(() => {
+         if(this.user.IsLoggedIn){
+            console.log("Logged in from Start page");
+         }else{
+            console.log("Not logged in from Start page");
+         }
+      });
    }
 
    GetWeekDay(index: number): string{
