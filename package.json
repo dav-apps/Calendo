@@ -21,18 +21,18 @@
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/pwa": "^0.6.8",
     "@angular/router": "^6.0.3",
+    "@angular/service-worker": "^6.0.3",
     "@fortawesome/fontawesome": "^1.1.8",
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@ng-bootstrap/ng-bootstrap": "^2.0.0",
     "bootstrap": "^4.1.1",
     "core-js": "^2.5.4",
-    "dav-npm": "git+https://github.com/Dav2070/dav-npm.git",
+    "dav-npm": "file:../dav-npm",
     "icheck": "^1.0.2",
     "jquery": "^3.3.1",
     "moment": "^2.22.2",
     "rxjs": "^6.0.0",
-    "zone.js": "^0.8.26",
-    "@angular/service-worker": "^6.0.3"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.6",
