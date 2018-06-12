@@ -11,7 +11,7 @@ export const environment = {
 	appointmentTableId: 20,
 	todoCompletedKey: "completed",
 	todoTimeKey: "time",
-	todoTextKey: "text",
+	todoNameKey: "name",
 	appointmentNameKey: "name",
 	appointmentStartKey: "start",
 	appointmentEndKey: "end",

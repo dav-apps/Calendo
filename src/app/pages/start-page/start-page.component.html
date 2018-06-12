@@ -7,9 +7,11 @@
          <h5 class="card-title">Appointments</h5>
          <ul class="list-group list-group-flush">
             <li class="list-group-item" *ngFor="let appointment of appointments; let i = index;">
-					<span *ngIf="appointment.Properties['allday'] !== 'true'">{{ appointment.Properties["start"] }}: </span>{{ appointment.Properties["name"] }}
+					<span *ngIf="!appointment.allday" id="appointment-item-{{ appointment.uuid }}">
+						{{ appointment.start }}: 
+					</span>
+					<label for="appointment-item-{{ appointment.uuid }}" class="col-form-label">{{ appointment.name }}</label>
 				</li>
-            <li class="list-group-item">18:00 Uhr: MS Build Keynote</li>
             <li class="list-group-item">
                <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(createAppointmentModal)"><i class="fas fa-plus"></i></button>
             </li>
@@ -21,13 +23,9 @@
       <div class="card-body">
          <h5 class="card-title">Todos</h5>
          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-               <input type="checkbox" class="todo-checkbox">
-               <span class="ml-3">Hello World</span>
-            </li>
-            <li class="list-group-item">
-               <input type="checkbox" class="todo-checkbox">
-               <span class="ml-3">Hello World</span>
+            <li class="list-group-item" *ngFor="let todo of todos; let i = index;">
+               <input type="checkbox" class="todo-checkbox" [checked]="todo.completed" id="todo-item-{{ todo.uuid }}">
+               <label for="todo-item-{{ todo.uuid }}" class="ml-3 col-form-label">{{ todo.name }}</label>
             </li>
             <li class="list-group-item">
                <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(createTodoModal)"><i class="fas fa-plus"></i></button>
@@ -110,8 +108,7 @@
 		<div class="mx-auto mt-4" style="width: 250px;">
 			<label for="newAppointmentName" class="col-form-label">Name</label>
 			<input id="newAppointmentName" class="form-control mx-auto" 
-					type="text" placeholder="Appointment name" 
-					[(ngModel)]="newAppointmentName" />
+					type="text" placeholder="Appointment name" [(ngModel)]="newAppointmentName" />
 		</div>
 	</div>
 	<div class="modal-footer">
@@ -121,27 +118,21 @@
 
 <ng-template #createTodoModal let-c="close" let-d="dismiss">
 	<div class="modal-header">
-	  	<h4 class="modal-title">New appointment</h4>
+	  	<h4 class="modal-title">New Todo</h4>
 	  	<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
 		 	<span aria-hidden="true">&times;</span>
 	  	</button>
 	</div>
-	<div class="modal-body">
-	  	<form>
-		 	<div class="form-group">
-				<label for="date">Date</label>
-				<div class="input-group">
-					<input id="newTodoDatePicker" class="form-control" placeholder="yyyy-mm-dd" name="newTodoDatePicker" [(ngModel)]="newAppointmentDate" ngbDatepicker #d="ngbDatepicker">
-			  		<div class="input-group-append">
-				 		<button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button">
-							<i class="fas fa-calendar-alt"></i>
-				 		</button>
-			  		</div>
-				</div>
-		 	</div>
-		  </form>
+	<div class="modal-body row">
+		<ngb-datepicker class="mx-auto" #dp [(ngModel)]="newTodoDate" (navigate)="date = $event.next"></ngb-datepicker>
+
+		<div class="mx-auto mt-4 col-10 offset-1">
+			<label for="newTodoName" class="col-form-label">Name</label>
+			<input id="newTodoName" class="form-control" 
+					type="text" placeholder="Todo name" [(ngModel)]="newTodoName" />
+		</div>
 	</div>
 	<div class="modal-footer">
-	  	<button type="button" class="btn btn-outline-dark" (click)="c(1)">Save</button>
+		<button type="button" class="btn btn-primary" [disabled]="newTodoName.length < 2" (click)="c(1)">Save</button>
 	</div>
 </ng-template>
