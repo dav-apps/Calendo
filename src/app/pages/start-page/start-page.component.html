@@ -6,10 +6,12 @@
       <div class="card-body">
          <h5 class="card-title">Appointments</h5>
          <ul class="list-group list-group-flush">
-            <li class="list-group-item">16:00 Uhr: Arzttermin</li>
+            <li class="list-group-item" *ngFor="let appointment of appointments; let i = index;">
+					<span *ngIf="appointment.Properties['allday'] !== 'true'">{{ appointment.Properties["start"] }}: </span>{{ appointment.Properties["name"] }}
+				</li>
             <li class="list-group-item">18:00 Uhr: MS Build Keynote</li>
             <li class="list-group-item">
-               <button type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus"></i></button>
+               <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(createAppointmentModal)"><i class="fas fa-plus"></i></button>
             </li>
          </ul>
       </div>
@@ -28,7 +30,7 @@
                <span class="ml-3">Hello World</span>
             </li>
             <li class="list-group-item">
-               <button type="button" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus"></i></button>
+               <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(createTodoModal)"><i class="fas fa-plus"></i></button>
             </li>
          </ul>
       </div>
@@ -81,3 +83,65 @@
 		</div>
 	</div>
 </div>
+
+<ng-template #createAppointmentModal let-c="close" let-d="dismiss">
+	<div class="modal-header">
+	  	<h4 class="modal-title">New appointment</h4>
+	  	<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+		 	<span aria-hidden="true">&times;</span>
+	  	</button>
+	</div>
+	<div class="modal-body row">
+		<ngb-datepicker class="mx-auto" #dp [(ngModel)]="newAppointmentDate" (navigate)="date = $event.next"></ngb-datepicker>
+
+		<div class="mx-auto">
+			<label for="createAppointmentStartTime" class="col-form-label mt-3">Start time</label>
+			<ngb-timepicker id="createAppointmentStartTime" [disabled]="newAppointmentAllDayCheckboxChecked"
+								[(ngModel)]="newAppointmentStartTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
+			
+			<label for="createAppointmentStartTime" class="col-form-label mt-3">End time</label>
+			<ngb-timepicker id="createAppointmentEndTime" [disabled]="newAppointmentAllDayCheckboxChecked"
+								[(ngModel)]="newAppointmentEndTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
+
+			<input type="checkbox" id="newAppointmentAllDayCheckbox">
+			<label for="newAppointmentAllDayCheckbox" class="col-form-label ml-3">All Day</label>
+		</div>
+
+		<div class="mx-auto mt-4" style="width: 250px;">
+			<label for="newAppointmentName" class="col-form-label">Name</label>
+			<input id="newAppointmentName" class="form-control mx-auto" 
+					type="text" placeholder="Appointment name" 
+					[(ngModel)]="newAppointmentName" />
+		</div>
+	</div>
+	<div class="modal-footer">
+	  	<button type="button" class="btn btn-primary" [disabled]="SetNewAppointmentSaveButtonDisabled()" (click)="c(0)">Save</button>
+	</div>
+</ng-template>
+
+<ng-template #createTodoModal let-c="close" let-d="dismiss">
+	<div class="modal-header">
+	  	<h4 class="modal-title">New appointment</h4>
+	  	<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+		 	<span aria-hidden="true">&times;</span>
+	  	</button>
+	</div>
+	<div class="modal-body">
+	  	<form>
+		 	<div class="form-group">
+				<label for="date">Date</label>
+				<div class="input-group">
+					<input id="newTodoDatePicker" class="form-control" placeholder="yyyy-mm-dd" name="newTodoDatePicker" [(ngModel)]="newAppointmentDate" ngbDatepicker #d="ngbDatepicker">
+			  		<div class="input-group-append">
+				 		<button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button">
+							<i class="fas fa-calendar-alt"></i>
+				 		</button>
+			  		</div>
+				</div>
+		 	</div>
+		  </form>
+	</div>
+	<div class="modal-footer">
+	  	<button type="button" class="btn btn-outline-dark" (click)="c(1)">Save</button>
+	</div>
+</ng-template>

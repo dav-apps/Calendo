@@ -8,7 +8,14 @@ export const environment = {
 	baseUrl: "localhost:3001",
 	appId: 11,
 	todoTableId: 19,
-	appointmentTableId: 20
+	appointmentTableId: 20,
+	todoCompletedKey: "completed",
+	todoTimeKey: "time",
+	todoTextKey: "text",
+	appointmentNameKey: "name",
+	appointmentStartKey: "start",
+	appointmentEndKey: "end",
+	appointmentAllDayKey: "allday"
 };
 
 /*
