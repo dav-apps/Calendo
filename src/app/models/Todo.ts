@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { TableObject, GetAllTableObjects, CreateTableObject } from 'dav-npm';
+import { TableObject, GetAllTableObjects, SaveTableObject, GetTableObject } from 'dav-npm';
 import { environment } from "../../environments/environment";
 
 export class Todo{
@@ -7,6 +7,23 @@ export class Todo{
                public completed: boolean, 
                public time: number, 
                public name: string){}
+
+   SetCompleted(completed: boolean){
+      if(this.completed != completed){
+         this.completed = completed;
+         this.Save();
+      }
+   }
+
+   private async Save(){
+      var tableObject = await GetTableObject(this.uuid);
+      if(tableObject){
+         tableObject.Properties[environment.todoNameKey] = this.name;
+         tableObject.Properties[environment.todoCompletedKey] = this.completed.toString();
+         tableObject.Properties[environment.todoTimeKey] = this.time.toString();
+         SaveTableObject(tableObject);
+      }
+   }
 }
 
 export function GetAllTodos(): Observable<Todo>{
@@ -40,6 +57,6 @@ export function CreateTodo(todo: Todo): string{
 	tableObject.Properties.add(environment.todoTimeKey, todo.time.toString());
 	tableObject.Properties.add(environment.todoNameKey, todo.name);
 
-	CreateTableObject(tableObject);
+	SaveTableObject(tableObject);
 	return tableObject.Uuid;
 }

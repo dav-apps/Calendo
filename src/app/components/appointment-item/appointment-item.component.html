@@ -1,0 +1,6 @@
+<li class="list-group-item">
+   <span *ngIf="!appointment.allday" class="appointment-item-{{ appointment.uuid }}">
+      {{ ConvertUnixTimestampToTime(appointment.start) }}: 
+   </span>
+   <label for="appointment-item-{{ appointment.uuid }}" class="col-form-label">{{ appointment.name }}</label>
+</li>

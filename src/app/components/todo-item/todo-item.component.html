@@ -1,0 +1,4 @@
+<li class="list-group-item">
+   <input type="checkbox" class="todo-checkbox todo-item-{{ todo.uuid }}" [checked]="todo.completed" id="todo-item-{{ todo.uuid }}">
+   <label for="todo-item-{{ todo.uuid }}" class="ml-3 col-form-label" [ngClass]="todo.completed ? 'strikethrough' : ''">{{ todo.name }}</label>
+</li>

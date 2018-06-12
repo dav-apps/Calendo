@@ -6,12 +6,7 @@
       <div class="card-body">
          <h5 class="card-title">Appointments</h5>
          <ul class="list-group list-group-flush">
-            <li class="list-group-item" *ngFor="let appointment of appointments; let i = index;">
-					<span *ngIf="!appointment.allday" id="appointment-item-{{ appointment.uuid }}">
-						{{ appointment.start }}: 
-					</span>
-					<label for="appointment-item-{{ appointment.uuid }}" class="col-form-label">{{ appointment.name }}</label>
-				</li>
+            <calendo-appointment-item [appointment]="appointment" *ngFor="let appointment of appointments; let i = index;"></calendo-appointment-item>
             <li class="list-group-item">
                <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(createAppointmentModal)"><i class="fas fa-plus"></i></button>
             </li>
@@ -23,10 +18,7 @@
       <div class="card-body">
          <h5 class="card-title">Todos</h5>
          <ul class="list-group list-group-flush">
-            <li class="list-group-item" *ngFor="let todo of todos; let i = index;">
-               <input type="checkbox" class="todo-checkbox" [checked]="todo.completed" id="todo-item-{{ todo.uuid }}">
-               <label for="todo-item-{{ todo.uuid }}" class="ml-3 col-form-label">{{ todo.name }}</label>
-            </li>
+            <calendo-todo-item [todo]="todo" *ngFor="let todo of todos; let i = index;"></calendo-todo-item>
             <li class="list-group-item">
                <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(createTodoModal)"><i class="fas fa-plus"></i></button>
             </li>
@@ -46,35 +38,28 @@
 				
 				<div class="card-text text-body" style="font-size: 17px;">
 					<ul class="list-group list-group-flush">
-						<li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" (click)="ShowOrHideAppointmentsOfDay(i)" style="cursor: pointer;">
-							Appointments
-							<span class="badge badge-primary badge-pill">2</span>
-						</li>
-						<!-- Hidden Appointments list -->
-						<ul class="list-group list-group-flush ml-3 mt-1" id="appointments-day-{{ i }}" style="display:none">
-							<li class="list-group-item">
-								Test
+						<span *ngIf="GetAppointments(i).length > 0">
+							<li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" 
+								(click)="ShowOrHideAppointmentsOfDay(i)" style="cursor: pointer;">
+								Appointments
+								<span class="badge badge-primary badge-pill">{{ appointmentsOfDay.length }}</span>
 							</li>
-							<li class="list-group-item">
-								Test
-							</li>
-						</ul>
+							<!-- Hidden Appointments list -->
+							<ul class="list-group list-group-flush ml-3 mt-1" id="appointments-day-{{ i }}" style="display:none">
+								<calendo-appointment-item [appointment]="appointment" *ngFor="let appointment of appointmentsOfDay"></calendo-appointment-item>
+							</ul>
+						</span>
 
-						<li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" (click)="ShowOrHideTodosOfDay(i)" style="cursor: pointer;">
-							Todos
-							<span class="badge badge-primary badge-pill">4</span>
-						</li>
-						<!-- Hidden Todos list -->
-						<ul class="list-group list-group-flush ml-3 mt-1" id="todos-day-{{ i }}" style="display:none">
-							<li class="list-group-item">
-								<input type="checkbox" class="todo-checkbox">
-								<span class="ml-3">Hello World</span>
+						<span *ngIf="GetTodos(i).length > 0">
+							<li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" (click)="ShowOrHideTodosOfDay(i)" style="cursor: pointer;">
+								Todos
+								<span class="badge badge-primary badge-pill">{{ todosOfDay.length }}</span>
 							</li>
-							<li class="list-group-item">
-								<input type="checkbox" class="todo-checkbox">
-								<span class="ml-3">Hello World</span>
-							</li>
-						</ul>
+							<!-- Hidden Todos list -->
+							<ul class="list-group list-group-flush ml-3 mt-1" id="todos-day-{{ i }}" style="display:none">
+								<calendo-todo-item [todo]="todo" *ngFor="let todo of todosOfDay;"></calendo-todo-item>
+							</ul>
+						</span>
 					</ul>
 				</div>
 			</div>

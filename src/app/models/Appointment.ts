@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { TableObject, GetAllTableObjects, CreateTableObject } from 'dav-npm';
+import { TableObject, GetAllTableObjects, SaveTableObject } from 'dav-npm';
 import { environment } from "../../environments/environment";
 import { TableObjectUploadStatus } from "../../../../dav-npm/dist/lib/models/TableObject";
 
@@ -13,7 +13,7 @@ export class Appointment{
 
 export function GetAllAppointments(): Observable<Appointment>{
    return new Observable<Appointment>((observer: any) => {
-      GetAllTableObjects()
+		GetAllTableObjects()
          .forEach((tableObject: TableObject) => {
             if(tableObject.TableId != environment.appointmentTableId){
                return;
@@ -42,7 +42,7 @@ export function GetAllAppointments(): Observable<Appointment>{
 
             observer.next(appointment);
             return;
-         })
+         });
    });
 }
 
@@ -54,6 +54,6 @@ export function CreateAppointment(appointment: Appointment): string{
    tableObject.Properties.add(environment.appointmentEndKey, appointment.end.toString());
    tableObject.Properties.add(environment.appointmentAllDayKey, appointment.allday.toString());
 
-   CreateTableObject(tableObject);
+   SaveTableObject(tableObject);
    return tableObject.Uuid;
 }

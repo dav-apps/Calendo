@@ -4,8 +4,6 @@ declare var $: any;
 import fontawesome from '@fortawesome/fontawesome'
 import solid from '@fortawesome/fontawesome-free-solid'
 import * as Dav from 'dav-npm';
-import { TableObject } from 'dav-npm';
-import { environment } from '../../../environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Todo, GetAllTodos, CreateTodo } from '../../models/Todo';
@@ -28,7 +26,9 @@ export class StartPageComponent{
    newAppointmentStartTime = { hour: 15, minute: 0 };
    newAppointmentEndTime = { hour: 16, minute: 0 };
    newTodoDate: NgbDateStruct;
-   newTodoName: string = "";
+	newTodoName: string = "";
+	appointmentsOfDay: Appointment[] = [];
+	todosOfDay: Todo[] = [];
 
    constructor(private modalService: NgbModal){
       fontawesome.library.add(solid);
@@ -36,56 +36,89 @@ export class StartPageComponent{
 
    ngOnInit(){
       this.user = new Dav.DavUser(async () => {
-         if(this.user.IsLoggedIn){
-            // Get all appointments
-            var appointments = GetAllAppointments();
-            appointments.forEach(appointment => {
-               // Check if the appointment is already in the list
-               var oldAppointment = this.appointments.find(obj => obj.uuid === appointment.uuid);
+         // Get all appointments
+         var appointments = GetAllAppointments();
+         appointments.forEach(appointment => {
+            // Check if the appointment is already in the list
+            var oldAppointment = this.appointments.find(obj => obj.uuid === appointment.uuid);
 
-               if(oldAppointment){
-                  // Replace the old appointmet
-                  oldAppointment = appointment;
-               }else{
-                  // Add the new appointment
-                  this.appointments.push(appointment);
+            if(oldAppointment){
+               // Replace the old appointmet
+               oldAppointment = appointment;
+            }else{
+               // Add the new appointment
+               this.appointments.push(appointment);
+            }
+
+            this.appointments.sort((a: Appointment, b: Appointment) => {
+               if(a.start > b.start){
+                  return -1;
+               }else if(a.start < b.start){
+                  return 1;
                }
+               return 0;
             });
+         });
 
-            // Get all todos
-            var todos = GetAllTodos();
-            todos.forEach(todo => {
-               // Check if the todo is already on the list
-               var oldTodo = this.todos.find(obj => obj.uuid === todo.uuid);
+         // Get all todos
+         var todos = GetAllTodos();
+         todos.forEach(todo => {
+            // Check if the todo is already on the list
+            var oldTodo = this.todos.find(obj => obj.uuid === todo.uuid);
 
-               if(oldTodo){
-                  oldTodo = todo;
-               }else{
-                  this.todos.push(todo);
-               }
-
-               setTimeout(() => {
-                  $('.todo-checkbox').iCheck({
-                     checkboxClass: 'icheckbox_square-blue',
-                     radioClass: 'iradio_square',
-                     increaseArea: '10%'
-                  });
-               }, 10);
-            });
-         }else{
-            console.log("Not logged in from Start page");
-         }
+            if(oldTodo){
+               oldTodo = todo;
+            }else{
+               this.todos.push(todo);
+            }
+         });
       });
    }
 
    GetWeekDay(index: number): string{
       moment.locale('en');
-      return moment().add(index, 'days').format('dddd');
+      return this.GetDateOfDay(index).format('dddd');
    }
 
    GetDate(index: number): string{
       moment.locale('en');
-      return moment().add(index, 'days').format('D. MMMM YYYY');
+      return this.GetDateOfDay(index).format('D. MMMM YYYY');
+   }
+
+   GetAppointments(index: number){
+		/* 
+			Run this method to generate the appointmentsOfDay array and then use the array
+			so this won't have to run every time the layout wants to access the list
+			(same with todosOfDay)
+		*/
+      var appointments: Appointment[] = [];
+      this.appointments.forEach(appointment => {
+         // Check if the appointment start is on this day
+         if(moment.unix(appointment.start).isSame(this.GetDateOfDay(index), 'day')){
+            appointments.push(appointment);
+         }
+		});
+		
+		this.appointmentsOfDay = appointments;
+      return appointments;
+	}
+	
+	GetTodos(index: number){
+		var todos: Todo[] = [];
+		this.todos.forEach(todo => {
+			if(todo.time){
+				if(moment.unix(todo.time).isSame(this.GetDateOfDay(index), 'day')){
+					todos.push(todo);
+				}
+			}
+		});
+
+		this.todosOfDay = todos;
+		return todos;
+	}
+
+   GetDateOfDay(index: number){
+      return moment().add(index, 'days');
    }
 
    ShowOrHideAppointmentsOfDay(day: number){
@@ -102,9 +135,9 @@ export class StartPageComponent{
       if($(elementId).is(":visible")){
          $(elementId).hide();
       }else{
-         $(elementId).show();
-      }
-   }
+			$(elementId).show();
+		}
+	}
 
    ResetNewObjects(){
       this.newAppointmentDate = {year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()};
@@ -137,7 +170,7 @@ export class StartPageComponent{
             // Create the new todo
             var todoTimeUnix: number = 0;
             if(this.newTodoDate){
-               var todoTime = new Date(this.newTodoDate.year, this.newTodoDate.month, this.newTodoDate.day, 0, 0, 0, 0);
+               var todoTime = new Date(this.newTodoDate.year, this.newTodoDate.month - 1, this.newTodoDate.day, 0, 0, 0, 0);
                todoTimeUnix = Math.floor(todoTime.getTime() / 1000);
             }
 

@@ -1,12 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
-import { UserMenuComponent } from './components/user-menu.component/user-menu.component';
+import { UserMenuComponent } from './components/user-menu/user-menu.component';
+import { TodoItemComponent } from './components/todo-item/todo-item.component';
+import { AppointmentItemComponent } from './components/appointment-item/appointment-item.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
@@ -14,12 +16,13 @@ import { environment } from '../environments/environment';
   	declarations: [
 		AppComponent,
 		StartPageComponent,
-		UserMenuComponent
+		UserMenuComponent,
+		TodoItemComponent,
+		AppointmentItemComponent
   	],
   	imports: [
 		BrowserModule,
 		FormsModule,
-		ReactiveFormsModule,
 		RouterModule.forRoot([
 			{path: '', component: StartPageComponent}
 		], {
