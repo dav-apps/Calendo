@@ -27,8 +27,8 @@ export class StartPageComponent{
    newAppointmentEndTime = { hour: 16, minute: 0 };
    newTodoDate: NgbDateStruct;
 	newTodoName: string = "";
-	appointmentsOfDay: Appointment[] = [];
-	todosOfDay: Todo[] = [];
+	todosOfDays: Array<Todo[]> = [[], [], [], [], [], [], []];
+	appointmentsOfDays: Array<Appointment[]> = [[], [], [], [], [], [], []];
 
    constructor(private modalService: NgbModal){
       fontawesome.library.add(solid);
@@ -44,10 +44,16 @@ export class StartPageComponent{
 
             if(oldAppointment){
                // Replace the old appointmet
-               oldAppointment = appointment;
+					oldAppointment = appointment;
+					
+					// TODO Replace the old appointment in the appointmentsOfDays array
             }else{
                // Add the new appointment
-               this.appointments.push(appointment);
+					this.appointments.push(appointment);
+					var dayIndex = this.GetDayIndexByTimestamp(appointment.start);
+					if(dayIndex != 0){
+						this.appointmentsOfDays[dayIndex].push(appointment);
+					}
             }
 
             this.appointments.sort((a: Appointment, b: Appointment) => {
@@ -67,13 +73,29 @@ export class StartPageComponent{
             var oldTodo = this.todos.find(obj => obj.uuid === todo.uuid);
 
             if(oldTodo){
-               oldTodo = todo;
+					oldTodo = todo;
+					// TODO replace todo in the todosOfDays array
             }else{
-               this.todos.push(todo);
+					this.todos.push(todo);
+					var dayIndex = this.GetDayIndexByTimestamp(todo.time);
+					if(dayIndex != 0){
+						this.todosOfDays[dayIndex].push(todo);
+					}
             }
          });
       });
-   }
+	}
+	
+	GetDayIndexByTimestamp(timestamp: number): number{
+		var index = 0;
+		for (var i of [1,2,3,4,5,6]) {
+			if(moment.unix(timestamp).isSame(this.GetDateOfDay(i), 'day')){
+				index = i;
+				break;
+			}
+		}
+		return index;
+	}
 
    GetWeekDay(index: number): string{
       moment.locale('en');
@@ -85,41 +107,15 @@ export class StartPageComponent{
       return this.GetDateOfDay(index).format('D. MMMM YYYY');
    }
 
-   GetAppointments(index: number){
-		/* 
-			Run this method to generate the appointmentsOfDay array and then use the array
-			so this won't have to run every time the layout wants to access the list
-			(same with todosOfDay)
-		*/
-      var appointments: Appointment[] = [];
-      this.appointments.forEach(appointment => {
-         // Check if the appointment start is on this day
-         if(moment.unix(appointment.start).isSame(this.GetDateOfDay(index), 'day')){
-            appointments.push(appointment);
-         }
-		});
-		
-		this.appointmentsOfDay = appointments;
-      return appointments;
-	}
-	
-	GetTodos(index: number){
-		var todos: Todo[] = [];
-		this.todos.forEach(todo => {
-			if(todo.time){
-				if(moment.unix(todo.time).isSame(this.GetDateOfDay(index), 'day')){
-					todos.push(todo);
-				}
-			}
-		});
-
-		this.todosOfDay = todos;
-		return todos;
-	}
-
    GetDateOfDay(index: number){
       return moment().add(index, 'days');
-   }
+	}
+
+	GetUncompletedTodosOfDay(index: number): Todo[]{
+		return this.todosOfDays[index].filter((todo: Todo) => {
+			return !todo.completed;
+		});
+	}
 
    ShowOrHideAppointmentsOfDay(day: number){
       var elementId = "#appointments-day-" + day;
