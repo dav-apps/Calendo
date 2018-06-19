@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
 import { TodosPageComponent } from './pages/todos-page/todos-page.component';
+import { AppointmentsPageComponent } from './pages/appointments-page/appointments-page.component';
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { AppointmentItemComponent } from './components/appointment-item/appointment-item.component';
@@ -18,6 +19,7 @@ import { environment } from '../environments/environment';
 		AppComponent,
 		StartPageComponent,
 		TodosPageComponent,
+		AppointmentsPageComponent,
 		UserMenuComponent,
 		TodoItemComponent,
 		AppointmentItemComponent
@@ -27,7 +29,8 @@ import { environment } from '../environments/environment';
 		FormsModule,
 		RouterModule.forRoot([
 			{ path: '', component: StartPageComponent },
-			{ path: 'todos', component: TodosPageComponent }
+			{ path: 'todos', component: TodosPageComponent },
+			{ path: 'appointments', component: AppointmentsPageComponent }
 		], {
 			useHash: false
 		}),

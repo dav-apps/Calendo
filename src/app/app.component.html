@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-primary" style="font-family: Roboto;">
-	<a class="navbar-brand ml-3" routerLink="/" style="font-size: 25px;">Calendo</a>
+	<a class="navbar-brand ml-3" routerLink="/" style="font-size: 25px;" (click)="isCollapsed = false">Calendo</a>
 	<div>
 		<calendo-user-menu class="mr-3" *ngIf="isWindowSmall"></calendo-user-menu>
 	
@@ -11,13 +11,13 @@
 	<div class="collapse navbar-collapse" id="navbar-items" [ngClass]="isWindowSmall ? '' : 'd-flex justify-content-center'" [ngbCollapse]="!isCollapsed" style="font-size: 20px;">
 		<ul class="navbar-nav text-white">
 			<li class="nav-item mx-3 my-auto">
-				<a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Start</a>
+				<a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="isCollapsed = false">Start</a>
 			</li>
 			<li class="nav-item mx-3 my-auto">
-				<a routerLink="/todos" routerLinkActive="active" class="nav-link">Todos</a>
+				<a routerLink="/todos" routerLinkActive="active" class="nav-link" (click)="isCollapsed = false">Todos</a>
 			</li>
 			<li class="nav-item mx-3 my-auto">
-				<a routerLink="/appointments" routerLinkActive="active" class="nav-link">Appointments</a>
+				<a routerLink="/appointments" routerLinkActive="active" class="nav-link" (click)="isCollapsed = false">Appointments</a>
 			</li>
 		</ul>
 	</div>
