@@ -23,7 +23,11 @@ export class Todo{
          tableObject.Properties[environment.todoTimeKey] = this.time.toString();
          SaveTableObject(tableObject);
       }
-   }
+	}
+	
+	Delete(){
+		
+	}
 }
 
 export function GetAllTodos(): Observable<Todo>{

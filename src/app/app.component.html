@@ -11,7 +11,7 @@
 	<div class="collapse navbar-collapse" id="navbar-items" [ngClass]="isWindowSmall ? '' : 'd-flex justify-content-center'" [ngbCollapse]="!isCollapsed" style="font-size: 20px;">
 		<ul class="navbar-nav text-white">
 			<li class="nav-item mx-3 my-auto">
-				<a routerLink="/" routerLinkActive="active" class="nav-link">Start</a>
+				<a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Start</a>
 			</li>
 			<li class="nav-item mx-3 my-auto">
 				<a routerLink="/todos" routerLinkActive="active" class="nav-link">Todos</a>

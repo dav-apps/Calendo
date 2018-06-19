@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import * as moment from 'moment';
 declare var $: any;
-import fontawesome from '@fortawesome/fontawesome'
-import solid from '@fortawesome/fontawesome-free-solid'
+import fontawesome from '@fortawesome/fontawesome';
+import solid from '@fortawesome/fontawesome-free-solid';
 import * as Dav from 'dav-npm';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';

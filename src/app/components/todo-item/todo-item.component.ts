@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Todo } from '../../models/Todo';
 declare var $: any;
 
@@ -11,8 +11,11 @@ declare var $: any;
 })
 export class TodoItemComponent{
    @Input() todo: Todo = new Todo("", false, 0, "");
+   @Output() delete = new EventEmitter();
 
-   constructor(){}
+   constructor(){
+      
+   }
 
    ngOnInit(){
       setTimeout(() => {
@@ -36,5 +39,10 @@ export class TodoItemComponent{
             $(todoItemClass).iCheck('uncheck');
          });
       }, 10);
+   }
+
+   Delete(){
+      this.todo.Delete();
+      this.delete.emit();
    }
 }

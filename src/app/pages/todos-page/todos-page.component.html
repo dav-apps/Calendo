@@ -1,0 +1,13 @@
+<h1 class="text-center mt-1">Todos</h1>
+
+<div class="row mt-3 d-flex justify-content-center">
+   <ul class="list-group list-group-flush">
+		<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo.uuid)" *ngFor="let todo of todoDaysWithoutDate.todos; let i = index;"></calendo-todo-item>
+		<span *ngFor="let todoDay of todoDays" [ngClass]="todoDay.todos.length > 0 ? 'mt-5' : ''">
+			<span *ngIf="todoDay.todos.length > 0">
+				<p class="text-weight-light" style="font-size: 20px;">{{ todoDay.date }}</p>
+				<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo.uuid)" *ngFor="let todo of todoDay.todos; let i = index;"></calendo-todo-item>
+			</span>
+		</span>
+   </ul>
+</div>
