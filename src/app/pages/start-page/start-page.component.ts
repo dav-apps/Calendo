@@ -18,8 +18,8 @@ import { Appointment, GetAllAppointments, CreateAppointment } from '../../models
 })
 export class StartPageComponent{
    user: Dav.DavUser;
-   todos: Array<Todo> = [];
-   appointments: Array<Appointment> = [];
+   allTodos: Array<Todo> = [];
+   allAppointments: Array<Appointment> = [];
    newAppointmentDate: NgbDateStruct = {year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()};
    newAppointmentName: string = "";
    newAppointmentAllDayCheckboxChecked: boolean = true;
@@ -39,56 +39,84 @@ export class StartPageComponent{
          // Get all appointments
          var appointments = GetAllAppointments();
          appointments.forEach(appointment => {
-            // Check if the appointment is already in the list
-            var oldAppointment = this.appointments.find(obj => obj.uuid === appointment.uuid);
-
-            if(oldAppointment){
-               // Replace the old appointmet
-					oldAppointment = appointment;
-					
-					// TODO Replace the old appointment in the appointmentsOfDays array
-            }else{
-               // Add the new appointment
-					this.appointments.push(appointment);
-					var dayIndex = this.GetDayIndexByTimestamp(appointment.start);
-					if(dayIndex != 0){
-						this.appointmentsOfDays[dayIndex].push(appointment);
-					}
-            }
-
-            this.appointments.sort((a: Appointment, b: Appointment) => {
-               if(a.start > b.start){
-                  return -1;
-               }else if(a.start < b.start){
-                  return 1;
-               }
-               return 0;
-            });
+				this.AddAppointment(appointment);
          });
 
          // Get all todos
          var todos = GetAllTodos();
          todos.forEach(todo => {
-            // Check if the todo is already on the list
-            var oldTodo = this.todos.find(obj => obj.uuid === todo.uuid);
-
-            if(oldTodo){
-					oldTodo = todo;
-					// TODO replace todo in the todosOfDays array
-            }else{
-					this.todos.push(todo);
-					var dayIndex = this.GetDayIndexByTimestamp(todo.time);
-					if(dayIndex != 0){
-						this.todosOfDays[dayIndex].push(todo);
-					}
-            }
+            this.AddTodo(todo);
          });
       });
 	}
+
+	AddAppointment(appointment: Appointment){
+		var oldAppointment = this.allAppointments.find(a => a.uuid == appointment.uuid);
+		var listChanged = false;
+
+		var dayIndex = this.GetDayIndexByTimestamp(appointment.start);
+		if(dayIndex != -1){
+			if(oldAppointment){
+				// Find the old appointment and replace it
+				var index = this.appointmentsOfDays[dayIndex].indexOf(oldAppointment);
+
+				if(index !== -1){
+					this.appointmentsOfDays[dayIndex][index] = appointment;
+					listChanged = true;
+				}
+			}else{
+				this.appointmentsOfDays[dayIndex].push(appointment);
+				listChanged = true;
+			}
+		}
+
+		if(listChanged){
+			this.appointmentsOfDays.forEach(appointments => {
+				appointments.sort((a: Appointment, b: Appointment) => {
+					if(a.start > b.start){
+						return -1;
+					}else if(a.start < b.start){
+						return 1;
+					}
+					return 0;
+				});
+			});
+		}
+	}
+
+	AddTodo(todo: Todo){
+		var oldTodo = this.allTodos.find(t => t.uuid == todo.uuid);
+
+		if(todo.time != 0){
+			var dayIndex = this.GetDayIndexByTimestamp(todo.time);
+			if(dayIndex != -1){
+				if(oldTodo){
+					// Find the old todo and replace it
+					var index = this.todosOfDays[dayIndex].indexOf(oldTodo);
+	
+					if(index !== -1){
+						this.todosOfDays[dayIndex][index] = todo;
+					}
+				}else{
+					this.todosOfDays[dayIndex].push(todo);
+				}
+			}
+		}else{
+			if(oldTodo){
+				var index = this.todosOfDays[0].indexOf(oldTodo);
+
+				if(index !== -1){
+					this.todosOfDays[0][index] = todo;
+				}
+			}else{
+				this.todosOfDays[0].push(todo);
+			}
+		}
+	}
 	
 	GetDayIndexByTimestamp(timestamp: number): number{
-		var index = 0;
-		for (var i of [1,2,3,4,5,6]) {
+		var index = -1;
+		for (var i of [0,1,2,3,4,5,6]) {
 			if(moment.unix(timestamp).isSame(this.GetDateOfDay(i), 'day')){
 				index = i;
 				break;
@@ -161,7 +189,8 @@ export class StartPageComponent{
 
             // Create the new appointment
             var appointment = new Appointment("", this.newAppointmentName, startUnix, endUnix, this.newAppointmentAllDayCheckboxChecked);
-            appointment.uuid = CreateAppointment(appointment);
+				appointment.uuid = CreateAppointment(appointment);
+				this.AddAppointment(appointment);
          }else if(result == 1){
             // Create the new todo
             var todoTimeUnix: number = 0;
@@ -171,7 +200,8 @@ export class StartPageComponent{
             }
 
             var todo = new Todo("", false, todoTimeUnix, this.newTodoName);
-            todo.uuid = CreateTodo(todo);
+				todo.uuid = CreateTodo(todo);
+				this.AddTodo(todo);
          }
 
          this.ResetNewObjects();

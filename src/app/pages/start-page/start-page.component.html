@@ -6,7 +6,7 @@
       <div class="card-body">
          <h5 class="card-title">Appointments</h5>
          <ul class="list-group list-group-flush">
-            <calendo-appointment-item [appointment]="appointment" *ngFor="let appointment of appointments; let i = index;"></calendo-appointment-item>
+            <calendo-appointment-item [appointment]="appointment" *ngFor="let appointment of appointmentsOfDays[0]; let i = index;"></calendo-appointment-item>
             <li class="list-group-item">
                <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(createAppointmentModal)"><i class="fas fa-plus"></i></button>
             </li>
@@ -18,7 +18,7 @@
       <div class="card-body">
          <h5 class="card-title">Todos</h5>
          <ul class="list-group list-group-flush">
-            <calendo-todo-item [todo]="todo" *ngFor="let todo of todos; let i = index;"></calendo-todo-item>
+            <calendo-todo-item [todo]="todo" *ngFor="let todo of todosOfDays[0]; let i = index;"></calendo-todo-item>
             <li class="list-group-item">
                <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(createTodoModal)"><i class="fas fa-plus"></i></button>
             </li>
