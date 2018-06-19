@@ -3,7 +3,7 @@
 <div class="row">
 	<div class="card col-10 offset-1 col-md-4 my-4" *ngIf="todoDaysWithoutDate.todos.length > 0">
 		<ul class="list-group list-group-flush">
-			<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo.uuid)" *ngFor="let todo of todoDaysWithoutDate.todos; let i = index;"></calendo-todo-item>
+			<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of todoDaysWithoutDate.todos; let i = index;"></calendo-todo-item>
 		</ul>
 	</div>
 
@@ -11,7 +11,7 @@
 		<div class="card-body">
 			<h5 class="card-title" *ngIf="todoDay.todos.length > 0">{{ todoDay.date }}</h5>
 			<ul class="list-group list-group-flush" *ngFor="let todo of todoDay.todos; let i = index;">
-				<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo.uuid)"></calendo-todo-item>
+				<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)"></calendo-todo-item>
 			</ul>
 		</div>
 	</div>

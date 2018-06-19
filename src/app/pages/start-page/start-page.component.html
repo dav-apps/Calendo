@@ -18,7 +18,7 @@
       <div class="card-body">
          <h5 class="card-title">Todos</h5>
          <ul class="list-group list-group-flush">
-            <calendo-todo-item [todo]="todo" *ngFor="let todo of todosOfDays[0]; let i = index;"></calendo-todo-item>
+            <calendo-todo-item [todo]="todo" *ngFor="let todo of todosOfDays[0]; let i = index;" (delete)="DeleteTodo(todo)"></calendo-todo-item>
             <li class="list-group-item">
                <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(createTodoModal)"><i class="fas fa-plus"></i></button>
             </li>
@@ -57,7 +57,7 @@
 							</li>
 							<!-- Hidden Todos list -->
 							<ul class="list-group list-group-flush ml-3 mt-1" id="todos-day-{{ i }}" style="display:none">
-								<calendo-todo-item [todo]="todo" *ngFor="let todo of todosOfDays[i];"></calendo-todo-item>
+								<calendo-todo-item [todo]="todo" *ngFor="let todo of todosOfDays[i];" (delete)="DeleteTodo(todo)"></calendo-todo-item>
 							</ul>
 						</span>
 

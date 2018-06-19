@@ -71,15 +71,15 @@ export class TodosPageComponent{
 		});
 	}
 
-	DeleteTodo(uuid: string){
+	DeleteTodo(todo: Todo){
 		// Find the todo in one of the arrays
-		var index = this.todoDaysWithoutDate.todos.findIndex(t => t.uuid == uuid);
+		var index = this.todoDaysWithoutDate.todos.findIndex(t => t.uuid == todo.uuid);
 
 		if(index !== -1){
 			this.todoDaysWithoutDate.todos.splice(index, 1);
 		}else{
 			this.todoDays.forEach(todoDay => {
-				index = todoDay["todos"].findIndex(t => t.uuid == uuid);
+				index = todoDay["todos"].findIndex(t => t.uuid == todo.uuid);
 
 				if(index !== -1){
 					todoDay["todos"].splice(index, 1);
