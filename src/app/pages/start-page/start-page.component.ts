@@ -153,7 +153,7 @@ export class StartPageComponent{
    }
 
    ShowModal(content){
-      this.modalService.open(content, { centered: true }).result.then((result) => {
+      this.modalService.open(content, { centered: true }).result.then(async (result) => {
          if(result == 0){
             // Calculate the unix timestamp of start and end
             var start = new Date(this.newAppointmentDate.year, this.newAppointmentDate.month - 1, 
@@ -168,7 +168,7 @@ export class StartPageComponent{
 
             // Create the new appointment
             var appointment = new Appointment("", this.newAppointmentName, startUnix, endUnix, this.newAppointmentAllDayCheckboxChecked);
-				appointment.uuid = CreateAppointment(appointment);
+				appointment.uuid = await CreateAppointment(appointment);
 				this.AddAppointment(appointment);
          }else if(result == 1){
             // Create the new todo
@@ -220,8 +220,8 @@ export class StartPageComponent{
       return !(this.newAppointmentName.length > 1 && timeOkay);
 	}
 	
-	DeleteTodo(todo: Todo){
-		todo.Delete();
+	public async DeleteTodo(todo: Todo){
+		await todo.Delete();
 
 		// Remove the todo from all arrays
 		this.todosOfDays.forEach((todoArray: Todo[]) => {

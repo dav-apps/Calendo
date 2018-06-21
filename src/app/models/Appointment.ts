@@ -1,20 +1,27 @@
 import { Observable } from "rxjs";
-import { TableObject, GetAllTableObjects, SaveTableObject } from 'dav-npm';
+import { TableObject, GetTableObject, GetAllTableObjects, CreateTableObject } from 'dav-npm';
 import { environment } from "../../environments/environment";
-import { TableObjectUploadStatus } from "../../../../dav-npm/dist/lib/models/TableObject";
 
 export class Appointment{
    constructor(public uuid: string, 
                public name: string, 
                public start: number, 
                public end: number, 
-               public allday: boolean){}
+					public allday: boolean){}
+	
+
+	async Delete(){
+		var tableObject = await GetTableObject(this.uuid);
+		if(tableObject){
+			tableObject.Delete();
+		}
+	}
 }
 
 export function GetAllAppointments(): Observable<Appointment>{
    return new Observable<Appointment>((observer: any) => {
-		GetAllTableObjects()
-         .forEach((tableObject: TableObject) => {
+		GetAllTableObjects(false).then(tableObjects => {
+			tableObjects.forEach((tableObject: TableObject) => {
             if(tableObject.TableId != environment.appointmentTableId){
                return;
             }
@@ -43,10 +50,11 @@ export function GetAllAppointments(): Observable<Appointment>{
             observer.next(appointment);
             return;
          });
+		});
    });
 }
 
-export function CreateAppointment(appointment: Appointment): string{
+export async function CreateAppointment(appointment: Appointment): Promise<string>{
    var tableObject = new TableObject();
    tableObject.TableId = environment.appointmentTableId;
    tableObject.Properties.add(environment.appointmentNameKey, appointment.name);
@@ -54,6 +62,5 @@ export function CreateAppointment(appointment: Appointment): string{
    tableObject.Properties.add(environment.appointmentEndKey, appointment.end.toString());
    tableObject.Properties.add(environment.appointmentAllDayKey, appointment.allday.toString());
 
-   SaveTableObject(tableObject);
-   return tableObject.Uuid;
+   return await CreateTableObject(tableObject);
 }

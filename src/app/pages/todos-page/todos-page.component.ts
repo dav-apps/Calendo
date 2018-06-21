@@ -71,7 +71,9 @@ export class TodosPageComponent{
 		});
 	}
 
-	DeleteTodo(todo: Todo){
+	async DeleteTodo(todo: Todo){
+		await todo.Delete();
+
 		// Find the todo in one of the arrays
 		var index = this.todoDaysWithoutDate.todos.findIndex(t => t.uuid == todo.uuid);
 

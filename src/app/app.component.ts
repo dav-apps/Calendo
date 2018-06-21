@@ -12,7 +12,18 @@ export class AppComponent {
 
 	ngOnInit(){
 		this.isWindowSmall = (window.innerWidth < 576);
-		Dav.Initialize(false, environment.appId);
+		var tableObject = new Dav.TableObject();
+		Dav.Initialize(false, environment.appId, [environment.todoTableId, environment.appointmentTableId], {
+			UpdateAll(){
+				console.log("UpdateAll called")
+			},
+			UpdateAllOfTable(){
+				console.log("UpdateAllOfTable called")
+			},
+			UpdateTableObject(){
+				console.log("UpdateTableObject called")
+			}
+		});
 	}
 
 	onResize(event: any) {
