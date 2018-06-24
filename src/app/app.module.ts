@@ -11,6 +11,7 @@ import { AppointmentsPageComponent } from './pages/appointments-page/appointment
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { AppointmentItemComponent } from './components/appointment-item/appointment-item.component';
+import { DataService } from './services/data-service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
@@ -37,7 +38,9 @@ import { environment } from '../environments/environment';
 		NgbModule.forRoot(),
 		ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   	],
-  	providers: [],
+  	providers: [
+		DataService
+	],
   	bootstrap: [AppComponent]
 })
 export class AppModule { }

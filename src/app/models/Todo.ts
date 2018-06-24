@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { CreateTableObject, GetTableObject, TableObject, GetAllTableObjects } from 'dav-npm';
+import { GetTableObject, TableObject, GetAllTableObjects } from 'dav-npm';
 import { environment } from "../../environments/environment";
 
 export class Todo{
@@ -33,40 +33,65 @@ export class Todo{
       }
 	}
 }
-
+/*
 export function GetAllTodos(): Observable<Todo>{
    return new Observable<Todo>((observer: any) => {
-		GetAllTableObjects(false).then((tableObjects: TableObject[]) => {
+		GetAllTableObjects(environment.todoTableId, false).then((tableObjects: TableObject[]) => {
 			tableObjects.forEach((tableObject: TableObject) => {
 				if(tableObject.TableId != environment.todoTableId){
 					return;
 				}
 	
-				var completed: boolean = (tableObject.Properties[environment.todoCompletedKey] === 'true' || 
-													tableObject.Properties[environment.todoCompletedKey] === 'True')
+				var completed: boolean = (tableObject.Properties.get(environment.todoCompletedKey) === 'true' || 
+													tableObject.Properties.get(environment.todoCompletedKey) === 'True')
 				
 				var todoTime: number = 0;
-				var tableObjectTodoTime = tableObject.Properties[environment.todoTimeKey];
+				var tableObjectTodoTime = tableObject.Properties.get(environment.todoTimeKey);
 				if(tableObjectTodoTime){
 					todoTime = Number.parseInt(tableObjectTodoTime);
 				}
-	
-				var todo = new Todo(tableObject.Uuid, completed, todoTime, tableObject.Properties[environment.todoNameKey]);
-	
+				var todo = new Todo(tableObject.Uuid, completed, todoTime, tableObject.Properties.get(environment.todoNameKey));
+				
 				observer.next(todo)
 				return;
 			});
 		});
    });
 }
+*/
+export async function GetAllTodos(): Promise<Todo[]>{
+	var tableObjects = await GetAllTableObjects(environment.todoTableId, false);
+	var todos: Todo[] = [];
+
+	for(let tableObject of tableObjects){
+		if(tableObject.TableId != environment.todoTableId){
+			return;
+		}
+
+		var completed: boolean = (tableObject.Properties.get(environment.todoCompletedKey) === 'true' || 
+											tableObject.Properties.get(environment.todoCompletedKey) === 'True')
+		
+		var todoTime: number = 0;
+		var tableObjectTodoTime = tableObject.Properties.get(environment.todoTimeKey);
+		if(tableObjectTodoTime){
+			todoTime = Number.parseInt(tableObjectTodoTime);
+		}
+		var todo = new Todo(tableObject.Uuid, completed, todoTime, tableObject.Properties.get(environment.todoNameKey));
+		
+		todos.push(todo);
+	}
+
+	return todos;
+}
 
 export function CreateTodo(todo: Todo): string{
    var tableObject = new TableObject();
-   tableObject.TableId = environment.todoTableId;
-	tableObject.Properties.add(environment.todoCompletedKey, todo.completed.toString());
-	tableObject.Properties.add(environment.todoTimeKey, todo.time.toString());
-	tableObject.Properties.add(environment.todoNameKey, todo.name);
+	tableObject.TableId = environment.todoTableId;
+	tableObject.SetPropertyValues([
+		{ name: environment.todoCompletedKey, value: todo.completed.toString() },
+		{ name: environment.todoTimeKey, value: todo.time.toString() },
+		{ name: environment.todoNameKey, value: todo.name }
+	]);
 
-	CreateTableObject(tableObject);
 	return tableObject.Uuid;
 }

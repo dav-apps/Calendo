@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Todo, GetAllTodos } from '../../models/Todo';
-import * as Dav from 'dav-npm';
-import * as moment from 'moment';
+import { Todo } from '../../models/Todo';
+import { DataService } from '../../services/data-service';
 
 @Component({
    selector: "calendo-todos-page",
@@ -11,76 +10,21 @@ import * as moment from 'moment';
    ]
 })
 export class TodosPageComponent{
-	user: Dav.DavUser;
-	todoDaysWithoutDate = {
-		date: "",
-		timestamp: 0,
-		todos: []
-	}
-	todoDays: object[] = [];	// {date: string, timestamp: number, todos: Todo[]}
 
-	constructor(){
+	constructor(private dataService: DataService){}
 
-	}
-
-	ngOnInit(){
-		this.user = new Dav.DavUser(async () => {
-			var todos = GetAllTodos();
-			todos.forEach(todo => {
-				this.AddTodo(todo);
-			});
-		});
-	}
-
-	AddTodo(todo: Todo){
-		if(todo.time != 0){
-			var date: string = moment.unix(todo.time).format('D. MMMM YYYY');
-			var timestampOfDate = moment.unix(todo.time).startOf('day').unix();
-
-			// Check if the date already exists in the todoDays array
-			var todoDay = this.todoDays.find(obj => obj["timestamp"] == timestampOfDate);
-
-			if(todoDay){
-				// Add the todo to the array of the todoDay
-				var todosArray: Todo[] = todoDay["todos"];
-				todosArray.push(todo);
-			}else{
-				// Add a new day to the array
-				var newTodoDay = {
-					date: date,
-					timestamp: timestampOfDate,
-					todos: [todo]
-				}
-
-				this.todoDays.push(newTodoDay);
-			}
-		}else{
-			this.todoDaysWithoutDate.todos.push(todo);
-		}
-
-		// Sort the todoDays array
-		this.todoDays.sort((a: object, b: object) => {
-			var timestampString = "timestamp";
-			if(a[timestampString] < b[timestampString]){
-				return -1;
-			}else if(a[timestampString] > b[timestampString]){
-				return 1;
-			}else{
-				return 0;
-			}
-		});
-	}
+	ngOnInit(){}
 
 	async DeleteTodo(todo: Todo){
 		await todo.Delete();
 
 		// Find the todo in one of the arrays
-		var index = this.todoDaysWithoutDate.todos.findIndex(t => t.uuid == todo.uuid);
+		var index = this.dataService.todoDaysWithoutDate.todos.findIndex(t => t.uuid == todo.uuid);
 
 		if(index !== -1){
-			this.todoDaysWithoutDate.todos.splice(index, 1);
+			this.dataService.todoDaysWithoutDate.todos.splice(index, 1);
 		}else{
-			this.todoDays.forEach(todoDay => {
+			this.dataService.todoDays.forEach(todoDay => {
 				index = todoDay["todos"].findIndex(t => t.uuid == todo.uuid);
 
 				if(index !== -1){
