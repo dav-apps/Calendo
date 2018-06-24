@@ -48,8 +48,6 @@ export class DataService{
 			this.AddTodoForStartPage(todo);
 			this.AddTodoForTodosPage(todo);
 		});
-
-		console.log(this.todosOfDays[0].length)
 	}
 
 	//#region StartPage

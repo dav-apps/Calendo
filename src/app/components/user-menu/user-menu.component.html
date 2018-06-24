@@ -1,13 +1,13 @@
-<button type="button" class="btn btn-sm btn-light" (click)="ShowLoginPage()" *ngIf="!user.IsLoggedIn">
+<button type="button" class="btn btn-sm btn-light" (click)="ShowLoginPage()" *ngIf="!dataService.user.IsLoggedIn">
    Login
 </button>
 
-<div ngbDropdown class="d-inline-block" placement="bottom-right" *ngIf="user.IsLoggedIn" style="font-family: Roboto;">
+<div ngbDropdown class="d-inline-block" placement="bottom-right" *ngIf="dataService.user.IsLoggedIn" style="font-family: Roboto;">
    <button class="btn btn-primary" ngbDropdownToggle id="user-menu-dropdown">
-      <img [src]="user.Avatar" class="rounded-circle" height="35" width="35" />
+      <img [src]="dataService.user.Avatar" class="rounded-circle" height="35" width="35" />
    </button>
    <div ngbDropdownMenu aria-labelledby="user-menu-dropdown">
-      <p class="font-weight-light my-auto py-1" style="font-size: 17px; margin-left: 23px;">{{ user.Username }}</p>
+      <p class="font-weight-light my-auto py-1" style="font-size: 17px; margin-left: 23px;">{{ dataService.user.Username }}</p>
       <div class="dropdown-divider"></div>
       <button class="dropdown-item" (click)="Logout()">Logout</button>
    </div>
