@@ -25,7 +25,7 @@ export class StartPageComponent{
 	newTodoName: string = "";
 
 	constructor(private modalService: NgbModal,
-					private dataService: DataService){
+					public dataService: DataService){
 		fontawesome.library.add(solid);
    }
 

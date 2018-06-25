@@ -10,7 +10,7 @@ import { DataService } from '../../services/data-service';
 })
 export class AppointmentsPageComponent{
 
-   constructor(private dataService: DataService){}
+   constructor(public dataService: DataService){}
 
    ngOnInit(){}
 }

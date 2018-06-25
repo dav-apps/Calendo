@@ -33,32 +33,7 @@ export class Todo{
       }
 	}
 }
-/*
-export function GetAllTodos(): Observable<Todo>{
-   return new Observable<Todo>((observer: any) => {
-		GetAllTableObjects(environment.todoTableId, false).then((tableObjects: TableObject[]) => {
-			tableObjects.forEach((tableObject: TableObject) => {
-				if(tableObject.TableId != environment.todoTableId){
-					return;
-				}
-	
-				var completed: boolean = (tableObject.Properties.get(environment.todoCompletedKey) === 'true' || 
-													tableObject.Properties.get(environment.todoCompletedKey) === 'True')
-				
-				var todoTime: number = 0;
-				var tableObjectTodoTime = tableObject.Properties.get(environment.todoTimeKey);
-				if(tableObjectTodoTime){
-					todoTime = Number.parseInt(tableObjectTodoTime);
-				}
-				var todo = new Todo(tableObject.Uuid, completed, todoTime, tableObject.Properties.get(environment.todoNameKey));
-				
-				observer.next(todo)
-				return;
-			});
-		});
-   });
-}
-*/
+
 export async function GetAllTodos(): Promise<Todo[]>{
 	var tableObjects = await GetAllTableObjects(environment.todoTableId, false);
 	var todos: Todo[] = [];

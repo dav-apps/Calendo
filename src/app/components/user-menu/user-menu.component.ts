@@ -13,7 +13,7 @@ import { DataService } from '../../services/data-service';
 })
 export class UserMenuComponent{
    constructor(private activatedRoute: ActivatedRoute,
-               private dataService: DataService){
+               public dataService: DataService){
       this.activatedRoute.queryParams.subscribe(async params => {
          if(params["jwt"]){
             // Login with the jwt

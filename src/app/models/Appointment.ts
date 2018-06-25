@@ -17,43 +17,7 @@ export class Appointment{
 		}
 	}
 }
-/*
-export function GetAllAppointments(): Observable<Appointment>{
-   return new Observable<Appointment>((observer: any) => {
-		GetAllTableObjects(environment.appointmentTableId, false).then(tableObjects => {
-			tableObjects.forEach((tableObject: TableObject) => {
-            if(tableObject.TableId != environment.appointmentTableId){
-               return;
-            }
 
-            var appointmentAllDay: boolean = (tableObject.Properties.get(environment.appointmentAllDayKey) === "true" || 
-                                    tableObject.Properties.get(environment.appointmentAllDayKey) === "True");
-            
-            var appointmentStart: number = 0;
-            var tableObjectAppointmentStart = tableObject.Properties.get(environment.appointmentStartKey);
-            if(tableObjectAppointmentStart){
-               appointmentStart = Number.parseInt(tableObjectAppointmentStart);
-            }
-
-            var appointmentEnd: number = 0;
-            var tableObjectAppointmentEnd = tableObject.Properties.get(environment.appointmentNameKey);
-            if(tableObjectAppointmentEnd){
-               appointmentEnd = Number.parseInt(tableObjectAppointmentEnd);
-            }
-
-            var appointment = new Appointment(tableObject.Uuid, 
-                                             tableObject.Properties.get(environment.appointmentNameKey),
-                                             appointmentStart,
-                                             appointmentEnd,
-                                             appointmentAllDay);
-
-            observer.next(appointment);
-            return;
-         });
-		});
-   });
-}
-*/
 export async function GetAllAppointments(): Promise<Appointment[]>{
 	var tableObjects = await GetAllTableObjects(environment.appointmentTableId, false);
 	var appointments: Appointment[] = [];

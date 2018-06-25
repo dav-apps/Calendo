@@ -11,7 +11,7 @@ import { DataService } from '../../services/data-service';
 })
 export class TodosPageComponent{
 
-	constructor(private dataService: DataService){}
+	constructor(public dataService: DataService){}
 
 	ngOnInit(){}
 
