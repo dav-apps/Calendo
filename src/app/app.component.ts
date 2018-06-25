@@ -17,7 +17,7 @@ export class AppComponent {
 
 	ngOnInit(){
 		this.isWindowSmall = (window.innerWidth < 576);
-		Dav.Initialize(false, environment.appId, [environment.todoTableId, environment.appointmentTableId], {
+		Dav.Initialize(environment.production, environment.appId, [environment.todoTableId, environment.appointmentTableId], {
 			UpdateAll: () => {
 				console.log("UpdateAll called")
 			},
