@@ -1,0 +1,25 @@
+<ng-template #createTodoModal let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title">New Todo</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body row">
+		<div class="mx-auto">
+			<p><input type="checkbox" id="new-todo-set-date-checkbox"><label for="new-todo-set-date-checkbox" class="ml-3">Set Date</label></p>
+			<ngb-datepicker #dp [(ngModel)]="newTodoDate" 
+								(navigate)="date = $event.next" 
+								[disabled]="!newTodoSetDateCheckboxChecked"></ngb-datepicker>
+		</div>
+
+		<div class="mx-auto mt-4 col-10 offset-1">
+			<label for="new-todo-name" class="col-form-label">Name</label>
+			<input id="new-todo-name" class="form-control" 
+					type="text" placeholder="Todo name" [(ngModel)]="newTodoName" />
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" [disabled]="newTodoName.length < 2" (click)="c()">Save</button>
+	</div>
+</ng-template>

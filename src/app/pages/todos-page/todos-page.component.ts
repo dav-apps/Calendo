@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Todo } from '../../models/Todo';
 import { DataService } from '../../services/data-service';
+import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-modal.component';
 
 @Component({
    selector: "calendo-todos-page",
@@ -10,27 +11,22 @@ import { DataService } from '../../services/data-service';
    ]
 })
 export class TodosPageComponent{
+	@ViewChild(NewTodoModalComponent)
+	private newTodoModalComponent: NewTodoModalComponent;
 
 	constructor(public dataService: DataService){}
 
 	ngOnInit(){}
 
+	ShowModal(){
+		this.newTodoModalComponent.Show();
+	}
+
+	CreateTodo(todo){
+		this.dataService.AddTodo(todo);
+	}
+
 	async DeleteTodo(todo: Todo){
-		await todo.Delete();
-
-		// Find the todo in one of the arrays
-		var index = this.dataService.todoDaysWithoutDate.todos.findIndex(t => t.uuid == todo.uuid);
-
-		if(index !== -1){
-			this.dataService.todoDaysWithoutDate.todos.splice(index, 1);
-		}else{
-			this.dataService.todoDays.forEach(todoDay => {
-				index = todoDay["todos"].findIndex(t => t.uuid == todo.uuid);
-
-				if(index !== -1){
-					todoDay["todos"].splice(index, 1);
-				}
-			});
-		}
+		this.dataService.RemoveTodo(todo);
 	}
 }

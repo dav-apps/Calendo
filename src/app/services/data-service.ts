@@ -37,21 +37,36 @@ export class DataService{
 	async LoadAllAppointments(){
 		var appointments = await GetAllAppointments();
 		appointments.forEach(appointment => {
-			this.AddAppointmentForStartPage(appointment);
-			this.AddAppointmentForAppointmentsPage(appointment);
+			this.AddAppointmentToStartPage(appointment);
+			this.AddAppointmentToAppointmentsPage(appointment);
 		});
 	}
 
 	async LoadAllTodos(){
 		var todos = await GetAllTodos();
 		todos.forEach(todo => {
-			this.AddTodoForStartPage(todo);
-			this.AddTodoForTodosPage(todo);
+			this.AddTodoToStartPage(todo);
+			this.AddTodoToTodosPage(todo);
 		});
 	}
 
+	AddTodo(todo: Todo){
+		this.AddTodoToStartPage(todo);
+		this.AddTodoToTodosPage(todo);
+	}
+
+	RemoveTodo(todo: Todo){
+		this.RemoveTodoFromStartPage(todo);
+		this.RemoveTodoFromTodosPage(todo);
+	}
+
+	AddAppointment(appointment: Appointment){
+		this.AddAppointmentToStartPage(appointment);
+		this.AddAppointmentToAppointmentsPage(appointment);
+	}
+
 	//#region StartPage
-	AddAppointmentForStartPage(appointment: Appointment){
+	AddAppointmentToStartPage(appointment: Appointment){
 		var dayIndex = this.GetDayIndexByTimestamp(appointment.start);
 		if(dayIndex == -1) return;
 
@@ -77,7 +92,7 @@ export class DataService{
 		});
 	}
 
-	AddTodoForStartPage(todo: Todo){
+	AddTodoToStartPage(todo: Todo){
 		var dayIndex = this.GetDayIndexByTimestamp(todo.time);
 
 		if(dayIndex != -1){
@@ -90,10 +105,21 @@ export class DataService{
 				// Add the todo
 				this.todosOfDays[dayIndex].push(todo);
 			}
-		}else if(dayIndex == -1 && todo.time == 0){
+		}else if(dayIndex == -1){
 			// Add the todo to the first array
 			this.todosOfDays[0].push(todo);
 		}
+	}
+
+	RemoveTodoFromStartPage(todo: Todo){
+		// Remove the todo from all arrays
+		this.todosOfDays.forEach((todoArray: Todo[]) => {
+			let index = todoArray.findIndex(t => t.uuid === todo.uuid);
+
+			if(index !== -1){
+				todoArray.splice(index, 1);
+			}
+		});
 	}
 
 	GetDayIndexByTimestamp(timestamp: number): number{
@@ -129,7 +155,7 @@ export class DataService{
 	//#endregion
 
 	//#region TodosPage
-	AddTodoForTodosPage(todo: Todo){
+	AddTodoToTodosPage(todo: Todo){
 		if(todo.time != 0){
 			var date: string = moment.unix(todo.time).format('D. MMMM YYYY');
 			var timestampOfDate = moment.unix(todo.time).startOf('day').unix();
@@ -167,10 +193,27 @@ export class DataService{
 			}
 		});
 	}
+
+	RemoveTodoFromTodosPage(todo: Todo){
+		// Find the todo in one of the arrays
+		var index = this.todoDaysWithoutDate.todos.findIndex(t => t.uuid == todo.uuid);
+
+		if(index !== -1){
+			this.todoDaysWithoutDate.todos.splice(index, 1);
+		}else{
+			this.todoDays.forEach(todoDay => {
+				index = todoDay["todos"].findIndex(t => t.uuid == todo.uuid);
+
+				if(index !== -1){
+					todoDay["todos"].splice(index, 1);
+				}
+			});
+		}
+	}
 	//#endregion
 
 	//#region AppointmentsPage
-	AddAppointmentForAppointmentsPage(appointment: Appointment){
+	AddAppointmentToAppointmentsPage(appointment: Appointment){
       var date: string = moment.unix(appointment.start).format('D. MMMM YYYY');
       var timestampOfDate = moment.unix(appointment.start).startOf('day').unix();
 

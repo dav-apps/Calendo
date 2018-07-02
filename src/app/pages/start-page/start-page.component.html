@@ -8,7 +8,7 @@
          <ul class="list-group list-group-flush">
             <calendo-appointment-item [appointment]="appointment" *ngFor="let appointment of dataService.appointmentsOfDays[0]"></calendo-appointment-item>
             <li class="list-group-item">
-               <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(createAppointmentModal)"><i class="fas fa-plus"></i></button>
+               <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(0)"><i class="fas fa-plus"></i></button>
             </li>
          </ul>
       </div>
@@ -20,7 +20,7 @@
          <ul class="list-group list-group-flush">
             <calendo-todo-item [todo]="todo" *ngFor="let todo of dataService.todosOfDays[0]" (delete)="DeleteTodo(todo)"></calendo-todo-item>
             <li class="list-group-item">
-               <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(createTodoModal)"><i class="fas fa-plus"></i></button>
+               <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(1)"><i class="fas fa-plus"></i></button>
             </li>
          </ul>
       </div>
@@ -69,57 +69,5 @@
 	</div>
 </div>
 
-<ng-template #createAppointmentModal let-c="close" let-d="dismiss">
-	<div class="modal-header">
-	  	<h4 class="modal-title">New appointment</h4>
-	  	<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-		 	<span aria-hidden="true">&times;</span>
-	  	</button>
-	</div>
-	<div class="modal-body row">
-		<ngb-datepicker class="mx-auto" #dp [(ngModel)]="newAppointmentDate" (navigate)="date = $event.next"></ngb-datepicker>
-
-		<div class="mx-auto">
-			<label for="createAppointmentStartTime" class="col-form-label mt-3">Start time</label>
-			<ngb-timepicker id="createAppointmentStartTime" [disabled]="newAppointmentAllDayCheckboxChecked"
-								[(ngModel)]="newAppointmentStartTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
-			
-			<label for="createAppointmentStartTime" class="col-form-label mt-3">End time</label>
-			<ngb-timepicker id="createAppointmentEndTime" [disabled]="newAppointmentAllDayCheckboxChecked"
-								[(ngModel)]="newAppointmentEndTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
-
-			<input type="checkbox" id="newAppointmentAllDayCheckbox">
-			<label for="newAppointmentAllDayCheckbox" class="col-form-label ml-3">All Day</label>
-		</div>
-
-		<div class="mx-auto mt-4" style="width: 250px;">
-			<label for="newAppointmentName" class="col-form-label">Name</label>
-			<input id="newAppointmentName" class="form-control mx-auto" 
-					type="text" placeholder="Appointment name" [(ngModel)]="newAppointmentName" />
-		</div>
-	</div>
-	<div class="modal-footer">
-	  	<button type="button" class="btn btn-primary" [disabled]="SetNewAppointmentSaveButtonDisabled()" (click)="c(0)">Save</button>
-	</div>
-</ng-template>
-
-<ng-template #createTodoModal let-c="close" let-d="dismiss">
-	<div class="modal-header">
-	  	<h4 class="modal-title">New Todo</h4>
-	  	<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-		 	<span aria-hidden="true">&times;</span>
-	  	</button>
-	</div>
-	<div class="modal-body row">
-		<ngb-datepicker class="mx-auto" #dp [(ngModel)]="newTodoDate" (navigate)="date = $event.next"></ngb-datepicker>
-
-		<div class="mx-auto mt-4 col-10 offset-1">
-			<label for="newTodoName" class="col-form-label">Name</label>
-			<input id="newTodoName" class="form-control" 
-					type="text" placeholder="Todo name" [(ngModel)]="newTodoName" />
-		</div>
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-primary" [disabled]="newTodoName.length < 2" (click)="c(1)">Save</button>
-	</div>
-</ng-template>
+<calendo-new-appointment-modal (save)="CreateAppointment($event)"></calendo-new-appointment-modal>
+<calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>

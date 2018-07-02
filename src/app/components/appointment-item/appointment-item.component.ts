@@ -15,6 +15,6 @@ export class AppointmentItemComponent{
    constructor(){}
 
    ConvertUnixTimestampToTime(timestamp: number): string{
-      return moment.unix(timestamp).format("h:mm");
+      return moment.unix(timestamp).format("H:mm");
    }
 }

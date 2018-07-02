@@ -1,4 +1,7 @@
-<h1 class="text-center mt-1">Appointments</h1>
+<h1 class="text-center mt-1">
+   Appointments
+   <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="ShowModal()"><i class="fas fa-plus"></i></button>
+</h1>
 
 <div class="row">
    <div class="card col-10 offset-1 col-md-4 my-4" *ngFor="let appointmentDay of dataService.appointmentDays">
@@ -10,3 +13,5 @@
       </div>
    </div>
 </div>
+
+<calendo-new-appointment-modal (save)="CreateAppointment($event)"></calendo-new-appointment-modal>
