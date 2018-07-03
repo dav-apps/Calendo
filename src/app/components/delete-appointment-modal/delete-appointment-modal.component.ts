@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 import { Appointment } from '../../models/Appointment';
 
 @Component({
@@ -19,5 +20,9 @@ export class DeleteAppointmentModalComponent{
          await this.appointment.Delete();
          this.remove.emit(null);
       }, () => {});
+   }
+
+   ConvertUnixTimestampToTime(timestamp: number): string{
+      return moment.unix(timestamp).format("H:mm");
    }
 }

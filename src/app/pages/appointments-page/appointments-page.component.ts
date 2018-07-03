@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { DataService } from '../../services/data-service';
-import { NewAppointmentModalComponent } from '../../components/new-appointment-modal/new-appointment-modal.component';
+import { AppointmentModalComponent } from '../../components/appointment-modal/appointment-modal.component';
 import { Appointment } from '../../models/Appointment';
 
 @Component({
@@ -11,8 +11,8 @@ import { Appointment } from '../../models/Appointment';
    ]
 })
 export class AppointmentsPageComponent{
-   @ViewChild(NewAppointmentModalComponent)
-	private newAppointmentModalComponent: NewAppointmentModalComponent;
+   @ViewChild(AppointmentModalComponent)
+	private newAppointmentModalComponent: AppointmentModalComponent;
 
    constructor(public dataService: DataService){}
 

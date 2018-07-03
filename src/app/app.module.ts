@@ -12,7 +12,7 @@ import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { AppointmentItemComponent } from './components/appointment-item/appointment-item.component';
 import { NewTodoModalComponent } from './components/new-todo-modal/new-todo-modal.component';
-import { NewAppointmentModalComponent } from './components/new-appointment-modal/new-appointment-modal.component';
+import { AppointmentModalComponent } from './components/appointment-modal/appointment-modal.component';
 import { DeleteAppointmentModalComponent } from './components/delete-appointment-modal/delete-appointment-modal.component';
 import { DataService } from './services/data-service';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -28,7 +28,7 @@ import { environment } from '../environments/environment';
 		TodoItemComponent,
 		AppointmentItemComponent,
 		NewTodoModalComponent,
-		NewAppointmentModalComponent,
+		AppointmentModalComponent,
 		DeleteAppointmentModalComponent
   	],
   	imports: [

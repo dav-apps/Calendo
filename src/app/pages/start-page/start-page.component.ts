@@ -5,7 +5,7 @@ import solid from '@fortawesome/fontawesome-free-solid';
 import { Todo } from '../../models/Todo';
 import { DataService } from '../../services/data-service';
 import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-modal.component';
-import { NewAppointmentModalComponent } from '../../components/new-appointment-modal/new-appointment-modal.component';
+import { AppointmentModalComponent } from '../../components/appointment-modal/appointment-modal.component';
 
 @Component({
    selector: "calendo-start-page",
@@ -17,8 +17,8 @@ import { NewAppointmentModalComponent } from '../../components/new-appointment-m
 export class StartPageComponent{
 	@ViewChild(NewTodoModalComponent)
 	private newTodoModalComponent: NewTodoModalComponent;
-	@ViewChild(NewAppointmentModalComponent)
-	private newAppointmentModalComponent: NewAppointmentModalComponent;
+	@ViewChild(AppointmentModalComponent)
+	private newAppointmentModalComponent: AppointmentModalComponent;
 
 	constructor(public dataService: DataService){
 		fontawesome.library.add(solid);

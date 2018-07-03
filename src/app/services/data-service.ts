@@ -65,6 +65,11 @@ export class DataService{
 		this.AddAppointmentToAppointmentsPage(appointment);
 	}
 
+	UpdateAppointment(appointment: Appointment){
+		this.RemoveAppointment(appointment);
+		this.AddAppointment(appointment);
+	}
+
 	RemoveAppointment(appointment: Appointment){
 		this.RemoveAppointmentFromStartPage(appointment);
 		this.RemoveAppointmentFromAppointmentsPage(appointment);

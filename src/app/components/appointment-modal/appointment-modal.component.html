@@ -1,0 +1,35 @@
+<ng-template #appointmentModal let-c="close" let-d="dismiss">
+   <div class="modal-header">
+		<h4 class="modal-title">{{ new ? 'New Appointment' : 'Edit Appointment' }}</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true">&times;</span>
+		</button>
+   </div>
+   <div class="modal-body row">
+      <ngb-datepicker class="mx-auto" #dp [(ngModel)]="appointmentDate" (navigate)="date = $event.next"></ngb-datepicker>
+
+      <div class="mx-auto">
+			<p class="mt-4">
+				<input type="checkbox" id="appointment-all-day-checkbox">
+				<label for="appointment-all-day-checkbox" class="col-form-label ml-3">Entire Day</label>
+			</p>
+
+         <label for="appointmentStartTime" class="col-form-label">Start time</label>
+         <ngb-timepicker id="appointment-start-time" [disabled]="appointmentAllDayCheckboxChecked"
+                        [(ngModel)]="appointmentStartTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
+         
+         <label for="appointmentEndTime" class="col-form-label mt-3">End time</label>
+         <ngb-timepicker id="appointment-end-time" [disabled]="appointmentAllDayCheckboxChecked"
+                        [(ngModel)]="appointmentEndTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
+      </div>
+
+      <div class="mx-auto mt-4" style="width: 250px;">
+         <label for="appointment-name" class="col-form-label">Name</label>
+         <input id="appointment-name" class="form-control mx-auto" 
+               type="text" placeholder="Appointment name" [(ngModel)]="appointmentName" />
+      </div>
+   </div>
+   <div class="modal-footer">
+		<button type="button" class="btn btn-primary" [disabled]="SetAppointmentSaveButtonDisabled()" (click)="c()">Save</button>
+   </div>
+</ng-template>

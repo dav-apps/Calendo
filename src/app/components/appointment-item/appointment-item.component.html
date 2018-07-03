@@ -1,10 +1,11 @@
 <calendo-delete-appointment-modal [appointment]="appointment" (remove)="Remove($event)"></calendo-delete-appointment-modal>
+<calendo-appointment-modal (save)="Update($event)"></calendo-appointment-modal>
 
 <li class="list-group-item">
    <label for="appointment-item-{{ appointment.uuid }}" class="col-form-label d-flex" ngbDropdown placement="bottom-right">
-         <span *ngIf="!appointment.allday" class="appointment-item-{{ appointment.uuid }} mr-2">
-            <span class="font-italic">{{ ConvertUnixTimestampToTime(appointment.start) }}</span>: 
-         </span>
+		<span *ngIf="!appointment.allday" class="appointment-item-{{ appointment.uuid }} mr-2">
+			<span class="font-italic">{{ ConvertUnixTimestampToTime(appointment.start) }}</span>: 
+		</span>
       {{ appointment.name }}
 		<button type="button" class="btn btn-light ml-auto py-0" id="appointment-item-menu-button" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
 		<div ngbDropdownMenu>

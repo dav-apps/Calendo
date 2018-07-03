@@ -1,4 +1,3 @@
-import { Observable } from "rxjs";
 import { GetTableObject, TableObject, GetAllTableObjects } from 'dav-npm';
 import { environment } from "../../environments/environment";
 
