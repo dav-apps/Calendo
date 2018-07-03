@@ -7,7 +7,7 @@
 	</div>
 	<div class="modal-body row">
 		<div class="mx-auto">
-			<p><input type="checkbox" id="new-todo-set-date-checkbox"><label for="new-todo-set-date-checkbox" class="ml-3">Set Date</label></p>
+			<p><input type="checkbox" id="new-todo-set-date-checkbox"><label for="new-todo-set-date-checkbox" class="ml-3">Select a Date</label></p>
 			<ngb-datepicker #dp [(ngModel)]="newTodoDate" 
 								(navigate)="date = $event.next" 
 								[disabled]="!newTodoSetDateCheckboxChecked"></ngb-datepicker>

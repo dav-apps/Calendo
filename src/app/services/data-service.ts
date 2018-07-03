@@ -65,6 +65,11 @@ export class DataService{
 		this.AddAppointmentToAppointmentsPage(appointment);
 	}
 
+	RemoveAppointment(appointment: Appointment){
+		this.RemoveAppointmentFromStartPage(appointment);
+		this.RemoveAppointmentFromAppointmentsPage(appointment);
+	}
+
 	//#region StartPage
 	AddAppointmentToStartPage(appointment: Appointment){
 		var dayIndex = this.GetDayIndexByTimestamp(appointment.start);
@@ -89,6 +94,17 @@ export class DataService{
 				}
 				return 0;
 			});
+		});
+	}
+
+	RemoveAppointmentFromStartPage(appointment: Appointment){
+		// Remove the appointment from all arrays
+		this.appointmentsOfDays.forEach((appointmentArray: Appointment[]) => {
+			let index = appointmentArray.findIndex(a => a.uuid == appointment.uuid);
+
+			if(index !== -1){
+				appointmentArray.splice(index, 1);
+			}
 		});
 	}
 
@@ -256,6 +272,25 @@ export class DataService{
             }
          });
       }
-   }
+	}
+	
+	RemoveAppointmentFromAppointmentsPage(appointment: Appointment){
+		var i = 0;
+
+		this.appointmentDays.forEach(appointmentDay => {
+			let index = appointmentDay["appointments"].findIndex(a => a.uuid == appointment.uuid);
+
+			if(index !== -1){
+				appointmentDay["appointments"].splice(index, 1);
+			}
+
+			if(appointmentDay["appointments"].length == 0){
+				// Remove the appointmentDay
+				this.appointmentDays.splice(i, 1);
+			}
+
+			i++;
+		});
+	}
 	//#endregion
 }

@@ -9,7 +9,6 @@ export class Appointment{
                public end: number, 
 					public allday: boolean){}
 	
-
 	async Delete(){
 		var tableObject = await GetTableObject(this.uuid);
 		if(tableObject){

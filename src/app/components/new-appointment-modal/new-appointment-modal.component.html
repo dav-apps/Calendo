@@ -9,16 +9,18 @@
       <ngb-datepicker class="mx-auto" #dp [(ngModel)]="newAppointmentDate" (navigate)="date = $event.next"></ngb-datepicker>
 
       <div class="mx-auto">
-         <label for="createAppointmentStartTime" class="col-form-label mt-3">Start time</label>
+			<p class="mt-4">
+				<input type="checkbox" id="new-appointment-all-day-checkbox">
+				<label for="new-appointment-all-day-checkbox" class="col-form-label ml-3">Entire Day</label>
+			</p>
+
+         <label for="createAppointmentStartTime" class="col-form-label">Start time</label>
          <ngb-timepicker id="createAppointmentStartTime" [disabled]="newAppointmentAllDayCheckboxChecked"
                         [(ngModel)]="newAppointmentStartTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
          
          <label for="createAppointmentStartTime" class="col-form-label mt-3">End time</label>
          <ngb-timepicker id="createAppointmentEndTime" [disabled]="newAppointmentAllDayCheckboxChecked"
                         [(ngModel)]="newAppointmentEndTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
-
-         <input type="checkbox" id="new-appointment-all-day-checkbox">
-         <label for="new-appointment-all-day-checkbox" class="col-form-label ml-3">All Day</label>
       </div>
 
       <div class="mx-auto mt-4" style="width: 250px;">
