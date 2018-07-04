@@ -71,7 +71,7 @@ export async function UpdateAppointment(appointment: Appointment){
 	}
 }
 
-function ConvertTableObjectToAppointment(tableObject: TableObject): Appointment{
+export function ConvertTableObjectToAppointment(tableObject: TableObject): Appointment{
 	if(tableObject.TableId != environment.appointmentTableId){
 		return null;
 	}

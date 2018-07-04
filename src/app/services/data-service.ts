@@ -35,6 +35,9 @@ export class DataService{
 	}
 
 	async LoadAllAppointments(){
+		this.appointmentsOfDays = [[], [], [], [], [], [], []];
+		this.appointmentDays = [];
+
 		var appointments = await GetAllAppointments();
 		appointments.forEach(appointment => {
 			this.AddAppointmentToStartPage(appointment);
@@ -43,6 +46,10 @@ export class DataService{
 	}
 
 	async LoadAllTodos(){
+		this.todosOfDays = [[], [], [], [], [], [], []];
+		this.todoDaysWithoutDate.todos = [];
+		this.todoDays = [];
+
 		var todos = await GetAllTodos();
 		todos.forEach(todo => {
 			this.AddTodoToStartPage(todo);
@@ -53,6 +60,11 @@ export class DataService{
 	AddTodo(todo: Todo){
 		this.AddTodoToStartPage(todo);
 		this.AddTodoToTodosPage(todo);
+	}
+
+	UpdateTodo(todo: Todo){
+		this.RemoveTodo(todo);
+		this.AddTodo(todo);
 	}
 
 	RemoveTodo(todo: Todo){

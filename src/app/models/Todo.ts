@@ -38,21 +38,11 @@ export async function GetAllTodos(): Promise<Todo[]>{
 	var todos: Todo[] = [];
 
 	for(let tableObject of tableObjects){
-		if(tableObject.TableId != environment.todoTableId){
-			return;
-		}
+		var todo = ConvertTableObjectToTodo(tableObject);
 
-		var completed: boolean = (tableObject.Properties.get(environment.todoCompletedKey) === 'true' || 
-											tableObject.Properties.get(environment.todoCompletedKey) === 'True')
-		
-		var todoTime: number = 0;
-		var tableObjectTodoTime = tableObject.Properties.get(environment.todoTimeKey);
-		if(tableObjectTodoTime){
-			todoTime = Number.parseInt(tableObjectTodoTime);
+		if(todo){
+			todos.push(todo);
 		}
-		var todo = new Todo(tableObject.Uuid, completed, todoTime, tableObject.Properties.get(environment.todoNameKey));
-		
-		todos.push(todo);
 	}
 
 	return todos;
@@ -68,4 +58,20 @@ export function CreateTodo(todo: Todo): string{
 	]);
 
 	return tableObject.Uuid;
+}
+
+export function ConvertTableObjectToTodo(tableObject: TableObject): Todo{
+	if(tableObject.TableId != environment.todoTableId){
+		return null;
+	}
+
+	var completed: boolean = (tableObject.Properties.get(environment.todoCompletedKey) === 'true' || 
+										tableObject.Properties.get(environment.todoCompletedKey) === 'True')
+	
+	var todoTime: number = 0;
+	var tableObjectTodoTime = tableObject.Properties.get(environment.todoTimeKey);
+	if(tableObjectTodoTime){
+		todoTime = Number.parseInt(tableObjectTodoTime);
+	}
+	return new Todo(tableObject.Uuid, completed, todoTime, tableObject.Properties.get(environment.todoNameKey));
 }
