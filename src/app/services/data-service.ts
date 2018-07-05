@@ -197,7 +197,7 @@ export class DataService{
 	//#region TodosPage
 	AddTodoToTodosPage(todo: Todo){
 		if(todo.time != 0){
-			var date: string = moment.unix(todo.time).format('D. MMMM YYYY');
+			var date: string = moment.unix(todo.time).format('dddd, D. MMMM YYYY');
 			var timestampOfDate = moment.unix(todo.time).startOf('day').unix();
 
 			// Check if the date already exists in the todoDays array
@@ -254,7 +254,7 @@ export class DataService{
 
 	//#region AppointmentsPage
 	AddAppointmentToAppointmentsPage(appointment: Appointment){
-      var date: string = moment.unix(appointment.start).format('D. MMMM YYYY');
+      var date: string = moment.unix(appointment.start).format('dddd, D. MMMM YYYY');
 		var timestampOfDate = moment.unix(appointment.start).startOf('day').unix();
 
 		// Check if the appointment is old

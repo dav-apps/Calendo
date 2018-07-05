@@ -6,7 +6,7 @@
       <div class="card-body">
          <h5 class="card-title">Appointments</h5>
          <ul class="list-group list-group-flush">
-            <calendo-appointment-item [appointment]="appointment" *ngFor="let appointment of dataService.appointmentsOfDays[0]"></calendo-appointment-item>
+            <calendo-appointment-item [appointment]="appointment" [showCompleted]="true" *ngFor="let appointment of dataService.appointmentsOfDays[0]"></calendo-appointment-item>
             <li class="list-group-item">
                <button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(0)"><i class="fas fa-plus"></i></button>
             </li>

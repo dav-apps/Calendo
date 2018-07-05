@@ -14,6 +14,7 @@ import { DataService } from '../../services/data-service';
 })
 export class AppointmentItemComponent{
    @Input() appointment: Appointment = new Appointment("", "", 0, 0, false);
+   @Input() showCompleted: boolean = false;
    @ViewChild(AppointmentModalComponent)
    private newAppointmentModalComponent: AppointmentModalComponent;
    @ViewChild(DeleteAppointmentModalComponent)
@@ -38,6 +39,12 @@ export class AppointmentItemComponent{
    }
 
    ConvertUnixTimestampToTime(timestamp: number): string{
-      return moment.unix(timestamp).format("H:mm");
+      return moment.unix(timestamp).format("HH:mm");
+   }
+
+   IsCompleted(): boolean{
+      if(!this.showCompleted) return false;
+      
+      return moment.now() / 1000 > this.appointment.end
    }
 }

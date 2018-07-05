@@ -3,10 +3,12 @@
 
 <li class="list-group-item">
    <label for="appointment-item-{{ appointment.uuid }}" class="col-form-label d-flex" ngbDropdown placement="bottom-right">
-		<span *ngIf="!appointment.allday" class="appointment-item-{{ appointment.uuid }} mr-2">
-			<span class="font-italic">{{ ConvertUnixTimestampToTime(appointment.start) }}</span>: 
-		</span>
-      {{ appointment.name }}
+		<i class="fas fa-check" style="margin-left: -30px; margin-top: 4px; position: absolute; color: green" *ngIf="IsCompleted() && !appointment.allday"></i>
+		<div *ngIf="!appointment.allday" class="appointment-item-{{ appointment.uuid }} mr-2" style=" margin-top: -10px">
+			<span class="font-italic" style="position: absolute; margin-bottom: -5px;">{{ ConvertUnixTimestampToTime(appointment.start) }}</span><br>
+			<span class="font-italic" style="position: absolute; margin-top: -5px;">{{ ConvertUnixTimestampToTime(appointment.end) }}</span>
+		</div>
+      <span [ngClass]="appointment.allday ? '' : 'ml-5'">{{ appointment.name }}</span>
 		<button type="button" class="btn btn-light ml-auto py-0" id="appointment-item-menu-button" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
 		<div ngbDropdownMenu>
 			<button class="dropdown-item" (click)="Edit()">Edit</button>
