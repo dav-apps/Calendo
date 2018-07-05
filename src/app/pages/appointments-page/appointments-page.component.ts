@@ -12,7 +12,7 @@ import { Appointment } from '../../models/Appointment';
 })
 export class AppointmentsPageComponent{
    @ViewChild(AppointmentModalComponent)
-	private newAppointmentModalComponent: AppointmentModalComponent;
+   private newAppointmentModalComponent: AppointmentModalComponent;
 
    constructor(public dataService: DataService){}
 
@@ -24,5 +24,11 @@ export class AppointmentsPageComponent{
 
    CreateAppointment(appointment: Appointment){
       this.dataService.AddAppointment(appointment);
+   }
+
+   ShowOrHideOldAppointments(){
+      this.dataService.hideOldAppointments = !this.dataService.hideOldAppointments;
+
+      this.dataService.LoadAllAppointments();
    }
 }

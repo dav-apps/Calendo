@@ -26,6 +26,10 @@ export class DataService{
 	//#region AppointmentsPage
 	appointmentDays: object[] = [];  // {date: string, timestamp: number, appointments: Appointment[]}
 	//#endregion
+
+	//#region All pages
+	hideOldAppointments: boolean = true;
+	//#endregion
 	
 	constructor(){
 		this.user = new DavUser(async () => {
@@ -104,9 +108,12 @@ export class DataService{
 
 		this.appointmentsOfDays.forEach(appointments => {
 			appointments.sort((a: Appointment, b: Appointment) => {
-				if(a.start > b.start){
+				if(a.allday) return 1;
+				if(b.allday) return -1;
+
+				if(a.start < b.start){
 					return -1;
-				}else if(a.start < b.start){
+				}else if(a.start > b.start){
 					return 1;
 				}
 				return 0;
@@ -248,7 +255,16 @@ export class DataService{
 	//#region AppointmentsPage
 	AddAppointmentToAppointmentsPage(appointment: Appointment){
       var date: string = moment.unix(appointment.start).format('D. MMMM YYYY');
-      var timestampOfDate = moment.unix(appointment.start).startOf('day').unix();
+		var timestampOfDate = moment.unix(appointment.start).startOf('day').unix();
+
+		// Check if the appointment is old
+		var appointmentStartTimestamp = moment.unix(appointment.start).endOf('day').unix();
+		if(!appointment.allday){
+			appointmentStartTimestamp = appointment.end;
+		}
+		if(appointmentStartTimestamp < moment.now() / 1000 && this.hideOldAppointments){
+			return;
+		}
 
       // Check if the date already exists in the appointmentDays array
       var appointmentDay = this.appointmentDays.find(obj => obj["timestamp"] == timestampOfDate);
@@ -259,6 +275,9 @@ export class DataService{
 
          // Sort the appointments array
          appointmentArray.sort((a: Appointment, b: Appointment) => {
+				if(a.allday) return 1;
+				if(b.allday) return -1;
+
             if(a.start < b.start){
                return -1;
             }else if(a.start > b.start){

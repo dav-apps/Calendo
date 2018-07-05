@@ -1,6 +1,10 @@
-<h1 class="text-center mt-1">
+<h1 class="text-center mt-1" ngbDropdown placement="bottom-right">
    Appointments
-   <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="ShowModal()"><i class="fas fa-plus"></i></button>
+	<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
+	<div ngbDropdownMenu>
+		<button class="dropdown-item" (click)="ShowOrHideOldAppointments()">{{ dataService.hideOldAppointments ? 'Show old appointments' : 'Hide old appointments' }}</button>
+		<button class="dropdown-item" (click)="ShowModal()">Add appointment</button>
+	</div>
 </h1>
 
 <div class="row">
