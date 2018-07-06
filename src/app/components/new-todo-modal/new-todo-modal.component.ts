@@ -77,7 +77,17 @@ export class NewTodoModalComponent{
    }
 
    async GetAllTodoGroups(){
+      this.allGroups = [];
       var todoGroups = await GetAllTodoGroups();
       todoGroups.forEach(group => this.allGroups.push(group));
+   }
+
+   RemoveGroup(name: string){
+      var index = this.todoGroups.findIndex(g => g == name);
+
+      if(index !== -1){
+         this.todoGroups.splice(index, 1);
+         this.GetAllTodoGroups();
+      }
    }
 }

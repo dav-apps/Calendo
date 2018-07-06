@@ -31,7 +31,7 @@
 				</div>
 			</div>
 
-			<calendo-todo-group-badge *ngFor="let todoGroup of todoGroups" [groupName]="todoGroup"></calendo-todo-group-badge>
+			<calendo-todo-group-badge *ngFor="let todoGroup of todoGroups" [groupName]="todoGroup" [canRemove]="true" (remove)="RemoveGroup($event)"></calendo-todo-group-badge>
 
 			<div class="form-group">
 				<label for="new-todo-name" class="col-form-label">Name</label>
