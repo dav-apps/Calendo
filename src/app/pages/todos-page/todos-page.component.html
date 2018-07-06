@@ -1,6 +1,10 @@
-<h1 class="text-center mt-1">
+<h1 class="text-center mt-1" ngbDropdown placement="bottom-right">
 	Todos
-	<button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="ShowModal()"><i class="fas fa-plus"></i></button>
+	<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
+	<div ngbDropdownMenu>
+		<button class="dropdown-item" (click)="SortByGroupOrDate()">{{ dataService.sortByDate ? 'Sort by Group' : 'Sort by Date' }}</button>
+		<button class="dropdown-item" (click)="ShowNewTodoModal()">New Todo</button>
+	</div>
 </h1>
 
 <div class="row">
@@ -17,6 +21,10 @@
 				<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)"></calendo-todo-item>
 			</ul>
 		</div>
+	</div>
+
+	<div class="card col-10 offset-1 col-md-4 my-4" [ngClass]="todoGroup.todos.length > 0 ? '' : 'hidden'" *ngFor="let todoGroup of dataService.todoGroups">
+		todoGroup.name
 	</div>
 </div>
 

@@ -8,8 +8,9 @@ export const environment = {
 	todoCompletedKey: "completed",
 	todoTimeKey: "time",
 	todoNameKey: "name",
+	todoGroupsKey: "groups",
 	appointmentNameKey: "name",
 	appointmentStartKey: "start",
 	appointmentEndKey: "end",
-	appointmentAllDayKey: "allday"
+	appointmentAllDayKey: "allday",
 };

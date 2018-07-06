@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 declare var $: any;
-import { Todo, CreateTodo } from '../../models/Todo';
+import { Todo, CreateTodo, GetAllTodoGroups } from '../../models/Todo';
 
 @Component({
    selector: "calendo-new-todo-modal",
@@ -16,6 +16,9 @@ export class NewTodoModalComponent{
    newTodoDate: NgbDateStruct;
    newTodoName: string;
    newTodoSetDateCheckboxChecked: boolean;
+   newGroupName: string = "";
+   todoGroups: string[] = [];
+   allGroups: string[] = ["test", "test2"];
 
    constructor(private modalService: NgbModal){}
 
@@ -23,6 +26,7 @@ export class NewTodoModalComponent{
 
    Show(){
       this.ResetNewObjects();
+      this.GetAllTodoGroups();
 
       this.modalService.open(this.todoModal).result.then(() => {
          // Save new todo
@@ -32,7 +36,7 @@ export class NewTodoModalComponent{
             todoTimeUnix = Math.floor(todoTime.getTime() / 1000);
          }
 
-         var todo = new Todo("", false, todoTimeUnix, this.newTodoName);
+         var todo = new Todo("", false, todoTimeUnix, this.newTodoName, this.todoGroups);
          todo.uuid = CreateTodo(todo);
 
          this.save.emit(todo);
@@ -52,5 +56,28 @@ export class NewTodoModalComponent{
       this.newTodoDate = {year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()};
       this.newTodoName = "";
       this.newTodoSetDateCheckboxChecked = true;
+      this.todoGroups = [];
+      this.newGroupName = "";
+      this.allGroups = [];
+   }
+
+   AddGroup(name: string){
+      this.newGroupName = "";
+
+      if(this.todoGroups.findIndex(g => g == name) == -1){
+         this.todoGroups.push(name);
+   
+         // Remove the group from allGroups
+         var index = this.allGroups.findIndex(g => g == name);
+   
+         if(index !== -1){
+            this.allGroups.splice(index, 1);
+         }
+      }
+   }
+
+   async GetAllTodoGroups(){
+      var todoGroups = await GetAllTodoGroups();
+      todoGroups.forEach(group => this.allGroups.push(group));
    }
 }

@@ -18,7 +18,7 @@ export class TodosPageComponent{
 
 	ngOnInit(){}
 
-	ShowModal(){
+	ShowNewTodoModal(){
 		this.newTodoModalComponent.Show();
 	}
 
@@ -28,5 +28,10 @@ export class TodosPageComponent{
 
 	async DeleteTodo(todo: Todo){
 		this.dataService.RemoveTodo(todo);
+	}
+
+	SortByGroupOrDate(){
+		this.dataService.sortByDate = !this.dataService.sortByDate;
+		this.dataService.LoadAllTodos();
 	}
 }

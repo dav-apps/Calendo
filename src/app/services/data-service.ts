@@ -20,15 +20,17 @@ export class DataService{
 		timestamp: 0,
 		todos: []
 	}
-	todoDays: object[] = [];	// {date: string, timestamp: number, todos: Todo[]}
+	todoDays: {date: string, timestamp: number, todos: Todo[]}[] = [];
+	todoGroups: {name: string, todos: Todo[]}[] = [];
 	//#endregion
 
 	//#region AppointmentsPage
-	appointmentDays: object[] = [];  // {date: string, timestamp: number, appointments: Appointment[]}
+	appointmentDays: {date: string, timestamp: number, appointments: Appointment[]}[] = [];
 	//#endregion
 
 	//#region All pages
 	hideOldAppointments: boolean = true;
+	sortByDate: boolean = true;
 	//#endregion
 	
 	constructor(){
@@ -53,6 +55,7 @@ export class DataService{
 		this.todosOfDays = [[], [], [], [], [], [], []];
 		this.todoDaysWithoutDate.todos = [];
 		this.todoDays = [];
+		this.todoGroups = [];
 
 		var todos = await GetAllTodos();
 		todos.forEach(todo => {
@@ -196,42 +199,66 @@ export class DataService{
 
 	//#region TodosPage
 	AddTodoToTodosPage(todo: Todo){
-		if(todo.time != 0){
-			var date: string = moment.unix(todo.time).format('dddd, D. MMMM YYYY');
-			var timestampOfDate = moment.unix(todo.time).startOf('day').unix();
-
-			// Check if the date already exists in the todoDays array
-			var todoDay = this.todoDays.find(obj => obj["timestamp"] == timestampOfDate);
-
-			if(todoDay){
-				// Add the todo to the array of the todoDay
-				var todosArray: Todo[] = todoDay["todos"];
-				todosArray.push(todo);
-			}else{
-				// Add a new day to the array
-				var newTodoDay = {
-					date: date,
-					timestamp: timestampOfDate,
-					todos: [todo]
+		if(this.sortByDate){
+			if(todo.time != 0){
+				var date: string = moment.unix(todo.time).format('dddd, D. MMMM YYYY');
+				var timestampOfDate = moment.unix(todo.time).startOf('day').unix();
+	
+				// Check if the date already exists in the todoDays array
+				var todoDay = this.todoDays.find(obj => obj["timestamp"] == timestampOfDate);
+	
+				if(todoDay){
+					// Add the todo to the array of the todoDay
+					var todosArray: Todo[] = todoDay["todos"];
+					todosArray.push(todo);
+				}else{
+					// Add a new day to the array
+					var newTodoDay = {
+						date: date,
+						timestamp: timestampOfDate,
+						todos: [todo]
+					}
+	
+					this.todoDays.push(newTodoDay);
 				}
-
-				this.todoDays.push(newTodoDay);
-			}
-		}else{
-			this.todoDaysWithoutDate.todos.push(todo);
-		}
-
-		// Sort the todoDays array
-		this.todoDays.sort((a: object, b: object) => {
-			var timestampString = "timestamp";
-			if(a[timestampString] < b[timestampString]){
-				return -1;
-			}else if(a[timestampString] > b[timestampString]){
-				return 1;
 			}else{
-				return 0;
+				this.todoDaysWithoutDate.todos.push(todo);
 			}
-		});
+	
+			// Sort the todoDays array
+			this.todoDays.sort((a: object, b: object) => {
+				var timestampString = "timestamp";
+				if(a[timestampString] < b[timestampString]){
+					return -1;
+				}else if(a[timestampString] > b[timestampString]){
+					return 1;
+				}else{
+					return 0;
+				}
+			});
+		}else{
+			// Sort by group
+			todo.groups.forEach(groupName => {
+				// Check if the todoGroup already exists
+				var index = this.todoGroups.findIndex(todoGroup => todoGroup.name == groupName);
+
+				if(index !== -1){
+					// Add the todo to the todoGroup
+					var todoGroup = this.todoGroups[index];
+					todoGroup.todos.push(todo);
+				}else{
+					// Create the todoGroup
+					var todoGroup = {
+						name: groupName,
+						todos: new Array<Todo>()
+					};
+
+					todoGroup.todos.push(todo);
+
+					this.todoGroups.push(todoGroup);
+				}
+			});
+		}
 	}
 
 	RemoveTodoFromTodosPage(todo: Todo){

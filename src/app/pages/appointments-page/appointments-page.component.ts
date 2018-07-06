@@ -18,7 +18,7 @@ export class AppointmentsPageComponent{
 
    ngOnInit(){}
 
-   ShowModal(){
+   ShowNewAppointmentModal(){
       this.newAppointmentModalComponent.Show();
    }
 
@@ -28,7 +28,6 @@ export class AppointmentsPageComponent{
 
    ShowOrHideOldAppointments(){
       this.dataService.hideOldAppointments = !this.dataService.hideOldAppointments;
-
       this.dataService.LoadAllAppointments();
    }
 }

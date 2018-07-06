@@ -72,27 +72,25 @@ export async function UpdateAppointment(appointment: Appointment){
 }
 
 export function ConvertTableObjectToAppointment(tableObject: TableObject): Appointment{
-	if(tableObject.TableId != environment.appointmentTableId){
-		return null;
-	}
+	if(tableObject.TableId != environment.appointmentTableId) return null;
 
-	var appointmentAllDay: boolean = (tableObject.Properties.get(environment.appointmentAllDayKey) === "true" || 
-									tableObject.Properties.get(environment.appointmentAllDayKey) === "True");
+	var appointmentAllDay: boolean = (tableObject.GetPropertyValue(environment.appointmentAllDayKey) === "true" || 
+									tableObject.GetPropertyValue(environment.appointmentAllDayKey) === "True");
 	
 	var appointmentStart: number = 0;
-	var tableObjectAppointmentStart = tableObject.Properties.get(environment.appointmentStartKey);
+	var tableObjectAppointmentStart = tableObject.GetPropertyValue(environment.appointmentStartKey);
 	if(tableObjectAppointmentStart){
 		appointmentStart = Number.parseInt(tableObjectAppointmentStart);
 	}
 
 	var appointmentEnd: number = 0;
-	var tableObjectAppointmentEnd = tableObject.Properties.get(environment.appointmentEndKey);
+	var tableObjectAppointmentEnd = tableObject.GetPropertyValue(environment.appointmentEndKey);
 	if(tableObjectAppointmentEnd){
 		appointmentEnd = Number.parseInt(tableObjectAppointmentEnd);
 	}
 
 	return new Appointment(tableObject.Uuid, 
-									tableObject.Properties.get(environment.appointmentNameKey),
+									tableObject.GetPropertyValue(environment.appointmentNameKey),
 									appointmentStart,
 									appointmentEnd,
 									appointmentAllDay);
