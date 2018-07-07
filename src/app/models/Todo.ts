@@ -137,7 +137,7 @@ function ConvertGroupsArrayToString(groups: string[]): string{
 
 	// Remove the last comma from the string
 	if(groupsString.length > 0){
-		groupsString = groupsString.replace(',', '');
+		groupsString = groupsString.slice(0, groupsString.length - 1);
 	}
 
 	return groupsString;

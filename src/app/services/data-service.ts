@@ -21,6 +21,8 @@ export class DataService{
 		todos: []
 	}
 	todoDays: {date: string, timestamp: number, todos: Todo[]}[] = [];
+
+	todosWithoutGroup: Todo[] = [];
 	todoGroups: {name: string, todos: Todo[]}[] = [];
 	//#endregion
 
@@ -55,6 +57,7 @@ export class DataService{
 		this.todosOfDays = [[], [], [], [], [], [], []];
 		this.todoDaysWithoutDate.todos = [];
 		this.todoDays = [];
+		this.todosWithoutGroup = [];
 		this.todoGroups = [];
 
 		var todos = await GetAllTodos();
@@ -238,26 +241,30 @@ export class DataService{
 			});
 		}else{
 			// Sort by group
-			todo.groups.forEach(groupName => {
-				// Check if the todoGroup already exists
-				var index = this.todoGroups.findIndex(todoGroup => todoGroup.name == groupName);
-
-				if(index !== -1){
-					// Add the todo to the todoGroup
-					var todoGroup = this.todoGroups[index];
-					todoGroup.todos.push(todo);
-				}else{
-					// Create the todoGroup
-					var todoGroup = {
-						name: groupName,
-						todos: new Array<Todo>()
-					};
-
-					todoGroup.todos.push(todo);
-
-					this.todoGroups.push(todoGroup);
-				}
-			});
+			if(todo.groups.length == 0){
+				this.todosWithoutGroup.push(todo);
+			}else{
+				todo.groups.forEach(groupName => {
+					// Check if the todoGroup already exists
+					var index = this.todoGroups.findIndex(todoGroup => todoGroup.name == groupName);
+	
+					if(index !== -1){
+						// Add the todo to the todoGroup
+						var todoGroup = this.todoGroups[index];
+						todoGroup.todos.push(todo);
+					}else{
+						// Create the todoGroup
+						var todoGroup = {
+							name: groupName,
+							todos: new Array<Todo>()
+						};
+	
+						todoGroup.todos.push(todo);
+	
+						this.todoGroups.push(todoGroup);
+					}
+				});
+			}
 		}
 	}
 

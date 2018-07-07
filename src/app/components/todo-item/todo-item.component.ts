@@ -10,7 +10,8 @@ declare var $: any;
    ]
 })
 export class TodoItemComponent{
-   @Input() todo: Todo = new Todo("", false, 0, "");
+   @Input() todo: Todo = new Todo("", false, 0, "", []);
+   @Input() showBadge: boolean = true;
    @Output() delete = new EventEmitter();
 
    constructor(){

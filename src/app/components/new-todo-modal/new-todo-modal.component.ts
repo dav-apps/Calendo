@@ -18,7 +18,7 @@ export class NewTodoModalComponent{
    newTodoSetDateCheckboxChecked: boolean;
    newGroupName: string = "";
    todoGroups: string[] = [];
-   allGroups: string[] = ["test", "test2"];
+   allGroups: string[] = [];
 
    constructor(private modalService: NgbModal){}
 

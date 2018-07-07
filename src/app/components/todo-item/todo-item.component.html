@@ -1,7 +1,7 @@
 <li class="list-group-item d-flex align-items-center">
    <input type="checkbox" class="todo-checkbox todo-item-{{ todo.uuid }}" [checked]="todo.completed" id="todo-item-{{ todo.uuid }}">
    <label for="todo-item-{{ todo.uuid }}" class="ml-3 col-form-label" [ngClass]="todo.completed ? 'strikethrough' : ''">
-      {{ todo.name }}<calendo-todo-group-badge *ngFor="let todoGroup of todo.groups" [groupName]="todoGroup" class="ml-2"></calendo-todo-group-badge>
+      {{ todo.name }}<span *ngIf="showBadge"><calendo-todo-group-badge *ngFor="let todoGroup of todo.groups" [groupName]="todoGroup" class="ml-2"></calendo-todo-group-badge></span>
    </label>
    
    <button type="button" class="close ml-auto" aria-label="Delete" (click)="Delete()" *ngIf="todo.completed">
