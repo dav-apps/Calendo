@@ -2,7 +2,7 @@
 	Todos
 	<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
 	<div ngbDropdownMenu>
-		<button class="dropdown-item" (click)="SortByGroupOrDate()">{{ dataService.sortByDate ? 'Sort by Group' : 'Sort by Date' }}</button>
+		<button class="dropdown-item" (click)="SortByGroupOrDate()">{{ dataService.sortTodosByDate ? 'Sort by Group' : 'Sort by Date' }}</button>
 		<button class="dropdown-item" (click)="ShowNewTodoModal()">New Todo</button>
 	</div>
 </h1>

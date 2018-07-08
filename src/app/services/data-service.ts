@@ -5,7 +5,7 @@ import { DavUser } from "dav-npm";
 import * as moment from 'moment';
 import * as localforage from "localforage";
 import { environment } from "../../environments/environment.prod";
-var bowser = require('bowser');
+import * as bowser from "bowser";
 
 @Injectable()
 export class DataService{
