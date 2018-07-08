@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from '../../services/data-service';
+import { environment } from '../../../environments/environment';
 declare var $: any;
 
 @Component({
@@ -11,6 +12,7 @@ declare var $: any;
 })
 export class SettingsPageComponent{
    sortTodoByDateSelected: boolean = false;
+   version: string = environment.version;
 
    constructor(public dataService: DataService){}
 
