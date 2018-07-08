@@ -2,7 +2,7 @@
    Appointments
 	<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
 	<div ngbDropdownMenu>
-		<button class="dropdown-item" (click)="ShowOrHideOldAppointments()">{{ dataService.hideOldAppointments ? 'Show old appointments' : 'Hide old appointments' }}</button>
+		<button class="dropdown-item" (click)="ShowOrHideOldAppointments()">{{ dataService.showOldAppointments ? 'Hide old appointments' : 'Show old appointments' }}</button>
 		<button class="dropdown-item" (click)="ShowNewAppointmentModal()">New appointment</button>
 	</div>
 </h1>

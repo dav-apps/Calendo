@@ -16,8 +16,6 @@ export class TodosPageComponent{
 
 	constructor(public dataService: DataService){}
 
-	ngOnInit(){}
-
 	ShowNewTodoModal(){
 		this.newTodoModalComponent.Show();
 	}
@@ -31,7 +29,7 @@ export class TodosPageComponent{
 	}
 
 	SortByGroupOrDate(){
-		this.dataService.sortByDate = !this.dataService.sortByDate;
+		this.dataService.sortTodosByDate = !this.dataService.sortTodosByDate;
 		this.dataService.LoadAllTodos();
 	}
 }

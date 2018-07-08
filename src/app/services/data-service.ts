@@ -3,6 +3,9 @@ import { Todo, GetAllTodos } from "../models/Todo";
 import { Appointment, GetAllAppointments } from "../models/Appointment";
 import { DavUser } from "dav-npm";
 import * as moment from 'moment';
+import * as localforage from "localforage";
+import { environment } from "../../environments/environment.prod";
+var bowser = require('bowser');
 
 @Injectable()
 export class DataService{
@@ -31,15 +34,30 @@ export class DataService{
 	//#endregion
 
 	//#region All pages
-	hideOldAppointments: boolean = true;
-	sortByDate: boolean = true;
+	showOldAppointments: boolean = false;
+	sortTodosByDate: boolean = true;
 	//#endregion
 	
 	constructor(){
+		this.GetShowOldAppointments().then(value => {
+			this.showOldAppointments = value;
+		});
+		
+		this.GetSortTodosByDate().then(value => {
+			this.sortTodosByDate = value;
+		});
+
 		this.user = new DavUser(async () => {
 			await this.LoadAllAppointments();
 			await this.LoadAllTodos();
       });
+	}
+
+	private InitLocalforage(){
+		if(bowser.firefox){
+			// Use localstorage as driver
+			localforage.setDriver(localforage.LOCALSTORAGE);
+		}
 	}
 
 	async LoadAllAppointments(){
@@ -202,7 +220,7 @@ export class DataService{
 
 	//#region TodosPage
 	AddTodoToTodosPage(todo: Todo){
-		if(this.sortByDate){
+		if(this.sortTodosByDate){
 			if(todo.time != 0){
 				var date: string = moment.unix(todo.time).format('dddd, D. MMMM YYYY');
 				var timestampOfDate = moment.unix(todo.time).startOf('day').unix();
@@ -296,7 +314,7 @@ export class DataService{
 		if(!appointment.allday){
 			appointmentStartTimestamp = appointment.end;
 		}
-		if(appointmentStartTimestamp < moment.now() / 1000 && this.hideOldAppointments){
+		if(appointmentStartTimestamp < moment.now() / 1000 && !this.showOldAppointments){
 			return;
 		}
 
@@ -361,6 +379,30 @@ export class DataService{
 
 			i++;
 		});
+	}
+	//#endregion
+
+	//#region SettingsPage
+	SetSortTodosByDate(value: boolean){
+		this.InitLocalforage();
+		localforage.setItem(environment.settingsSortTodosByDateKey, value);
+	}
+
+	async GetSortTodosByDate(): Promise<boolean>{
+		this.InitLocalforage();
+		var value = await localforage.getItem(environment.settingsSortTodosByDateKey) as boolean;
+		return value == null || value;
+	}
+
+	SetShowOldAppointments(value: boolean){
+		this.InitLocalforage();
+		localforage.setItem(environment.settingsShowOldAppointments, value);
+	}
+
+	async GetShowOldAppointments(){
+		this.InitLocalforage();
+		var value = await localforage.getItem(environment.settingsShowOldAppointments) as boolean;
+		return value != null && value;
 	}
 	//#endregion
 }

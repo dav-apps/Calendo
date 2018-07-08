@@ -17,6 +17,8 @@ export const environment = {
 	appointmentStartKey: "start",
 	appointmentEndKey: "end",
 	appointmentAllDayKey: "allday",
+	settingsSortTodosByDateKey: "settings-sortTodosByDate",
+	settingsShowOldAppointments: "settings-showOldAppointments"
 };
 
 /*

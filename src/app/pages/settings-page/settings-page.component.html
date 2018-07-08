@@ -1,0 +1,25 @@
+<h1 class="text-center">Settings</h1>
+
+<div class="form-group" style="font-size: 18px; width: 150px">
+   <label for="sort-todos-select">Sort todos by</label>
+   <select class="form-control" id="sort-todos-select2" (change)="onSortTodosSelectChanged($event.target.value)">
+      <option value="0" [selected]="sortTodoByDateSelected">Date</option>
+      <option value="1" [selected]="!sortTodoByDateSelected">Group</option>
+   </select>
+</div>
+
+<p style="font-size: 18px" class="mt-4">
+   <input type="checkbox" id="show-old-appointments-checkbox"><label for="show-old-appointments-checkbox" class="ml-3">Show old appointments</label>
+</p>
+
+<!-- App information -->
+<div class="mt-5">
+   <p>
+      <a href="https://dav-apps.tech/privacy" target="blank" class="text-secondary">Privacy Policy</a><br>
+      <a href="https://github.com/Dav2070/Calendo" target="blank" class="text-secondary">Calendo on GitHub</a>
+   </p>
+   <p>
+      Version 0.1<br>
+      Copyright &copy; 2018 by dav
+   </p>
+</div>

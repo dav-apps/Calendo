@@ -1,6 +1,6 @@
 {
   "name": "calendo",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -1615,6 +1615,11 @@
       "version": "4.1.1",
       "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.1.1.tgz",
       "integrity": "sha512-SpiDSOcbg4J/PjVSt4ny5eY6j74VbVSjROY4Fb/WIUXBV9cnb5luyR4KnPvNoXuGnBK1T+nJIWqRsvU3yP8Mcg=="
+    },
+    "bowser": {
+      "version": "1.9.4",
+      "resolved": "https://registry.npmjs.org/bowser/-/bowser-1.9.4.tgz",
+      "integrity": "sha512-9IdMmj2KjigRq6oWhmwv1W36pDuA4STQZ8q6YO9um+x07xgYNCD3Oou+WP/3L1HNz7iqythGet3/p4wvc8AAwQ=="
     },
     "brace-expansion": {
       "version": "1.1.11",
@@ -4290,13 +4295,11 @@
         },
         "balanced-match": {
           "version": "1.0.0",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "brace-expansion": {
           "version": "1.1.11",
           "bundled": true,
-          "optional": true,
           "requires": {
             "balanced-match": "^1.0.0",
             "concat-map": "0.0.1"
@@ -4309,18 +4312,15 @@
         },
         "code-point-at": {
           "version": "1.1.0",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "concat-map": {
           "version": "0.0.1",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "console-control-strings": {
           "version": "1.1.0",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "core-util-is": {
           "version": "1.0.2",
@@ -4423,8 +4423,7 @@
         },
         "inherits": {
           "version": "2.0.3",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "ini": {
           "version": "1.3.5",
@@ -4434,7 +4433,6 @@
         "is-fullwidth-code-point": {
           "version": "1.0.0",
           "bundled": true,
-          "optional": true,
           "requires": {
             "number-is-nan": "^1.0.0"
           }
@@ -4447,20 +4445,17 @@
         "minimatch": {
           "version": "3.0.4",
           "bundled": true,
-          "optional": true,
           "requires": {
             "brace-expansion": "^1.1.7"
           }
         },
         "minimist": {
           "version": "0.0.8",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "minipass": {
           "version": "2.2.4",
           "bundled": true,
-          "optional": true,
           "requires": {
             "safe-buffer": "^5.1.1",
             "yallist": "^3.0.0"
@@ -4477,7 +4472,6 @@
         "mkdirp": {
           "version": "0.5.1",
           "bundled": true,
-          "optional": true,
           "requires": {
             "minimist": "0.0.8"
           }
@@ -4550,8 +4544,7 @@
         },
         "number-is-nan": {
           "version": "1.0.1",
-          "bundled": true,
-          "optional": true
+          "bundled": true
         },
         "object-assign": {
           "version": "4.1.1",
@@ -4561,7 +4554,6 @@
         "once": {
           "version": "1.4.0",
           "bundled": true,
-          "optional": true,
           "requires": {
             "wrappy": "1"
           }
@@ -4667,7 +4659,6 @@
         "string-width": {
           "version": "1.0.2",
           "bundled": true,
-          "optional": true,
           "requires": {
             "code-point-at": "^1.0.0",
             "is-fullwidth-code-point": "^1.0.0",
@@ -5491,8 +5482,7 @@
     "immediate": {
       "version": "3.0.6",
       "resolved": "https://registry.npmjs.org/immediate/-/immediate-3.0.6.tgz",
-      "integrity": "sha1-nbHb0Pr43m++D13V5Wu2BigN5ps=",
-      "dev": true
+      "integrity": "sha1-nbHb0Pr43m++D13V5Wu2BigN5ps="
     },
     "import-local": {
       "version": "1.0.0",
@@ -6658,7 +6648,6 @@
       "version": "3.1.1",
       "resolved": "https://registry.npmjs.org/lie/-/lie-3.1.1.tgz",
       "integrity": "sha1-mkNrLMd0bKWd56QfpGmz77dr2H4=",
-      "dev": true,
       "requires": {
         "immediate": "~3.0.5"
       }
@@ -6699,6 +6688,14 @@
         "big.js": "^3.1.3",
         "emojis-list": "^2.0.0",
         "json5": "^0.5.0"
+      }
+    },
+    "localforage": {
+      "version": "1.7.2",
+      "resolved": "https://registry.npmjs.org/localforage/-/localforage-1.7.2.tgz",
+      "integrity": "sha1-+kRCYC+Abt0rympUq05lbwMfEhw=",
+      "requires": {
+        "lie": "3.1.1"
       }
     },
     "locate-path": {

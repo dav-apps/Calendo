@@ -1,6 +1,6 @@
 {
   "name": "calendo",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -26,10 +26,12 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@ng-bootstrap/ng-bootstrap": "^2.0.0",
     "bootstrap": "^4.1.1",
+    "bowser": "^1.9.4",
     "core-js": "^2.5.4",
     "dav-npm": "file:../dav-npm",
     "icheck": "^1.0.2",
     "jquery": "^3.3.1",
+    "localforage": "^1.7.2",
     "moment": "^2.22.2",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
