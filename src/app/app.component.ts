@@ -62,6 +62,8 @@ export class AppComponent {
 				}
 			}
 		});
+
+		Dav.Log(environment.apiKey, environment.visitKey);
 	}
 
 	onResize(event: any) {
