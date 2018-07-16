@@ -1,0 +1,21 @@
+<div (window:resize)="onResize($event)" style="margin-left: 30px">
+   <div class="row" id="calendar-top-bar">
+      <h3 class="mt-1">July 2018</h3>
+   </div>
+   <div id="calendar-label-div" style="margin-left: -26px">
+      <span class="position-absolute">Mo</span>
+      <span class="position-absolute" [style.margin-left.px]="calendarDayWidth">Di</span>
+      <span class="position-absolute" [style.margin-left.px]="calendarDayWidth * 2">Mi</span>
+      <span class="position-absolute" [style.margin-left.px]="calendarDayWidth * 3">Do</span>
+      <span class="position-absolute" [style.margin-left.px]="calendarDayWidth * 4">Fr</span>
+      <span class="position-absolute" [style.margin-left.px]="calendarDayWidth * 5">Sa</span>
+      <span class="position-absolute" [style.margin-left.px]="calendarDayWidth * 6">So</span>
+   </div>
+   <div class="row mt-4" id="calendar-container" [style.height.px]="calendarHeight">
+      <div class="row" *ngFor="let week of calendarDays; let i = index;">
+         <div class="border" *ngFor="let day of week; let i2 = index;" [style.height.px]="calendarDayHeight" [style.width.px]="calendarDayWidth">
+            {{ day }}
+         </div>
+      </div>
+   </div>
+</div>

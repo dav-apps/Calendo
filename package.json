@@ -28,7 +28,7 @@
     "bootstrap": "^4.1.1",
     "bowser": "^1.9.4",
     "core-js": "^2.5.4",
-    "dav-npm": "git+https://github.com/Dav2070/dav-npm.git",
+    "dav-npm": "file:../dav-npm",
     "icheck": "^1.0.2",
     "jquery": "^3.3.1",
     "localforage": "^1.7.2",

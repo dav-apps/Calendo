@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-primary" style="font-family: Roboto;">
+<nav class="navbar navbar-expand-md navbar-dark bg-primary" id="calendo-navbar" style="font-family: Roboto;">
 	<a class="navbar-brand ml-3" routerLink="/" style="font-size: 25px;" (click)="isCollapsed = false">Calendo</a>
 	<div>
 		<calendo-user-menu class="mr-3" *ngIf="isWindowSmall"></calendo-user-menu>
@@ -14,6 +14,9 @@
 				<a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="isCollapsed = false">Start</a>
 			</li>
 			<li class="nav-item mx-3 my-auto">
+				<a routerLink="/calendar" routerLinkActive="active" class="nav-link" (click)="isCollapsed = false">Calendar</a>
+			</li>
+			<li class="nav-item mx-3 my-auto">
 				<a routerLink="/todos" routerLinkActive="active" class="nav-link" (click)="isCollapsed = false">Todos</a>
 			</li>
 			<li class="nav-item mx-3 my-auto">
@@ -24,6 +27,6 @@
 	<calendo-user-menu style="margin-right: -6px" *ngIf="!isWindowSmall"></calendo-user-menu>
 </nav>
 
-<div class="container" (window:resize)="onResize($event)">
+<div (window:resize)="onResize($event)" [style.width.px]="windowWidth">
 	<router-outlet></router-outlet>
 </div>

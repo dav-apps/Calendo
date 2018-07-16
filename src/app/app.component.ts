@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+declare var $: any;
 import * as Dav from 'dav-npm';
 import { environment } from '../environments/environment';
 import { DataService } from './services/data-service';
@@ -12,13 +13,14 @@ import { ConvertTableObjectToTodo } from './models/Todo';
 export class AppComponent {
 	isCollapsed = false;
 	isWindowSmall = false;
+	smallWindowMaxSize: number = 768;
+	windowWidth: number = 500;
 
-	constructor(private dataService: DataService){
-
-	}
+	constructor(private dataService: DataService){}
 
 	ngOnInit(){
-		this.isWindowSmall = (window.innerWidth < 576);
+		this.setSize();
+
 		Dav.Initialize(environment.production, environment.appId, [environment.todoTableId, environment.appointmentTableId], {
 			UpdateAllOfTable: (tableId: number) => {
 				if(tableId === environment.appointmentTableId){
@@ -67,6 +69,11 @@ export class AppComponent {
 	}
 
 	onResize(event: any) {
-		this.isWindowSmall = (window.innerWidth < 576);
+		this.setSize();
+	}
+
+	setSize(){
+		this.isWindowSmall = (window.innerWidth < this.smallWindowMaxSize);
+		this.windowWidth = window.innerWidth - 15;
 	}
 }

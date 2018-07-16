@@ -1,21 +1,23 @@
-<h1 class="text-center mt-1" ngbDropdown placement="bottom-right">
-   Appointments
-	<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
-	<div ngbDropdownMenu>
-		<button class="dropdown-item" (click)="ShowOrHideOldAppointments()">{{ dataService.showOldAppointments ? 'Hide old appointments' : 'Show old appointments' }}</button>
-		<button class="dropdown-item" (click)="ShowNewAppointmentModal()">New appointment</button>
-	</div>
-</h1>
-
-<div class="row">
-   <div class="card col-10 offset-1 col-md-4 my-4" *ngFor="let appointmentDay of dataService.appointmentDays">
-      <div class="card-body">
-         <h5 class="card-title">{{ appointmentDay.date }}</h5>
-         <ul class="list-group list-group-flush" *ngFor="let appointment of appointmentDay.appointments">
-            <calendo-appointment-item [appointment]="appointment"></calendo-appointment-item>
-         </ul>
+<div class="container">
+   <h1 class="text-center mt-1" ngbDropdown placement="bottom-right">
+      Appointments
+      <button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
+      <div ngbDropdownMenu>
+         <button class="dropdown-item" (click)="ShowOrHideOldAppointments()">{{ dataService.showOldAppointments ? 'Hide old appointments' : 'Show old appointments' }}</button>
+         <button class="dropdown-item" (click)="ShowNewAppointmentModal()">New appointment</button>
+      </div>
+   </h1>
+   
+   <div class="row">
+      <div class="card col-10 offset-1 col-md-4 my-4" *ngFor="let appointmentDay of dataService.appointmentDays">
+         <div class="card-body">
+            <h5 class="card-title">{{ appointmentDay.date }}</h5>
+            <ul class="list-group list-group-flush" *ngFor="let appointment of appointmentDay.appointments">
+               <calendo-appointment-item [appointment]="appointment"></calendo-appointment-item>
+            </ul>
+         </div>
       </div>
    </div>
+   
+   <calendo-appointment-modal (save)="CreateAppointment($event)"></calendo-appointment-modal>
 </div>
-
-<calendo-appointment-modal (save)="CreateAppointment($event)"></calendo-appointment-modal>
