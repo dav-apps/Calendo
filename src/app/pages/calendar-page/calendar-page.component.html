@@ -1,5 +1,5 @@
 <div (window:resize)="onResize($event)" style="margin-left: 30px">
-   <div class="row" id="calendar-top-bar">
+   <div class="row" id="calendar-top-bar" (click)="scrollUp()">
       <h3 class="mt-1">{{ getMonthName(currentMonth) }} {{ currentYear }}</h3>
    </div>
    <div id="calendar-label-div" style="margin-left: -26px">
@@ -13,8 +13,20 @@
    </div>
    <div class="row mt-4" id="calendar-container" [style.height.px]="calendarHeight">
       <div class="row" *ngFor="let week of calendarDays; let i = index;">
-         <div class="border" *ngFor="let day of week;" [style.height.px]="calendarDayHeight" [style.width.px]="calendarDayWidth">
-            {{ day.day }}
+         <div class="border" *ngFor="let day of week; let j = index;" 
+               [style.height.px]="calendarDayHeight" 
+               [style.width.px]="calendarDayWidth" 
+               [style.background-color]="day.today ? '#dddddd' : getDayBackgroundColor(i, j)">
+            <span>{{ day.day }}</span>
+
+            <!-- Render appointments -->
+            <div *ngFor="let appointment of day.appointments; let k = index;">
+               <span *ngIf="k < 2">{{ appointment.name }}</span>
+            </div>
+            <span *ngIf="day.appointments.length > 2">...</span>
+
+            <!-- Render todos -->
+            <br><span class="badge badge-primary ml-1" *ngIf="day.todos.length > 0">{{ day.todos.length }} Todo<span *ngIf="day.todos.length > 1">s</span></span>
          </div>
       </div>
    </div>

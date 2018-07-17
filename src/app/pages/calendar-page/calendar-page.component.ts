@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import * as moment from 'moment';
 declare var $: any;
+import { Appointment } from '../../models/Appointment';
+import { AppointmentItemComponent } from '../../components/appointment-item/appointment-item.component';
+import { Todo } from '../../models/Todo';
 
 @Component({
    selector: "calendo-calendar-page",
@@ -20,8 +23,9 @@ export class CalendarPageComponent{
       [{}, {}, {}, {}, {}, {}, {}],
       [{}, {}, {}, {}, {}, {}, {}]
    ];
-   currentMonth: number = 1;
    currentYear: number = 2018;
+   currentMonth: number = 1;
+   currentWeek: number = 1;
    firstWeekDayOfMonth = 0;
 
    constructor(){}
@@ -32,51 +36,63 @@ export class CalendarPageComponent{
    }
 
    initialize(){
-      var date = new Date();
-      this.currentMonth = date.getMonth();
-      this.currentYear = date.getFullYear();
+      var date = moment();
+      this.currentYear = date.year();
+      this.currentMonth = date.month();
+      this.currentWeek = moment().week();
 
-      this.createDays();
+      this.showWeek();
    }
 
-   createDays(){
-      // Get the first day of the month
-      var date = new Date();
-      date.setMonth(this.currentMonth);
-      date.setFullYear(this.currentYear);
+   showWeek(){
+      // Get the first day of the current week
+      var date = moment().year(this.currentYear).week(this.currentWeek).weekday(1);
 
-      var firstOfMonth = moment.unix(date.getTime() / 1000).startOf('month');
-      var currentDay = $.extend(true, {}, firstOfMonth);
-      this.firstWeekDayOfMonth = firstOfMonth.day();
+      // Fill the days array with values
+      for(let i = 0; i < 5; i++){
+         // Go through each row
+         for(let j = 0; j < 7; j++){
+            // Go through each cell of the row
+            var today: boolean = this.isToday(date);
 
-      if(this.firstWeekDayOfMonth == 0){
-         this.firstWeekDayOfMonth = 6;
-      }else{
-         this.firstWeekDayOfMonth = this.firstWeekDayOfMonth - 1;
-      }
-
-      for (let i = 0; i < firstOfMonth.daysInMonth(); i++) {
-         this.addDateToCalendarDaysArray(i, currentDay);
-         currentDay.add(1, 'days');
+            this.calendarDays[i][j] = {
+               date: moment.unix(date.unix()),
+               day: date.format("D"),
+               today,
+               appointments: [],
+               todos: []
+            }
+            
+            date.add('days', 1);
+         }
       }
    }
 
-   addDateToCalendarDaysArray(index: number, date: moment.Moment){
-      var obj = {
-         day: date.format("D")
-      }
+   scrollUp(){
+      this.currentWeek--;
+      var date = moment().week(this.currentWeek);
+      this.currentMonth = date.weekday(7).month();
+      this.currentYear = date.year();
 
-      index = index + this.firstWeekDayOfMonth;
-      var rowIndex = Math.floor(index / 7);
-      var columnIndex = index % 7;
+      this.showWeek();
+   }
 
-      if(this.calendarDays[rowIndex]){
-         this.calendarDays[rowIndex][columnIndex] = obj;
-      }
+   isToday(date: moment.Moment): boolean{
+      return date.startOf('day').unix() == moment().startOf('day').unix();
    }
 
    getMonthName(index: number): string{
       return moment.months(index);
+   }
+
+   getDayBackgroundColor(dayRow, dayColumn){
+      var date = this.calendarDays[dayRow][dayColumn]["date"]
+
+      if(date.month() % 2 == 0){
+         return "#f9f9f9"
+      }else{
+         return "#ffffff"
+      }
    }
 
    onResize(event: any){
