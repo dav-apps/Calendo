@@ -34,6 +34,9 @@ export class DataService{
 	//#endregion
 
 	//#region All pages
+	allAppointments: Appointment[] = [];
+	allTodos: Todo[] = [];
+
 	showOldAppointments: boolean = false;
 	sortTodosByDate: boolean = true;
 	//#endregion
@@ -63,11 +66,13 @@ export class DataService{
 	async LoadAllAppointments(){
 		this.appointmentsOfDays = [[], [], [], [], [], [], []];
 		this.appointmentDays = [];
+		this.allAppointments = [];
 
 		var appointments = await GetAllAppointments();
 		appointments.forEach(appointment => {
 			this.AddAppointmentToStartPage(appointment);
 			this.AddAppointmentToAppointmentsPage(appointment);
+			this.allAppointments.push(appointment);
 		});
 	}
 
@@ -77,12 +82,43 @@ export class DataService{
 		this.todoDays = [];
 		this.todosWithoutGroup = [];
 		this.todoGroups = [];
+		this.allTodos = [];
 
 		var todos = await GetAllTodos();
 		todos.forEach(todo => {
 			this.AddTodoToStartPage(todo);
 			this.AddTodoToTodosPage(todo);
+			this.allTodos.push(todo);
 		});
+	}
+
+	async GetAppointmentsOfDay(day: moment.Moment){
+		var appointments: Appointment[] = [];
+
+		this.allAppointments.forEach((appointment) => {
+			if(moment.unix(appointment.start).startOf('day').unix() === day.startOf('day').unix()){
+				appointments.push(appointment);
+			}
+		});
+
+		// Sort the appointments
+		appointments.sort((a: Appointment, b: Appointment) => {
+			if(a.allday) return 1;
+			if(b.allday) return -1;
+
+			if(a.start < b.start){
+				return -1;
+			}else if(a.start > b.start){
+				return 1;
+			}
+			return 0;
+		});
+
+		return appointments;
+	}
+
+	async GetTodosOfDay(){
+		
 	}
 
 	AddTodo(todo: Todo){

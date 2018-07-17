@@ -1,9 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import * as moment from 'moment';
 declare var $: any;
+import { DataService } from '../../services/data-service';
 import { Appointment } from '../../models/Appointment';
-import { AppointmentItemComponent } from '../../components/appointment-item/appointment-item.component';
-import { Todo } from '../../models/Todo';
 
 @Component({
    selector: "calendo-calendar-page",
@@ -28,7 +27,7 @@ export class CalendarPageComponent{
    currentWeek: number = 1;
    firstWeekDayOfMonth = 0;
 
-   constructor(){}
+   constructor(public dataService: DataService){}
 
    ngOnInit(){
       this.setSize();
@@ -53,15 +52,20 @@ export class CalendarPageComponent{
             this.scroll(false);
          }
       });
+
+      $(document).bind("touchmove", (e) => {
+         console.log(e)
+         this.scroll(true);
+      });
    }
 
-   initialize(){
+   async initialize(){
       var date = moment();
       this.currentYear = date.year();
       this.currentMonth = date.month();
       this.currentWeek = moment().week();
 
-      this.showWeek();
+      await this.showWeek();
    }
 
    showWeek(){
@@ -82,6 +86,12 @@ export class CalendarPageComponent{
                appointments: [],
                todos: []
             }
+
+            this.dataService.GetAppointmentsOfDay(date).then((appointments: Appointment[]) => {
+               appointments.forEach((appointment) => {
+                  this.calendarDays[i][j]["appointments"].push(appointment);
+               });
+            });
             
             date.add('days', 1);
          }
@@ -111,9 +121,11 @@ export class CalendarPageComponent{
    }
 
    getDayBackgroundColor(dayRow, dayColumn){
-      var date = this.calendarDays[dayRow][dayColumn]["date"]
+      var date = this.calendarDays[dayRow][dayColumn]["date"];
 
-      if(date.month() % 2 == 0){
+      if(this.isToday(date)){
+         return "#dddddd";
+      }else if(date.month() % 2 == 0){
          return "#f9f9f9"
       }else{
          return "#ffffff"
