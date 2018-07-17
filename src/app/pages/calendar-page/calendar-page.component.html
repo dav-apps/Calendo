@@ -1,5 +1,5 @@
 <div (window:resize)="onResize($event)" style="margin-left: 30px">
-   <div class="row" id="calendar-top-bar" (click)="scrollUp()">
+   <div class="row" id="calendar-top-bar" (click)="scroll(true)">
       <h3 class="mt-1">{{ getMonthName(currentMonth) }} {{ currentYear }}</h3>
    </div>
    <div id="calendar-label-div" style="margin-left: -26px">

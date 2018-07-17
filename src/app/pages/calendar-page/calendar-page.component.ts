@@ -33,6 +33,26 @@ export class CalendarPageComponent{
    ngOnInit(){
       this.setSize();
       this.initialize();
+
+      $(document).keydown((e) => {
+         if(e.keyCode === 38){
+            // Arrow up
+            this.scroll(true);
+         }else if(e.keyCode === 40){
+            // Arrow down
+            this.scroll(false);
+         }
+      });
+
+      $(document).bind('mousewheel', (e) => {
+         if(e.originalEvent.wheelDelta > 0){
+            // Wheel up
+            this.scroll(true);
+         }else{
+            // Wheel down
+            this.scroll(false);
+         }
+      });
    }
 
    initialize(){
@@ -68,8 +88,13 @@ export class CalendarPageComponent{
       }
    }
 
-   scrollUp(){
-      this.currentWeek--;
+   scroll(up: boolean){
+      if(up){
+         this.currentWeek--;
+      }else{
+         this.currentWeek++;
+      }
+      
       var date = moment().week(this.currentWeek);
       this.currentMonth = date.weekday(7).month();
       this.currentYear = date.year();
