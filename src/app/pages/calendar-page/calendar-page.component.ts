@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import * as moment from 'moment';
 declare var $: any;
 import { DataService } from '../../services/data-service';
 import { Appointment } from '../../models/Appointment';
+import { Todo } from '../../models/Todo';
 
 @Component({
    selector: "calendo-calendar-page",
@@ -13,49 +15,45 @@ import { Appointment } from '../../models/Appointment';
 })
 export class CalendarPageComponent{
    calendarHeight: number = 500;
+   calendarWidth: number = 200;
    calendarDayHeight: number = this.calendarHeight / 5;
    calendarDayWidth: number = window.innerWidth / 7;
    calendarDays = [
       [{}, {}, {}, {}, {}, {}, {}],
+      [{}, {}, {}, {}, {}, {}, {}],    // Buffer for Scrolling
+      [{}, {}, {}, {}, {}, {}, {}],    // 1. Row
+      [{}, {}, {}, {}, {}, {}, {}],    // 2. Row
+      [{}, {}, {}, {}, {}, {}, {}],    // 3. Row
+      [{}, {}, {}, {}, {}, {}, {}],    // 4. Row
+      [{}, {}, {}, {}, {}, {}, {}],    // 5. Row
+      [{}, {}, {}, {}, {}, {}, {}],    // Buffer for Scrolling
       [{}, {}, {}, {}, {}, {}, {}],
-      [{}, {}, {}, {}, {}, {}, {}],
-      [{}, {}, {}, {}, {}, {}, {}],
-      [{}, {}, {}, {}, {}, {}, {}]
    ];
    currentYear: number = 2018;
    currentMonth: number = 1;
-   currentWeek: number = 1;
+   weekAtBeginning: number = 1;
    firstWeekDayOfMonth = 0;
+   @ViewChild("calendarContainer", { read: ElementRef }) calendarContainer: ElementRef<any>;
 
    constructor(public dataService: DataService){}
 
-   ngOnInit(){
+   click(){
+      this.calendarContainer.nativeElement.scrollTop = 2 * this.calendarDayHeight;
+   }
+
+   async ngOnInit(){
+      await this.initialize();
       this.setSize();
-      this.initialize();
+      this.calendarContainer.nativeElement.scrollTop = 2 * this.calendarDayHeight;
 
-      $(document).keydown((e) => {
-         if(e.keyCode === 38){
-            // Arrow up
-            this.scroll(true);
-         }else if(e.keyCode === 40){
-            // Arrow down
-            this.scroll(false);
+      $("#calendarContainer").scroll(() => {
+         if(this.calendarContainer.nativeElement.scrollTop < 2 * this.calendarDayHeight){
+            // Create a new row of days at the top of the array
+            this.addWeekTop();
+         }else if(this.calendarContainer.nativeElement.scrollTop > (this.calendarDays.length - 7) * this.calendarDayHeight){
+            // Create a new row of days at the end of the array
+            this.addWeekBottom();
          }
-      });
-
-      $(document).bind('mousewheel', (e) => {
-         if(e.originalEvent.wheelDelta > 0){
-            // Wheel up
-            this.scroll(true);
-         }else{
-            // Wheel down
-            this.scroll(false);
-         }
-      });
-
-      $(document).bind("touchmove", (e) => {
-         console.log(e)
-         this.scroll(true);
       });
    }
 
@@ -63,17 +61,17 @@ export class CalendarPageComponent{
       var date = moment();
       this.currentYear = date.year();
       this.currentMonth = date.month();
-      this.currentWeek = moment().week();
+      this.weekAtBeginning = moment().week() - 2;
 
-      await this.showWeek();
+      await this.showCurrentWeek();
    }
 
-   showWeek(){
+   showCurrentWeek(){
       // Get the first day of the current week
-      var date = moment().year(this.currentYear).week(this.currentWeek).weekday(1);
+      var date = moment().year(this.currentYear).week(this.weekAtBeginning).weekday(1);
 
       // Fill the days array with values
-      for(let i = 0; i < 5; i++){
+      for(let i = 0; i < this.calendarDays.length; i++){
          // Go through each row
          for(let j = 0; j < 7; j++){
             // Go through each cell of the row
@@ -88,8 +86,14 @@ export class CalendarPageComponent{
             }
 
             this.dataService.GetAppointmentsOfDay(date).then((appointments: Appointment[]) => {
-               appointments.forEach((appointment) => {
+               appointments.forEach(appointment => {
                   this.calendarDays[i][j]["appointments"].push(appointment);
+               });
+            });
+
+            this.dataService.GetTodosOfDay(date).then((todos: Todo[]) => {
+               todos.forEach(todo => {
+                  this.calendarDays[i][j]["todos"].push(todo);
                });
             });
             
@@ -98,18 +102,50 @@ export class CalendarPageComponent{
       }
    }
 
-   scroll(up: boolean){
-      if(up){
-         this.currentWeek--;
-      }else{
-         this.currentWeek++;
-      }
-      
-      var date = moment().week(this.currentWeek);
-      this.currentMonth = date.weekday(7).month();
-      this.currentYear = date.year();
+   addWeekTop(){
+      var newWeek = [{}, {}, {}, {}, {}, {}, {}];
+      this.weekAtBeginning--;
+      var date = moment().week(this.weekAtBeginning).weekday(1);
+      var dateInTheMiddle = moment().week(this.weekAtBeginning + 2).weekday(1);
+      this.currentMonth = dateInTheMiddle.month();
+      this.currentYear = dateInTheMiddle.year();
 
-      this.showWeek();
+      for(let i = 0; i < 7; i++){
+         newWeek[i] = {
+            date: moment.unix(date.unix()),
+            day: date.format("D"),
+            today: false,
+            appointments: [],
+            todos: []
+         }
+
+         date.add('days', 1);
+      }
+
+      this.calendarDays.unshift(newWeek);
+   }
+
+   addWeekBottom(){
+      var newWeek = [{}, {}, {}, {}, {}, {}, {}];
+      this.weekAtBeginning++;
+      var date = moment().week(this.weekAtBeginning).weekday(1);
+      var dateInTheMiddle = moment().week(this.weekAtBeginning + 2).weekday(1);
+      this.currentMonth = dateInTheMiddle.month();
+      this.currentYear = dateInTheMiddle.year();
+
+      for(let i = 0; i < 7; i++){
+         newWeek[i] = {
+            date: moment.unix(date.unix()),
+            day: date.format("D"),
+            today: false,
+            appointments: [],
+            todos: []
+         }
+
+         date.add('days', 1);
+      }
+
+      this.calendarDays.push(newWeek);
    }
 
    isToday(date: moment.Moment): boolean{
@@ -137,13 +173,14 @@ export class CalendarPageComponent{
    }
 
    setSize(){
+      this.calendarWidth = window.innerWidth;
       this.calendarHeight = window.innerHeight
                            - $("#calendo-navbar").height()
                            - $("#calendar-top-bar").height()
                            - $("#calendar-label-div").height()
-                           - 75;
+                           - 52;
 
       this.calendarDayHeight = this.calendarHeight / 5;
-      this.calendarDayWidth = window.innerWidth / 7;
+      this.calendarDayWidth = this.calendarWidth / 7;
    }
 }

@@ -92,6 +92,38 @@ export class DataService{
 		});
 	}
 
+	AddTodo(todo: Todo){
+		this.AddTodoToStartPage(todo);
+		this.AddTodoToTodosPage(todo);
+	}
+
+	async GetTodosOfDay(day: moment.Moment){
+		var todos: Todo[] = [];
+
+		this.allTodos.forEach((todo) => {
+			if(moment.unix(todo.time).startOf('day').unix() === day.startOf('day').unix()){
+				todos.push(todo);
+			}
+		});
+
+		return todos;
+	}
+
+	UpdateTodo(todo: Todo){
+		this.RemoveTodo(todo);
+		this.AddTodo(todo);
+	}
+
+	RemoveTodo(todo: Todo){
+		this.RemoveTodoFromStartPage(todo);
+		this.RemoveTodoFromTodosPage(todo);
+	}
+
+	AddAppointment(appointment: Appointment){
+		this.AddAppointmentToStartPage(appointment);
+		this.AddAppointmentToAppointmentsPage(appointment);
+	}
+
 	async GetAppointmentsOfDay(day: moment.Moment){
 		var appointments: Appointment[] = [];
 
@@ -115,30 +147,6 @@ export class DataService{
 		});
 
 		return appointments;
-	}
-
-	async GetTodosOfDay(){
-		
-	}
-
-	AddTodo(todo: Todo){
-		this.AddTodoToStartPage(todo);
-		this.AddTodoToTodosPage(todo);
-	}
-
-	UpdateTodo(todo: Todo){
-		this.RemoveTodo(todo);
-		this.AddTodo(todo);
-	}
-
-	RemoveTodo(todo: Todo){
-		this.RemoveTodoFromStartPage(todo);
-		this.RemoveTodoFromTodosPage(todo);
-	}
-
-	AddAppointment(appointment: Appointment){
-		this.AddAppointmentToStartPage(appointment);
-		this.AddAppointmentToAppointmentsPage(appointment);
 	}
 
 	UpdateAppointment(appointment: Appointment){
