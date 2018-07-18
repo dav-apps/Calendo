@@ -20,16 +20,16 @@
             <span>{{ day.day }}</span>
 
             <!-- Render appointments -->
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush text-truncate">
                <span *ngFor="let appointment of day.appointments; let k = index;">
-                  <li class="list-group-item p-1 pl-2" *ngIf="k < 2" 
+                  <li class="list-group-item p-1 pl-2" *ngIf="k < 2"
                      [style.background-color]="getDayBackgroundColor(i, j)">{{ appointment.name }}</li>
                </span>
             </ul>
             <span *ngIf="day.appointments.length > 2">...</span>
 
             <!-- Render todos -->
-            <br><span class="badge badge-primary ml-1" *ngIf="day.todos.length > 0">{{ day["todos"].length }} Todo<span *ngIf="day['todos'].length > 1">s</span></span>
+            <br><span class="badge badge-primary ml-1" *ngIf='day.todos.length > 0'>{{ day.todos.length }} Todo<span *ngIf="day.todos.length > 1">s</span></span>
          </div>
       </div>
    </div>

@@ -33,10 +33,12 @@ export class DataService{
 	appointmentDays: {date: string, timestamp: number, appointments: Appointment[]}[] = [];
 	//#endregion
 
-	//#region All pages
+	//#region CalendarPage
 	allAppointments: Appointment[] = [];
 	allTodos: Todo[] = [];
+	//#endregion
 
+	//#region All pages
 	showOldAppointments: boolean = false;
 	sortTodosByDate: boolean = true;
 	//#endregion
@@ -69,11 +71,11 @@ export class DataService{
 		this.allAppointments = [];
 
 		var appointments = await GetAllAppointments();
-		appointments.forEach(appointment => {
+		for(let appointment of appointments){
 			this.AddAppointmentToStartPage(appointment);
 			this.AddAppointmentToAppointmentsPage(appointment);
-			this.allAppointments.push(appointment);
-		});
+			this.AddAppointmentToAllAppointments(appointment);
+		}
 	}
 
 	async LoadAllTodos(){
@@ -85,28 +87,17 @@ export class DataService{
 		this.allTodos = [];
 
 		var todos = await GetAllTodos();
-		todos.forEach(todo => {
+		for(let todo of todos){
 			this.AddTodoToStartPage(todo);
 			this.AddTodoToTodosPage(todo);
-			this.allTodos.push(todo);
-		});
+			this.AddTodoToAllTodos(todo);
+		}
 	}
 
 	AddTodo(todo: Todo){
 		this.AddTodoToStartPage(todo);
 		this.AddTodoToTodosPage(todo);
-	}
-
-	async GetTodosOfDay(day: moment.Moment){
-		var todos: Todo[] = [];
-
-		this.allTodos.forEach((todo) => {
-			if(moment.unix(todo.time).startOf('day').unix() === day.startOf('day').unix()){
-				todos.push(todo);
-			}
-		});
-
-		return todos;
+		this.AddTodoToAllTodos(todo);
 	}
 
 	UpdateTodo(todo: Todo){
@@ -117,36 +108,13 @@ export class DataService{
 	RemoveTodo(todo: Todo){
 		this.RemoveTodoFromStartPage(todo);
 		this.RemoveTodoFromTodosPage(todo);
+		this.RemoveTodoFromAllTodos(todo);
 	}
 
 	AddAppointment(appointment: Appointment){
 		this.AddAppointmentToStartPage(appointment);
 		this.AddAppointmentToAppointmentsPage(appointment);
-	}
-
-	async GetAppointmentsOfDay(day: moment.Moment){
-		var appointments: Appointment[] = [];
-
-		this.allAppointments.forEach((appointment) => {
-			if(moment.unix(appointment.start).startOf('day').unix() === day.startOf('day').unix()){
-				appointments.push(appointment);
-			}
-		});
-
-		// Sort the appointments
-		appointments.sort((a: Appointment, b: Appointment) => {
-			if(a.allday) return 1;
-			if(b.allday) return -1;
-
-			if(a.start < b.start){
-				return -1;
-			}else if(a.start > b.start){
-				return 1;
-			}
-			return 0;
-		});
-
-		return appointments;
+		this.AddAppointmentToAllAppointments(appointment);
 	}
 
 	UpdateAppointment(appointment: Appointment){
@@ -157,6 +125,7 @@ export class DataService{
 	RemoveAppointment(appointment: Appointment){
 		this.RemoveAppointmentFromStartPage(appointment);
 		this.RemoveAppointmentFromAppointmentsPage(appointment);
+		this.RemoveAppointmentFromAllAppointments(appointment);
 	}
 
 	//#region StartPage
@@ -423,6 +392,69 @@ export class DataService{
 
 			i++;
 		});
+	}
+	//#endregion
+
+	//#region CalendarPage
+	AddAppointmentToAllAppointments(appointment: Appointment){
+		this.allAppointments.push(appointment);
+	}
+
+	GetAppointmentsOfDay(day: moment.Moment){
+		var appointments: Appointment[] = [];
+
+		this.allAppointments.forEach((appointment) => {
+			if(moment.unix(appointment.start).startOf('day').unix() === day.startOf('day').unix()){
+				appointments.push(appointment);
+			}
+		});
+
+		// Sort the appointments
+		appointments.sort((a: Appointment, b: Appointment) => {
+			if(a.allday) return 1;
+			if(b.allday) return -1;
+
+			if(a.start < b.start){
+				return -1;
+			}else if(a.start > b.start){
+				return 1;
+			}
+			return 0;
+		});
+
+		return appointments;
+	}
+
+	RemoveAppointmentFromAllAppointments(appointment: Appointment){
+		let index = this.allAppointments.findIndex(a => a.uuid == appointment.uuid);
+
+		if(index !== -1){
+			this.allAppointments.splice(index, 1);
+		}
+	}
+
+	AddTodoToAllTodos(todo: Todo){
+		this.allTodos.push(todo);
+	}
+
+	GetTodosOfDay(day: moment.Moment, uncompleted: boolean){
+		var todos: Todo[] = [];
+
+		this.allTodos.forEach((todo) => {
+			if(moment.unix(todo.time).startOf('day').unix() === day.startOf('day').unix() && (uncompleted || !todo.completed)){
+				todos.push(todo);
+			}
+		});
+
+		return todos;
+	}
+
+	RemoveTodoFromAllTodos(todo: Todo){
+		let index = this.allTodos.findIndex(t => t.uuid == todo.uuid);
+
+		if(index !== -1){
+			this.allTodos.splice(index, 1);
+		}
 	}
 	//#endregion
 
