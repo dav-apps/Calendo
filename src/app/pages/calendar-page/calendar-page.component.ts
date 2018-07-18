@@ -31,15 +31,13 @@ export class CalendarPageComponent{
    ];
    currentYear: number = 2018;
    currentMonth: number = 1;
-   weekAtBeginning: number = 1;
+   topWeek: number = 1;
    firstWeekDayOfMonth = 0;
    @ViewChild("calendarContainer", { read: ElementRef }) calendarContainer: ElementRef<any>;
+   isInitializing: boolean = true;
+   position: number = 1;
 
    constructor(public dataService: DataService){}
-
-   click(){
-      this.calendarContainer.nativeElement.scrollTop = 2 * this.calendarDayHeight;
-   }
 
    async ngOnInit(){
       await this.initialize();
@@ -47,12 +45,21 @@ export class CalendarPageComponent{
       this.calendarContainer.nativeElement.scrollTop = 2 * this.calendarDayHeight;
 
       $("#calendarContainer").scroll(() => {
-         if(this.calendarContainer.nativeElement.scrollTop < 2 * this.calendarDayHeight){
-            // Create a new row of days at the top of the array
-            this.addWeekTop();
-         }else if(this.calendarContainer.nativeElement.scrollTop > (this.calendarDays.length - 7) * this.calendarDayHeight){
-            // Create a new row of days at the end of the array
-            this.addWeekBottom();
+         if(!this.isInitializing){
+            if(this.calendarContainer.nativeElement.scrollTop < 2 * this.calendarDayHeight){
+               // Create a new row of days at the top of the array
+               this.addWeekTop();
+            }else if(this.calendarContainer.nativeElement.scrollTop > (this.calendarDays.length - 7) * this.calendarDayHeight){
+               // Create a new row of days at the end of the array
+               this.addWeekBottom();
+            }else{
+               this.position = Math.floor(this.calendarContainer.nativeElement.scrollTop / this.calendarDayHeight);
+               var currentWeek = moment().week(this.topWeek + this.position + 1).weekday(0)
+               this.currentMonth = currentWeek.month();
+               this.currentYear = currentWeek.year();
+            }
+         }else{
+            this.isInitializing = false;
          }
       });
    }
@@ -61,14 +68,14 @@ export class CalendarPageComponent{
       var date = moment();
       this.currentYear = date.year();
       this.currentMonth = date.month();
-      this.weekAtBeginning = moment().week() - 2;
+      this.topWeek = moment().week() - 2;
 
       await this.showCurrentWeek();
    }
 
    showCurrentWeek(){
       // Get the first day of the current week
-      var date = moment().year(this.currentYear).week(this.weekAtBeginning).weekday(1);
+      var date = moment().year(this.currentYear).week(this.topWeek).weekday(1);
 
       // Fill the days array with values
       for(let i = 0; i < this.calendarDays.length; i++){
@@ -104,11 +111,11 @@ export class CalendarPageComponent{
 
    addWeekTop(){
       var newWeek = [{}, {}, {}, {}, {}, {}, {}];
-      this.weekAtBeginning--;
-      var date = moment().week(this.weekAtBeginning).weekday(1);
-      var dateInTheMiddle = moment().week(this.weekAtBeginning + 2).weekday(1);
-      this.currentMonth = dateInTheMiddle.month();
-      this.currentYear = dateInTheMiddle.year();
+      this.topWeek--;
+      var date = moment().week(this.topWeek).weekday(1);
+      //var dateInTheMiddle = moment().week(this.topWeek + 2).weekday(1);
+      //this.currentMonth = dateInTheMiddle.month();
+      //this.currentYear = dateInTheMiddle.year();
 
       for(let i = 0; i < 7; i++){
          newWeek[i] = {
@@ -127,11 +134,7 @@ export class CalendarPageComponent{
 
    addWeekBottom(){
       var newWeek = [{}, {}, {}, {}, {}, {}, {}];
-      this.weekAtBeginning++;
-      var date = moment().week(this.weekAtBeginning).weekday(1);
-      var dateInTheMiddle = moment().week(this.weekAtBeginning + 2).weekday(1);
-      this.currentMonth = dateInTheMiddle.month();
-      this.currentYear = dateInTheMiddle.year();
+      var date = moment().week(this.topWeek + this.position + 8).weekday(1);
 
       for(let i = 0; i < 7; i++){
          newWeek[i] = {
@@ -146,6 +149,7 @@ export class CalendarPageComponent{
       }
 
       this.calendarDays.push(newWeek);
+      //this.topWeek--;
    }
 
    isToday(date: moment.Moment): boolean{
