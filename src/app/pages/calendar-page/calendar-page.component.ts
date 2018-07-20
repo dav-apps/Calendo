@@ -57,8 +57,8 @@ export class CalendarPageComponent{
 
 	//#region Mobile Design
 	currentWeekDays: string[] = ["1", "2", "3", "4", "5", "6", "7"];
-	currentWeek: number = 1;
-	currentDay: number = 0;		// Number of the week day between 0 and 6
+	currentDayOfWeek: number = 0;		// Number of the week day between 0 and 6
+	currentDayOfYear: number = 0;
 	currentDayBackgroundColor: string = "#e3e4e5";
 	topDay: moment.Moment = moment();
 	dayBufferCount: number = 5;
@@ -73,7 +73,7 @@ export class CalendarPageComponent{
 		
 		setTimeout(() => {
 			this.calendarContainer.nativeElement.scrollTop = this.calendarDayHeight * 3;
-			this.mobileCalendarContainer.nativeElement.scrollTop = (this.calendarDayHeight * this.weekBufferCount * 7) + (this.calendarDayHeight * this.currentDay);
+			this.mobileCalendarContainer.nativeElement.scrollTop = (this.calendarDayHeight * this.weekBufferCount * 7) + (this.calendarDayHeight * this.currentDayOfWeek);
 		}, 1);
 
       $("#calendarContainer").scroll(() => {
@@ -106,15 +106,18 @@ export class CalendarPageComponent{
 					console.log("Add top")
 				}else if(this.mobileCalendarContainer.nativeElement.scrollTop > bottomScrollAreaHeight){
 					console.log("Add bottom")
+				}else{
+					this.position = Math.floor(this.mobileCalendarContainer.nativeElement.scrollTop / this.calendarDayHeight);
+					let currentDay = moment().year(this.topDay.year()).dayOfYear(this.topDay.dayOfYear());
+					currentDay.add(this.position, 'days');
+
+					this.currentMonth = currentDay.month();
+					this.currentYear = currentDay.year();
+					this.currentDayOfWeek = currentDay.isoWeekday() - 1;
+					this.currentDayOfYear = currentDay.dayOfYear();
+
+					this.updateCurrentWeekDays();
 				}
-
-				this.position = Math.floor(this.mobileCalendarContainer.nativeElement.scrollTop / this.calendarDayHeight);
-				let currentDay = moment().year(this.topDay.year()).dayOfYear(this.topDay.dayOfYear());
-				currentDay.add(this.position, 'days');
-
-				this.currentMonth = currentDay.month();
-				this.currentYear = currentDay.year();
-				this.currentDay = currentDay.isoWeekday() - 1;
 			}else{
 				this.isInitializing = false;
 			}
@@ -125,8 +128,8 @@ export class CalendarPageComponent{
       var date = moment();
       this.currentYear = date.year();
 		this.currentMonth = date.month();
-		this.currentWeek = date.week();
-		this.currentDay = date.day() - 1;
+		this.currentDayOfWeek = date.day() - 1;
+		this.currentDayOfYear = date.dayOfYear();
 		this.topWeek = moment().subtract(3, 'weeks').week();
 		this.topDay = moment().subtract(3, 'weeks').day(1);
 
@@ -217,9 +220,9 @@ export class CalendarPageComponent{
 	}
 	
 	updateCurrentWeekDays(){
-		var date = moment().month(this.currentMonth).year(this.currentYear).week(this.currentWeek);
-		date.weekday(1);
-		
+		var date = moment().year(this.currentYear).dayOfYear(this.currentDayOfYear);
+		date.isoWeekday(1);
+
 		for(let i = 0; i < 7; i++){
 			this.currentWeekDays[i] = date.format("D");
 			date.add('day', 1);

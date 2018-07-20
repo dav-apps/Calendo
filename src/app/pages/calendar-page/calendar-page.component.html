@@ -5,9 +5,9 @@
    <div id="calendar-label-div" class="position-absolute ml-1">
       <span class="position-absolute" *ngFor="let day of weekDayLabels; let i = index;" [style.margin-left.px]="calendarDayWidth * i">
 			<span class="font-weight-light">{{ day }}</span><br>
-			<span [style.background-color]="currentDay == i ? currentDayBackgroundColor : ''" 
-					[style.padding-left.px]="currentDay == i ? 2 : 0"
-					[style.padding-right.px]="currentDay == i ? 2 : 0"
+			<span [style.background-color]="currentDayOfWeek == i ? currentDayBackgroundColor : ''" 
+					[style.padding-left.px]="currentDayOfWeek == i ? 2 : 0"
+					[style.padding-right.px]="currentDayOfWeek == i ? 2 : 0"
 					*ngIf="showMobileLayout">{{ currentWeekDays[i] }}</span>
 		</span>
    </div>
