@@ -3,34 +3,45 @@
       <h3 class="mt-1 ml-3">{{ getMonthName(currentMonth) }} {{ currentYear }}</h3>
    </div>
    <div id="calendar-label-div" class="position-absolute ml-1">
-      <span class="position-absolute">Mo</span>
-      <span class="position-absolute" [style.margin-left.px]="calendarDayWidth">Di</span>
-      <span class="position-absolute" [style.margin-left.px]="calendarDayWidth * 2">Mi</span>
-      <span class="position-absolute" [style.margin-left.px]="calendarDayWidth * 3">Do</span>
-      <span class="position-absolute" [style.margin-left.px]="calendarDayWidth * 4">Fr</span>
-      <span class="position-absolute" [style.margin-left.px]="calendarDayWidth * 5">Sa</span>
-      <span class="position-absolute" [style.margin-left.px]="calendarDayWidth * 6">So</span>
+      <span class="position-absolute" *ngFor="let day of weekDayLabels; let i = index;" [style.margin-left.px]="calendarDayWidth * i">
+			<span class="font-weight-light">{{ day }}</span><br>
+			<span [style.background-color]="currentDay == i ? currentDayBackgroundColor : ''" 
+					[style.padding-left.px]="currentDay == i ? 2 : 0"
+					[style.padding-right.px]="currentDay == i ? 2 : 0"
+					*ngIf="showMobileLayout">{{ currentWeekDays[i] }}</span>
+		</span>
    </div>
-   <div id="calendarContainer" #calendarContainer [style.height.px]="calendarHeight" [style.width.px]="calendarWidth" style="overflow:scroll; margin-top: 30px;">
-      <div class="d-flex" *ngFor="let week of calendarDays; let i = index;">
-         <div class="border" *ngFor="let day of week; let j = index;" 
-               [style.height.px]="calendarDayHeight" 
-               [style.width.px]="calendarDayWidth" 
-               [style.background-color]="getDayBackgroundColor(i, j)">
-            <span>{{ day.day }}</span>
+	<div id="calendarContainer" #calendarContainer 
+			[style.height.px]="calendarHeight" 
+			[style.width.px]="calendarWidth" 
+			style="overflow: scroll; margin-top: 30px;">
+		<div class="d-flex" *ngFor="let week of calendarDays; let i = index;">
+			<div class="border" *ngFor="let day of week; let j = index;" 
+					[style.height.px]="calendarDayHeight" 
+					[style.width.px]="calendarDayWidth" 
+					[style.background-color]="getDayBackgroundColor(i, j)">
+				<span>{{ day.day }}</span>
 
-            <!-- Render appointments -->
-            <ul class="list-group list-group-flush text-truncate">
-               <span *ngFor="let appointment of day.appointments; let k = index;">
-                  <li class="list-group-item p-1 pl-2" *ngIf="k < 2"
-                     [style.background-color]="getDayBackgroundColor(i, j)">{{ appointment.name }}</li>
-               </span>
-            </ul>
-            <span *ngIf="day.appointments.length > 2">...</span>
+				<!-- Render appointments -->
+				<ul class="list-group list-group-flush text-truncate">
+					<span *ngFor="let appointment of day.appointments; let k = index;">
+						<li class="list-group-item p-1 pl-2" *ngIf="k < 2"
+							[style.background-color]="getDayBackgroundColor(i, j)">{{ appointment.name }}</li>
+					</span>
+				</ul>
+				<span *ngIf="day.appointments.length > 2">...</span>
 
-            <!-- Render todos -->
-            <br><span class="badge badge-primary ml-1" *ngIf='day.todos.length > 0'>{{ day.todos.length }} Todo<span *ngIf="day.todos.length > 1">s</span></span>
-         </div>
-      </div>
-   </div>
+				<!-- Render todos -->
+				<br><span class="badge badge-primary ml-1" *ngIf='day.todos.length > 0'>{{ day.todos.length }} Todo<span *ngIf="day.todos.length > 1">s</span></span>
+			</div>
+		</div>
+	</div>
+	<div id="mobileCalendarContainer" #mobileCalendarContainer style="overflow: scroll; margin-top: 60px;" [style.height.px]="calendarHeight" [style.width.px]="calendarWidth">
+		<div *ngFor="let week of calendarDays; let i = index;">
+			<div class="border" *ngFor="let day of week; let j = index;"
+					[style.height.px]="calendarDayHeight">
+				<span>{{ day.fullDay }}</span>
+			</div>
+		</div>
+	</div>
 </div>

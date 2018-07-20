@@ -13,13 +13,25 @@ import { Todo } from '../../models/Todo';
    ]
 })
 export class CalendarPageComponent{
+	@ViewChild("calendarContainer", { read: ElementRef }) calendarContainer: ElementRef<any>;
+	@ViewChild("mobileCalendarContainer", {read: ElementRef}) mobileCalendarContainer: ElementRef<any>;
+	currentYear: number = 2018;
+	currentMonth: number = 1;
+	showMobileLayout: boolean = true;
+	isInitializing: boolean = true;
+	weekDayLabels: string[] = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+	dayFormat: string = "D";
+	fullDayFormat: string = "dddd D";
+	
+	//#region Desktop Design
    calendarHeight: number = 500;
    calendarWidth: number = 200;
-   calendarDayHeight: number = this.calendarHeight / 5;
+   calendarDayHeight: number = this.showMobileLayout ? this.calendarHeight / 7 :  this.calendarHeight / 5;
    calendarDayWidth: number = window.innerWidth / 7;
    defaultCalendarDay = {
       date: moment(),
-      day: moment().format("D"),
+		day: moment().format(this.dayFormat),
+		fullDay: moment().format(this.fullDayFormat),
       today: false,
       appointments: new Array<Appointment>(),
       todos: new Array<Todo>()
@@ -37,54 +49,92 @@ export class CalendarPageComponent{
       [this.defaultCalendarDay, this.defaultCalendarDay, this.defaultCalendarDay, this.defaultCalendarDay, this.defaultCalendarDay, this.defaultCalendarDay, this.defaultCalendarDay],
       [this.defaultCalendarDay, this.defaultCalendarDay, this.defaultCalendarDay, this.defaultCalendarDay, this.defaultCalendarDay, this.defaultCalendarDay, this.defaultCalendarDay]
    ];
-   bufferCount: number = 3;         // The number of buffer weeks at the beginning and at the end of the calendarDays array
-   visibleWeeksCount: number = this.calendarDays.length - (2 * this.bufferCount);   // The number of weeks that are visible
-   currentYear: number = 2018;
-   currentMonth: number = 1;
+   weekBufferCount: number = 3;         // The number of buffer weeks at the beginning and at the end of the calendarDays array
+   visibleWeeksCount: number = this.calendarDays.length - (2 * this.weekBufferCount);   // The number of weeks that are visible
    topWeek: number = 1;
-   firstWeekDayOfMonth = 0;
-   @ViewChild("calendarContainer", { read: ElementRef }) calendarContainer: ElementRef<any>;
-   isInitializing: boolean = true;
-   position: number = 1;
+	position: number = 1;
+	//#endregion
+
+	//#region Mobile Design
+	currentWeekDays: string[] = ["1", "2", "3", "4", "5", "6", "7"];
+	currentWeek: number = 1;
+	currentDay: number = 0;		// Number of the week day between 0 and 6
+	currentDayBackgroundColor: string = "#e3e4e5";
+	topDay: moment.Moment = moment();
+	dayBufferCount: number = 5;
+	visibleDaysCount: number = 5;
+	//#endregion
 
    constructor(public dataService: DataService){}
 
    async ngOnInit(){
-      await this.initialize();
-      this.setSize();
-      this.calendarContainer.nativeElement.scrollTop = 2 * this.calendarDayHeight;
+		await this.initialize();
+		this.setSize();
+		
+		setTimeout(() => {
+			this.calendarContainer.nativeElement.scrollTop = this.calendarDayHeight * 3;
+			this.mobileCalendarContainer.nativeElement.scrollTop = (this.calendarDayHeight * this.weekBufferCount * 7) + (this.calendarDayHeight * this.currentDay);
+		}, 1);
 
       $("#calendarContainer").scroll(() => {
          if(!this.isInitializing){
-            let bottomScrollAreaHeight = (this.calendarDays.length - (this.bufferCount + this.visibleWeeksCount)) * this.calendarDayHeight;
-            if(this.calendarContainer.nativeElement.scrollTop < 2 * this.calendarDayHeight){
-               // Create a new row of days at the top of the array
-               this.addWeekTop();
-            }else if(this.calendarContainer.nativeElement.scrollTop > bottomScrollAreaHeight){
-               // Create a new row of days at the end of the array
-               this.addWeekBottom();
-            }else{
-               this.position = Math.floor(this.calendarContainer.nativeElement.scrollTop / this.calendarDayHeight);
-               var currentWeek = moment().week(this.topWeek + this.position + 1).weekday(0)
-               this.currentMonth = currentWeek.month();
-               this.currentYear = currentWeek.year();
-            }
+				let bottomScrollAreaHeight = (this.calendarDays.length - (this.weekBufferCount + this.visibleWeeksCount)) * this.calendarDayHeight;
+
+				if(this.calendarContainer.nativeElement.scrollTop < 2 * this.calendarDayHeight){
+					// Create a new row of days at the top of the array
+					this.addWeekTop();
+				}else if(this.calendarContainer.nativeElement.scrollTop > bottomScrollAreaHeight){
+					// Create a new row of days at the end of the array
+					this.addWeekBottom();
+				}else{
+					this.position = Math.floor(this.calendarContainer.nativeElement.scrollTop / this.calendarDayHeight);
+					let currentWeek = moment().week(this.topWeek + this.position + 1).weekday(0)
+					this.currentMonth = currentWeek.month();
+					this.currentYear = currentWeek.year();
+				}
          }else{
             this.isInitializing = false;
          }
-      });
+		});
+
+		$("#mobileCalendarContainer").scroll(() => {
+			if(!this.isInitializing){
+				let daysCount = this.calendarDays.length * this.calendarDays[0].length;
+				let bottomScrollAreaHeight = (daysCount - this.dayBufferCount - this.visibleDaysCount) * this.calendarDayHeight;
+
+				if(this.mobileCalendarContainer.nativeElement.scrollTop < this.dayBufferCount * this.calendarDayHeight){
+					console.log("Add top")
+				}else if(this.mobileCalendarContainer.nativeElement.scrollTop > bottomScrollAreaHeight){
+					console.log("Add bottom")
+				}
+
+				this.position = Math.floor(this.mobileCalendarContainer.nativeElement.scrollTop / this.calendarDayHeight);
+				let currentDay = moment().year(this.topDay.year()).dayOfYear(this.topDay.dayOfYear());
+				currentDay.add(this.position, 'days');
+
+				this.currentMonth = currentDay.month();
+				this.currentYear = currentDay.year();
+				this.currentDay = currentDay.isoWeekday() - 1;
+			}else{
+				this.isInitializing = false;
+			}
+		});
    }
 
    async initialize(){
       var date = moment();
       this.currentYear = date.year();
-      this.currentMonth = date.month();
-      this.topWeek = moment().week() - 2;
+		this.currentMonth = date.month();
+		this.currentWeek = date.week();
+		this.currentDay = date.day() - 1;
+		this.topWeek = moment().subtract(3, 'weeks').week();
+		this.topDay = moment().subtract(3, 'weeks').day(1);
 
       await this.dataService.LoadAllTodos();
       await this.dataService.LoadAllAppointments();
 
-      this.showCurrentWeek();
+		this.showCurrentWeek();
+		this.updateCurrentWeekDays();
    }
 
    showCurrentWeek(){
@@ -100,7 +150,8 @@ export class CalendarPageComponent{
 
             this.calendarDays[i][j] = {
                date: moment.unix(date.unix()),
-               day: date.format("D"),
+					day: date.format(this.dayFormat),
+					fullDay: date.format(this.fullDayFormat),
                today,
                appointments: this.dataService.GetAppointmentsOfDay(date),
                todos: this.dataService.GetTodosOfDay(date, false)
@@ -119,7 +170,8 @@ export class CalendarPageComponent{
       for(let i = 0; i < 7; i++){
          newWeek[i] = {
             date: moment.unix(date.unix()),
-            day: date.format("D"),
+				day: date.format(this.dayFormat),
+				fullDay: date.format(this.fullDayFormat),
             today: false,
             appointments: this.dataService.GetAppointmentsOfDay(date),
             todos: this.dataService.GetTodosOfDay(date, false)
@@ -143,7 +195,8 @@ export class CalendarPageComponent{
       for(let i = 0; i < 7; i++){
          newWeek[i] = {
             date: moment.unix(date.unix()),
-            day: date.format("D"),
+				day: date.format(this.dayFormat),
+				fullDay: date.format(this.fullDayFormat),
             today: false,
             appointments: this.dataService.GetAppointmentsOfDay(date),
             todos: this.dataService.GetTodosOfDay(date, false)
@@ -153,7 +206,25 @@ export class CalendarPageComponent{
       }
 
       this.calendarDays.push(newWeek);
-   }
+	}
+
+	addDayTop(){
+
+	}
+
+	addDayBottom(){
+
+	}
+	
+	updateCurrentWeekDays(){
+		var date = moment().month(this.currentMonth).year(this.currentYear).week(this.currentWeek);
+		date.weekday(1);
+		
+		for(let i = 0; i < 7; i++){
+			this.currentWeekDays[i] = date.format("D");
+			date.add('day', 1);
+		}
+	}
 
    isToday(date: moment.Moment): boolean{
       return date.startOf('day').unix() == moment().startOf('day').unix();
@@ -173,21 +244,27 @@ export class CalendarPageComponent{
       }else{
          return "#ffffff"
       }
-   }
+	}
 
    onResize(event: any){
       this.setSize();
    }
 
    setSize(){
-      this.calendarWidth = window.innerWidth;
-      this.calendarHeight = window.innerHeight
-                           - $("#calendo-navbar").height()
-                           - $("#calendar-top-bar").height()
-                           - $("#calendar-label-div").height()
-                           - 52;
+		this.showMobileLayout = window.innerWidth < 500;
 
-      this.calendarDayHeight = this.calendarHeight / 5;
-      this.calendarDayWidth = this.calendarWidth / 7;
+		this.calendarContainer.nativeElement.hidden = this.showMobileLayout;
+		this.mobileCalendarContainer.nativeElement.hidden = !this.showMobileLayout;
+
+		this.calendarWidth = window.innerWidth;
+		this.calendarHeight = window.innerHeight
+									- $("#calendo-navbar").height()
+									- $("#calendar-top-bar").height()
+									- $("#calendar-label-div").height();
+
+		this.calendarHeight -= this.showMobileLayout ? 81 : 52 ;
+
+		this.calendarDayHeight = this.calendarHeight / 5;
+		this.calendarDayWidth = this.calendarWidth / 7;
    }
 }
