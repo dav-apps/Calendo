@@ -1,13 +1,14 @@
 <div (window:resize)="onResize($event)">
    <div id="calendar-top-bar">
-      <h3 class="mt-1 ml-3">{{ getMonthName(currentMonth) }} {{ currentYear }}</h3>
+      <h3 class="mt-1 ml-3">{{ getCurrentMonth() }} {{ getCurrentYear() }}</h3>
    </div>
    <div id="calendar-label-div" class="position-absolute ml-1">
       <span class="position-absolute" *ngFor="let day of weekDayLabels; let i = index;" [style.margin-left.px]="calendarDayWidth * i">
 			<span class="font-weight-light">{{ day }}</span><br>
-			<span [style.background-color]="currentDayOfWeek == i ? currentDayBackgroundColor : ''" 
+			<span [style.background-color]="currentDayOfWeek == i ? '#e3e4e5' : ''" 
 					[style.padding-left.px]="currentDayOfWeek == i ? 2 : 0"
 					[style.padding-right.px]="currentDayOfWeek == i ? 2 : 0"
+					(click)="goToWeekday(i)"
 					*ngIf="showMobileLayout">{{ currentWeekDays[i] }}</span>
 		</span>
    </div>
