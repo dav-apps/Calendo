@@ -34,8 +34,49 @@ export class DataService{
 	//#endregion
 
 	//#region CalendarPage
+	private updatingCalendarDays: boolean = false;
+	private updateCalendarDaysAgain: boolean = false;
 	allAppointments: Appointment[] = [];
 	allTodos: Todo[] = [];
+	calendarDaysAppointments = [
+		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
+		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
+		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
+		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
+		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
+		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
+		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
+		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
+		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
+		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
+		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()]
+	];
+	calendarDaysTodos = [
+		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
+		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
+		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
+		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
+		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
+		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
+		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
+		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
+		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
+		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
+		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()]
+	];
+	calendarDaysDates = [
+		[0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0]
+	]
 	//#endregion
 
 	//#region All pages
@@ -69,12 +110,13 @@ export class DataService{
 		this.appointmentsOfDays = [[], [], [], [], [], [], []];
 		this.appointmentDays = [];
 		this.allAppointments = [];
+		this.ClearCalendarDaysAppointments();
 
 		var appointments = await GetAllAppointments();
 		for(let appointment of appointments){
 			this.AddAppointmentToStartPage(appointment);
 			this.AddAppointmentToAppointmentsPage(appointment);
-			this.AddAppointmentToAllAppointments(appointment);
+			this.AddAppointmentToCalendarPage(appointment);
 		}
 	}
 
@@ -85,19 +127,48 @@ export class DataService{
 		this.todosWithoutGroup = [];
 		this.todoGroups = [];
 		this.allTodos = [];
+		this.ClearCalendarDaysTodos();
 
 		var todos = await GetAllTodos();
 		for(let todo of todos){
 			this.AddTodoToStartPage(todo);
 			this.AddTodoToTodosPage(todo);
-			this.AddTodoToAllTodos(todo);
+			this.AddTodoToCalendarPage(todo);
+		}
+	}
+
+	ClearCalendarDaysAppointments(){
+		for(let calendarWeek of this.calendarDaysAppointments){
+			for(let calendarDay of calendarWeek){
+				calendarDay = [];
+			}
+		}
+
+		this.ClearCalendarDaysDates();
+	}
+
+	ClearCalendarDaysTodos(){
+		for(let calendarWeek of this.calendarDaysTodos){
+			for(let calendarDay of calendarWeek){
+				calendarDay = [];
+			}
+		}
+
+		this.ClearCalendarDaysDates();
+	}
+
+	ClearCalendarDaysDates(){
+		for(let calendarWeek of this.calendarDaysDates){
+			for(let calendarDay of calendarWeek){
+				calendarDay = 0;
+			}
 		}
 	}
 
 	AddTodo(todo: Todo){
 		this.AddTodoToStartPage(todo);
 		this.AddTodoToTodosPage(todo);
-		this.AddTodoToAllTodos(todo);
+		this.AddTodoToCalendarPage(todo);
 	}
 
 	UpdateTodo(todo: Todo){
@@ -108,13 +179,13 @@ export class DataService{
 	RemoveTodo(todo: Todo){
 		this.RemoveTodoFromStartPage(todo);
 		this.RemoveTodoFromTodosPage(todo);
-		this.RemoveTodoFromAllTodos(todo);
+		this.RemoveTodoFromCalendarPage(todo);
 	}
 
 	AddAppointment(appointment: Appointment){
 		this.AddAppointmentToStartPage(appointment);
 		this.AddAppointmentToAppointmentsPage(appointment);
-		this.AddAppointmentToAllAppointments(appointment);
+		this.AddAppointmentToCalendarPage(appointment);
 	}
 
 	UpdateAppointment(appointment: Appointment){
@@ -125,7 +196,7 @@ export class DataService{
 	RemoveAppointment(appointment: Appointment){
 		this.RemoveAppointmentFromStartPage(appointment);
 		this.RemoveAppointmentFromAppointmentsPage(appointment);
-		this.RemoveAppointmentFromAllAppointments(appointment);
+		this.RemoveAppointmentFromCalendarPage(appointment);
 	}
 
 	//#region StartPage
@@ -396,18 +467,50 @@ export class DataService{
 	//#endregion
 
 	//#region CalendarPage
-	AddAppointmentToAllAppointments(appointment: Appointment){
+	UpdateCalendarDays(){
+		if(this.updatingCalendarDays){
+			this.updateCalendarDaysAgain = true;
+			return;
+		}
+
+		this.updatingCalendarDays = true;
+
+		// Go through each calendarDay
+		for(let i = 0; i < this.calendarDaysAppointments.length; i++){
+			for(let j = 0; j < this.calendarDaysAppointments[i].length; j++){
+				let appointments = this.GetAppointmentsOfDay(moment.unix(this.calendarDaysDates[i][j]));
+				this.calendarDaysAppointments[i][j] = appointments;
+			}
+		}
+
+		for(let i = 0; i < this.calendarDaysTodos.length; i++){
+			for(let j = 0; j < this.calendarDaysTodos[i].length; j++){
+				let todos = this.GetTodosOfDay(moment.unix(this.calendarDaysDates[i][j]), false);
+				this.calendarDaysTodos[i][j] = todos;
+			}
+		}
+
+		this.updatingCalendarDays = false;
+
+		if(this.updateCalendarDaysAgain){
+			this.updateCalendarDaysAgain = false;
+			this.UpdateCalendarDays();
+		}
+	}
+
+	AddAppointmentToCalendarPage(appointment: Appointment){
 		this.allAppointments.push(appointment);
+		this.UpdateCalendarDays();
 	}
 
 	GetAppointmentsOfDay(day: moment.Moment){
 		var appointments: Appointment[] = [];
 
-		this.allAppointments.forEach((appointment) => {
+		for(let appointment of this.allAppointments){
 			if(moment.unix(appointment.start).startOf('day').unix() === day.startOf('day').unix()){
 				appointments.push(appointment);
 			}
-		});
+		}
 
 		// Sort the appointments
 		appointments.sort((a: Appointment, b: Appointment) => {
@@ -425,23 +528,26 @@ export class DataService{
 		return appointments;
 	}
 
-	RemoveAppointmentFromAllAppointments(appointment: Appointment){
+	RemoveAppointmentFromCalendarPage(appointment: Appointment){
 		let index = this.allAppointments.findIndex(a => a.uuid == appointment.uuid);
 
 		if(index !== -1){
 			this.allAppointments.splice(index, 1);
 		}
+
+		this.UpdateCalendarDays();
 	}
 
-	AddTodoToAllTodos(todo: Todo){
+	AddTodoToCalendarPage(todo: Todo){
 		this.allTodos.push(todo);
+		this.UpdateCalendarDays();
 	}
 
-	GetTodosOfDay(day: moment.Moment, uncompleted: boolean){
+	GetTodosOfDay(day: moment.Moment, completed: boolean){
 		var todos: Todo[] = [];
 
 		this.allTodos.forEach((todo) => {
-			if(moment.unix(todo.time).startOf('day').unix() === day.startOf('day').unix() && (uncompleted || !todo.completed)){
+			if(moment.unix(todo.time).startOf('day').unix() === day.startOf('day').unix() && (completed || !todo.completed)){
 				todos.push(todo);
 			}
 		});
@@ -449,12 +555,14 @@ export class DataService{
 		return todos;
 	}
 
-	RemoveTodoFromAllTodos(todo: Todo){
+	RemoveTodoFromCalendarPage(todo: Todo){
 		let index = this.allTodos.findIndex(t => t.uuid == todo.uuid);
 
 		if(index !== -1){
 			this.allTodos.splice(index, 1);
 		}
+
+		this.UpdateCalendarDays();
 	}
 	//#endregion
 

@@ -25,15 +25,15 @@
 
 				<!-- Render appointments -->
 				<ul class="list-group list-group-flush text-truncate">
-					<span *ngFor="let appointment of day.appointments; let k = index;">
+					<span *ngFor="let appointment of dataService.calendarDaysAppointments[i][j]; let k = index;">
 						<li class="list-group-item p-1 pl-2" *ngIf="k < 2"
 							[style.background-color]="getDayBackgroundColor(i, j)">{{ appointment.name }}</li>
 					</span>
 				</ul>
-				<span *ngIf="day.appointments.length > 2">...</span>
+				<span *ngIf="dataService.calendarDaysAppointments[i][j].length > 2">...</span>
 
 				<!-- Render todos -->
-				<br><span class="badge badge-primary ml-1" *ngIf='day.todos.length > 0'>{{ day.todos.length }} Todo<span *ngIf="day.todos.length > 1">s</span></span>
+				<br><span class="badge badge-primary ml-1" *ngIf='dataService.calendarDaysTodos[i][j].length > 0'>{{ dataService.calendarDaysTodos[i][j].length }} Todo<span *ngIf="dataService.calendarDaysTodos[i][j].length > 1">s</span></span>
 			</div>
 		</div>
 	</div>
@@ -42,6 +42,18 @@
 			<div class="border" *ngFor="let day of week; let j = index;"
 					[style.height.px]="calendarDayHeight">
 				<span>{{ day.fullDay }}</span>
+
+				<!-- Render appointments -->
+				<ul class="list-group list-group-flush text-truncate mt-2">
+					<span *ngFor="let appointment of dataService.calendarDaysAppointments[i][j]; let k = index;">
+						<li class="list-group-item p-1 pl-2" *ngIf="k < 2" 
+							style="border: 0 none;">{{ appointment.allday ? '' : getTimeOfDate(appointment.start) }} {{ appointment.name }}</li>
+					</span>
+				</ul>
+				<span class="badge badge-secondary ml-1" *ngIf="dataService.calendarDaysAppointments[i][j].length > 2">+{{ dataService.calendarDaysAppointments[i][j].length - 2 }} appointment<span *ngIf="dataService.calendarDaysAppointments[i][j].length > 3">s</span></span>
+
+				<!-- Render todos -->
+				<span class="badge badge-primary ml-1" *ngIf='dataService.calendarDaysTodos[i][j].length > 0'>{{ dataService.calendarDaysTodos[i][j].length }} Todo<span *ngIf="dataService.calendarDaysTodos[i][j].length > 1">s</span></span>
 			</div>
 		</div>
 	</div>
