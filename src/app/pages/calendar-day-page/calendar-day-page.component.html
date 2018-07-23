@@ -1,0 +1,25 @@
+<div class="container">
+   <h1 class="text-center">{{ getCurrentDate() }}</h1>
+
+   <div>
+      <h2 class="mt-4 mb-3">
+         Appointments
+         <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="showNewAppointmentModal()"><i class="fas fa-plus"></i></button>
+      </h2>
+
+      <p class="font-weight-light" style="font-size: 18px" *ngIf="dataService.selectedDayAppointments.length == 0">No appointments</p>
+      <calendo-appointment-item [appointment]="appointment" *ngFor="let appointment of dataService.selectedDayAppointments"></calendo-appointment-item>
+   </div>
+   
+   <div>
+      <h2 class="mt-4 mb-3">
+         Todos
+         <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="showNewTodoModal()"><i class="fas fa-plus"></i></button>
+      </h2>
+      <p class="font-weight-light" style="font-size: 18px" *ngIf="dataService.selectedDayTodos.length == 0">No Todos</p>
+      <calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.selectedDayTodos"></calendo-todo-item>
+   </div>
+
+   <calendo-appointment-modal (save)="CreateAppointment($event)"></calendo-appointment-modal>
+   <calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
+</div>

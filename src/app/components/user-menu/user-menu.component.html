@@ -2,7 +2,7 @@
    Login
 </button>
 
-<div ngbDropdown class="d-inline-block" placement="bottom-right" *ngIf="dataService.user.IsLoggedIn" style="font-family: Roboto;">
+<div ngbDropdown class="d-inline-block default-font" placement="bottom-right" *ngIf="dataService.user.IsLoggedIn">
    <button class="btn btn-primary" ngbDropdownToggle id="user-menu-dropdown">
       <img [src]="dataService.user.Avatar" class="rounded-circle" height="35" width="35" />
    </button>

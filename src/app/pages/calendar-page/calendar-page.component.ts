@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 declare var $: any;
 import { DataService } from '../../services/data-service';
@@ -49,8 +50,10 @@ export class CalendarPageComponent{
 	weekBufferCount: number = 3;		// The number of buffer weeks at the beginning and at the end of the calendarDays array
    visibleRowsCount: number = 5;		// The number of weeks that are visible
 	currentWeekDays: string[] = ["1", "2", "3", "4", "5", "6", "7"];
+	scrolled: boolean = false;
 
-	constructor(public dataService: DataService){}
+	constructor(private dataService: DataService,
+					private router: Router){}
 
    async ngOnInit(){
 		await this.initialize();
@@ -72,6 +75,13 @@ export class CalendarPageComponent{
 				this.scrollToDate(this.currentDay);
 			}, 1);
 		}, 1);
+
+		setInterval(() => {
+			if(this.scrolled){
+				this.dataService.UpdateCalendarDays();
+				this.scrolled = false;
+			}
+		}, 2000);
 	}
 	
 	onScroll(){
@@ -88,12 +98,19 @@ export class CalendarPageComponent{
 
 			if(container.nativeElement.scrollTop < buffer * this.calendarDayHeight){
 				this.addWeekTop();
+				this.scrolled = true;
 			}else if(container.nativeElement.scrollTop > bufferHeight * this.calendarDayHeight){
 				this.addWeekBottom();
+				this.scrolled = true;
 			}else{
 				this.position = Math.floor(container.nativeElement.scrollTop / this.calendarDayHeight);
+
+				if(this.showMobileLayout){
+					this.currentDay = moment.unix(this.topDay.unix()).add(this.position, 'days');
+				}else{
+					this.currentDay = moment.unix(this.topDay.unix()).add(this.position + 1, 'weeks');
+				}
 				
-				this.currentDay = moment.unix(this.topDay.unix()).add(this.position, this.showMobileLayout ? 'days' : 'weeks');
 				this.updateCurrentWeekDays();
 			}
 		}
@@ -180,7 +197,6 @@ export class CalendarPageComponent{
 		this.dataService.calendarDaysTodos.unshift([[], [], [], [], [], [], []]);
 		this.dataService.calendarDaysDates.unshift(dates);
 		this.calendarDays.unshift(newWeek);
-		this.dataService.UpdateCalendarDays();
    }
 
    addWeekBottom(){
@@ -204,7 +220,6 @@ export class CalendarPageComponent{
 		this.dataService.calendarDaysTodos.push([[], [], [], [], [], [], []]);
 		this.dataService.calendarDaysDates.push(dates);
 		this.calendarDays.push(newWeek);
-		this.dataService.UpdateCalendarDays();
 	}
 	
 	updateCurrentWeekDays(){
@@ -249,6 +264,10 @@ export class CalendarPageComponent{
       }else{
          return "#ffffff"
       }
+	}
+
+	dayClicked(date: moment.Moment){
+		this.router.navigate(['/calendar/day', date.unix()])
 	}
 
    onResize(event: any){

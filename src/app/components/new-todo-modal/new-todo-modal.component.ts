@@ -24,8 +24,8 @@ export class NewTodoModalComponent{
 
    ngOnInit(){}
 
-   Show(){
-      this.ResetNewObjects();
+   Show(date?: number){
+      this.ResetNewObjects(date);
       this.GetAllTodoGroups();
 
       this.modalService.open(this.todoModal).result.then(() => {
@@ -52,8 +52,13 @@ export class NewTodoModalComponent{
       $('#new-todo-set-date-checkbox').on('ifUnchecked', (event) => this.newTodoSetDateCheckboxChecked = false);
    }
 
-   ResetNewObjects(){
-      this.newTodoDate = {year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()};
+   ResetNewObjects(date?: number){
+      let d = new Date();
+      if(date){
+         d = new Date(date * 1000);
+      }
+
+      this.newTodoDate = {year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate()};
       this.newTodoName = "";
       this.newTodoSetDateCheckboxChecked = true;
       this.todoGroups = [];

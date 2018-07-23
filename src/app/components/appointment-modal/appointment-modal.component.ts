@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 declare var $: any;
 import { Appointment, CreateAppointment, GetAppointment, UpdateAppointment } from '../../models/Appointment';
@@ -8,7 +8,7 @@ import { Appointment, CreateAppointment, GetAppointment, UpdateAppointment } fro
    templateUrl: "./appointment-modal.component.html"
 })
 export class AppointmentModalComponent{
-   @Output() save = new EventEmitter();
+	@Output() save = new EventEmitter();
    @ViewChild('appointmentModal') appointmentModal: ElementRef;
    appointmentDate: NgbDateStruct;
    appointmentName: string;
@@ -20,7 +20,7 @@ export class AppointmentModalComponent{
 
    constructor(private modalService: NgbModal){}
 
-   Show(appointment?: Appointment){
+   Show(appointment?: Appointment, date?: number){
       if(appointment){
 			// Update appointment
 			// Add the values of the appointment to the local variables
@@ -37,7 +37,7 @@ export class AppointmentModalComponent{
          this.appointmentEndTime = { hour: endDate.getHours(), minute: endDate.getMinutes() };
       }else{
          // New appointment
-         this.ResetNewObjects();
+         this.ResetNewObjects(date);
       }
 
       this.modalService.open(this.appointmentModal).result.then(async () => {
@@ -84,8 +84,13 @@ export class AppointmentModalComponent{
       $('#appointment-all-day-checkbox').on('ifUnchecked', (event) => this.appointmentAllDayCheckboxChecked = false);
    }
 
-   ResetNewObjects(){
-      this.appointmentDate = {year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()};
+   ResetNewObjects(date?: number){
+		let d = new Date();
+		if(date){
+			d = new Date(date * 1000);
+		}
+		
+      this.appointmentDate = {year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate()};
       this.appointmentName = "";
       this.appointmentAllDayCheckboxChecked = true;
       this.appointmentStartTime = { hour: 15, minute: 0 };

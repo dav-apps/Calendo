@@ -20,7 +20,8 @@
 			<div class="border" *ngFor="let day of week; let j = index;" 
 					[style.height.px]="calendarDayHeight" 
 					[style.width.px]="calendarDayWidth" 
-					[style.background-color]="getDayBackgroundColor(i, j)">
+					[style.background-color]="getDayBackgroundColor(i, j)"
+					(click)="dayClicked(day.date)">
 				<span>{{ day.day }}</span>
 
 				<!-- Render appointments -->
@@ -37,10 +38,14 @@
 			</div>
 		</div>
 	</div>
-	<div id="mobileCalendarContainer" #mobileCalendarContainer style="overflow: scroll; margin-top: 60px;" [style.height.px]="calendarHeight" [style.width.px]="calendarWidth">
+	<div id="mobileCalendarContainer" #mobileCalendarContainer 
+			style="overflow: scroll; margin-top: 60px;" 
+			[style.height.px]="calendarHeight" 
+			[style.width.px]="calendarWidth">
 		<div *ngFor="let week of calendarDays; let i = index;">
 			<div class="border" *ngFor="let day of week; let j = index;"
-					[style.height.px]="calendarDayHeight">
+					[style.height.px]="calendarDayHeight"
+					(click)="dayClicked(day.date)">
 				<span>{{ day.fullDay }}</span>
 
 				<!-- Render appointments -->

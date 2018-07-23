@@ -8,7 +8,10 @@ import { ConvertTableObjectToTodo } from './models/Todo';
 
 @Component({
   	selector: 'app-root',
-  	templateUrl: './app.component.html'
+	templateUrl: './app.component.html',
+	styleUrls: [
+		'./app.component.scss'
+	]
 })
 export class AppComponent {
 	isCollapsed = false;

@@ -38,6 +38,9 @@ export class DataService{
 	private updateCalendarDaysAgain: boolean = false;
 	allAppointments: Appointment[] = [];
 	allTodos: Todo[] = [];
+	selectedDay: moment.Moment = moment();
+	selectedDayAppointments: Appointment[] = [];
+	selectedDayTodos: Todo[] = [];
 	calendarDaysAppointments = [
 		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
 		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
@@ -111,6 +114,7 @@ export class DataService{
 		this.appointmentDays = [];
 		this.allAppointments = [];
 		this.ClearCalendarDaysAppointments();
+		this.selectedDayAppointments = [];
 
 		var appointments = await GetAllAppointments();
 		for(let appointment of appointments){
@@ -128,6 +132,7 @@ export class DataService{
 		this.todoGroups = [];
 		this.allTodos = [];
 		this.ClearCalendarDaysTodos();
+		this.selectedDayTodos = [];
 
 		var todos = await GetAllTodos();
 		for(let todo of todos){
@@ -197,6 +202,30 @@ export class DataService{
 		this.RemoveAppointmentFromStartPage(appointment);
 		this.RemoveAppointmentFromAppointmentsPage(appointment);
 		this.RemoveAppointmentFromCalendarPage(appointment);
+	}
+
+	SortAppointmentsArray(appointments: Appointment[]){
+		appointments.sort((a: Appointment, b: Appointment) => {
+			if(a.start < b.start){
+				return -1;
+			}else if(a.start > b.start){
+				return 1;
+			}else{
+				return 0;
+			}
+		});
+	}
+
+	SortTodosArray(todos: Todo[]){
+		todos.sort((a: Todo, b: Todo) => {
+			if(a.time < b.time){
+				return -1;
+			}else if(a.time > b.time){
+				return 1;
+			}else{
+				return 0;
+			}
+		});
 	}
 
 	//#region StartPage
@@ -478,14 +507,16 @@ export class DataService{
 		// Go through each calendarDay
 		for(let i = 0; i < this.calendarDaysAppointments.length; i++){
 			for(let j = 0; j < this.calendarDaysAppointments[i].length; j++){
-				let appointments = this.GetAppointmentsOfDay(moment.unix(this.calendarDaysDates[i][j]));
+				let date = moment.unix(this.calendarDaysDates[i][j]).startOf('day');
+				let appointments = this.GetAppointmentsOfDay(date);
 				this.calendarDaysAppointments[i][j] = appointments;
 			}
 		}
 
 		for(let i = 0; i < this.calendarDaysTodos.length; i++){
 			for(let j = 0; j < this.calendarDaysTodos[i].length; j++){
-				let todos = this.GetTodosOfDay(moment.unix(this.calendarDaysDates[i][j]), false);
+				let date = moment.unix(this.calendarDaysDates[i][j]);
+				let todos = this.GetTodosOfDay(date, false);
 				this.calendarDaysTodos[i][j] = todos;
 			}
 		}
@@ -500,6 +531,13 @@ export class DataService{
 
 	AddAppointmentToCalendarPage(appointment: Appointment){
 		this.allAppointments.push(appointment);
+		this.SortAppointmentsArray(this.allAppointments);
+
+		if(moment.unix(appointment.start).startOf('day').unix() == this.selectedDay.startOf('day').unix()){
+			this.selectedDayAppointments.push(appointment);
+			this.SortAppointmentsArray(this.selectedDayAppointments);
+		}
+
 		this.UpdateCalendarDays();
 	}
 
@@ -530,9 +568,13 @@ export class DataService{
 
 	RemoveAppointmentFromCalendarPage(appointment: Appointment){
 		let index = this.allAppointments.findIndex(a => a.uuid == appointment.uuid);
-
 		if(index !== -1){
 			this.allAppointments.splice(index, 1);
+		}
+
+		index = this.selectedDayAppointments.findIndex(a => a.uuid == appointment.uuid);
+		if(index !== -1){
+			this.selectedDayAppointments.splice(index, 1);
 		}
 
 		this.UpdateCalendarDays();
@@ -540,6 +582,13 @@ export class DataService{
 
 	AddTodoToCalendarPage(todo: Todo){
 		this.allTodos.push(todo);
+		this.SortTodosArray(this.allTodos);
+
+		if(moment.unix(todo.time).startOf('day').unix() == this.selectedDay.startOf('day').unix()){
+			this.selectedDayTodos.push(todo);
+			this.SortTodosArray(this.selectedDayTodos);
+		}
+
 		this.UpdateCalendarDays();
 	}
 
@@ -557,9 +606,13 @@ export class DataService{
 
 	RemoveTodoFromCalendarPage(todo: Todo){
 		let index = this.allTodos.findIndex(t => t.uuid == todo.uuid);
-
 		if(index !== -1){
 			this.allTodos.splice(index, 1);
+		}
+
+		index = this.selectedDayTodos.findIndex(t => t.uuid == todo.uuid);
+		if(index !== -1){
+			this.selectedDayTodos.splice(index, 1);
 		}
 
 		this.UpdateCalendarDays();
