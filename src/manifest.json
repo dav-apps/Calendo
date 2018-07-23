@@ -1,6 +1,7 @@
 {
   "name": "Calendo",
   "short_name": "Calendo",
+  "description": "Calendo makes it easy to keep track of your todos and appointments. You can set specific dates for your todos, sort them in groups and see your todos and appointments in your calendar.",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
