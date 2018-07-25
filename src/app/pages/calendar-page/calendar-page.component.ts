@@ -25,7 +25,6 @@ export class CalendarPageComponent{
 	calendarDayHeight: number = this.showMobileLayout ? this.calendarHeight / 7 :  this.calendarHeight / 5;
    calendarDayWidth: number = window.innerWidth / 7;
 
-	//#region Mobile
 	topDay: moment.Moment = moment();
 	currentDay: moment.Moment = moment();
 	currentDayOfWeek: number = 0;
@@ -34,11 +33,6 @@ export class CalendarPageComponent{
 	dayBuffer: number = 14;			// The number of days before and after the current day at the beginning
 	scrolled: boolean = false;
 	currentWeekDays: string[] = ["1", "2", "3", "4", "5", "6", "7"];
-	//#endregion
-
-	//#region Desktop
-
-	//#endregion
 
 	constructor(private dataService: DataService,
 					private router: Router){}
@@ -53,14 +47,6 @@ export class CalendarPageComponent{
    async initialize(){
 		this.topDay = moment().subtract(this.dayBuffer, 'days');
 
-		// Clear the arrays
-		this.dataService.mobileCalendarDaysDates = [];
-		this.dataService.mobileCalendarDaysAppointments = [];
-		this.dataService.mobileCalendarDaysTodos = [];
-		this.dataService.desktopCalendarDaysDates = [];
-		this.dataService.desktopCalendarDaysAppointments = [];
-		this.dataService.desktopCalendarDaysTodos = [];
-
 		this.fillDaysMobile();
 		this.fillDaysDesktop();
 		
@@ -69,6 +55,7 @@ export class CalendarPageComponent{
 
 			setTimeout(() => {
 				this.scrollToDate(this.currentDay);
+				this.setSize();
 
 				setTimeout(() => {
 					this.isInitializing = false;
@@ -109,6 +96,10 @@ export class CalendarPageComponent{
 	}
 
    fillDaysMobile(){
+		this.dataService.mobileCalendarDaysDates = [];
+		this.dataService.mobileCalendarDaysAppointments = [];
+		this.dataService.mobileCalendarDaysTodos = [];
+
       // Get the first day of the top week
 		var date = moment.unix(this.topDay.unix()).startOf('day');
 
@@ -126,6 +117,10 @@ export class CalendarPageComponent{
 	}
 
 	fillDaysDesktop(){
+		this.dataService.desktopCalendarDaysDates = [];
+		this.dataService.desktopCalendarDaysAppointments = [];
+		this.dataService.desktopCalendarDaysTodos = [];
+
 		var startDate = moment.unix(this.currentDay.unix()).startOf('month').isoWeekday(1).startOf('day');
 		var endDate = moment.unix(this.currentDay.unix()).endOf('month').isoWeekday(7).endOf('day');
 		var date = moment.unix(startDate.unix());
@@ -183,6 +178,18 @@ export class CalendarPageComponent{
 		this.dataService.mobileCalendarDaysDates.push(date.unix());
 		this.dataService.mobileCalendarDaysAppointments.push([]);
 		this.dataService.mobileCalendarDaysTodos.push([]);
+	}
+
+	ShowPrevious(){
+		this.currentDay.subtract(1, 'month');
+		this.fillDaysDesktop();
+		this.setSize();
+	}
+
+	ShowNext(){
+		this.currentDay.add(1, 'month');
+		this.fillDaysDesktop();
+		this.setSize();
 	}
 	
 	updateCurrentWeekDays(){
