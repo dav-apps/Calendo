@@ -15,51 +15,41 @@
 	<div id="calendarContainer" #calendarContainer 
 			[style.height.px]="calendarHeight" 
 			[style.width.px]="calendarWidth" 
-			style="overflow: scroll; margin-top: 30px;">
+			style="margin-top: 30px;">
+<!--
 		<div class="d-flex" *ngFor="let week of calendarDays; let i = index;">
 			<div class="border" *ngFor="let day of week; let j = index;" 
 					[style.height.px]="calendarDayHeight" 
 					[style.width.px]="calendarDayWidth" 
-					[style.background-color]="getDayBackgroundColor(i, j)"
+					[style.background-color]="getDayBackgroundColor(i)"
 					(click)="dayClicked(day.date)">
 				<span>{{ day.day }}</span>
 
-				<!-- Render appointments -->
-				<ul class="list-group list-group-flush text-truncate">
-					<span *ngFor="let appointment of dataService.calendarDaysAppointments[i][j]; let k = index;">
-						<li class="list-group-item p-1 pl-2" *ngIf="k < 2"
-							[style.background-color]="getDayBackgroundColor(i, j)">{{ appointment.name }}</li>
-					</span>
-				</ul>
-				<span *ngIf="dataService.calendarDaysAppointments[i][j].length > 2">...</span>
-
-				<!-- Render todos -->
-				<br><span class="badge badge-primary ml-1" *ngIf='dataService.calendarDaysTodos[i][j].length > 0'>{{ dataService.calendarDaysTodos[i][j].length }} Todo<span *ngIf="dataService.calendarDaysTodos[i][j].length > 1">s</span></span>
+				
 			</div>
 		</div>
+	-->
 	</div>
 	<div id="mobileCalendarContainer" #mobileCalendarContainer 
 			style="overflow: scroll; margin-top: 60px;" 
 			[style.height.px]="calendarHeight" 
 			[style.width.px]="calendarWidth">
-		<div *ngFor="let week of calendarDays; let i = index;">
-			<div class="border" *ngFor="let day of week; let j = index;"
-					[style.height.px]="calendarDayHeight"
-					(click)="dayClicked(day.date)">
-				<span>{{ day.fullDay }}</span>
+		<div class="border" *ngFor="let date of dataService.mobileCalendarDaysDates; let i = index;"
+				[style.height.px]="calendarDayHeight"
+				(click)="dayClicked(date)">
+			<span>{{ getFullDayOfDate(date) }}</span>
 
-				<!-- Render appointments -->
-				<ul class="list-group list-group-flush text-truncate mt-2">
-					<span *ngFor="let appointment of dataService.calendarDaysAppointments[i][j]; let k = index;">
-						<li class="list-group-item p-1 pl-2" *ngIf="k < 2" 
-							style="border: 0 none;">{{ appointment.allday ? '' : getTimeOfDate(appointment.start) }} {{ appointment.name }}</li>
-					</span>
-				</ul>
-				<span class="badge badge-secondary ml-1" *ngIf="dataService.calendarDaysAppointments[i][j].length > 2">+{{ dataService.calendarDaysAppointments[i][j].length - 2 }} appointment<span *ngIf="dataService.calendarDaysAppointments[i][j].length > 3">s</span></span>
+			<!-- Render appointments -->
+			<ul class="list-group list-group-flush text-truncate mt-2">
+				<span *ngFor="let appointment of dataService.mobileCalendarDaysAppointments[i]; let k = index;">
+					<li class="list-group-item p-1 pl-2" *ngIf="k < 2" 
+						style="border: 0 none;">{{ appointment.allday ? '' : getTimeOfDate(appointment.start) }} {{ appointment.name }}</li>
+				</span>
+			</ul>
+			<span class="badge badge-secondary ml-1" *ngIf="dataService.mobileCalendarDaysAppointments[i].length > 2">+{{ dataService.mobileCalendarDaysAppointments[i].length - 2 }} appointment<span *ngIf="dataService.mobileCalendarDaysAppointments[i].length > 3">s</span></span>
 
-				<!-- Render todos -->
-				<span class="badge badge-primary ml-1" *ngIf='dataService.calendarDaysTodos[i][j].length > 0'>{{ dataService.calendarDaysTodos[i][j].length }} Todo<span *ngIf="dataService.calendarDaysTodos[i][j].length > 1">s</span></span>
-			</div>
+			<!-- Render todos -->
+			<span class="badge badge-primary ml-1" *ngIf='dataService.mobileCalendarDaysTodos[i].length > 0'>{{ dataService.mobileCalendarDaysTodos[i].length }} Todo<span *ngIf="dataService.mobileCalendarDaysTodos[i].length > 1">s</span></span>
 		</div>
 	</div>
 </div>

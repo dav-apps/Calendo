@@ -67,19 +67,10 @@ export class DataService{
 		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
 		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()]
 	];
-	calendarDaysDates = [
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0]
-	]
+
+	mobileCalendarDaysDates: number[] = [];
+	mobileCalendarDaysAppointments: Appointment[][] = [];
+	mobileCalendarDaysTodos: Todo[][] = [];
 	//#endregion
 
 	//#region All pages
@@ -143,30 +134,24 @@ export class DataService{
 	}
 
 	ClearCalendarDaysAppointments(){
-		for(let calendarWeek of this.calendarDaysAppointments){
-			for(let calendarDay of calendarWeek){
-				calendarDay = [];
-			}
+		for(let appointments of this.mobileCalendarDaysAppointments){
+			appointments = [];
 		}
 
 		this.ClearCalendarDaysDates();
 	}
 
 	ClearCalendarDaysTodos(){
-		for(let calendarWeek of this.calendarDaysTodos){
-			for(let calendarDay of calendarWeek){
-				calendarDay = [];
-			}
+		for(let todos of this.mobileCalendarDaysTodos){
+			todos = [];
 		}
 
 		this.ClearCalendarDaysDates();
 	}
 
 	ClearCalendarDaysDates(){
-		for(let calendarWeek of this.calendarDaysDates){
-			for(let calendarDay of calendarWeek){
-				calendarDay = 0;
-			}
+		for(let date of this.mobileCalendarDaysDates){
+			date = 0;
 		}
 	}
 
@@ -504,21 +489,11 @@ export class DataService{
 
 		this.updatingCalendarDays = true;
 
-		// Go through each calendarDay
-		for(let i = 0; i < this.calendarDaysAppointments.length; i++){
-			for(let j = 0; j < this.calendarDaysAppointments[i].length; j++){
-				let date = moment.unix(this.calendarDaysDates[i][j]).startOf('day');
-				let appointments = this.GetAppointmentsOfDay(date);
-				this.calendarDaysAppointments[i][j] = appointments;
-			}
-		}
-
-		for(let i = 0; i < this.calendarDaysTodos.length; i++){
-			for(let j = 0; j < this.calendarDaysTodos[i].length; j++){
-				let date = moment.unix(this.calendarDaysDates[i][j]);
-				let todos = this.GetTodosOfDay(date, false);
-				this.calendarDaysTodos[i][j] = todos;
-			}
+		// Go through each mobileCalendarDay
+		for(let i = 0; i < this.mobileCalendarDaysDates.length; i++){
+			let date = moment.unix(this.mobileCalendarDaysDates[i]).startOf('day');
+			this.mobileCalendarDaysAppointments[i] = this.GetAppointmentsOfDay(date);
+			this.mobileCalendarDaysTodos[i] = this.GetTodosOfDay(date, false);
 		}
 
 		this.updatingCalendarDays = false;
