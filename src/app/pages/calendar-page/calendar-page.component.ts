@@ -42,6 +42,26 @@ export class CalendarPageComponent{
 
 		$("#calendarContainer").scroll(() => this.onScroll());
 		$("#mobileCalendarContainer").scroll(() => this.onScroll());
+
+		$(document).keydown((e) => {
+         if(e.keyCode === 38 || e.keyCode === 37){
+				// Arrow up or Arrow left
+				this.ShowPrevious();
+         }else if(e.keyCode === 40 || e.keyCode === 39){
+            // Arrow down or Arrow right
+            this.ShowNext();
+         }
+      });
+
+      $(document).bind('mousewheel', (e) => {
+         if(e.originalEvent.wheelDelta > 0){
+            // Wheel up
+            this.ShowPrevious();
+         }else{
+            // Wheel down
+            this.ShowNext();
+         }
+      });
    }
 
    async initialize(){
