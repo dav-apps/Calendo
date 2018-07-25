@@ -1,4 +1,4 @@
-<div (window:resize)="onResize($event)">
+<div (window:resize)="onResize()">
    <div id="calendar-top-bar">
       <h3 class="mt-1 ml-3">{{ getCurrentMonth() }} {{ getCurrentYear() }}</h3>
    </div>
@@ -16,19 +16,27 @@
 			[style.height.px]="calendarHeight" 
 			[style.width.px]="calendarWidth" 
 			style="margin-top: 30px;">
-<!--
-		<div class="d-flex" *ngFor="let week of calendarDays; let i = index;">
-			<div class="border" *ngFor="let day of week; let j = index;" 
+		<div class="d-flex" *ngFor="let week of dataService.desktopCalendarDaysDates; let i = index;">
+			<div class="border" *ngFor="let date of week; let j = index;" 
 					[style.height.px]="calendarDayHeight" 
 					[style.width.px]="calendarDayWidth" 
-					[style.background-color]="getDayBackgroundColor(i)"
-					(click)="dayClicked(day.date)">
-				<span>{{ day.day }}</span>
+					[style.background-color]="getDayBackgroundColor(i, j)"
+					(click)="dayClicked(date)">
+				<span>{{ getDayOfDate(date) }}</span>
 
-				
+				<!-- Render appointments -->
+				<ul class="list-group list-group-flush text-truncate">
+					<span *ngFor="let appointment of dataService.desktopCalendarDaysAppointments[i][j]; let k = index;">
+						<li class="list-group-item p-1 pl-2" *ngIf="k < 2"
+							[style.background-color]="getDayBackgroundColor(i, j)">{{ appointment.name }}</li>
+					</span>
+				</ul>
+				<span *ngIf="dataService.desktopCalendarDaysAppointments[i][j].length > 2">...</span>
+
+				<!-- Render todos -->
+				<br><span class="badge badge-primary ml-1" *ngIf='dataService.desktopCalendarDaysTodos[i][j].length > 0'>{{ dataService.desktopCalendarDaysTodos[i][j].length }} Todo<span *ngIf="dataService.desktopCalendarDaysTodos[i][j].length > 1">s</span></span>
 			</div>
 		</div>
-	-->
 	</div>
 	<div id="mobileCalendarContainer" #mobileCalendarContainer 
 			style="overflow: scroll; margin-top: 60px;" 

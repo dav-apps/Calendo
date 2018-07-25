@@ -38,39 +38,18 @@ export class DataService{
 	private updateCalendarDaysAgain: boolean = false;
 	allAppointments: Appointment[] = [];
 	allTodos: Todo[] = [];
-	selectedDay: moment.Moment = moment();
-	selectedDayAppointments: Appointment[] = [];
-	selectedDayTodos: Todo[] = [];
-	calendarDaysAppointments = [
-		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
-		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
-		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
-		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
-		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
-		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
-		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
-		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
-		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
-		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()],
-		[new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>(), new Array<Appointment>()]
-	];
-	calendarDaysTodos = [
-		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
-		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
-		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
-		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
-		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
-		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
-		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
-		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
-		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
-		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()],
-		[new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>(), new Array<Todo>()]
-	];
 
 	mobileCalendarDaysDates: number[] = [];
 	mobileCalendarDaysAppointments: Appointment[][] = [];
 	mobileCalendarDaysTodos: Todo[][] = [];
+
+	desktopCalendarDaysDates: number[][] = [];
+	desktopCalendarDaysAppointments: Appointment[][][] = [];
+	desktopCalendarDaysTodos: Todo[][][] = [];
+
+	selectedDay: moment.Moment = moment();
+	selectedDayAppointments: Appointment[] = [];
+	selectedDayTodos: Todo[] = [];
 	//#endregion
 
 	//#region All pages
@@ -191,6 +170,9 @@ export class DataService{
 
 	SortAppointmentsArray(appointments: Appointment[]){
 		appointments.sort((a: Appointment, b: Appointment) => {
+			if(a.allday) return 1;
+			if(b.allday) return -1;
+
 			if(a.start < b.start){
 				return -1;
 			}else if(a.start > b.start){
@@ -424,18 +406,7 @@ export class DataService{
          appointmentArray.push(appointment);
 
          // Sort the appointments array
-         appointmentArray.sort((a: Appointment, b: Appointment) => {
-				if(a.allday) return 1;
-				if(b.allday) return -1;
-
-            if(a.start < b.start){
-               return -1;
-            }else if(a.start > b.start){
-               return 1;
-            }else{
-               return 0;
-            }
-         });
+         this.SortAppointmentsArray(appointmentArray);
       }else{
          // Create a new appointmentDay
          var newAppointmentDay = {
@@ -496,6 +467,15 @@ export class DataService{
 			this.mobileCalendarDaysTodos[i] = this.GetTodosOfDay(date, false);
 		}
 
+		// Go through each desktopCalendarDay
+		for(let i = 0; i < this.desktopCalendarDaysDates.length; i++){
+			for(let j = 0; j < this.desktopCalendarDaysDates[i].length; j++){
+				let date = moment.unix(this.desktopCalendarDaysDates[i][j]).startOf('day');
+				this.desktopCalendarDaysAppointments[i][j] = this.GetAppointmentsOfDay(date);
+				this.desktopCalendarDaysTodos[i][j] = this.GetTodosOfDay(date, false);
+			}
+		}
+
 		this.updatingCalendarDays = false;
 
 		if(this.updateCalendarDaysAgain){
@@ -525,18 +505,7 @@ export class DataService{
 			}
 		}
 
-		// Sort the appointments
-		appointments.sort((a: Appointment, b: Appointment) => {
-			if(a.allday) return 1;
-			if(b.allday) return -1;
-
-			if(a.start < b.start){
-				return -1;
-			}else if(a.start > b.start){
-				return 1;
-			}
-			return 0;
-		});
+		this.SortAppointmentsArray(appointments);
 
 		return appointments;
 	}

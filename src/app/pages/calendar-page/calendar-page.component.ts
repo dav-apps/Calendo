@@ -57,6 +57,9 @@ export class CalendarPageComponent{
 		this.dataService.mobileCalendarDaysDates = [];
 		this.dataService.mobileCalendarDaysAppointments = [];
 		this.dataService.mobileCalendarDaysTodos = [];
+		this.dataService.desktopCalendarDaysDates = [];
+		this.dataService.desktopCalendarDaysAppointments = [];
+		this.dataService.desktopCalendarDaysTodos = [];
 
 		this.fillDaysMobile();
 		this.fillDaysDesktop();
@@ -123,7 +126,32 @@ export class CalendarPageComponent{
 	}
 
 	fillDaysDesktop(){
+		var startDate = moment.unix(this.currentDay.unix()).startOf('month').isoWeekday(1).startOf('day');
+		var endDate = moment.unix(this.currentDay.unix()).endOf('month').isoWeekday(7).endOf('day');
+		var date = moment.unix(startDate.unix());
+		var dates = [];
 
+		while (date.unix() < endDate.unix()) {
+			dates.push(date.unix())
+			date.add(1, 'days');
+		}
+
+		let datesWeek = [];
+
+		for(let i = 0; i < dates.length; i++){
+			datesWeek.push(dates[i]);
+
+			if(datesWeek.length == 7){
+				// Add the datesWeek to the desktopCalendarDays array
+				this.dataService.desktopCalendarDaysDates.push(datesWeek);
+				this.dataService.desktopCalendarDaysAppointments.push([[], [], [], [], [], [], []]);
+				this.dataService.desktopCalendarDaysTodos.push([[], [], [], [], [], [], []]);
+
+				datesWeek = [];
+			}
+		}
+
+		this.dataService.UpdateCalendarDays();
 	}
 
 	scrollToDate(date: moment.Moment){
@@ -183,11 +211,11 @@ export class CalendarPageComponent{
 
 		this.calendarHeight -= this.showMobileLayout ? 82 : 52 ;
 
-		this.calendarDayHeight = this.calendarHeight / 5;
+		this.calendarDayHeight = this.calendarHeight / this.dataService.desktopCalendarDaysDates.length;
 		this.calendarDayWidth = this.calendarWidth / 7;
 	}
 	
-	onResize(event: any){
+	onResize(){
       this.setSize();
 	}
 
@@ -203,6 +231,10 @@ export class CalendarPageComponent{
 		return moment.unix(date).format(this.fullDayFormat);
 	}
 
+	getDayOfDate(date: number){
+		return moment.unix(date).format(this.dayFormat);
+	}
+
 	getCurrentMonth(){
 		return this.currentDay.format("MMMM")
 	}
@@ -215,12 +247,12 @@ export class CalendarPageComponent{
 		return moment.unix(date).format("H:mm");
 	}
 
-	getDayBackgroundColor(index: number){
-      var date = this.dataService.mobileCalendarDaysDates[index]["date"];
+	getDayBackgroundColor(i: number, j: number){
+		var date = moment.unix(this.dataService.desktopCalendarDaysDates[i][j]);
 
       if(this.isToday(date)){
          return "#dddddd";
-      }else if(date.month() % 2 == 0){
+      }else if(date.month() == this.currentDay.month()){
          return "#f9f9f9"
       }else{
          return "#ffffff"
