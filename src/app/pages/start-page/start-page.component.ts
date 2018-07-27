@@ -1,10 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-declare var $: any;
 import * as moment from 'moment';
 import fontawesome from '@fortawesome/fontawesome';
 import solid from '@fortawesome/fontawesome-free-solid';
+declare var $: any;
 import { Todo } from '../../models/Todo';
-import { Appointment } from '../../models/Appointment';
 import { DataService } from '../../services/data-service';
 import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-modal.component';
 import { AppointmentModalComponent } from '../../components/appointment-modal/appointment-modal.component';
@@ -17,33 +16,22 @@ import { AppointmentModalComponent } from '../../components/appointment-modal/ap
    ]
 })
 export class StartPageComponent{
-	//@ViewChild(NewTodoModalComponent)
-	//private newTodoModalComponent: NewTodoModalComponent;
-	//@ViewChild(AppointmentModalComponent)
-	//private newAppointmentModalComponent: AppointmentModalComponent;
+	@ViewChild(NewTodoModalComponent)
+	private newTodoModalComponent: NewTodoModalComponent;
+	@ViewChild(AppointmentModalComponent)
+	private newAppointmentModalComponent: AppointmentModalComponent;
+	startContainerHeight: number = 700;
+	largeDateFormat: string = "dddd";
+	smallDateFormat: string = "D. MMMM YYYY";
 
 	constructor(private dataService: DataService){
 		fontawesome.library.add(solid);
-   }
-/*
-   ShowOrHideAppointmentsOfDay(day: number){
-      var elementId = "#appointments-day-" + day;
-      if($(elementId).is(":visible")){
-         $(elementId).hide();
-      }else{
-         $(elementId).show();
-      }
-   }
-
-   ShowOrHideTodosOfDay(day: number){
-      var elementId = "#todos-day-" + day;
-      if($(elementId).is(":visible")){
-         $(elementId).hide();
-      }else{
-			$(elementId).show();
-		}
 	}
 
+	ngOnInit(){
+		this.setSize();
+	}
+	
    ShowModal(index){
 		if(index == 0){
 			// Show the appointment modal
@@ -53,7 +41,7 @@ export class StartPageComponent{
 			this.newTodoModalComponent.Show();
 		}
 	}
-*/
+
 	CreateTodo(todo){
 		this.dataService.AddTodo(todo);
 	}
@@ -66,11 +54,29 @@ export class StartPageComponent{
 		this.dataService.RemoveTodo(todo);
 	}
 
-	GetLongDate(date: number): string{
-      return moment.unix(date).format('D. MMMM YYYY');
+	GetLargeDate(date: number): string{
+      return moment.unix(date).format(this.largeDateFormat);
 	}
 	
-	GetWeekday(date: number): string{
-		return moment.unix(date).format('dddd');
+	GetSmallDate(date: number): string{
+		return moment.unix(date).format(this.smallDateFormat);
+	}
+
+	onResize(){
+		this.setSize();
+	}
+
+	setSize(){
+		this.startContainerHeight = window.innerHeight 
+											- $("#calendo-navbar").height()
+											- 16;
+
+		if(window.innerWidth < 600){
+			this.largeDateFormat = "DD.MM";
+			this.smallDateFormat = "dddd";
+		}else{
+			this.largeDateFormat = "dddd";
+			this.smallDateFormat = "D. MMMM YYYY";
+		}
 	}
 }
