@@ -32,17 +32,17 @@
 					(click)="dayClicked(date)">
 				<span>{{ getDayOfDate(date) }}</span>
 
-				<!-- Render appointments -->
-				<ul class="list-group list-group-flush text-truncate">
-					<span *ngFor="let appointment of dataService.desktopCalendarDaysAppointments[i][j]; let k = index;">
-						<li class="list-group-item p-1 pl-2" *ngIf="k < 2"
-							[style.background-color]="getDayBackgroundColor(i, j)">{{ appointment.name }}</li>
-					</span>
-				</ul>
-				<span *ngIf="dataService.desktopCalendarDaysAppointments[i][j].length > 2">...</span>
-
 				<!-- Render todos -->
-				<br><span class="badge badge-primary ml-1" *ngIf='dataService.desktopCalendarDaysTodos[i][j].length > 0'>{{ dataService.desktopCalendarDaysTodos[i][j].length }} Todo<span *ngIf="dataService.desktopCalendarDaysTodos[i][j].length > 1">s</span></span>
+				<span class="badge badge-primary ml-1" *ngIf='dataService.desktopCalendarDaysTodos[i][j].length > 0'>{{ dataService.desktopCalendarDaysTodos[i][j].length }} Todo<span *ngIf="dataService.desktopCalendarDaysTodos[i][j].length > 1">s</span></span>
+
+				<!-- Render appointments -->
+				<div>
+					<calendo-small-appointment-item [appointment]="appointment"
+																[enableDropdown]="false" 
+																[compact]="true" 
+																*ngFor="let appointment of dataService.desktopCalendarDaysAppointments[i][j]; let k = index;">
+					</calendo-small-appointment-item>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -52,20 +52,23 @@
 			[style.width.px]="calendarWidth">
 		<div class="border" *ngFor="let date of dataService.mobileCalendarDaysDates; let i = index;"
 				[style.height.px]="calendarDayHeight"
+				style="position: relative; background-color: white"
 				(click)="dayClicked(date)">
 			<span>{{ getFullDayOfDate(date) }}</span>
 
-			<!-- Render appointments -->
-			<ul class="list-group list-group-flush text-truncate mt-2">
-				<span *ngFor="let appointment of dataService.mobileCalendarDaysAppointments[i]; let k = index;">
-					<li class="list-group-item p-1 pl-2" *ngIf="k < 2" 
-						style="border: 0 none;">{{ appointment.allday ? '' : getTimeOfDate(appointment.start) }} {{ appointment.name }}</li>
-				</span>
-			</ul>
-			<span class="badge badge-secondary ml-1" *ngIf="dataService.mobileCalendarDaysAppointments[i].length > 2">+{{ dataService.mobileCalendarDaysAppointments[i].length - 2 }} appointment<span *ngIf="dataService.mobileCalendarDaysAppointments[i].length > 3">s</span></span>
-
 			<!-- Render todos -->
-			<span class="badge badge-primary ml-1" *ngIf='dataService.mobileCalendarDaysTodos[i].length > 0'>{{ dataService.mobileCalendarDaysTodos[i].length }} Todo<span *ngIf="dataService.mobileCalendarDaysTodos[i].length > 1">s</span></span>
+			<span class="badge badge-primary ml-2" *ngIf='dataService.mobileCalendarDaysTodos[i].length > 0'>
+				{{ dataService.mobileCalendarDaysTodos[i].length }} Todo<span *ngIf="dataService.mobileCalendarDaysTodos[i].length > 1">s</span>
+			</span>
+
+			<!-- Render appointments -->
+			<div class="d-flex flex-column">
+				<calendo-small-appointment-item *ngFor="let appointment of dataService.mobileCalendarDaysAppointments[i]; let k = index;"
+															[appointment]="appointment" 
+															[enableDropdown]="false" 
+															[compact]="true">
+				</calendo-small-appointment-item>
+			</div>
 		</div>
 	</div>
 </div>

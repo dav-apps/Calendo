@@ -12,8 +12,8 @@
       <div class="card col-10 offset-1 col-md-4 my-4" *ngFor="let appointmentDay of dataService.appointmentDays">
          <div class="card-body">
             <h5 class="card-title">{{ appointmentDay.date }}</h5>
-            <ul class="list-group list-group-flush" *ngFor="let appointment of appointmentDay.appointments">
-               <calendo-appointment-item [appointment]="appointment"></calendo-appointment-item>
+            <ul class="list-group list-group-flush d-flex flex-column" *ngFor="let appointment of appointmentDay.appointments">
+               <calendo-small-appointment-item class="d-inline-flex" [appointment]="appointment"></calendo-small-appointment-item>
             </ul>
          </div>
       </div>

@@ -1,13 +1,25 @@
 <calendo-delete-appointment-modal [appointment]="appointment" (remove)="Remove()"></calendo-delete-appointment-modal>
 <calendo-appointment-modal (save)="Update($event)"></calendo-appointment-modal>
 
-<div ngbDropdown placement="bottom-left">
+<div *ngIf="enableDropdown" ngbDropdown placement="bottom-left">
    <div class="px-1 rounded cursor" style="background-color: #1565C0; font-size: 15px; color: white" ngbDropdownToggle>
-      <p>{{ appointment.name }}<br>
-      <span *ngIf="!appointment.allday">{{ getTimeSpan() }}</span></p>
+      <p *ngIf="!compact">
+         {{ appointment.name }}<br>
+         <span *ngIf="!appointment.allday">{{ getTimeSpan() }}</span>
+      </p>
+      <p *ngIf="compact">{{ getStartTime() }} {{ appointment.name }}</p>
    </div>
+
    <div ngbDropdownMenu>
       <button class="dropdown-item" (click)="Edit()">Edit</button>
       <button class="dropdown-item" (click)="Delete()">Delete</button>
    </div>
+</div>
+
+<div class="px-1 rounded cursor d-inline-flex" style="background-color: #1565C0; font-size: 15px; color: white;" *ngIf="!enableDropdown">
+   <span *ngIf="!compact">
+      {{ appointment.name }}<br>
+      <span *ngIf="!appointment.allday">{{ getTimeSpan() }}</span>
+   </span>
+   <span *ngIf="compact">{{ getStartTime() }} {{ appointment.name }}</span>
 </div>

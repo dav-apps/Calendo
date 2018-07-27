@@ -14,7 +14,8 @@ import { DataService } from '../../services/data-service';
 })
 export class SmallAppointmentItemComponent{
    @Input() appointment: Appointment = new Appointment("", "", 0, 0, false);
-   @Input() showCompleted: boolean = false;
+   @Input() enableDropdown: boolean = true;
+   @Input() compact: boolean = false;
    @ViewChild(AppointmentModalComponent)
    private newAppointmentModalComponent: AppointmentModalComponent;
    @ViewChild(DeleteAppointmentModalComponent)
@@ -23,7 +24,11 @@ export class SmallAppointmentItemComponent{
    constructor(private dataService: DataService){}
 
    getTimeSpan(){
-      return moment.unix(this.appointment.start).format("H:mm") + " - " + moment.unix(this.appointment.end).format("H:mm")
+      return moment.unix(this.appointment.start).format("H:mm") + " - " + moment.unix(this.appointment.end).format("H:mm");
+   }
+
+   getStartTime(){
+      return moment.unix(this.appointment.start).format("H:mm");
    }
 
    Edit(){
