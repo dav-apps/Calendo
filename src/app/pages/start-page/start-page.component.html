@@ -3,13 +3,16 @@
 		style="overflow: scroll;" 
 		[style.height.px]="startContainerHeight">
 
-	<div class="row mt-2" *ngFor="let date of dataService.startDaysDates; let i = index;">
+	<div class="row mt-4" *ngFor="let date of dataService.startDaysDates; let i = index;">
 		<div class="col-3">
 			<h4>{{ GetLargeDate(date) }}</h4>
 			<p class="font-weight-light">{{ GetSmallDate(date) }}</p>
 		</div>
-		<div class="col-9">
-			<calendo-appointment-item [appointment]="appointment" *ngFor="let appointment of dataService.startDaysAppointments[i]"></calendo-appointment-item>
+		<div class="col-9 d-flex flex-column">
+			<div class="d-inline-flex" style="margin: -3px" *ngFor="let appointment of dataService.startDaysAppointments[i]">
+				<calendo-small-appointment-item [appointment]="appointment"></calendo-small-appointment-item>
+			</div>
+			
 			<calendo-todo-item [todo]="todo" *ngFor="let todo of dataService.startDaysTodos[i]" (delete)="DeleteTodo(todo)"></calendo-todo-item>
 		</div>
 	</div>

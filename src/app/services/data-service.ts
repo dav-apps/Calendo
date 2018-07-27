@@ -200,6 +200,8 @@ export class DataService{
 
 	//#region StartPage
 	AddAppointmentToStartPage(appointment: Appointment){
+		if(appointment.start < moment().startOf('day').unix()) return;
+
 		// Check if the day of the appointment is already in the array
 		let index = this.startDaysDates.findIndex(d => moment.unix(d).isSame(moment.unix(appointment.start), 'day'));
 
@@ -259,6 +261,8 @@ export class DataService{
 	}
 
 	AddTodoToStartPage(todo: Todo){
+		if(todo.time < moment().startOf('day').unix()) return;
+
 		// Check if the day of the todo is already in the array
 		let index = this.startDaysDates.findIndex(t => moment.unix(t).isSame(moment.unix(todo.time), 'day'));
 
