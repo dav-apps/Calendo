@@ -1,8 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 declare var $: any;
+import * as moment from 'moment';
 import fontawesome from '@fortawesome/fontawesome';
 import solid from '@fortawesome/fontawesome-free-solid';
 import { Todo } from '../../models/Todo';
+import { Appointment } from '../../models/Appointment';
 import { DataService } from '../../services/data-service';
 import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-modal.component';
 import { AppointmentModalComponent } from '../../components/appointment-modal/appointment-modal.component';
@@ -15,15 +17,15 @@ import { AppointmentModalComponent } from '../../components/appointment-modal/ap
    ]
 })
 export class StartPageComponent{
-	@ViewChild(NewTodoModalComponent)
-	private newTodoModalComponent: NewTodoModalComponent;
-	@ViewChild(AppointmentModalComponent)
-	private newAppointmentModalComponent: AppointmentModalComponent;
+	//@ViewChild(NewTodoModalComponent)
+	//private newTodoModalComponent: NewTodoModalComponent;
+	//@ViewChild(AppointmentModalComponent)
+	//private newAppointmentModalComponent: AppointmentModalComponent;
 
-	constructor(public dataService: DataService){
+	constructor(private dataService: DataService){
 		fontawesome.library.add(solid);
    }
-
+/*
    ShowOrHideAppointmentsOfDay(day: number){
       var elementId = "#appointments-day-" + day;
       if($(elementId).is(":visible")){
@@ -51,7 +53,7 @@ export class StartPageComponent{
 			this.newTodoModalComponent.Show();
 		}
 	}
-
+*/
 	CreateTodo(todo){
 		this.dataService.AddTodo(todo);
 	}
@@ -62,5 +64,13 @@ export class StartPageComponent{
 
 	public async DeleteTodo(todo: Todo){
 		this.dataService.RemoveTodo(todo);
+	}
+
+	GetLongDate(date: number): string{
+      return moment.unix(date).format('D. MMMM YYYY');
+	}
+	
+	GetWeekday(date: number): string{
+		return moment.unix(date).format('dddd');
 	}
 }

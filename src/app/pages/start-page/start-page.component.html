@@ -1,7 +1,29 @@
-<div class="container">
-	<h1 class="mt-1">{{ dataService.GetWeekDay(0) }}</h1>
-	<p class="lead">{{ dataService.GetDate(0) }}</p>
+<div class="container-fluid" style="overflow: scroll; height: 700px">
+<!--
+	<div class="row" *ngFor="let date of dates; let i = index;" style="height: 100px">
+		<div class="col-3">
+			<h4>{{ GetWeekday(date) }}</h4>
+			<p class="font-weight-light">{{ GetLongDate(date) }}</p>
+		</div>
+		<div class="col-9">
+			<calendo-appointment-item [appointment]="appointment" *ngFor="let appointment of appointments[i]"></calendo-appointment-item>
+			<calendo-todo-item [todo]="todo" *ngFor="let todo of todos[i]" (delete)="DeleteTodo(todo)"></calendo-todo-item>
+		</div>
+	</div>
+-->
 
+	<div class="row mt-2" *ngFor="let date of dataService.startDaysDates; let i = index;">
+		<div class="col-3">
+			<h4>{{ GetWeekday(date) }}</h4>
+			<p class="font-weight-light">{{ GetLongDate(date) }}</p>
+		</div>
+		<div class="col-9">
+			<calendo-appointment-item [appointment]="appointment" *ngFor="let appointment of dataService.startDaysAppointments[i]"></calendo-appointment-item>
+			<calendo-todo-item [todo]="todo" *ngFor="let todo of dataService.startDaysTodos[i]" (delete)="DeleteTodo(todo)"></calendo-todo-item>
+		</div>
+	</div>
+
+	<!--
 	<div class="row mt-4">
 		<div class="card col-10 offset-1 col-md-4 mb-5">
 			<div class="card-body">
@@ -45,7 +67,7 @@
 									Appointments
 									<span class="badge badge-primary badge-pill">{{ dataService.appointmentsOfDays[i].length }}</span>
 								</li>
-								<!-- Hidden Appointments list -->
+								
 								<ul class="list-group list-group-flush ml-3 mt-1" id="appointments-day-{{ i }}" style="display:none">
 									<calendo-appointment-item [appointment]="appointment" *ngFor="let appointment of dataService.appointmentsOfDays[i]"></calendo-appointment-item>
 								</ul>
@@ -56,7 +78,7 @@
 									Todos
 									<span class="badge badge-primary badge-pill">{{ dataService.GetUncompletedTodosOfDay(i).length }}</span>
 								</li>
-								<!-- Hidden Todos list -->
+								
 								<ul class="list-group list-group-flush ml-3 mt-1" id="todos-day-{{ i }}" style="display:none">
 									<calendo-todo-item [todo]="todo" *ngFor="let todo of dataService.todosOfDays[i];" (delete)="DeleteTodo(todo)"></calendo-todo-item>
 								</ul>
@@ -72,4 +94,5 @@
 
 	<calendo-appointment-modal (save)="CreateAppointment($event)"></calendo-appointment-modal>
 	<calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
+-->
 </div>

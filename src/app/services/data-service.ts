@@ -13,8 +13,9 @@ export class DataService{
 	user: DavUser;
 
 	//#region StartPage
-	todosOfDays: Array<Todo[]> = [[], [], [], [], [], [], []];
-	appointmentsOfDays: Array<Appointment[]> = [[], [], [], [], [], [], []];
+	startDaysDates: number[] = [];
+	startDaysAppointments: Appointment[][] = [];
+	startDaysTodos: Todo[][] = [];
 	//#endregion
 
 	//#region TodosPage
@@ -67,6 +68,10 @@ export class DataService{
 		});
 
 		this.user = new DavUser(async () => {
+			this.startDaysDates = [];
+			this.startDaysAppointments = [];
+			this.startDaysTodos = [];
+
 			await this.LoadAllAppointments();
 			await this.LoadAllTodos();
       });
@@ -80,7 +85,6 @@ export class DataService{
 	}
 
 	async LoadAllAppointments(){
-		this.appointmentsOfDays = [[], [], [], [], [], [], []];
 		this.appointmentDays = [];
 		this.allAppointments = [];
 		this.ClearCalendarDaysAppointments();
@@ -95,7 +99,6 @@ export class DataService{
 	}
 
 	async LoadAllTodos(){
-		this.todosOfDays = [[], [], [], [], [], [], []];
 		this.todoDaysWithoutDate.todos = [];
 		this.todoDays = [];
 		this.todosWithoutGroup = [];
@@ -197,103 +200,120 @@ export class DataService{
 
 	//#region StartPage
 	AddAppointmentToStartPage(appointment: Appointment){
-		var dayIndex = this.GetDayIndexByTimestamp(appointment.start);
-		if(dayIndex == -1) return;
-
-		var index = this.appointmentsOfDays[dayIndex].findIndex(a => a.uuid == appointment.uuid);
+		// Check if the day of the appointment is already in the array
+		let index = this.startDaysDates.findIndex(d => moment.unix(d).isSame(moment.unix(appointment.start), 'day'));
 
 		if(index !== -1){
-			// Replace the appointment
-			this.appointmentsOfDays[dayIndex][index] = appointment;
+			// Check if the appointment is already in the appointments array of the day
+			let i = this.startDaysAppointments[index].findIndex(a => a.uuid == appointment.uuid);
+
+			if(i !== -1){
+				// Replace the appointment
+				this.startDaysAppointments[index][i] = appointment;
+			}else{
+				// Add the appointment
+				this.startDaysAppointments[index].push(appointment);
+			}
+
+			this.SortAppointmentsArray(this.startDaysAppointments[index]);
 		}else{
-			// Add the appointment
-			this.appointmentsOfDays[dayIndex].push(appointment);
-		}
+			// Create a new day
+			this.startDaysDates.push(moment.unix(appointment.start).startOf('day').unix());
+			this.startDaysAppointments.push([appointment]);
+			this.startDaysTodos.push([]);
 
-		this.appointmentsOfDays.forEach(appointments => {
-			appointments.sort((a: Appointment, b: Appointment) => {
-				if(a.allday) return 1;
-				if(b.allday) return -1;
+			// Sort the arrays
+			for(let j = 0; j < this.startDaysDates.length; j++){
+				for(let i = 1; i < this.startDaysDates.length; i++){
+					if(this.startDaysDates[i - 1] > this.startDaysDates[i]){
+						// Swap the dates
+						let firstDate = this.startDaysDates[i - 1];
+						let secondDate = this.startDaysDates[i];
+						this.startDaysDates[i - 1] = secondDate;
+						this.startDaysDates[i] = firstDate;
 
-				if(a.start < b.start){
-					return -1;
-				}else if(a.start > b.start){
-					return 1;
+						let firstAppointments = this.startDaysAppointments[i - 1];
+						let secondAppointments = this.startDaysAppointments[i];
+						this.startDaysAppointments[i - 1] = secondAppointments;
+						this.startDaysAppointments[i] = firstAppointments;
+
+						let firstTodos = this.startDaysTodos[i - 1];
+						let secondTodos = this.startDaysTodos[i];
+						this.startDaysTodos[i - 1] = secondTodos;
+						this.startDaysTodos[i] = firstTodos;
+					}
 				}
-				return 0;
-			});
-		});
+			}
+		}
 	}
 
 	RemoveAppointmentFromStartPage(appointment: Appointment){
 		// Remove the appointment from all arrays
-		this.appointmentsOfDays.forEach((appointmentArray: Appointment[]) => {
-			let index = appointmentArray.findIndex(a => a.uuid == appointment.uuid);
+		this.startDaysAppointments.forEach((appointmentsArray: Appointment[]) => {
+			let index = appointmentsArray.findIndex(a => a.uuid == appointment.uuid);
 
 			if(index !== -1){
-				appointmentArray.splice(index, 1);
+				appointmentsArray.splice(index, 1);
 			}
 		});
 	}
 
 	AddTodoToStartPage(todo: Todo){
-		var dayIndex = this.GetDayIndexByTimestamp(todo.time);
+		// Check if the day of the todo is already in the array
+		let index = this.startDaysDates.findIndex(t => moment.unix(t).isSame(moment.unix(todo.time), 'day'));
 
-		if(dayIndex != -1){
-			var index = this.todosOfDays[dayIndex].findIndex(t => t.uuid == todo.uuid);
+		if(index !== -1){
+			// Check if the todo is already in the todos array of the day
+			let i = this.startDaysTodos[index].findIndex(t => t.uuid == todo.uuid);
 
-			if(index !== -1){
+			if(i !== -1){
 				// Replace the todo
-				this.todosOfDays[dayIndex][index] = todo;
+				this.startDaysTodos[index][i] = todo;
 			}else{
 				// Add the todo
-				this.todosOfDays[dayIndex].push(todo);
+				this.startDaysTodos[index].push(todo);
 			}
-		}else if(dayIndex == -1){
-			// Add the todo to the first array
-			this.todosOfDays[0].push(todo);
+
+			this.SortTodosArray(this.startDaysTodos[index]);
+		}else{
+			// Create a new day
+			this.startDaysDates.push(moment.unix(todo.time).startOf('day').unix());
+			this.startDaysAppointments.push([]);
+			this.startDaysTodos.push([todo]);
+
+			// Sort the arrays
+			for(let j = 0; j < this.startDaysDates.length; j++){
+				for(let i = 1; i < this.startDaysDates.length; i++){
+					if(this.startDaysDates[i - 1] > this.startDaysDates[i]){
+						// Swap the dates
+						let firstDate = this.startDaysDates[i - 1];
+						let secondDate = this.startDaysDates[i];
+						this.startDaysDates[i - 1] = secondDate;
+						this.startDaysDates[i] = firstDate;
+
+						let firstAppointments = this.startDaysAppointments[i - 1];
+						let secondAppointments = this.startDaysAppointments[i];
+						this.startDaysAppointments[i - 1] = secondAppointments;
+						this.startDaysAppointments[i] = firstAppointments;
+
+						let firstTodos = this.startDaysTodos[i - 1];
+						let secondTodos = this.startDaysTodos[i];
+						this.startDaysTodos[i - 1] = secondTodos;
+						this.startDaysTodos[i] = firstTodos;
+					}
+				}
+			}
 		}
 	}
 
 	RemoveTodoFromStartPage(todo: Todo){
 		// Remove the todo from all arrays
-		this.todosOfDays.forEach((todoArray: Todo[]) => {
-			let index = todoArray.findIndex(t => t.uuid === todo.uuid);
+		this.startDaysTodos.forEach((todosArray: Todo[]) => {
+			let index = todosArray.findIndex(t => t.uuid == todo.uuid);
 
 			if(index !== -1){
-				todoArray.splice(index, 1);
+				todosArray.splice(index, 1);
 			}
-		});
-	}
-
-	GetDayIndexByTimestamp(timestamp: number): number{
-		var index = -1;
-		for (var i of [0,1,2,3,4,5,6]) {
-			if(moment.unix(timestamp).isSame(this.GetDateOfDay(i), 'day')){
-				index = i;
-				break;
-			}
-		}
-		return index;
-	}
-
-	GetWeekDay(index: number): string{
-      moment.locale('en');
-      return this.GetDateOfDay(index).format('dddd');
-   }
-
-   GetDate(index: number): string{
-      moment.locale('en');
-      return this.GetDateOfDay(index).format('D. MMMM YYYY');
-   }
-
-   GetDateOfDay(index: number){
-      return moment().add(index, 'days');
-	}
-
-	GetUncompletedTodosOfDay(index: number): Todo[]{
-		return this.todosOfDays[index].filter((todo: Todo) => {
-			return !todo.completed;
 		});
 	}
 	//#endregion
