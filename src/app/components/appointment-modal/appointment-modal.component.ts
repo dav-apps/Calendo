@@ -2,10 +2,14 @@ import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular
 import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 declare var $: any;
 import { Appointment, CreateAppointment, GetAppointment, UpdateAppointment } from '../../models/Appointment';
+import { environment } from '../../../environments/environment';
 
 @Component({
    selector: "calendo-appointment-modal",
-   templateUrl: "./appointment-modal.component.html"
+	templateUrl: "./appointment-modal.component.html",
+	styleUrls: [
+		"./appointment-modal.component.scss"
+	]
 })
 export class AppointmentModalComponent{
 	@Output() save = new EventEmitter();
@@ -17,6 +21,8 @@ export class AppointmentModalComponent{
    appointmentEndTime;
 	new: boolean = true;
 	appointmentUuid: string;
+	availableColors: string[] = ["D32F2F", "d67724", "FFD600", "388E3C", "43A047", "00B0FF", "1565C0", "283593", "7B1FA2", "757575", "000000"];
+	selectedColor: number = 6;
 
    constructor(private modalService: NgbModal){}
 
@@ -28,13 +34,19 @@ export class AppointmentModalComponent{
 			this.appointmentUuid = appointment.uuid;
 
          var startDate = new Date(appointment.start*1000);
-         var endDate = new Date(appointment.end*1000);
+			var endDate = new Date(appointment.end*1000);
 
          this.appointmentDate = { year: startDate.getFullYear(), month: startDate.getMonth() + 1, day: startDate.getDate() };
          this.appointmentName = appointment.name;
          this.appointmentAllDayCheckboxChecked = appointment.allday;
          this.appointmentStartTime = { hour: startDate.getHours(), minute: startDate.getMinutes() };
-         this.appointmentEndTime = { hour: endDate.getHours(), minute: endDate.getMinutes() };
+			this.appointmentEndTime = { hour: endDate.getHours(), minute: endDate.getMinutes() };
+			if(appointment.color){
+				let colorIndex = this.availableColors.findIndex(c => c == appointment.color);
+				if(colorIndex !== -1){
+					this.selectedColor = colorIndex;
+				}
+			}
       }else{
          // New appointment
          this.ResetNewObjects(date);
@@ -53,9 +65,11 @@ export class AppointmentModalComponent{
 									this.appointmentEndTime.minute, 0, 0);
 			var endUnix = Math.floor(end.getTime() / 1000);
 
+			var color = this.availableColors[this.selectedColor];
+
 			if(this.new){
 				// Create the new appointment
-				var appointment = new Appointment("", this.appointmentName, startUnix, endUnix, this.appointmentAllDayCheckboxChecked);
+				var appointment = new Appointment("", this.appointmentName, startUnix, endUnix, this.appointmentAllDayCheckboxChecked, color);
 				appointment.uuid = await CreateAppointment(appointment);
 
 				this.save.emit(appointment);
@@ -66,6 +80,7 @@ export class AppointmentModalComponent{
 				appointment.start = startUnix;
 				appointment.end = endUnix;
 				appointment.allday = this.appointmentAllDayCheckboxChecked;
+				appointment.color = color;
 				UpdateAppointment(appointment);
 
 				this.save.emit(appointment);

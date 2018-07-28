@@ -21,7 +21,19 @@
          <label for="appointmentEndTime" class="col-form-label mt-3">End time</label>
          <ngb-timepicker id="appointment-end-time" [disabled]="appointmentAllDayCheckboxChecked"
                         [(ngModel)]="appointmentEndTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
-      </div>
+		</div>
+		
+		<div class="mx-auto mt-2" style="width: 250px;">
+			<label>Color</label>
+
+			<div class="row mx-auto">
+				<div class="rounded-circle m-1 appointment-color" 
+						[style.background-color]="selectedColor == i ? 'white' : '#' + color" 
+						[style.border]="selectedColor == i ? '5px solid #' + color : ''"
+						(click)="selectedColor = i"
+						*ngFor="let color of availableColors; let i = index;"></div>
+			</div>
+		</div>
 
       <div class="mx-auto mt-4" style="width: 250px;">
          <label for="appointment-name" class="col-form-label">Name</label>

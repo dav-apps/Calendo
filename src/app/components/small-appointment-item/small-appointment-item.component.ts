@@ -4,6 +4,7 @@ import { AppointmentModalComponent } from '../../components/appointment-modal/ap
 import { DeleteAppointmentModalComponent } from '../../components/delete-appointment-modal/delete-appointment-modal.component';
 import { Appointment } from '../../models/Appointment';
 import { DataService } from '../../services/data-service';
+import { environment } from '../../../environments/environment';
 
 @Component({
    selector: "calendo-small-appointment-item",
@@ -13,13 +14,14 @@ import { DataService } from '../../services/data-service';
    ]
 })
 export class SmallAppointmentItemComponent{
-   @Input() appointment: Appointment = new Appointment("", "", 0, 0, false);
+   @Input() appointment: Appointment = new Appointment("", "", 0, 0, false, environment.appointmentDefaultColor);
    @Input() enableDropdown: boolean = true;
    @Input() compact: boolean = false;
    @ViewChild(AppointmentModalComponent)
    private newAppointmentModalComponent: AppointmentModalComponent;
    @ViewChild(DeleteAppointmentModalComponent)
    private deleteAppointmentModalComponent: DeleteAppointmentModalComponent;
+   defaultColor: string = environment.appointmentDefaultColor;
 
    constructor(private dataService: DataService){}
 

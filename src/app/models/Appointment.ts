@@ -6,7 +6,8 @@ export class Appointment{
                public name: string, 
                public start: number, 
                public end: number, 
-					public allday: boolean){}
+					public allday: boolean,
+					public color: string){}
 	
 	async Delete(){
 		var tableObject = await GetTableObject(this.uuid);
@@ -52,7 +53,8 @@ export async function CreateAppointment(appointment: Appointment): Promise<strin
 		{ name: environment.appointmentNameKey, value: appointment.name },
 		{ name: environment.appointmentStartKey, value: appointment.start.toString() },
 		{ name: environment.appointmentEndKey, value: appointment.end.toString() },
-		{ name: environment.appointmentAllDayKey, value: appointment.allday.toString() }
+		{ name: environment.appointmentAllDayKey, value: appointment.allday.toString() },
+		{ name: environment.appointmentColorKey, value: appointment.color }
 	]);
 
    return tableObject.Uuid;
@@ -66,7 +68,8 @@ export async function UpdateAppointment(appointment: Appointment){
 			{ name: environment.appointmentNameKey, value: appointment.name },
 			{ name: environment.appointmentStartKey, value: appointment.start.toString() },
 			{ name: environment.appointmentEndKey, value: appointment.end.toString() },
-			{ name: environment.appointmentAllDayKey, value: appointment.allday.toString() }
+			{ name: environment.appointmentAllDayKey, value: appointment.allday.toString() },
+			{ name: environment.appointmentColorKey, value: appointment.color }
 		]);
 	}
 }
@@ -89,9 +92,16 @@ export function ConvertTableObjectToAppointment(tableObject: TableObject): Appoi
 		appointmentEnd = Number.parseInt(tableObjectAppointmentEnd);
 	}
 
+	var color: string = environment.appointmentDefaultColor;
+	var tableObjectAppointmentColor = tableObject.GetPropertyValue(environment.appointmentColorKey);
+	if(tableObjectAppointmentColor){
+		color = tableObjectAppointmentColor;
+	}
+
 	return new Appointment(tableObject.Uuid, 
 									tableObject.GetPropertyValue(environment.appointmentNameKey),
 									appointmentStart,
 									appointmentEnd,
-									appointmentAllDay);
+									appointmentAllDay,
+									color);
 }

@@ -18,6 +18,8 @@ export const environment = {
 	appointmentStartKey: "start",
 	appointmentEndKey: "end",
 	appointmentAllDayKey: "allday",
+	appointmentColorKey: "color",
+	appointmentDefaultColor: "1565C0",
 	settingsSortTodosByDateKey: "settings-sortTodosByDate",
 	settingsShowOldAppointments: "settings-showOldAppointments",
 	visitKey: "visit"
