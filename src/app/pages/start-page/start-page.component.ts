@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 import fontawesome from '@fortawesome/fontawesome';
 import solid from '@fortawesome/fontawesome-free-solid';
@@ -24,7 +25,8 @@ export class StartPageComponent{
 	largeDateFormat: string = "dddd";
 	smallDateFormat: string = "D. MMMM YYYY";
 
-	constructor(private dataService: DataService){
+	constructor(private dataService: DataService,
+					private router: Router){
 		fontawesome.library.add(solid);
 	}
 
@@ -42,16 +44,12 @@ export class StartPageComponent{
 		}
 	}
 
-	CreateTodo(todo){
-		this.dataService.AddTodo(todo);
-	}
-
-	CreateAppointment(appointment){
-		this.dataService.AddAppointment(appointment);
-	}
-
 	public async DeleteTodo(todo: Todo){
 		this.dataService.RemoveTodo(todo);
+	}
+
+	ShowCalendarDay(date: number){
+		this.router.navigate(['/calendar/day', date]);
 	}
 
 	GetLargeDate(date: number): string{

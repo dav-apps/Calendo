@@ -16,7 +16,7 @@
    </div>
 </div>
 
-<div class="px-1 rounded cursor d-inline-flex" style="background-color: #1565C0; font-size: 15px; color: white;" *ngIf="!enableDropdown">
+<div class="px-1 rounded d-inline-flex" style="background-color: #1565C0; font-size: 15px; color: white;" *ngIf="!enableDropdown">
    <span *ngIf="!compact">
       {{ appointment.name }}<br>
       <span *ngIf="!appointment.allday">{{ getTimeSpan() }}</span>

@@ -52,4 +52,8 @@ export class CalendarDayPageComponent{
    CreateTodo(todo: Todo){
       this.dataService.AddTodo(todo);
    }
+
+   DeleteTodo(todo: Todo){
+      this.dataService.RemoveTodo(todo);
+   }
 }

@@ -17,7 +17,8 @@
          <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="showNewTodoModal()"><i class="fas fa-plus"></i></button>
       </h2>
       <p class="font-weight-light" style="font-size: 18px" *ngIf="dataService.selectedDayTodos.length == 0">No Todos</p>
-      <calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.selectedDayTodos"></calendo-todo-item>
+      
+      <calendo-small-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.selectedDayTodos"></calendo-small-todo-item>
    </div>
 
    <calendo-appointment-modal (save)="CreateAppointment($event)"></calendo-appointment-modal>

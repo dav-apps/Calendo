@@ -24,7 +24,7 @@ export class TodosPageComponent{
 		this.dataService.AddTodo(todo);
 	}
 
-	async DeleteTodo(todo: Todo){
+	DeleteTodo(todo: Todo){
 		this.dataService.RemoveTodo(todo);
 	}
 
