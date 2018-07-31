@@ -1,7 +1,8 @@
 <div class="container-fluid" 
 		(window:resize)="onResize()"
 		style="overflow: scroll;" 
-		[style.height.px]="startContainerHeight">
+		[style.height.px]="startContainerHeight"
+		[style.width.px]="startContainerWidth">
 
 	<div class="row mt-4" *ngFor="let date of dataService.startDaysDates; let i = index;">
 		<div class="col-3">

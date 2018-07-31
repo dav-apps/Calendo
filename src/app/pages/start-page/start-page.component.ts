@@ -22,6 +22,7 @@ export class StartPageComponent{
 	@ViewChild(AppointmentModalComponent)
 	private newAppointmentModalComponent: AppointmentModalComponent;
 	startContainerHeight: number = 700;
+	startContainerWidth: number = 700;
 	largeDateFormat: string = "dddd";
 	smallDateFormat: string = "D. MMMM YYYY";
 
@@ -65,6 +66,7 @@ export class StartPageComponent{
 	}
 
 	setSize(){
+		this.startContainerWidth = window.innerWidth;
 		this.startContainerHeight = window.innerHeight 
 											- $("#calendo-navbar").height()
 											- 16;
