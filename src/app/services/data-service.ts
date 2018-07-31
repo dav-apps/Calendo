@@ -12,7 +12,8 @@ import * as bowser from "bowser";
 export class DataService{
 
 	user: DavUser;
-	locale: string = "de";
+	//locale: string = navigator.language;
+	locale: string = "de-CH"
 
 	//#region StartPage
 	startDaysDates: number[] = [];
@@ -201,12 +202,20 @@ export class DataService{
 	}
 
 	GetLocale(){
-		switch (this.locale) {
-			case "de":
-				return locales.de;
-			default:		// en
-				return locales.en;
+		let l = this.locale.toLowerCase();
+
+		if(l.includes("en")){			// en
+			if(l == "en-gb") 				return locales.enGB;
+			else if(l == "en-nz")		return locales.enNZ;
+			else if(l == "en-il")		return locales.enIL;
+			else 								return locales.enUS;
+		}if(l.includes("de")){			// de
+			if(l == "de-at") 				return locales.deAT;
+			else if(l == "de-ch") 		return locales.deCH;
+			else 								return locales.deDE;
 		}
+
+		return locales.enUS;
 	}
 
 	//#region StartPage

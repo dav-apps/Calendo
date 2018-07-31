@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DataService } from '../../services/data-service';
 import { environment } from '../../../environments/environment';
-import { en } from "../../../locales/locales";
+import { enUS } from "../../../locales/locales";
 declare var $: any;
 
 @Component({
@@ -12,7 +12,7 @@ declare var $: any;
    ]
 })
 export class SettingsPageComponent{
-   locale = en.settingsPage;
+   locale = enUS.settingsPage;
    sortTodoByDateSelected: boolean = false;
    version: string = environment.version;
 

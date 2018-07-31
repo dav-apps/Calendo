@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { DataService } from '../../services/data-service';
 import { AppointmentModalComponent } from '../../components/appointment-modal/appointment-modal.component';
 import { Appointment } from '../../models/Appointment';
-import { en } from '../../../locales/locales';
+import { enUS } from '../../../locales/locales';
 
 @Component({
    selector: "calendo-appointments-page",
@@ -12,7 +12,7 @@ import { en } from '../../../locales/locales';
    ]
 })
 export class AppointmentsPageComponent{
-   locale = en.appointmentsPage;
+   locale = enUS.appointmentsPage;
    @ViewChild(AppointmentModalComponent)
    private newAppointmentModalComponent: AppointmentModalComponent;
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import * as Dav from 'dav-npm';
 import { environment } from '../environments/environment';
-import { en } from '../locales/locales';
+import { enUS } from '../locales/locales';
 import { DataService } from './services/data-service';
 import { ConvertTableObjectToAppointment } from './models/Appointment';
 import { ConvertTableObjectToTodo } from './models/Todo';
@@ -14,7 +14,7 @@ import { ConvertTableObjectToTodo } from './models/Todo';
 	]
 })
 export class AppComponent {
-	locale = en.navbar;
+	locale = enUS.navbar;
 	isCollapsed = false;
 	isWindowSmall = false;
 	smallWindowMaxSize: number = 768;

@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Todo } from '../../models/Todo';
 import { DataService } from '../../services/data-service';
 import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-modal.component';
-import { en } from '../../../locales/locales';
+import { enUS } from '../../../locales/locales';
 
 @Component({
    selector: "calendo-todos-page",
@@ -12,7 +12,7 @@ import { en } from '../../../locales/locales';
    ]
 })
 export class TodosPageComponent{
-	locale = en.todosPage;
+	locale = enUS.todosPage;
 	@ViewChild(NewTodoModalComponent)
 	private newTodoModalComponent: NewTodoModalComponent;
 

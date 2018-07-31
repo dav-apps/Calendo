@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import * as Dav from 'dav-npm';
 import { environment } from '../../../environments/environment';
-import { en } from '../../../locales/locales';
+import { enUS } from '../../../locales/locales';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data-service';
 
@@ -13,7 +13,7 @@ import { DataService } from '../../services/data-service';
    ]
 })
 export class UserMenuComponent{
-   locale = en.userMenu;
+   locale = enUS.userMenu;
 
    constructor(private activatedRoute: ActivatedRoute,
                public dataService: DataService){

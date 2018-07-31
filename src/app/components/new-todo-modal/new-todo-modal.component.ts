@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular
 import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 declare var $: any;
 import { Todo, CreateTodo, GetAllTodoGroups } from '../../models/Todo';
-import { en } from '../../../locales/locales';
+import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
 
 @Component({
@@ -13,7 +13,7 @@ import { DataService } from '../../services/data-service';
    ]
 })
 export class NewTodoModalComponent{
-   locale = en.newTodoModal;
+   locale = enUS.newTodoModal;
    @Output() save = new EventEmitter();
    @ViewChild('createTodoModal') todoModal: ElementRef;
    newTodoDate: NgbDateStruct;

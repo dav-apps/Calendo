@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { Appointment } from '../../models/Appointment';
-import { en } from '../../../locales/locales';
+import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
 
 @Component({
@@ -10,7 +10,7 @@ import { DataService } from '../../services/data-service';
    templateUrl: "./delete-appointment-modal.component.html"
 })
 export class DeleteAppointmentModalComponent{
-   locale = en.deleteAppointmentModal;
+   locale = enUS.deleteAppointmentModal;
    @Input() appointment: Appointment;
    @Output() remove = new EventEmitter();
    @ViewChild('deleteAppointmentModal') appointmentModal: ElementRef;

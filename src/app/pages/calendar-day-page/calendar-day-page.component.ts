@@ -6,14 +6,14 @@ import { AppointmentModalComponent } from '../../components/appointment-modal/ap
 import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-modal.component';
 import { Appointment } from '../../models/Appointment';
 import { Todo } from '../../models/Todo';
-import { en } from '../../../locales/locales';
+import { enUS } from '../../../locales/locales';
 
 @Component({
    selector: "calendo-calendar-day-page",
    templateUrl: "./calendar-day-page.component.html"
 })
 export class CalendarDayPageComponent{
-   locale = en.calendarDayPage;
+   locale = enUS.calendarDayPage;
    @ViewChild(AppointmentModalComponent)
    private newAppointmentModalComponent: AppointmentModalComponent;
    @ViewChild(NewTodoModalComponent)
@@ -23,6 +23,7 @@ export class CalendarDayPageComponent{
    constructor(public dataService: DataService,
                private route: ActivatedRoute){
       this.locale = this.dataService.GetLocale().calendarDayPage;
+      moment.locale(this.dataService.locale);
    }
 
    ngOnInit(){
@@ -38,7 +39,7 @@ export class CalendarDayPageComponent{
    }
 
    getCurrentDate(){
-      return this.date.format("dddd, MMMM D YYYY")
+      return this.date.format(this.locale.formats.currentDay);
    }
 
    showNewTodoModal(){

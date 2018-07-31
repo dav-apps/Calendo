@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular
 import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 declare var $: any;
 import { Appointment, CreateAppointment, GetAppointment, UpdateAppointment } from '../../models/Appointment';
-import { en } from '../../../locales/locales';
+import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
 
 @Component({
@@ -13,7 +13,7 @@ import { DataService } from '../../services/data-service';
 	]
 })
 export class AppointmentModalComponent{
-	locale = en.appointmentModal;
+	locale = enUS.appointmentModal;
 	@Output() save = new EventEmitter();
    @ViewChild('appointmentModal') appointmentModal: ElementRef;
    appointmentDate: NgbDateStruct;
