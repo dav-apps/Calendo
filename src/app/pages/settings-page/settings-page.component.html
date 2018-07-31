@@ -1,16 +1,16 @@
 <div class="container">
-   <h1 class="text-center">Settings</h1>
+   <h1 class="text-center">{{ locale.header }}</h1>
 
    <div class="form-group" style="font-size: 18px; width: 150px">
-      <label for="sort-todos-select">Sort todos by</label>
+      <label for="sort-todos-select">{{ locale.sortTodosBy }}</label>
       <select class="form-control" id="sort-todos-select2" (change)="onSortTodosSelectChanged($event.target.value)">
-         <option value="0" [selected]="sortTodoByDateSelected">Date</option>
-         <option value="1" [selected]="!sortTodoByDateSelected">Group</option>
+         <option value="0" [selected]="sortTodoByDateSelected">{{ locale.sortTodosByDate }}</option>
+         <option value="1" [selected]="!sortTodoByDateSelected">{{ locale.sortTodosByGroup }}</option>
       </select>
    </div>
 
    <p style="font-size: 18px" class="mt-4">
-      <input type="checkbox" id="show-old-appointments-checkbox"><label for="show-old-appointments-checkbox" class="ml-3">Show old appointments</label>
+      <input type="checkbox" id="show-old-appointments-checkbox"><label for="show-old-appointments-checkbox" class="ml-3">{{ locale.showOldAppointments }}</label>
    </p>
 
    <!-- App information -->

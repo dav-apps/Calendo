@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DataService } from '../../services/data-service';
 import { environment } from '../../../environments/environment';
+import { en } from "../../../locales/locales";
 declare var $: any;
 
 @Component({
@@ -13,8 +14,11 @@ declare var $: any;
 export class SettingsPageComponent{
    sortTodoByDateSelected: boolean = false;
    version: string = environment.version;
+   locale = en.settingsPage;
 
-   constructor(public dataService: DataService){}
+   constructor(public dataService: DataService){
+      this.locale = this.dataService.GetLocale().settingsPage;
+   }
 
    async ngOnInit(){
       this.sortTodoByDateSelected = await this.dataService.GetSortTodosByDate();

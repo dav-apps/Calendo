@@ -5,12 +5,14 @@ import { DavUser } from "dav-npm";
 import * as moment from 'moment';
 import * as localforage from "localforage";
 import { environment } from "../../environments/environment.prod";
+import * as locales from "../../locales/locales";
 import * as bowser from "bowser";
 
 @Injectable()
 export class DataService{
 
 	user: DavUser;
+	locale: string = "en";
 
 	//#region StartPage
 	startDaysDates: number[] = [];
@@ -196,6 +198,15 @@ export class DataService{
 				return 0;
 			}
 		});
+	}
+
+	GetLocale(){
+		switch (this.locale) {
+			case "de":
+				return locales.de;
+			default:		// en
+				return locales.en;
+		}
 	}
 
 	//#region StartPage
