@@ -2,6 +2,8 @@ import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular
 import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 declare var $: any;
 import { Todo, CreateTodo, GetAllTodoGroups } from '../../models/Todo';
+import { en } from '../../../locales/locales';
+import { DataService } from '../../services/data-service';
 
 @Component({
    selector: "calendo-new-todo-modal",
@@ -11,6 +13,7 @@ import { Todo, CreateTodo, GetAllTodoGroups } from '../../models/Todo';
    ]
 })
 export class NewTodoModalComponent{
+   locale = en.newTodoModal;
    @Output() save = new EventEmitter();
    @ViewChild('createTodoModal') todoModal: ElementRef;
    newTodoDate: NgbDateStruct;
@@ -20,7 +23,10 @@ export class NewTodoModalComponent{
    todoGroups: string[] = [];
    allGroups: string[] = [];
 
-   constructor(private modalService: NgbModal){}
+   constructor(private modalService: NgbModal,
+               private dataService: DataService){
+      this.locale = this.dataService.GetLocale().newTodoModal;
+   }
 
    ngOnInit(){}
 

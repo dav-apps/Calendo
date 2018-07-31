@@ -1,10 +1,10 @@
 <div class="container">
    <h1 class="text-center mt-1" ngbDropdown placement="bottom-right">
-      Appointments
+      {{ locale.header }}
       <button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
       <div ngbDropdownMenu>
-         <button class="dropdown-item" (click)="ShowOrHideOldAppointments()">{{ dataService.showOldAppointments ? 'Hide old appointments' : 'Show old appointments' }}</button>
-         <button class="dropdown-item" (click)="ShowNewAppointmentModal()">New appointment</button>
+         <button class="dropdown-item" (click)="ShowOrHideOldAppointments()">{{ dataService.showOldAppointments ? locale.hideOldAppointments : locale.showOldAppointments }}</button>
+         <button class="dropdown-item" (click)="ShowNewAppointmentModal()">{{ locale.newAppointment }}</button>
       </div>
    </h1>
    

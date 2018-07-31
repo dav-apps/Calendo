@@ -12,9 +12,9 @@ declare var $: any;
    ]
 })
 export class SettingsPageComponent{
+   locale = en.settingsPage;
    sortTodoByDateSelected: boolean = false;
    version: string = environment.version;
-   locale = en.settingsPage;
 
    constructor(public dataService: DataService){
       this.locale = this.dataService.GetLocale().settingsPage;

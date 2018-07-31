@@ -2,7 +2,8 @@ import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular
 import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 declare var $: any;
 import { Appointment, CreateAppointment, GetAppointment, UpdateAppointment } from '../../models/Appointment';
-import { environment } from '../../../environments/environment';
+import { en } from '../../../locales/locales';
+import { DataService } from '../../services/data-service';
 
 @Component({
    selector: "calendo-appointment-modal",
@@ -12,6 +13,7 @@ import { environment } from '../../../environments/environment';
 	]
 })
 export class AppointmentModalComponent{
+	locale = en.appointmentModal;
 	@Output() save = new EventEmitter();
    @ViewChild('appointmentModal') appointmentModal: ElementRef;
    appointmentDate: NgbDateStruct;
@@ -24,7 +26,10 @@ export class AppointmentModalComponent{
 	availableColors: string[] = ["D32F2F", "d67724", "FFD600", "388E3C", "43A047", "00B0FF", "1565C0", "283593", "7B1FA2", "757575", "000000"];
 	selectedColor: number = 6;
 
-   constructor(private modalService: NgbModal){}
+	constructor(private modalService: NgbModal,
+					private dataService: DataService){
+		this.locale = this.dataService.GetLocale().appointmentModal;
+	}
 
    Show(appointment?: Appointment, date?: number){
       if(appointment){

@@ -5,6 +5,7 @@ import { DeleteAppointmentModalComponent } from '../../components/delete-appoint
 import { Appointment } from '../../models/Appointment';
 import { DataService } from '../../services/data-service';
 import { environment } from '../../../environments/environment';
+import { en } from '../../../locales/locales';
 
 @Component({
    selector: "calendo-small-appointment-item",
@@ -14,6 +15,7 @@ import { environment } from '../../../environments/environment';
    ]
 })
 export class SmallAppointmentItemComponent{
+   locale = en.smallAppointmentItem;
    @Input() appointment: Appointment = new Appointment("", "", 0, 0, false, environment.appointmentDefaultColor);
    @Input() enableDropdown: boolean = true;
    @Input() compact: boolean = false;
@@ -23,7 +25,9 @@ export class SmallAppointmentItemComponent{
    private deleteAppointmentModalComponent: DeleteAppointmentModalComponent;
    defaultColor: string = environment.appointmentDefaultColor;
 
-   constructor(private dataService: DataService){}
+   constructor(private dataService: DataService){
+      this.locale = this.dataService.GetLocale().smallAppointmentItem;
+   }
 
    getTimeSpan(){
       return moment.unix(this.appointment.start).format("H:mm") + " - " + moment.unix(this.appointment.end).format("H:mm");

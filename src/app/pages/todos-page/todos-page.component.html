@@ -1,10 +1,10 @@
 <div class="container">
 	<h1 class="text-center mt-1" ngbDropdown placement="bottom-right">
-		Todos
+		{{ locale.header }}
 		<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
 		<div ngbDropdownMenu>
-			<button class="dropdown-item" (click)="SortByGroupOrDate()">{{ dataService.sortTodosByDate ? 'Sort by Group' : 'Sort by Date' }}</button>
-			<button class="dropdown-item" (click)="ShowNewTodoModal()">New Todo</button>
+			<button class="dropdown-item" (click)="SortByGroupOrDate()">{{ dataService.sortTodosByDate ? locale.sortByGroup : locale.sortByDate }}</button>
+			<button class="dropdown-item" (click)="ShowNewTodoModal()">{{ locale.newTodo }}</button>
 		</div>
 	</h1>
 

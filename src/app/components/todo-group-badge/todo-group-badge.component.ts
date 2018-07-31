@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-declare var $: any;
 
 @Component({
    selector: "calendo-todo-group-badge",

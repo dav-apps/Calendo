@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-declare var $: any;
 import * as Dav from 'dav-npm';
 import { environment } from '../environments/environment';
+import { en } from '../locales/locales';
 import { DataService } from './services/data-service';
 import { ConvertTableObjectToAppointment } from './models/Appointment';
 import { ConvertTableObjectToTodo } from './models/Todo';
@@ -14,12 +14,15 @@ import { ConvertTableObjectToTodo } from './models/Todo';
 	]
 })
 export class AppComponent {
+	locale = en.navbar;
 	isCollapsed = false;
 	isWindowSmall = false;
 	smallWindowMaxSize: number = 768;
 	windowWidth: number = 500;
 
-	constructor(private dataService: DataService){}
+	constructor(private dataService: DataService){
+		this.locale = this.dataService.GetLocale().navbar;
+	}
 
 	ngOnInit(){
 		this.setSize();

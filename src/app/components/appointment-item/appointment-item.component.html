@@ -11,8 +11,8 @@
       <span [ngClass]="appointment.allday ? '' : 'ml-5'">{{ appointment.name }}</span>
 		<button type="button" class="btn btn-light ml-auto py-0" id="appointment-item-menu-button" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
 		<div ngbDropdownMenu>
-			<button class="dropdown-item" (click)="Edit()">Edit</button>
-			<button class="dropdown-item" (click)="Delete()">Delete</button>
+			<button class="dropdown-item" (click)="Edit()">{{ locale.edit }}</button>
+			<button class="dropdown-item" (click)="Delete()">{{ locale.delete }}</button>
 		</div>
    </label>
 </li>

@@ -12,7 +12,7 @@ import * as bowser from "bowser";
 export class DataService{
 
 	user: DavUser;
-	locale: string = "en";
+	locale: string = "de";
 
 	//#region StartPage
 	startDaysDates: number[] = [];

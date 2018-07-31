@@ -1,12 +1,12 @@
 <ng-template #deleteAppointmentModal let-c="close" let-d="dismiss">
    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Delete appointment</h4>
+      <h4 class="modal-title" id="modal-basic-title">{{ locale.header }}</h4>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
          <span aria-hidden="true">&times;</span>
       </button>
    </div>
    <div class="modal-body">
-      <p>Are you sure you want to delete the following appointment?</p>
+      <p>{{ locale.deleteWarning }}</p>
       <div class="d-flex">
          <span *ngIf="!appointment.allday" class="mr-2">
             <span class="font-italic">{{ ConvertUnixTimestampToTime(appointment.start) }}</span>: 
@@ -15,6 +15,6 @@
       </div>
    </div>
    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="c()">Delete</button>
+      <button type="button" class="btn btn-outline-danger" (click)="c()">{{ locale.delete }}</button>
    </div>
 </ng-template>

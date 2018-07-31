@@ -3,20 +3,20 @@
 
    <div class="d-flex flex-column">
       <h2 class="mt-4 mb-3">
-         Appointments
+         {{ locale.appointments }}
          <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="showNewAppointmentModal()"><i class="fas fa-plus"></i></button>
       </h2>
 
-      <p class="font-weight-light" style="font-size: 18px" *ngIf="dataService.selectedDayAppointments.length == 0">No appointments</p>
+      <p class="font-weight-light" style="font-size: 18px" *ngIf="dataService.selectedDayAppointments.length == 0">{{ locale.noAppointments }}</p>
       <calendo-small-appointment-item class="d-inline-flex" [appointment]="appointment" *ngFor="let appointment of dataService.selectedDayAppointments"></calendo-small-appointment-item>
    </div>
    
    <div>
       <h2 class="mt-4 mb-3">
-         Todos
+         {{ locale.todos }}
          <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="showNewTodoModal()"><i class="fas fa-plus"></i></button>
       </h2>
-      <p class="font-weight-light" style="font-size: 18px" *ngIf="dataService.selectedDayTodos.length == 0">No Todos</p>
+      <p class="font-weight-light" style="font-size: 18px" *ngIf="dataService.selectedDayTodos.length == 0">{{ locale.noTodos }}</p>
       
       <calendo-small-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.selectedDayTodos"></calendo-small-todo-item>
    </div>

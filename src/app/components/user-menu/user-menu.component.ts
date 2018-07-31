@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import * as Dav from 'dav-npm';
 import { environment } from '../../../environments/environment';
-import { Router, ActivatedRoute } from '@angular/router';
+import { en } from '../../../locales/locales';
+import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data-service';
 
 @Component({
@@ -12,8 +13,13 @@ import { DataService } from '../../services/data-service';
    ]
 })
 export class UserMenuComponent{
+   locale = en.userMenu;
+
    constructor(private activatedRoute: ActivatedRoute,
                public dataService: DataService){
+
+      this.locale = this.dataService.GetLocale().userMenu;
+
       this.activatedRoute.queryParams.subscribe(async params => {
          if(params["jwt"]){
             // Login with the jwt

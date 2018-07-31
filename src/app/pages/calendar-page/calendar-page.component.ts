@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 declare var $: any;
 import { DataService } from '../../services/data-service';
+import { en } from '../../../locales/locales';
 
 @Component({
    selector: "calendo-calendar-page",
@@ -12,6 +13,7 @@ import { DataService } from '../../services/data-service';
    ]
 })
 export class CalendarPageComponent{
+	locale = en.calendarPage;
 	@ViewChild("calendarContainer", { read: ElementRef }) calendarContainer: ElementRef<any>;
 	@ViewChild("mobileCalendarContainer", {read: ElementRef}) mobileCalendarContainer: ElementRef<any>;
 	weekDayLabels: string[] = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
@@ -35,7 +37,9 @@ export class CalendarPageComponent{
 	currentWeekDays: string[] = ["1", "2", "3", "4", "5", "6", "7"];
 
 	constructor(private dataService: DataService,
-					private router: Router){}
+					private router: Router){
+		this.locale = this.dataService.GetLocale().calendarPage;
+	}
 
    async ngOnInit(){
 		await this.initialize();

@@ -6,12 +6,14 @@ import { AppointmentModalComponent } from '../../components/appointment-modal/ap
 import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-modal.component';
 import { Appointment } from '../../models/Appointment';
 import { Todo } from '../../models/Todo';
+import { en } from '../../../locales/locales';
 
 @Component({
    selector: "calendo-calendar-day-page",
    templateUrl: "./calendar-day-page.component.html"
 })
 export class CalendarDayPageComponent{
+   locale = en.calendarDayPage;
    @ViewChild(AppointmentModalComponent)
    private newAppointmentModalComponent: AppointmentModalComponent;
    @ViewChild(NewTodoModalComponent)
@@ -19,7 +21,9 @@ export class CalendarDayPageComponent{
    date: moment.Moment = moment();
 
    constructor(public dataService: DataService,
-               private route: ActivatedRoute){}
+               private route: ActivatedRoute){
+      this.locale = this.dataService.GetLocale().calendarDayPage;
+   }
 
    ngOnInit(){
       this.route.params.subscribe(param => {

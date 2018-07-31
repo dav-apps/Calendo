@@ -1,5 +1,5 @@
 <button type="button" class="btn btn-sm btn-light" (click)="ShowLoginPage()" *ngIf="!dataService.user.IsLoggedIn">
-   Login
+   {{ locale.login }}
 </button>
 
 <div ngbDropdown class="d-inline-block default-font" placement="bottom-right" *ngIf="dataService.user.IsLoggedIn">
@@ -9,7 +9,7 @@
    <div ngbDropdownMenu aria-labelledby="user-menu-dropdown">
       <p class="font-weight-light my-auto py-1" style="font-size: 17px; margin-left: 23px;">{{ dataService.user.Username }}</p>
       <div class="dropdown-divider"></div>
-      <button class="dropdown-item" routerLink="/settings">Settings</button>
-      <button class="dropdown-item" (click)="Logout()">Logout</button>
+      <button class="dropdown-item" routerLink="/settings">{{ locale.settings }}</button>
+      <button class="dropdown-item" (click)="Logout()">{{ locale.logout }}</button>
    </div>
 </div>

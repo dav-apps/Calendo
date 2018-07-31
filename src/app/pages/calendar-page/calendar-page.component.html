@@ -33,7 +33,7 @@
 				<span>{{ getDayOfDate(date) }}</span>
 
 				<!-- Render todos -->
-				<span class="badge badge-primary ml-1" *ngIf='dataService.desktopCalendarDaysTodos[i][j].length > 0'>{{ dataService.desktopCalendarDaysTodos[i][j].length }} Todo<span *ngIf="dataService.desktopCalendarDaysTodos[i][j].length > 1">s</span></span>
+				<span class="badge badge-primary ml-1" *ngIf='dataService.desktopCalendarDaysTodos[i][j].length > 0'>{{ dataService.desktopCalendarDaysTodos[i][j].length }} {{ locale.todo }}<span *ngIf="dataService.desktopCalendarDaysTodos[i][j].length > 1">{{ locale.s }}</span></span>
 
 				<!-- Render appointments -->
 				<div>
@@ -58,7 +58,7 @@
 
 			<!-- Render todos -->
 			<span class="badge badge-primary ml-2" *ngIf='dataService.mobileCalendarDaysTodos[i].length > 0'>
-				{{ dataService.mobileCalendarDaysTodos[i].length }} Todo<span *ngIf="dataService.mobileCalendarDaysTodos[i].length > 1">s</span>
+				{{ dataService.mobileCalendarDaysTodos[i].length }} {{ locale.todo }}<span *ngIf="dataService.mobileCalendarDaysTodos[i].length > 1">{{ locale.s }}</span>
 			</span>
 
 			<!-- Render appointments -->

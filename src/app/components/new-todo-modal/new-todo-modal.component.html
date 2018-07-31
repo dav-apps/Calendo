@@ -1,13 +1,13 @@
 <ng-template #createTodoModal let-c="close" let-d="dismiss">
 	<div class="modal-header">
-		<h4 class="modal-title">New Todo</h4>
+		<h4 class="modal-title">{{ locale.header }}</h4>
 		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
 	<div class="modal-body row">
 		<div class="mx-auto">
-			<p><input type="checkbox" id="new-todo-set-date-checkbox"><label for="new-todo-set-date-checkbox" class="ml-3">Set a Date</label></p>
+			<p><input type="checkbox" id="new-todo-set-date-checkbox"><label for="new-todo-set-date-checkbox" class="ml-3">{{ locale.setDate }}</label></p>
 			<ngb-datepicker #dp [(ngModel)]="newTodoDate" 
 								(navigate)="date = $event.next" 
 								[disabled]="!newTodoSetDateCheckboxChecked"></ngb-datepicker>
@@ -15,17 +15,17 @@
 
 		<div class="mx-auto mt-4 col-10 offset-1">
 			<div class="form-group">
-				<label for="new-group-name" class="col-form-label">Add a new group</label>
+				<label for="new-group-name" class="col-form-label">{{ locale.addNewGroup }}</label>
 
 				<div class="d-flex">
 					<button type="button" class="btn btn-outline-primary btn-sm" (click)="AddGroup(newGroupName)"><i class="fas fa-plus"></i></button>
 					<input id="new-group-name" class="form-control"
-							type="text" placeholder="Group name" [(ngModel)]="newGroupName" />
+							type="text" [placeholder]="locale.groupName" [(ngModel)]="newGroupName" />
 				</div>
 			</div>
 
 			<div class="form-group" ngbDropdown placement="bottom-left" *ngIf="allGroups.length > 0">
-				<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle>Add existing group</button>
+				<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle>{{ locale.addExistingGroup }}</button>
 				<div ngbDropdownMenu>
 					<button class="dropdown-item" (click)="AddGroup(groupName)" *ngFor="let groupName of allGroups">{{ groupName }}</button>
 				</div>
@@ -34,13 +34,13 @@
 			<calendo-todo-group-badge *ngFor="let todoGroup of todoGroups" [groupName]="todoGroup" [canRemove]="true" (remove)="RemoveGroup($event)"></calendo-todo-group-badge>
 
 			<div class="form-group">
-				<label for="new-todo-name" class="col-form-label">Name</label>
+				<label for="new-todo-name" class="col-form-label">{{ locale.name }}</label>
 				<input id="new-todo-name" class="form-control" 
-						type="text" placeholder="Todo name" [(ngModel)]="newTodoName" />
+						type="text" [placeholder]="locale.todoName" [(ngModel)]="newTodoName" />
 			</div>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-primary" [disabled]="newTodoName.length < 2" (click)="c()">Save</button>
+		<button type="button" class="btn btn-primary" [disabled]="newTodoName.length < 2" (click)="c()">{{ locale.save }}</button>
 	</div>
 </ng-template>

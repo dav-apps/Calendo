@@ -5,6 +5,7 @@ import { DeleteAppointmentModalComponent } from '../../components/delete-appoint
 import { Appointment } from '../../models/Appointment';
 import { DataService } from '../../services/data-service';
 import { environment } from '../../../environments/environment';
+import { en } from '../../../locales/locales';
 
 @Component({
    selector: "calendo-appointment-item",
@@ -14,6 +15,7 @@ import { environment } from '../../../environments/environment';
    ]
 })
 export class AppointmentItemComponent{
+   locale = en.appointmentItem;
    @Input() appointment: Appointment = new Appointment("", "", 0, 0, false, environment.appointmentDefaultColor);
    @Input() showCompleted: boolean = false;
    @ViewChild(AppointmentModalComponent)
@@ -21,7 +23,9 @@ export class AppointmentItemComponent{
    @ViewChild(DeleteAppointmentModalComponent)
    private deleteAppointmentModalComponent: DeleteAppointmentModalComponent;
 
-   constructor(public dataService: DataService){}
+   constructor(public dataService: DataService){
+      this.locale = this.dataService.GetLocale().appointmentItem;
+   }
 
    Edit(){
       this.newAppointmentModalComponent.Show(this.appointment);

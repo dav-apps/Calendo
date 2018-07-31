@@ -8,6 +8,7 @@ import { Todo } from '../../models/Todo';
 import { DataService } from '../../services/data-service';
 import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-modal.component';
 import { AppointmentModalComponent } from '../../components/appointment-modal/appointment-modal.component';
+import { en } from '../../../locales/locales';
 
 @Component({
    selector: "calendo-start-page",
@@ -17,6 +18,7 @@ import { AppointmentModalComponent } from '../../components/appointment-modal/ap
    ]
 })
 export class StartPageComponent{
+	locale = en.startPage;
 	@ViewChild(NewTodoModalComponent)
 	private newTodoModalComponent: NewTodoModalComponent;
 	@ViewChild(AppointmentModalComponent)
@@ -29,6 +31,7 @@ export class StartPageComponent{
 	constructor(private dataService: DataService,
 					private router: Router){
 		fontawesome.library.add(solid);
+		this.locale = this.dataService.GetLocale().startPage;
 	}
 
 	ngOnInit(){

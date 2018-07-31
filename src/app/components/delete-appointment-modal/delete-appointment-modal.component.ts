@@ -2,17 +2,23 @@ import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { Appointment } from '../../models/Appointment';
+import { en } from '../../../locales/locales';
+import { DataService } from '../../services/data-service';
 
 @Component({
    selector: "calendo-delete-appointment-modal",
    templateUrl: "./delete-appointment-modal.component.html"
 })
 export class DeleteAppointmentModalComponent{
+   locale = en.deleteAppointmentModal;
    @Input() appointment: Appointment;
    @Output() remove = new EventEmitter();
    @ViewChild('deleteAppointmentModal') appointmentModal: ElementRef;
 
-   constructor(private modalService: NgbModal){}
+   constructor(private modalService: NgbModal,
+               private dataService: DataService){
+      this.locale = this.dataService.GetLocale().deleteAppointmentModal;
+   }
 
    Show(){
       this.modalService.open(this.appointmentModal).result.then(async () => {
