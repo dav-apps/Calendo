@@ -12,8 +12,7 @@ import * as bowser from "bowser";
 export class DataService{
 
 	user: DavUser;
-	//locale: string = navigator.language;
-	locale: string = "de-CH"
+	locale: string = navigator.language;
 
 	//#region StartPage
 	startDaysDates: number[] = [];
@@ -208,6 +207,9 @@ export class DataService{
 			if(l == "en-gb") 				return locales.enGB;
 			else if(l == "en-nz")		return locales.enNZ;
 			else if(l == "en-il")		return locales.enIL;
+			else if(l == "en-ie")		return locales.enIE;
+			else if(l == "en-ca")		return locales.enCA;
+			else if(l == "en-au")		return locales.enAU;
 			else 								return locales.enUS;
 		}if(l.includes("de")){			// de
 			if(l == "de-at") 				return locales.deAT;

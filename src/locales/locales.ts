@@ -342,6 +342,264 @@ export const enIL = {
       showOldAppointments: "Show old appointments"
    }
 };
+
+export const enIE = {
+   navbar: {
+      start: "Start",
+      calendar: "Calendar",
+      todos: "Todos",
+      appointments: "Appointments"
+   },
+   userMenu: {
+      login: "Login",
+      logout: "Logout",
+      settings: "Settings"
+   },
+   newTodoModal: {
+      header: "New Todo",
+      setDate: "Set a date",
+      addNewGroup: "Add a new group",
+      groupName: "Group name",
+      addExistingGroup: "Add existing group",
+      name: "Name",
+      todoName: "Todo name",
+      save: "Save"
+   },
+   appointmentItem: {
+      edit: "Edit",
+      delete: "Delete"
+   },
+   smallAppointmentItem: {
+      edit: "Edit",
+      delete: "Delete"
+   },
+   appointmentModal: {
+      newAppointment: "New Appointment",
+      editAppointment: "Edit Appointment",
+      entireDay: "Entire Day",
+      start: "Start",
+      end: "End",
+      color: "Color",
+      name: "Name",
+      appointmentName: "Appointment name",
+      save: "Save"
+   },
+   deleteAppointmentModal: {
+      header: "Delete appointment",
+      deleteWarning: "Are you sure you want to delete the following appointment?",
+      delete: "Delete"
+   },
+   startPage: {
+      formats: {
+			smallDate: "D-M",
+			largeDate: "dddd"
+      }
+   },
+   todosPage: {
+      header: "Todos",
+      sortByGroup: "Sort by Group",
+      sortByDate: "Sort by Date",
+      newTodo: "New Todo"
+   },
+   appointmentsPage: {
+      header: "Appointments",
+      showOldAppointments: "Show old appointments",
+      hideOldAppointments: "Hide old appointments",
+      newAppointment: "New appointment"
+   },
+   calendarPage: {
+      todo: "Todo",
+      s: "s"
+   },
+   calendarDayPage: {
+      appointments: "Appointments",
+      todos: "Todos",
+      noAppointments: "No appointments",
+      noTodos: "No Todos",
+      formats: {
+         currentDay: "dddd D MMMM YYYY"
+      }
+   },
+   settingsPage: {
+      header: "Settings",
+      sortTodosBy: "Sort todos by",
+      sortTodosByDate: "Date",
+      sortTodosByGroup: "Group",
+      showOldAppointments: "Show old appointments"
+   }
+};
+
+export const enCA = {
+   navbar: {
+      start: "Start",
+      calendar: "Calendar",
+      todos: "Todos",
+      appointments: "Appointments"
+   },
+   userMenu: {
+      login: "Login",
+      logout: "Logout",
+      settings: "Settings"
+   },
+   newTodoModal: {
+      header: "New Todo",
+      setDate: "Set a date",
+      addNewGroup: "Add a new group",
+      groupName: "Group name",
+      addExistingGroup: "Add existing group",
+      name: "Name",
+      todoName: "Todo name",
+      save: "Save"
+   },
+   appointmentItem: {
+      edit: "Edit",
+      delete: "Delete"
+   },
+   smallAppointmentItem: {
+      edit: "Edit",
+      delete: "Delete"
+   },
+   appointmentModal: {
+      newAppointment: "New Appointment",
+      editAppointment: "Edit Appointment",
+      entireDay: "Entire Day",
+      start: "Start",
+      end: "End",
+      color: "Color",
+      name: "Name",
+      appointmentName: "Appointment name",
+      save: "Save"
+   },
+   deleteAppointmentModal: {
+      header: "Delete appointment",
+      deleteWarning: "Are you sure you want to delete the following appointment?",
+      delete: "Delete"
+   },
+   startPage: {
+      formats: {
+			smallDate: "M-D",
+			largeDate: "dddd"
+      }
+   },
+   todosPage: {
+      header: "Todos",
+      sortByGroup: "Sort by Group",
+      sortByDate: "Sort by Date",
+      newTodo: "New Todo"
+   },
+   appointmentsPage: {
+      header: "Appointments",
+      showOldAppointments: "Show old appointments",
+      hideOldAppointments: "Hide old appointments",
+      newAppointment: "New appointment"
+   },
+   calendarPage: {
+      todo: "Todo",
+      s: "s"
+   },
+   calendarDayPage: {
+      appointments: "Appointments",
+      todos: "Todos",
+      noAppointments: "No appointments",
+      noTodos: "No Todos",
+      formats: {
+         currentDay: "dddd, MMMM D, YYYY"
+      }
+   },
+   settingsPage: {
+      header: "Settings",
+      sortTodosBy: "Sort todos by",
+      sortTodosByDate: "Date",
+      sortTodosByGroup: "Group",
+      showOldAppointments: "Show old appointments"
+   }
+};
+
+export const enAU = {
+   navbar: {
+      start: "Start",
+      calendar: "Calendar",
+      todos: "Todos",
+      appointments: "Appointments"
+   },
+   userMenu: {
+      login: "Login",
+      logout: "Logout",
+      settings: "Settings"
+   },
+   newTodoModal: {
+      header: "New Todo",
+      setDate: "Set a date",
+      addNewGroup: "Add a new group",
+      groupName: "Group name",
+      addExistingGroup: "Add existing group",
+      name: "Name",
+      todoName: "Todo name",
+      save: "Save"
+   },
+   appointmentItem: {
+      edit: "Edit",
+      delete: "Delete"
+   },
+   smallAppointmentItem: {
+      edit: "Edit",
+      delete: "Delete"
+   },
+   appointmentModal: {
+      newAppointment: "New Appointment",
+      editAppointment: "Edit Appointment",
+      entireDay: "Entire Day",
+      start: "Start",
+      end: "End",
+      color: "Color",
+      name: "Name",
+      appointmentName: "Appointment name",
+      save: "Save"
+   },
+   deleteAppointmentModal: {
+      header: "Delete appointment",
+      deleteWarning: "Are you sure you want to delete the following appointment?",
+      delete: "Delete"
+   },
+   startPage: {
+      formats: {
+			smallDate: "D/M",
+			largeDate: "dddd"
+      }
+   },
+   todosPage: {
+      header: "Todos",
+      sortByGroup: "Sort by Group",
+      sortByDate: "Sort by Date",
+      newTodo: "New Todo"
+   },
+   appointmentsPage: {
+      header: "Appointments",
+      showOldAppointments: "Show old appointments",
+      hideOldAppointments: "Hide old appointments",
+      newAppointment: "New appointment"
+   },
+   calendarPage: {
+      todo: "Todo",
+      s: "s"
+   },
+   calendarDayPage: {
+      appointments: "Appointments",
+      todos: "Todos",
+      noAppointments: "No appointments",
+      noTodos: "No Todos",
+      formats: {
+         currentDay: "dddd, D MMMM YYYY"
+      }
+   },
+   settingsPage: {
+      header: "Settings",
+      sortTodosBy: "Sort todos by",
+      sortTodosByDate: "Date",
+      sortTodosByGroup: "Group",
+      showOldAppointments: "Show old appointments"
+   }
+};
 //#endregion
 
 //#region de
