@@ -26,7 +26,7 @@ export class StartPageComponent{
 	largeDateFormat: string = this.locale.formats.smallDate;
 	smallDateFormat: string = this.locale.formats.largeDate;
 
-	constructor(private dataService: DataService,
+	constructor(public dataService: DataService,
 					private router: Router){
 		fontawesome.library.add(solid);
 		this.locale = this.dataService.GetLocale().startPage;

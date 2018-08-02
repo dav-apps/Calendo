@@ -36,7 +36,7 @@ export class CalendarPageComponent{
 	scrolled: boolean = false;
 	currentWeekDays: string[] = ["1", "2", "3", "4", "5", "6", "7"];
 
-	constructor(private dataService: DataService,
+	constructor(public dataService: DataService,
 					private router: Router){
 		this.locale = this.dataService.GetLocale().calendarPage;
 		moment.locale(this.dataService.locale);
