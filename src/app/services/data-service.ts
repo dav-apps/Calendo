@@ -273,13 +273,19 @@ export class DataService{
 
 	RemoveAppointmentFromStartPage(appointment: Appointment){
 		// Remove the appointment from all arrays
-		this.startDaysAppointments.forEach((appointmentsArray: Appointment[]) => {
-			let index = appointmentsArray.findIndex(a => a.uuid == appointment.uuid);
+		for(let i = 0; i < this.startDaysAppointments.length; i++){
+			let index = this.startDaysAppointments[i].findIndex(a => a.uuid == appointment.uuid);
 
 			if(index !== -1){
-				appointmentsArray.splice(index, 1);
+				this.startDaysAppointments[i].splice(index, 1);
+
+				if(this.startDaysAppointments[i].length == 0 && this.startDaysTodos[i].length == 0){
+					this.startDaysAppointments.splice(i, 1);
+					this.startDaysTodos.splice(i, 1);
+					this.startDaysDates.splice(i, 1);
+				}
 			}
-		});
+		}
 	}
 
 	AddTodoToStartPage(todo: Todo){
@@ -334,13 +340,19 @@ export class DataService{
 
 	RemoveTodoFromStartPage(todo: Todo){
 		// Remove the todo from all arrays
-		this.startDaysTodos.forEach((todosArray: Todo[]) => {
-			let index = todosArray.findIndex(t => t.uuid == todo.uuid);
+		for(let i = 0; i < this.startDaysTodos.length; i++){
+			let index = this.startDaysTodos[i].findIndex(t => t.uuid == todo.uuid);
 
 			if(index !== -1){
-				todosArray.splice(index, 1);
+				this.startDaysTodos[i].splice(index, 1);
+
+				if(this.startDaysAppointments[i].length == 0 && this.startDaysTodos[i].length == 0){
+					this.startDaysAppointments.splice(i, 1);
+					this.startDaysTodos.splice(i, 1);
+					this.startDaysDates.splice(i, 1);
+				}
 			}
-		});
+		}
 	}
 	//#endregion
 
