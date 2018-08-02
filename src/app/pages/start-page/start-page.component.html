@@ -1,22 +1,56 @@
-<div class="container-fluid" 
-		(window:resize)="onResize()"
-		style="overflow: scroll;" 
-		[style.height.px]="startContainerHeight"
-		[style.width.px]="startContainerWidth">
+<div class="container-fluid" (window:resize)="onResize()">
 
-	<div class="row mt-4" *ngFor="let date of dataService.startDaysDates; let i = index;">
-		<div class="col-3">
-			<h4 class="cursor" (click)="ShowCalendarDay(dataService.startDaysDates[i])">{{ GetLargeDate(date) }}</h4>
-			<p class="font-weight-light cursor" (click)="ShowCalendarDay(dataService.startDaysDates[i])">{{ GetSmallDate(date) }}</p>
-		</div>
-		<div class="col-9 d-flex flex-column">
-			<div class="d-inline-flex" style="margin: -3px" *ngFor="let appointment of dataService.startDaysAppointments[i]">
-				<calendo-small-appointment-item [appointment]="appointment"></calendo-small-appointment-item>
+	<div class="ml-md-5 ml-2" (click)="ShowCalendarDay(dataService.startDaysDates[0])">
+		<h1 class="mt-1">{{ GetCurrentWeekday() }}</h1>
+		<p class="lead">{{ GetCurrentDate() }}</p>
+	</div>
+
+	<div class="row mt-4">
+		<div class="card col-10 offset-1 col-md-4 mb-5">
+			<div class="card-body">
+				<h5 class="card-title">{{ locale.appointments }}</h5>
+				<ul class="list-group list-group-flush">
+					<calendo-appointment-item [appointment]="appointment" [showCompleted]="true" *ngFor="let appointment of dataService.startDaysAppointments[0]"></calendo-appointment-item>
+					<li class="list-group-item">
+						<button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(0)"><i class="fas fa-plus"></i></button>
+					</li>
+				</ul>
 			</div>
-			
-			<div>
-				<calendo-small-todo-item [todo]="todo" *ngFor="let todo of dataService.startDaysTodos[i]" (delete)="DeleteTodo(todo)"></calendo-small-todo-item>
+		</div>
+		
+		<div class="card col-10 offset-1 col-md-4 offset-md-2 mb-5">
+			<div class="card-body">
+				<h5 class="card-title">{{ locale.todos }}</h5>
+				<ul class="list-group list-group-flush">
+					<calendo-todo-item [todo]="todo" *ngFor="let todo of dataService.startDaysTodos[0]" (delete)="DeleteTodo(todo)"></calendo-todo-item>
+					<li class="list-group-item">
+						<button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(1)"><i class="fas fa-plus"></i></button>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
+
+	<div class="container">
+		<ng-container *ngFor="let date of dataService.startDaysDates; let i = index;">
+			<div class="row py-4 ml-md-4 border-top" *ngIf="i > 0">
+				<div class="col-3">
+					<h4 class="cursor" (click)="ShowCalendarDay(dataService.startDaysDates[i])">{{ GetLargeDate(date) }}</h4>
+					<p class="font-weight-light cursor" (click)="ShowCalendarDay(dataService.startDaysDates[i])">{{ GetSmallDate(date) }}</p>
+				</div>
+				<div class="col-9 d-flex flex-column mt-2">
+					<div class="d-inline-flex" *ngFor="let appointment of dataService.startDaysAppointments[i]">
+						<calendo-small-appointment-item [appointment]="appointment"></calendo-small-appointment-item>
+					</div>
+					
+					<div>
+						<calendo-small-todo-item [todo]="todo" *ngFor="let todo of dataService.startDaysTodos[i]" (delete)="DeleteTodo(todo)"></calendo-small-todo-item>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+	</div>
+
+	<calendo-appointment-modal (save)="CreateAppointment($event)"></calendo-appointment-modal>
+	<calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
 </div>

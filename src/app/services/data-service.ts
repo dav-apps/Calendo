@@ -425,17 +425,32 @@ export class DataService{
 	}
 
 	RemoveTodoFromTodosPage(todo: Todo){
-		// Find the todo in one of the arrays
-		var index = this.todoDaysWithoutDate.todos.findIndex(t => t.uuid == todo.uuid);
+		// Remove the todo from the todoDays
+		let index = this.todoDaysWithoutDate.todos.findIndex(t => t.uuid == todo.uuid);
 
 		if(index !== -1){
 			this.todoDaysWithoutDate.todos.splice(index, 1);
 		}else{
 			this.todoDays.forEach(todoDay => {
-				index = todoDay["todos"].findIndex(t => t.uuid == todo.uuid);
+				index = todoDay.todos.findIndex(t => t.uuid == todo.uuid);
 
 				if(index !== -1){
-					todoDay["todos"].splice(index, 1);
+					todoDay.todos.splice(index, 1);
+				}
+			});
+		}
+
+		// Remove the todo from the todoGroups
+		index = this.todosWithoutGroup.findIndex(t => t.uuid == todo.uuid);
+
+		if(index !== -1){
+			this.todosWithoutGroup.splice(index, 1);
+		}else{
+			this.todoGroups.forEach(todoGroup => {
+				index = todoGroup.todos.findIndex(t => t.uuid == todo.uuid);
+
+				if(index !== -1){
+					todoGroup.todos.splice(index, 1);
 				}
 			});
 		}

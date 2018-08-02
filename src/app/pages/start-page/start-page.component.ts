@@ -23,8 +23,6 @@ export class StartPageComponent{
 	private newTodoModalComponent: NewTodoModalComponent;
 	@ViewChild(AppointmentModalComponent)
 	private newAppointmentModalComponent: AppointmentModalComponent;
-	startContainerHeight: number = 700;
-	startContainerWidth: number = 700;
 	largeDateFormat: string = this.locale.formats.smallDate;
 	smallDateFormat: string = this.locale.formats.largeDate;
 
@@ -37,16 +35,6 @@ export class StartPageComponent{
 
 	ngOnInit(){
 		this.setSize();
-	}
-	
-   ShowModal(index){
-		if(index == 0){
-			// Show the appointment modal
-			this.newAppointmentModalComponent.Show();
-		}else{
-			// Show the todo modal
-			this.newTodoModalComponent.Show();
-		}
 	}
 
 	public async DeleteTodo(todo: Todo){
@@ -65,16 +53,37 @@ export class StartPageComponent{
 		return moment.unix(date).format(this.smallDateFormat);
 	}
 
+	GetCurrentWeekday(){
+		return moment().format("dddd")
+	}
+
+	GetCurrentDate(){
+		return moment().format("LL")
+	}
+
+	ShowModal(index){
+		if(index == 0){
+			// Show the appointment modal
+			this.newAppointmentModalComponent.Show();
+		}else{
+			// Show the todo modal
+			this.newTodoModalComponent.Show();
+		}
+	}
+
+	CreateTodo(todo){
+		this.dataService.AddTodo(todo);
+	}
+
+	CreateAppointment(appointment){
+		this.dataService.AddAppointment(appointment);
+	}
+
 	onResize(){
 		this.setSize();
 	}
 
 	setSize(){
-		this.startContainerWidth = window.innerWidth;
-		this.startContainerHeight = window.innerHeight 
-											- $("#calendo-navbar").height()
-											- 16;
-
 		if(window.innerWidth < 600){
 			this.largeDateFormat = this.locale.formats.smallDate;
 			this.smallDateFormat = this.locale.formats.largeDate;

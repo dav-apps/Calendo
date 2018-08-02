@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
 	<h1 class="text-center mt-1" ngbDropdown placement="bottom-right">
 		{{ locale.header }}
 		<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
@@ -10,13 +10,13 @@
 
 	<div class="row">
 		<!-- Sort by date -->
-		<div class="card col-10 offset-1 col-md-4 my-4" *ngIf="dataService.todoDaysWithoutDate.todos.length > 0">
+		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4" *ngIf="dataService.todoDaysWithoutDate.todos.length > 0">
 			<ul class="list-group list-group-flush">
 				<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.todoDaysWithoutDate.todos"></calendo-todo-item>
 			</ul>
 		</div>
 
-		<div class="card col-10 offset-1 col-md-4 my-4" *ngFor="let todoDay of dataService.todoDays" [ngClass]="todoDay.todos.length > 0 ? '' : 'hidden'">
+		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4" *ngFor="let todoDay of dataService.todoDays" [ngClass]="todoDay.todos.length > 0 ? '' : 'hidden'">
 			<div class="card-body">
 				<h5 class="card-title" *ngIf="todoDay.todos.length > 0">{{ todoDay.date }}</h5>
 				<ul class="list-group list-group-flush" *ngFor="let todo of todoDay.todos">
@@ -26,13 +26,15 @@
 		</div>
 
 		<!-- Sort by group -->
-		<div class="card col-10 offset-1 col-md-4 my-4" *ngIf="dataService.todosWithoutGroup.length > 0">
-			<ul class="list-group list-group-flush">
-				<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.todosWithoutGroup" [showBadge]="false"></calendo-todo-item>
-			</ul>
+		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4" *ngIf="dataService.todosWithoutGroup.length > 0">
+			<div class="card-body">
+				<ul class="list-group list-group-flush" *ngFor="let todo of dataService.todosWithoutGroup">
+					<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" [showBadge]="false"></calendo-todo-item>
+				</ul>
+			</div>
 		</div>
 
-		<div class="card col-10 offset-1 col-md-4 my-4" *ngFor="let todoGroup of dataService.todoGroups" [ngClass]="todoGroup.todos.length > 0 ? '' : 'hidden'">
+		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4" *ngFor="let todoGroup of dataService.todoGroups" [ngClass]="todoGroup.todos.length > 0 ? '' : 'hidden'">
 			<div class="card-body">
 				<h5 class="card-title" *ngIf="todoGroup.todos.length > 0">{{ todoGroup.name }}</h5>
 				<ul class="list-group list-group-flush" *ngFor="let todo of todoGroup.todos">

@@ -46,6 +46,8 @@ export const enUS = {
       delete: "Delete"
    },
    startPage: {
+		appointments: "Appointments",
+		todos: "Todos",
       formats: {
 			smallDate: "M/D",
 			largeDate: "dddd"
@@ -132,6 +134,8 @@ export const enGB = {
       delete: "Delete"
    },
    startPage: {
+		appointments: "Appointments",
+		todos: "Todos",
       formats: {
 			smallDate: "D/M",
 			largeDate: "dddd"
@@ -218,6 +222,8 @@ export const enNZ = {
       delete: "Delete"
    },
    startPage: {
+		appointments: "Appointments",
+		todos: "Todos",
       formats: {
 			smallDate: "D/M",
 			largeDate: "dddd"
@@ -304,6 +310,8 @@ export const enIL = {
       delete: "Delete"
    },
    startPage: {
+		appointments: "Appointments",
+		todos: "Todos",
       formats: {
 			smallDate: "D/M",
 			largeDate: "dddd"
@@ -390,6 +398,8 @@ export const enIE = {
       delete: "Delete"
    },
    startPage: {
+		appointments: "Appointments",
+		todos: "Todos",
       formats: {
 			smallDate: "D-M",
 			largeDate: "dddd"
@@ -476,6 +486,8 @@ export const enCA = {
       delete: "Delete"
    },
    startPage: {
+		appointments: "Appointments",
+		todos: "Todos",
       formats: {
 			smallDate: "M-D",
 			largeDate: "dddd"
@@ -562,6 +574,8 @@ export const enAU = {
       delete: "Delete"
    },
    startPage: {
+		appointments: "Appointments",
+		todos: "Todos",
       formats: {
 			smallDate: "D/M",
 			largeDate: "dddd"
@@ -650,6 +664,8 @@ export const deDE = {
       delete: "Löschen"
    },
    startPage: {
+		appointments: "Termine",
+		todos: "Todos",
       formats: {
          smallDate: "D.M",
 			largeDate: "dddd"
@@ -736,6 +752,8 @@ export const deAT = {
       delete: "Löschen"
    },
    startPage: {
+		appointments: "Termine",
+		todos: "Todos",
       formats: {
          smallDate: "D.M",
 			largeDate: "dddd"
@@ -822,6 +840,8 @@ export const deCH = {
       delete: "Löschen"
    },
    startPage: {
+		appointments: "Termine",
+		todos: "Todos",
       formats: {
          smallDate: "D.M",
 			largeDate: "dddd"
