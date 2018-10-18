@@ -22,7 +22,12 @@
               "src/favicon.png",
               "src/assets",
               "src/web.config",
-              "src/manifest.json"
+              "src/manifest.json",
+              {
+                "glob": "**/*", 
+                "input": "../node_modules/dav-npm/dist/lib/workers/", 
+                "output": "./dav/"
+              }
             ],
             "styles": [
               "node_modules/icheck/skins/square/blue.css",
