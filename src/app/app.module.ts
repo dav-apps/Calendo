@@ -57,7 +57,7 @@ import { environment } from '../environments/environment';
 			useHash: false
 		}),
 		NgbModule.forRoot(),
-		ServiceWorkerModule.register('/sw.js', { enabled: environment.production })
+		ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   	],
   	providers: [
 		DataService
