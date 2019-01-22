@@ -15,9 +15,9 @@ export class DataService{
 	locale: string = navigator.language;
 
 	//#region StartPage
-	startDaysDates: number[] = [];
-	startDaysAppointments: Appointment[][] = [];
-	startDaysTodos: Todo[][] = [];
+	startDaysDates: number[] = [];					// Contains the timestamps of the start of the days
+	startDaysAppointments: Appointment[][] = [];	// Contains the appointments for the individual days
+	startDaysTodos: Todo[][] = [];					// Contains the todos for the individual days
 	//#endregion
 
 	//#region TodosPage
@@ -70,10 +70,7 @@ export class DataService{
 		});
 
 		this.user = new DavUser(async () => {
-			this.startDaysDates = [];
-			this.startDaysAppointments = [];
-			this.startDaysTodos = [];
-
+			this.InitStartDays();
 			await this.LoadAllAppointments();
 			await this.LoadAllTodos();
       });
@@ -84,6 +81,17 @@ export class DataService{
 			// Use localstorage as driver
 			localforage.setDriver(localforage.LOCALSTORAGE);
 		}
+	}
+
+	InitStartDays(){
+		this.startDaysDates = [];
+		this.startDaysAppointments = [];
+		this.startDaysTodos = [];
+
+		// Add the current day to the start page
+		this.startDaysDates.push(moment().startOf('day').unix());
+		this.startDaysAppointments.push([]);
+		this.startDaysTodos.push([]);
 	}
 
 	async LoadAllAppointments(){
@@ -279,7 +287,7 @@ export class DataService{
 			if(index !== -1){
 				this.startDaysAppointments[i].splice(index, 1);
 
-				if(this.startDaysAppointments[i].length == 0 && this.startDaysTodos[i].length == 0){
+				if(this.startDaysAppointments[i].length == 0 && this.startDaysTodos[i].length == 0 && i != 0){
 					this.startDaysAppointments.splice(i, 1);
 					this.startDaysTodos.splice(i, 1);
 					this.startDaysDates.splice(i, 1);
@@ -346,7 +354,7 @@ export class DataService{
 			if(index !== -1){
 				this.startDaysTodos[i].splice(index, 1);
 
-				if(this.startDaysAppointments[i].length == 0 && this.startDaysTodos[i].length == 0){
+				if(this.startDaysAppointments[i].length == 0 && this.startDaysTodos[i].length == 0 && i != 0){
 					this.startDaysAppointments.splice(i, 1);
 					this.startDaysTodos.splice(i, 1);
 					this.startDaysDates.splice(i, 1);
