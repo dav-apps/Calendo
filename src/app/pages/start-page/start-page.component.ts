@@ -9,6 +9,7 @@ import { DataService } from '../../services/data-service';
 import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-modal.component';
 import { AppointmentModalComponent } from '../../components/appointment-modal/appointment-modal.component';
 import { enUS } from '../../../locales/locales';
+import { Appointment } from 'src/app/models/Appointment';
 
 @Component({
    selector: "calendo-start-page",
@@ -61,7 +62,7 @@ export class StartPageComponent{
 		return moment().format("LL")
 	}
 
-	ShowModal(index){
+	ShowModal(index: number){
 		if(index == 0){
 			// Show the appointment modal
 			this.newAppointmentModalComponent.Show();
@@ -71,11 +72,11 @@ export class StartPageComponent{
 		}
 	}
 
-	CreateTodo(todo){
+	CreateTodo(todo: Todo){
 		this.dataService.AddTodo(todo);
 	}
 
-	CreateAppointment(appointment){
+	CreateAppointment(appointment: Appointment){
 		this.dataService.AddAppointment(appointment);
 	}
 
