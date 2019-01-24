@@ -25,6 +25,7 @@ export class AppointmentModalComponent{
 	appointmentUuid: string;
 	availableColors: string[] = ["D32F2F", "d67724", "FFD600", "388E3C", "43A047", "00B0FF", "1565C0", "283593", "7B1FA2", "757575", "000000"];
 	selectedColor: number = 6;
+	reminderCheckboxChecked: boolean = true;
 
 	constructor(private modalService: NgbModal,
 					private dataService: DataService){
@@ -95,13 +96,22 @@ export class AppointmentModalComponent{
       $('#appointment-all-day-checkbox').iCheck({
          checkboxClass: 'icheckbox_square-blue',
          radioClass: 'iradio_square'
-      });
+		});
+		
+		$('#appointment-reminder-checkbox').iCheck({
+			checkboxClass: 'icheckbox_square-blue',
+         radioClass: 'iradio_square'
+		});
 
 		if(this.appointmentAllDayCheckboxChecked){
 			$('#appointment-all-day-checkbox').iCheck('check');
 		}
       $('#appointment-all-day-checkbox').on('ifChecked', (event) => this.appointmentAllDayCheckboxChecked = true);
-      $('#appointment-all-day-checkbox').on('ifUnchecked', (event) => this.appointmentAllDayCheckboxChecked = false);
+		$('#appointment-all-day-checkbox').on('ifUnchecked', (event) => this.appointmentAllDayCheckboxChecked = false);
+		
+		$('#appointment-reminder-checkbox').on('ifChecked', (event) => this.reminderCheckboxChecked = true);
+		$('#appointment-reminder-checkbox').on('ifUnchecked', (event) => this.reminderCheckboxChecked = false);
+		$('#appointment-reminder-checkbox').iCheck('check');
    }
 
    ResetNewObjects(date?: number){
@@ -114,7 +124,8 @@ export class AppointmentModalComponent{
       this.appointmentName = "";
       this.appointmentAllDayCheckboxChecked = true;
       this.appointmentStartTime = { hour: 15, minute: 0 };
-      this.appointmentEndTime = { hour: 16, minute: 0 };
+		this.appointmentEndTime = { hour: 16, minute: 0 };
+		this.reminderCheckboxChecked = true;
    }
 
    SetAppointmentSaveButtonDisabled(): boolean{
@@ -136,5 +147,9 @@ export class AppointmentModalComponent{
       }
       
 		return !(this.appointmentName.length > 1 && timeOkay);
+	}
+
+	onReminderOptionChanged(secondsBefore: number){
+		console.log(secondsBefore)
 	}
 }

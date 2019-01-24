@@ -6,7 +6,7 @@
 		</button>
    </div>
    <div class="modal-body row">
-      <ngb-datepicker class="mx-auto" #dp [(ngModel)]="appointmentDate" (navigate)="date = $event.next"></ngb-datepicker>
+      <ngb-datepicker class="mx-auto mb-3" #dp [(ngModel)]="appointmentDate" (navigate)="date = $event.next"></ngb-datepicker>
 
       <div class="mx-auto">
 			<p class="mt-4">
@@ -21,6 +21,27 @@
          <label for="appointmentEndTime" class="col-form-label mt-3">{{ locale.end }}</label>
          <ngb-timepicker id="appointment-end-time" [disabled]="appointmentAllDayCheckboxChecked"
                         [(ngModel)]="appointmentEndTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
+		</div>
+
+		<div class="mx-auto mt-2" style="width: 250px;">
+			<input type="checkbox" id="appointment-reminder-checkbox"><label for="appointment-reminder-checkbox" class="ml-3">Reminder</label>
+
+			<div class="form-group" style="width: 250px; margin-top: -20px;">
+				<label for="sort-todos-select">{{ locale.sortTodosBy }}</label>
+				<select class="form-control" id="sort-todos-select2" [disabled]="!reminderCheckboxChecked" (change)="onReminderOptionChanged($event.target.value)">
+					<option value="0">0 minutes before</option>
+					<option value="300">5 minutes before</option>
+					<option value="600">10 minutes before</option>
+					<option value="900">15 minutes before</option>
+					<option value="1800">30 minutes before</option>
+					<option value="3600" [selected]="!appointmentAllDayCheckboxChecked">1 hour before</option>
+					<option value="7200">2 hours before</option>
+					<option value="21600">6 hours before</option>
+					<option value="43200" [selected]="appointmentAllDayCheckboxChecked">12 hours before</option>
+					<option value="86400">1 day before</option>
+					<option value="604800">1 week before</option>
+				</select>
+			</div>
 		</div>
 		
 		<div class="mx-auto mt-2" style="width: 250px;">
