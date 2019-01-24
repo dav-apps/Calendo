@@ -233,7 +233,7 @@ export class DataService{
 		if(appointment.start < moment().startOf('day').unix()) return;
 
 		// Check if the day of the appointment is already in the array
-		let index = this.startDaysDates.findIndex(d => moment.unix(d).isSame(moment.unix(appointment.start), 'day'));
+		let index = this.startDaysDates.findIndex(d => d == moment.unix(appointment.start).startOf('day').unix());
 
 		if(index !== -1){
 			// Check if the appointment is already in the appointments array of the day
@@ -297,10 +297,10 @@ export class DataService{
 	}
 
 	AddTodoToStartPage(todo: Todo){
-		if(todo.time < moment().startOf('day').unix()) return;
+		if(todo.time < moment().startOf('day').unix() && todo.time != 0) return;
 
 		// Check if the day of the todo is already in the array
-		let index = this.startDaysDates.findIndex(t => moment.unix(t).isSame(moment.unix(todo.time), 'day'));
+		let index = todo.time == 0 ? 0 : this.startDaysDates.findIndex(t => t == todo.time);
 
 		if(index !== -1){
 			// Check if the todo is already in the todos array of the day
