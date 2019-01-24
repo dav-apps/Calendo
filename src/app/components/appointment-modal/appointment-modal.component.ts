@@ -4,6 +4,8 @@ declare var $: any;
 import { Appointment, CreateAppointment, GetAppointment, UpdateAppointment } from '../../models/Appointment';
 import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
+import { SubscribePushNotifications, CreateNotification } from 'dav-npm';
+import * as moment from 'moment';
 
 @Component({
    selector: "calendo-appointment-modal",
@@ -26,6 +28,8 @@ export class AppointmentModalComponent{
 	availableColors: string[] = ["D32F2F", "d67724", "FFD600", "388E3C", "43A047", "00B0FF", "1565C0", "283593", "7B1FA2", "757575", "000000"];
 	selectedColor: number = 6;
 	reminderCheckboxChecked: boolean = true;
+	notificationTime: number = 43200;				// Saves the time of the notification in seconds before the start of the appointment
+	pushSupported: boolean = true;
 
 	constructor(private modalService: NgbModal,
 					private dataService: DataService){
@@ -33,6 +37,9 @@ export class AppointmentModalComponent{
 	}
 
    Show(appointment?: Appointment, date?: number){
+		// Check if push is supported
+		this.pushSupported = ('serviceWorker' in navigator) && ('PushManager' in window);
+
       if(appointment){
 			// Update appointment
 			// Add the values of the appointment to the local variables
@@ -76,8 +83,34 @@ export class AppointmentModalComponent{
 			if(this.new){
 				// Create the new appointment
 				var appointment = new Appointment("", this.appointmentName, startUnix, endUnix, this.appointmentAllDayCheckboxChecked, color);
-				appointment.uuid = await CreateAppointment(appointment);
 
+				if(this.reminderCheckboxChecked){
+					// Ask the user for notification permission
+					let permissionGranted = false;
+					let permissionResult = await Notification.requestPermission((result) => {
+						permissionGranted = permissionResult == "granted";
+					});
+					permissionGranted = permissionResult == "granted";
+					
+					if(permissionGranted){
+						// Create the notification
+						if(await SubscribePushNotifications()){
+							let time = appointment.start - this.notificationTime;
+
+							if(this.appointmentAllDayCheckboxChecked){
+								// Set the time to the start of the day
+								time = moment.unix(appointment.start).startOf('day').unix() - this.notificationTime;
+							}
+
+							let notificationUuid = await CreateNotification(time, 0, {
+								title: "You have an appointment",
+								message: "Hello World"
+							});
+						}
+					}
+				}
+
+				appointment.uuid = await CreateAppointment(appointment);
 				this.save.emit(appointment);
 			}else{
 				var appointment = await GetAppointment(this.appointmentUuid);
@@ -106,8 +139,18 @@ export class AppointmentModalComponent{
 		if(this.appointmentAllDayCheckboxChecked){
 			$('#appointment-all-day-checkbox').iCheck('check');
 		}
-      $('#appointment-all-day-checkbox').on('ifChecked', (event) => this.appointmentAllDayCheckboxChecked = true);
-		$('#appointment-all-day-checkbox').on('ifUnchecked', (event) => this.appointmentAllDayCheckboxChecked = false);
+      $('#appointment-all-day-checkbox').on('ifChecked', (event) => {
+			this.appointmentAllDayCheckboxChecked = true
+
+			// Set the notification time to 12 hours
+			this.notificationTime = 43200
+		});
+		$('#appointment-all-day-checkbox').on('ifUnchecked', (event) => {
+			this.appointmentAllDayCheckboxChecked = false
+
+			// Set the notification time to 1 hour
+			this.notificationTime = 3600
+		});
 		
 		$('#appointment-reminder-checkbox').on('ifChecked', (event) => this.reminderCheckboxChecked = true);
 		$('#appointment-reminder-checkbox').on('ifUnchecked', (event) => this.reminderCheckboxChecked = false);
@@ -150,6 +193,6 @@ export class AppointmentModalComponent{
 	}
 
 	onReminderOptionChanged(secondsBefore: number){
-		console.log(secondsBefore)
+		this.notificationTime = secondsBefore;
 	}
 }

@@ -23,7 +23,7 @@
                         [(ngModel)]="appointmentEndTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
 		</div>
 
-		<div class="mx-auto mt-2" style="width: 250px;">
+		<div class="mx-auto mt-2" style="width: 250px;" [style.display]="pushSupported ? 'block' : 'none'">
 			<input type="checkbox" id="appointment-reminder-checkbox"><label for="appointment-reminder-checkbox" class="ml-3">Reminder</label>
 
 			<div class="form-group" style="width: 250px; margin-top: -20px;">

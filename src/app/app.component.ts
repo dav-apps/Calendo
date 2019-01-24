@@ -69,17 +69,15 @@ export class AppComponent {
 					}
 				}
 			},
-			ReceiveNotification: async (notification: object) => {
-				/*
+			ReceiveNotification: async (notification: {title: string, message: string}) => {
 				if('serviceWorker' in navigator){
 					let registration = await navigator.serviceWorker.getRegistration();
-					registration.showNotification("Hello World!", {
+					registration.showNotification(notification.title, {
 						icon: "/assets/icons/icon-192x192.png",
 						//badge: "/favicon.png",
-						body: "You have a notification!"
+						body: notification.message
 					});
 				}
-				*/
 			}
 		});
 
