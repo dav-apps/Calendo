@@ -38,7 +38,19 @@ export const enUS = {
       color: "Color",
       name: "Name",
       appointmentName: "Appointment name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder",
+      reminderTimes: {
+         minutes0: "0 minutes before",
+         minutes15: "15 minutes before",
+         minutes30: "30 minutes before",
+         hour1: "1 hour before",
+         hours3: "3 hours before",
+         hours6: "6 hours before",
+         hours12: "12 hours before",
+         day1: "1 day before",
+         week1: "1 week before"
+      }
    },
    deleteAppointmentModal: {
       header: "Delete appointment",
@@ -135,7 +147,19 @@ export const enGB = {
       color: "Color",
       name: "Name",
       appointmentName: "Appointment name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder",
+      reminderTimes: {
+         minutes0: "0 minutes before",
+         minutes15: "15 minutes before",
+         minutes30: "30 minutes before",
+         hour1: "1 hour before",
+         hours3: "3 hours before",
+         hours6: "6 hours before",
+         hours12: "12 hours before",
+         day1: "1 day before",
+         week1: "1 week before"
+      }
    },
    deleteAppointmentModal: {
       header: "Delete appointment",
@@ -232,7 +256,19 @@ export const enNZ = {
       color: "Color",
       name: "Name",
       appointmentName: "Appointment name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder",
+      reminderTimes: {
+         minutes0: "0 minutes before",
+         minutes15: "15 minutes before",
+         minutes30: "30 minutes before",
+         hour1: "1 hour before",
+         hours3: "3 hours before",
+         hours6: "6 hours before",
+         hours12: "12 hours before",
+         day1: "1 day before",
+         week1: "1 week before"
+      }
    },
    deleteAppointmentModal: {
       header: "Delete appointment",
@@ -329,7 +365,19 @@ export const enIL = {
       color: "Color",
       name: "Name",
       appointmentName: "Appointment name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder",
+      reminderTimes: {
+         minutes0: "0 minutes before",
+         minutes15: "15 minutes before",
+         minutes30: "30 minutes before",
+         hour1: "1 hour before",
+         hours3: "3 hours before",
+         hours6: "6 hours before",
+         hours12: "12 hours before",
+         day1: "1 day before",
+         week1: "1 week before"
+      }
    },
    deleteAppointmentModal: {
       header: "Delete appointment",
@@ -426,7 +474,19 @@ export const enIE = {
       color: "Color",
       name: "Name",
       appointmentName: "Appointment name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder",
+      reminderTimes: {
+         minutes0: "0 minutes before",
+         minutes15: "15 minutes before",
+         minutes30: "30 minutes before",
+         hour1: "1 hour before",
+         hours3: "3 hours before",
+         hours6: "6 hours before",
+         hours12: "12 hours before",
+         day1: "1 day before",
+         week1: "1 week before"
+      }
    },
    deleteAppointmentModal: {
       header: "Delete appointment",
@@ -523,7 +583,19 @@ export const enCA = {
       color: "Color",
       name: "Name",
       appointmentName: "Appointment name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder",
+      reminderTimes: {
+         minutes0: "0 minutes before",
+         minutes15: "15 minutes before",
+         minutes30: "30 minutes before",
+         hour1: "1 hour before",
+         hours3: "3 hours before",
+         hours6: "6 hours before",
+         hours12: "12 hours before",
+         day1: "1 day before",
+         week1: "1 week before"
+      }
    },
    deleteAppointmentModal: {
       header: "Delete appointment",
@@ -620,7 +692,19 @@ export const enAU = {
       color: "Color",
       name: "Name",
       appointmentName: "Appointment name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder",
+      reminderTimes: {
+         minutes0: "0 minutes before",
+         minutes15: "15 minutes before",
+         minutes30: "30 minutes before",
+         hour1: "1 hour before",
+         hours3: "3 hours before",
+         hours6: "6 hours before",
+         hours12: "12 hours before",
+         day1: "1 day before",
+         week1: "1 week before"
+      }
    },
    deleteAppointmentModal: {
       header: "Delete appointment",
@@ -719,7 +803,19 @@ export const deDE = {
       color: "Farbe",
       name: "Name",
       appointmentName: "Name des Termins",
-      save: "Speichern"
+      save: "Speichern",
+      reminder: "Erinnerung",
+      reminderTimes: {
+         minutes0: "0 Minuten vorher",
+         minutes15: "15 Minuten vorher",
+         minutes30: "30 Minuten vorher",
+         hour1: "1 Stunde vorher",
+         hours3: "3 Stunden vorher",
+         hours6: "6 Stunden vorher",
+         hours12: "12 Stunden vorher",
+         day1: "1 Tag vorher",
+         week1: "1 Woche vorher"
+      }
    },
    deleteAppointmentModal: {
       header: "Termin löschen",
@@ -816,7 +912,19 @@ export const deAT = {
       color: "Farbe",
       name: "Name",
       appointmentName: "Name des Termins",
-      save: "Speichern"
+      save: "Speichern",
+      reminder: "Erinnerung",
+      reminderTimes: {
+         minutes0: "0 Minuten vorher",
+         minutes15: "15 Minuten vorher",
+         minutes30: "30 Minuten vorher",
+         hour1: "1 Stunde vorher",
+         hours3: "3 Stunden vorher",
+         hours6: "6 Stunden vorher",
+         hours12: "12 Stunden vorher",
+         day1: "1 Tag vorher",
+         week1: "1 Woche vorher"
+      }
    },
    deleteAppointmentModal: {
       header: "Termin löschen",
@@ -913,7 +1021,19 @@ export const deCH = {
       color: "Farbe",
       name: "Name",
       appointmentName: "Name des Termins",
-      save: "Speichern"
+      save: "Speichern",
+      reminder: "Erinnerung",
+      reminderTimes: {
+         minutes0: "0 Minuten vorher",
+         minutes15: "15 Minuten vorher",
+         minutes30: "30 Minuten vorher",
+         hour1: "1 Stunde vorher",
+         hours3: "3 Stunden vorher",
+         hours6: "6 Stunden vorher",
+         hours12: "12 Stunden vorher",
+         day1: "1 Tag vorher",
+         week1: "1 Woche vorher"
+      }
    },
    deleteAppointmentModal: {
       header: "Termin löschen",
