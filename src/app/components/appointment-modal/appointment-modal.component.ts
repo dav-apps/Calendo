@@ -16,6 +16,7 @@ import * as moment from 'moment';
 })
 export class AppointmentModalComponent{
 	locale = enUS.appointmentModal;
+	notificationLocale = enUS.notifications.appointment;
 	@Output() save = new EventEmitter();
    @ViewChild('appointmentModal') appointmentModal: ElementRef;
    appointmentDate: NgbDateStruct;
@@ -34,6 +35,7 @@ export class AppointmentModalComponent{
 	constructor(private modalService: NgbModal,
 					private dataService: DataService){
 		this.locale = this.dataService.GetLocale().appointmentModal;
+		this.notificationLocale = this.dataService.GetLocale().notifications.appointment;
 	}
 
    Show(appointment?: Appointment, date?: number){
@@ -95,17 +97,30 @@ export class AppointmentModalComponent{
 					if(permissionGranted){
 						// Create the notification
 						if(await SubscribePushNotifications()){
-							let time = appointment.start - this.notificationTime;
+							// Set the time of the notification to (the start of the day - seconds before) or (appointment start - seconds before)
+							let time = (this.appointmentAllDayCheckboxChecked ? appointment.start : moment.unix(appointment.start).startOf('day').unix()) - this.notificationTime;
 
+							// Format the time in the message correctly
+							let title = appointment.name;
+							let message = "";
 							if(this.appointmentAllDayCheckboxChecked){
-								// Set the time to the start of the day
-								time = moment.unix(appointment.start).startOf('day').unix() - this.notificationTime;
+								let appointmentMoment = moment.unix(appointment.start);
+								message = this.notificationLocale.messageSpecificTime + ", " + appointmentMoment.format(this.notificationLocale.formats.allDay);
+							}else{
+								let appointmentStartMoment = moment.unix(appointment.start);
+								let appointmentEndMoment = moment.unix(appointment.end);
+
+								message = appointmentStartMoment.format(this.notificationLocale.formats.specificTime)
+											+ " - "
+											+ appointmentEndMoment.format(this.notificationLocale.formats.specificTime);
 							}
 
 							let notificationUuid = await CreateNotification(time, 0, {
-								title: "You have an appointment",
-								message: "Hello World"
+								title,
+								message
 							});
+
+							appointment.notificationUuid = notificationUuid;
 						}
 					}
 				}

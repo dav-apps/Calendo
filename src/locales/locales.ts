@@ -84,7 +84,16 @@ export const enUS = {
       sortTodosByDate: "Date",
       sortTodosByGroup: "Group",
       showOldAppointments: "Show old appointments"
-   }
+	},
+	notifications: {
+		appointment: {
+			messageSpecificTime: "Full day event",
+			formats: {
+				allDay: "LL",
+				specificTime: "LT"
+			}
+		}
+	}
 };
 
 export const enGB = {
@@ -172,7 +181,16 @@ export const enGB = {
       sortTodosByDate: "Date",
       sortTodosByGroup: "Group",
       showOldAppointments: "Show old appointments"
-   }
+	},
+	notifications: {
+		appointment: {
+			messageSpecificTime: "Full day event",
+			formats: {
+				allDay: "LL",
+				specificTime: "LT"
+			}
+		}
+	}
 };
 
 export const enNZ = {
@@ -260,7 +278,16 @@ export const enNZ = {
       sortTodosByDate: "Date",
       sortTodosByGroup: "Group",
       showOldAppointments: "Show old appointments"
-   }
+	},
+	notifications: {
+		appointment: {
+			messageSpecificTime: "Full day event",
+			formats: {
+				allDay: "LL",
+				specificTime: "LT"
+			}
+		}
+	}
 };
 
 export const enIL = {
@@ -348,7 +375,16 @@ export const enIL = {
       sortTodosByDate: "Date",
       sortTodosByGroup: "Group",
       showOldAppointments: "Show old appointments"
-   }
+	},
+	notifications: {
+		appointment: {
+			messageSpecificTime: "Full day event",
+			formats: {
+				allDay: "LL",
+				specificTime: "LT"
+			}
+		}
+	}
 };
 
 export const enIE = {
@@ -436,7 +472,16 @@ export const enIE = {
       sortTodosByDate: "Date",
       sortTodosByGroup: "Group",
       showOldAppointments: "Show old appointments"
-   }
+	},
+	notifications: {
+		appointment: {
+			messageSpecificTime: "Full day event",
+			formats: {
+				allDay: "LL",
+				specificTime: "LT"
+			}
+		}
+	}
 };
 
 export const enCA = {
@@ -524,7 +569,16 @@ export const enCA = {
       sortTodosByDate: "Date",
       sortTodosByGroup: "Group",
       showOldAppointments: "Show old appointments"
-   }
+	},
+	notifications: {
+		appointment: {
+			messageSpecificTime: "Full day event",
+			formats: {
+				allDay: "LL",
+				specificTime: "LT"
+			}
+		}
+	}
 };
 
 export const enAU = {
@@ -612,7 +666,16 @@ export const enAU = {
       sortTodosByDate: "Date",
       sortTodosByGroup: "Group",
       showOldAppointments: "Show old appointments"
-   }
+	},
+	notifications: {
+		appointment: {
+			messageSpecificTime: "Full day event",
+			formats: {
+				allDay: "LL",
+				specificTime: "LT"
+			}
+		}
+	}
 };
 //#endregion
 
@@ -702,7 +765,16 @@ export const deDE = {
       sortTodosByDate: "Datum",
       sortTodosByGroup: "Gruppe",
       showOldAppointments: "Zeige alte Termine"
-   }
+	},
+	notifications: {
+		appointment: {
+			messageSpecificTime: "Ganztägiger Termin",
+			formats: {
+				allDay: "LL",
+				specificTime: "LT"
+			}
+		}
+	}
 };
 
 export const deAT = {
@@ -790,7 +862,16 @@ export const deAT = {
       sortTodosByDate: "Datum",
       sortTodosByGroup: "Gruppe",
       showOldAppointments: "Zeige alte Termine"
-   }
+	},
+	notifications: {
+		appointment: {
+			messageSpecificTime: "Ganztägiger Termin",
+			formats: {
+				allDay: "LL",
+				specificTime: "LT"
+			}
+		}
+	}
 };
 
 export const deCH = {
@@ -878,6 +959,15 @@ export const deCH = {
       sortTodosByDate: "Datum",
       sortTodosByGroup: "Gruppe",
       showOldAppointments: "Zeige alte Termine"
-   }
+	},
+	notifications: {
+		appointment: {
+			messageSpecificTime: "Ganztägiger Termin",
+			formats: {
+				allDay: "LL",
+				specificTime: "LT"
+			}
+		}
+	}
 };
 //#endregion

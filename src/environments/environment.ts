@@ -19,6 +19,7 @@ export const environment = {
 	appointmentEndKey: "end",
 	appointmentAllDayKey: "allday",
 	appointmentColorKey: "color",
+	appointmentNotificationUuidKey: "notification_uuid",
 	appointmentDefaultColor: "1565C0",
 	settingsSortTodosByDateKey: "settings-sortTodosByDate",
 	settingsShowOldAppointments: "settings-showOldAppointments",
