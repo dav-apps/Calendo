@@ -7,7 +7,8 @@ export class Appointment{
                public start: number, 
                public end: number, 
 					public allday: boolean,
-					public color: string){}
+					public color: string,
+					public notificationUuid: string = ""){}
 	
 	async Delete(){
 		var tableObject = await GetTableObject(this.uuid);
@@ -57,6 +58,10 @@ export async function CreateAppointment(appointment: Appointment): Promise<strin
 		{ name: environment.appointmentColorKey, value: appointment.color }
 	]);
 
+	if(appointment.notificationUuid){
+		tableObject.SetPropertyValue(environment.appointmentNotificationUuidKey, appointment.notificationUuid);
+	}
+
    return tableObject.Uuid;
 }
 
@@ -64,13 +69,17 @@ export async function UpdateAppointment(appointment: Appointment){
 	var tableObject = await GetTableObject(appointment.uuid);
 
 	if(tableObject){
-		tableObject.SetPropertyValues([
+		await tableObject.SetPropertyValues([
 			{ name: environment.appointmentNameKey, value: appointment.name },
 			{ name: environment.appointmentStartKey, value: appointment.start.toString() },
 			{ name: environment.appointmentEndKey, value: appointment.end.toString() },
 			{ name: environment.appointmentAllDayKey, value: appointment.allday.toString() },
 			{ name: environment.appointmentColorKey, value: appointment.color }
 		]);
+		
+		if(tableObject.GetPropertyValue(environment.appointmentNotificationUuidKey) || appointment.notificationUuid){
+			await tableObject.SetPropertyValue(environment.appointmentNotificationUuidKey, appointment.notificationUuid);
+		}
 	}
 }
 
@@ -98,10 +107,17 @@ export function ConvertTableObjectToAppointment(tableObject: TableObject): Appoi
 		color = tableObjectAppointmentColor;
 	}
 
+	var notificationUuid = "";
+	var tableObjectNotificationUuid = tableObject.GetPropertyValue(environment.appointmentNotificationUuidKey);
+	if(tableObjectNotificationUuid){
+		notificationUuid = tableObjectNotificationUuid;
+	}
+
 	return new Appointment(tableObject.Uuid, 
 									tableObject.GetPropertyValue(environment.appointmentNameKey),
 									appointmentStart,
 									appointmentEnd,
 									appointmentAllDay,
-									color);
+									color,
+									notificationUuid);
 }
