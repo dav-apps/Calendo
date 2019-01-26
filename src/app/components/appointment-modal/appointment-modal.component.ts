@@ -4,7 +4,7 @@ declare var $: any;
 import { Appointment, CreateAppointment, GetAppointment, UpdateAppointment } from '../../models/Appointment';
 import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
-import { SubscribePushNotifications, CreateNotification } from 'dav-npm';
+import { SubscribePushNotifications, CreateNotification, GetNotification } from 'dav-npm';
 import * as moment from 'moment';
 
 @Component({
@@ -31,6 +31,7 @@ export class AppointmentModalComponent{
 	reminderCheckboxChecked: boolean = true;
 	notificationTime: number = 43200;				// Saves the time of the notification in seconds before the start of the appointment
 	pushSupported: boolean = true;
+	reminderTimes: {secondsBefore: number, text: string, selected: boolean}[] = [];
 
 	constructor(private modalService: NgbModal,
 					private dataService: DataService){
@@ -42,6 +43,20 @@ export class AppointmentModalComponent{
 		// Check if push is supported
 		this.pushSupported = ('serviceWorker' in navigator) && ('PushManager' in window);
 
+		// Init reminderTimes
+		this.reminderTimes = [];
+		this.reminderTimes.push(
+			{ secondsBefore: 0, text: this.locale.reminderTimes.minutes0, selected: false }, 
+			{ secondsBefore: 900, text: this.locale.reminderTimes.minutes15, selected: false },
+			{ secondsBefore: 1800, text: this.locale.reminderTimes.minutes30, selected: false }, 
+			{ secondsBefore: 3600, text: this.locale.reminderTimes.hour1, selected: false },
+			{ secondsBefore: 10800, text: this.locale.reminderTimes.hours3, selected: false },
+			{ secondsBefore: 21600, text: this.locale.reminderTimes.hours6, selected: false },
+			{ secondsBefore: 43200, text: this.locale.reminderTimes.hours12, selected: true },
+			{ secondsBefore: 86400, text: this.locale.reminderTimes.day1, selected: false },
+			{ secondsBefore: 604800, text: this.locale.reminderTimes.week1, selected: false }
+		);
+
       if(appointment){
 			// Update appointment
 			// Add the values of the appointment to the local variables
@@ -50,6 +65,21 @@ export class AppointmentModalComponent{
 
          var startDate = new Date(appointment.start*1000);
 			var endDate = new Date(appointment.end*1000);
+			
+			if(appointment.notificationUuid){
+				// Get the date of the notification
+				GetNotification(appointment.notificationUuid).then((notification: {time: number, interval: number, properties: object}) => {
+					if(notification){
+						this.reminderCheckboxChecked = true;
+						
+						// Calculate the seconds the notification is sent before the appointment starts
+						let difference = (appointment.allday ? moment.unix(appointment.start).startOf('day').unix() : appointment.start) - notification.time;
+						this.SetReminderSelection(difference);
+					}
+				});
+			}else{
+				this.reminderCheckboxChecked = false;
+			}
 
          this.appointmentDate = { year: startDate.getFullYear(), month: startDate.getMonth() + 1, day: startDate.getDate() };
          this.appointmentName = appointment.name;
@@ -98,7 +128,7 @@ export class AppointmentModalComponent{
 						// Create the notification
 						if(await SubscribePushNotifications()){
 							// Set the time of the notification to (the start of the day - seconds before) or (appointment start - seconds before)
-							let time = (this.appointmentAllDayCheckboxChecked ? appointment.start : moment.unix(appointment.start).startOf('day').unix()) - this.notificationTime;
+							let time = (this.appointmentAllDayCheckboxChecked ? moment.unix(appointment.start).startOf('day').unix() : appointment.start) - this.notificationTime;
 
 							// Format the time in the message correctly
 							let title = appointment.name;
@@ -158,18 +188,20 @@ export class AppointmentModalComponent{
 			this.appointmentAllDayCheckboxChecked = true
 
 			// Set the notification time to 12 hours
-			this.notificationTime = 43200
+			this.SetReminderSelection(43200)
 		});
 		$('#appointment-all-day-checkbox').on('ifUnchecked', (event) => {
 			this.appointmentAllDayCheckboxChecked = false
 
 			// Set the notification time to 1 hour
-			this.notificationTime = 3600
+			this.SetReminderSelection(3600)
 		});
 		
 		$('#appointment-reminder-checkbox').on('ifChecked', (event) => this.reminderCheckboxChecked = true);
 		$('#appointment-reminder-checkbox').on('ifUnchecked', (event) => this.reminderCheckboxChecked = false);
-		$('#appointment-reminder-checkbox').iCheck('check');
+		if(this.reminderCheckboxChecked){
+			$('#appointment-reminder-checkbox').iCheck('check');
+		}
    }
 
    ResetNewObjects(date?: number){
@@ -208,6 +240,15 @@ export class AppointmentModalComponent{
 	}
 
 	onReminderOptionChanged(secondsBefore: number){
+		this.SetReminderSelection(secondsBefore);
+	}
+
+	SetReminderSelection(secondsBefore: number){
 		this.notificationTime = secondsBefore;
+
+		// Set the appropriate item in reminderTimes to selected = true
+		for(let item of this.reminderTimes){
+			item.selected = item.secondsBefore == secondsBefore;
+		}
 	}
 }

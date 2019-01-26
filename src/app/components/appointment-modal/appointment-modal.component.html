@@ -26,17 +26,13 @@
 		<div class="mx-auto mt-2" style="width: 250px;" [style.display]="pushSupported && dataService.user.IsLoggedIn ? 'block' : 'none'">
 			<input type="checkbox" id="appointment-reminder-checkbox"><label for="appointment-reminder-checkbox" class="ml-3">{{ locale.reminder }}</label>
 
-			<div class="form-group" style="width: 250px;">
-				<select class="form-control" id="sort-todos-select2" [disabled]="!reminderCheckboxChecked" (change)="onReminderOptionChanged($event.target.value)">
-					<option value="0">{{ locale.reminderTimes.minutes0 }}</option>
-					<option value="900">{{ locale.reminderTimes.minutes15 }}</option>
-					<option value="1800">{{ locale.reminderTimes.minutes30 }}</option>
-					<option value="3600" [selected]="!appointmentAllDayCheckboxChecked">{{ locale.reminderTimes.hour1 }}</option>
-					<option value="10800">{{ locale.reminderTimes.hours3 }}</option>
-					<option value="21600">{{ locale.reminderTimes.hours6 }}</option>
-					<option value="43200" [selected]="appointmentAllDayCheckboxChecked">{{ locale.reminderTimes.hours12 }}</option>
-					<option value="86400">{{ locale.reminderTimes.day1 }}</option>
-					<option value="604800">{{ locale.reminderTimes.week1 }}</option>
+			<div class="form-group mt-2" style="width: 250px;">
+				<select class="form-control" [disabled]="!reminderCheckboxChecked" (change)="onReminderOptionChanged($event.target.value)">
+					<option *ngFor="let item of reminderTimes" 
+								[value]="item.secondsBefore"
+								[selected]="item.selected">
+						{{ item.text }}
+					</option>
 				</select>
 			</div>
 		</div>
