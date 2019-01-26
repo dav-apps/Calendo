@@ -1,4 +1,4 @@
-import { TableObject, GetTableObject, GetAllTableObjects } from 'dav-npm';
+import { TableObject, GetTableObject, GetAllTableObjects, DeleteNotification } from 'dav-npm';
 import { environment } from "../../environments/environment";
 
 export class Appointment{
@@ -13,6 +13,11 @@ export class Appointment{
 	async Delete(){
 		var tableObject = await GetTableObject(this.uuid);
 		if(tableObject){
+			if(this.notificationUuid){
+				// Delete the notification
+				DeleteNotification(this.notificationUuid);
+			}
+
 			tableObject.Delete();
 		}
 	}
