@@ -4,7 +4,7 @@ declare var $: any;
 import { Appointment, CreateAppointment, GetAppointment, UpdateAppointment } from '../../models/Appointment';
 import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
-import { SubscribePushNotifications, CreateNotification, GetNotification } from 'dav-npm';
+import { SubscribePushNotifications, CreateNotification, GetNotification, DeleteNotification, UpdateNotification } from 'dav-npm';
 import * as moment from 'moment';
 
 @Component({
@@ -71,7 +71,7 @@ export class AppointmentModalComponent{
 				GetNotification(appointment.notificationUuid).then((notification: {time: number, interval: number, properties: object}) => {
 					if(notification){
 						this.reminderCheckboxChecked = true;
-						
+
 						// Calculate the seconds the notification is sent before the appointment starts
 						let difference = (appointment.allday ? moment.unix(appointment.start).startOf('day').unix() : appointment.start) - notification.time;
 						this.SetReminderSelection(difference);
@@ -118,46 +118,19 @@ export class AppointmentModalComponent{
 
 				if(this.reminderCheckboxChecked){
 					// Ask the user for notification permission
-					let permissionGranted = false;
-					let permissionResult = await Notification.requestPermission((result) => {
-						permissionGranted = permissionResult == "granted";
-					});
-					permissionGranted = permissionResult == "granted";
-					
-					if(permissionGranted){
+					if(await this.GetNotificationPermission() && await SubscribePushNotifications()){
 						// Create the notification
-						if(await SubscribePushNotifications()){
-							// Set the time of the notification to (the start of the day - seconds before) or (appointment start - seconds before)
-							let time = (this.appointmentAllDayCheckboxChecked ? moment.unix(appointment.start).startOf('day').unix() : appointment.start) - this.notificationTime;
-
-							// Format the time in the message correctly
-							let title = appointment.name;
-							let message = "";
-							if(this.appointmentAllDayCheckboxChecked){
-								let appointmentMoment = moment.unix(appointment.start);
-								message = this.notificationLocale.messageSpecificTime + ", " + appointmentMoment.format(this.notificationLocale.formats.allDay);
-							}else{
-								let appointmentStartMoment = moment.unix(appointment.start);
-								let appointmentEndMoment = moment.unix(appointment.end);
-
-								message = appointmentStartMoment.format(this.notificationLocale.formats.specificTime)
-											+ " - "
-											+ appointmentEndMoment.format(this.notificationLocale.formats.specificTime);
-							}
-
-							let notificationUuid = await CreateNotification(time, 0, {
-								title,
-								message
-							});
-
-							appointment.notificationUuid = notificationUuid;
-						}
+						// Set the time of the notification to (the start of the day - seconds before) or (appointment start - seconds before)
+						let time = (this.appointmentAllDayCheckboxChecked ? moment.unix(appointment.start).startOf('day').unix() : appointment.start) - this.notificationTime;
+						let notificationUuid = await CreateNotification(time, 0, this.GenerateNotificationProperties(appointment));
+						appointment.notificationUuid = notificationUuid;
 					}
 				}
 
 				appointment.uuid = await CreateAppointment(appointment);
 				this.save.emit(appointment);
 			}else{
+				// Update the appointment
 				var appointment = await GetAppointment(this.appointmentUuid);
 
 				appointment.name = this.appointmentName;
@@ -165,8 +138,28 @@ export class AppointmentModalComponent{
 				appointment.end = endUnix;
 				appointment.allday = this.appointmentAllDayCheckboxChecked;
 				appointment.color = color;
-				UpdateAppointment(appointment);
 
+				if(this.reminderCheckboxChecked){
+					let time = (this.appointmentAllDayCheckboxChecked ? moment.unix(appointment.start).startOf('day').unix() : appointment.start) - this.notificationTime;
+					let notificationProperties = this.GenerateNotificationProperties(appointment);
+
+					if(appointment.notificationUuid){
+						// There already is a notification; update it
+						UpdateNotification(appointment.notificationUuid, time, 0, notificationProperties);
+					}else{
+						// There was no notification before; create one
+						if(await this.GetNotificationPermission() && await SubscribePushNotifications()){
+							let notificationUuid = await CreateNotification(time, 0, notificationProperties);
+							appointment.notificationUuid = notificationUuid;
+						}
+					}
+				}else if(appointment.notificationUuid){
+					// Delete the notification
+					DeleteNotification(appointment.notificationUuid);
+					appointment.notificationUuid = "";
+				}
+
+				UpdateAppointment(appointment);
 				this.save.emit(appointment);
 			}
       }, () => {});
@@ -250,5 +243,34 @@ export class AppointmentModalComponent{
 		for(let item of this.reminderTimes){
 			item.selected = item.secondsBefore == secondsBefore;
 		}
+	}
+
+	GenerateNotificationProperties(appointment: Appointment) : {title: string, message: string}{
+		// Format the time in the message correctly
+		let title = appointment.name;
+		let message = "";
+		if(this.appointmentAllDayCheckboxChecked){
+			let appointmentMoment = moment.unix(appointment.start);
+			message = this.notificationLocale.messageSpecificTime + ", " + appointmentMoment.format(this.notificationLocale.formats.allDay);
+		}else{
+			let appointmentStartMoment = moment.unix(appointment.start);
+			let appointmentEndMoment = moment.unix(appointment.end);
+
+			message = appointmentStartMoment.format(this.notificationLocale.formats.specificTime)
+						+ " - "
+						+ appointmentEndMoment.format(this.notificationLocale.formats.specificTime);
+		}
+
+		return {
+			title,
+			message
+		}
+	}
+
+	async GetNotificationPermission() : Promise<boolean>{
+		let permissionResult = await Notification.requestPermission((result) => {
+			return result == "granted";
+		});
+		return permissionResult == "granted";
 	}
 }
