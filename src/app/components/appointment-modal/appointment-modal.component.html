@@ -6,54 +6,72 @@
 		</button>
    </div>
    <div class="modal-body row">
-      <ngb-datepicker class="mx-auto mb-3" #dp [(ngModel)]="appointmentDate" (navigate)="date = $event.next"></ngb-datepicker>
+		<div class="mx-auto">
+			<!-- Datepicker -->
+			<ngb-datepicker #dp [(ngModel)]="appointmentDate" (navigate)="date = $event.next"></ngb-datepicker>
 
-      <div class="mx-auto">
-			<p class="mt-4">
+			<!-- All Day Checkbox -->
+			<p class="mt-2 ml-1">
 				<input type="checkbox" id="appointment-all-day-checkbox">
 				<label for="appointment-all-day-checkbox" class="col-form-label ml-3">{{ locale.entireDay }}</label>
 			</p>
-
-         <label for="appointmentStartTime" class="col-form-label">{{ locale.start }}</label>
-         <ngb-timepicker id="appointment-start-time" [disabled]="appointmentAllDayCheckboxChecked"
-                        [(ngModel)]="appointmentStartTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
-         
-         <label for="appointmentEndTime" class="col-form-label mt-3">{{ locale.end }}</label>
-         <ngb-timepicker id="appointment-end-time" [disabled]="appointmentAllDayCheckboxChecked"
-                        [(ngModel)]="appointmentEndTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
 		</div>
 
-		<div class="mx-auto mt-2" style="width: 250px;" [style.display]="pushSupported && dataService.user.IsLoggedIn ? 'block' : 'none'">
-			<input type="checkbox" id="appointment-reminder-checkbox"><label for="appointment-reminder-checkbox" class="ml-3">{{ locale.reminder }}</label>
-
-			<div class="form-group mt-2" style="width: 250px;">
-				<select class="form-control" [disabled]="!reminderCheckboxChecked" (change)="onReminderOptionChanged($event.target.value)">
-					<option *ngFor="let item of reminderTimes" 
-								[value]="item.secondsBefore"
-								[selected]="item.selected">
-						{{ item.text }}
-					</option>
-				</select>
-			</div>
-		</div>
-		
-		<div class="mx-auto mt-2" style="width: 250px;">
-			<label>{{ locale.color }}</label>
-
-			<div class="row mx-auto">
-				<div class="rounded-circle m-1 appointment-color" 
-						[style.background-color]="selectedColor == i ? 'white' : '#' + color" 
-						[style.border]="selectedColor == i ? '5px solid #' + color : ''"
-						(click)="selectedColor = i"
-						*ngFor="let color of availableColors; let i = index;"></div>
+		<div class="mx-auto mb-3">
+			<!-- Start & End time pickers -->
+			<div class="mx-auto">
+				<div class="row">
+					<div class="col-5 offset-1 mr-1">
+						<label for="appointmentStartTime" class="col-form-label">{{ locale.start }}</label>
+						<ngb-timepicker id="appointment-start-time" [disabled]="appointmentAllDayCheckboxChecked"
+											[(ngModel)]="appointmentStartTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
+					</div>
+	
+					<div class="col-5">
+						<label for="appointmentEndTime" class="col-form-label">{{ locale.end }}</label>
+						<ngb-timepicker id="appointment-end-time" [disabled]="appointmentAllDayCheckboxChecked"
+											[(ngModel)]="appointmentEndTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
+					</div>
+				</div>
 			</div>
 		</div>
 
-      <div class="mx-auto mt-4" style="width: 250px;">
-         <label for="appointment-name" class="col-form-label">{{ locale.name }}</label>
-         <input id="appointment-name" class="form-control mx-auto" 
-               type="text" [placeholder]="locale.appointmentName" [(ngModel)]="appointmentName" />
-      </div>
+		<!-- Reminder -->
+		<div class="col-12">
+			<div class="mx-auto mt-2" style="width: 250px;" [style.display]="pushSupported && dataService.user.IsLoggedIn ? 'block' : 'none'">
+				<input type="checkbox" id="appointment-reminder-checkbox"><label for="appointment-reminder-checkbox" class="ml-3">{{ locale.reminder }}</label>
+	
+				<div class="form-group mt-2" style="width: 250px;">
+					<select class="form-control" [disabled]="!reminderCheckboxChecked" (change)="onReminderOptionChanged($event.target.value)">
+						<option *ngFor="let item of reminderTimes" 
+									[value]="item.secondsBefore"
+									[selected]="item.selected">
+							{{ item.text }}
+						</option>
+					</select>
+				</div>
+			</div>
+
+			<!-- Color -->
+			<div class="mx-auto mt-3" style="width: 250px;">
+				<label>{{ locale.color }}</label>
+	
+				<div class="row mx-auto">
+					<div class="rounded-circle m-1 appointment-color" 
+							[style.background-color]="selectedColor == i ? 'white' : '#' + color" 
+							[style.border]="selectedColor == i ? '5px solid #' + color : ''"
+							(click)="selectedColor = i"
+							*ngFor="let color of availableColors; let i = index;"></div>
+				</div>
+			</div>
+
+			<!-- Name -->
+			<div class="mx-auto mt-3" style="width: 250px;">
+				<label for="appointment-name" class="col-form-label">{{ locale.name }}</label>
+				<input id="appointment-name" class="form-control mx-auto" 
+						type="text" [placeholder]="locale.appointmentName" [(ngModel)]="appointmentName" />
+			</div>
+		</div>
    </div>
    <div class="modal-footer">
 		<button type="button" class="btn btn-primary" [disabled]="SetAppointmentSaveButtonDisabled()" (click)="c()">{{ locale.save }}</button>

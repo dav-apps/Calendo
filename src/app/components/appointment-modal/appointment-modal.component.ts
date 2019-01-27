@@ -22,8 +22,8 @@ export class AppointmentModalComponent{
    appointmentDate: NgbDateStruct;
    appointmentName: string;
    appointmentAllDayCheckboxChecked: boolean;
-   appointmentStartTime;
-   appointmentEndTime;
+   appointmentStartTime: {hour: number, minute: number};
+   appointmentEndTime: {hour: number, minute: number};
 	new: boolean = true;
 	appointmentUuid: string;
 	availableColors: string[] = ["D32F2F", "d67724", "FFD600", "388E3C", "43A047", "00B0FF", "1565C0", "283593", "7B1FA2", "757575", "000000"];
