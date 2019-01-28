@@ -30,7 +30,7 @@ export class AppointmentModalComponent{
 	selectedColor: number = 6;
 	reminderCheckboxChecked: boolean = true;
 	notificationTime: number = 43200;				// Saves the time of the notification in seconds before the start of the appointment
-	pushSupported: boolean = true;
+	showReminderOption: boolean = true;
 	reminderTimes: {secondsBefore: number, text: string, selected: boolean}[] = [];
 
 	constructor(private modalService: NgbModal,
@@ -41,8 +41,11 @@ export class AppointmentModalComponent{
 
    Show(appointment?: Appointment, date?: number){
 		// Check if push is supported
-		this.pushSupported = ('serviceWorker' in navigator) && ('PushManager' in window);
-
+		this.showReminderOption = ('serviceWorker' in navigator) 
+											&& ('PushManager' in window)
+											&& this.dataService.user.IsLoggedIn
+											&& Notification.permission != "denied";
+		
 		// Init reminderTimes
 		this.reminderTimes = [];
 		this.reminderTimes.push(
@@ -118,12 +121,11 @@ export class AppointmentModalComponent{
 
 				if(this.reminderCheckboxChecked){
 					// Ask the user for notification permission
-					if(await this.GetNotificationPermission() && await SubscribePushNotifications()){
+					if(await this.dataService.GetNotificationPermission() && await SubscribePushNotifications()){
 						// Create the notification
 						// Set the time of the notification to (the start of the day - seconds before) or (appointment start - seconds before)
 						let time = (this.appointmentAllDayCheckboxChecked ? moment.unix(appointment.start).startOf('day').unix() : appointment.start) - this.notificationTime;
-						let notificationUuid = await CreateNotification(time, 0, this.GenerateNotificationProperties(appointment));
-						appointment.notificationUuid = notificationUuid;
+						appointment.notificationUuid = await CreateNotification(time, 0, this.GenerateNotificationProperties(appointment));
 					}
 				}
 
@@ -148,7 +150,7 @@ export class AppointmentModalComponent{
 						UpdateNotification(appointment.notificationUuid, time, 0, notificationProperties);
 					}else{
 						// There was no notification before; create one
-						if(await this.GetNotificationPermission() && await SubscribePushNotifications()){
+						if(await this.dataService.GetNotificationPermission() && await SubscribePushNotifications()){
 							let notificationUuid = await CreateNotification(time, 0, notificationProperties);
 							appointment.notificationUuid = notificationUuid;
 						}
@@ -265,12 +267,5 @@ export class AppointmentModalComponent{
 			title,
 			message
 		}
-	}
-
-	async GetNotificationPermission() : Promise<boolean>{
-		let permissionResult = await Notification.requestPermission((result) => {
-			return result == "granted";
-		});
-		return permissionResult == "granted";
 	}
 }

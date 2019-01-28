@@ -37,8 +37,8 @@
 		</div>
 
 		<!-- Reminder -->
-		<div class="col-12">
-			<div class="mx-auto mt-2" style="width: 250px;" [style.display]="pushSupported && dataService.user.IsLoggedIn ? 'block' : 'none'">
+		<div class="col-12 mt-2">
+			<div class="mx-auto" style="width: 250px;" [style.display]="showReminderOption ? 'block' : 'none'">
 				<input type="checkbox" id="appointment-reminder-checkbox"><label for="appointment-reminder-checkbox" class="ml-3">{{ locale.reminder }}</label>
 	
 				<div class="form-group mt-2" style="width: 250px;">

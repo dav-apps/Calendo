@@ -667,4 +667,13 @@ export class DataService{
 		return value != null && value;
 	}
 	//#endregion
+
+	//#region Helper methods
+	async GetNotificationPermission() : Promise<boolean>{
+		let permissionResult = await Notification.requestPermission((result) => {
+			return result == "granted";
+		});
+		return permissionResult == "granted";
+	}
+	//#endregion
 }
