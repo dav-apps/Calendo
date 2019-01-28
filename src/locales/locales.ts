@@ -19,7 +19,8 @@ export const enUS = {
       addExistingGroup: "Add existing group",
       name: "Name",
       todoName: "Todo name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder"
    },
    appointmentItem: {
       edit: "Edit",
@@ -104,7 +105,10 @@ export const enUS = {
 				allDay: "LL",
 				specificTime: "LT"
 			}
-		}
+      },
+      todo: {
+         title: "Don't forget..."
+      }
 	}
 };
 
@@ -128,7 +132,8 @@ export const enGB = {
       addExistingGroup: "Add existing group",
       name: "Name",
       todoName: "Todo name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder"
    },
    appointmentItem: {
       edit: "Edit",
@@ -213,7 +218,10 @@ export const enGB = {
 				allDay: "LL",
 				specificTime: "LT"
 			}
-		}
+		},
+      todo: {
+         title: "Don't forget..."
+      }
 	}
 };
 
@@ -237,7 +245,8 @@ export const enNZ = {
       addExistingGroup: "Add existing group",
       name: "Name",
       todoName: "Todo name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder"
    },
    appointmentItem: {
       edit: "Edit",
@@ -322,7 +331,10 @@ export const enNZ = {
 				allDay: "LL",
 				specificTime: "LT"
 			}
-		}
+		},
+      todo: {
+         title: "Don't forget..."
+      }
 	}
 };
 
@@ -346,7 +358,8 @@ export const enIL = {
       addExistingGroup: "Add existing group",
       name: "Name",
       todoName: "Todo name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder"
    },
    appointmentItem: {
       edit: "Edit",
@@ -431,7 +444,10 @@ export const enIL = {
 				allDay: "LL",
 				specificTime: "LT"
 			}
-		}
+		},
+      todo: {
+         title: "Don't forget..."
+      }
 	}
 };
 
@@ -455,7 +471,8 @@ export const enIE = {
       addExistingGroup: "Add existing group",
       name: "Name",
       todoName: "Todo name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder"
    },
    appointmentItem: {
       edit: "Edit",
@@ -540,7 +557,10 @@ export const enIE = {
 				allDay: "LL",
 				specificTime: "LT"
 			}
-		}
+		},
+      todo: {
+         title: "Don't forget..."
+      }
 	}
 };
 
@@ -564,7 +584,8 @@ export const enCA = {
       addExistingGroup: "Add existing group",
       name: "Name",
       todoName: "Todo name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder"
    },
    appointmentItem: {
       edit: "Edit",
@@ -649,7 +670,10 @@ export const enCA = {
 				allDay: "LL",
 				specificTime: "LT"
 			}
-		}
+		},
+      todo: {
+         title: "Don't forget..."
+      }
 	}
 };
 
@@ -673,7 +697,8 @@ export const enAU = {
       addExistingGroup: "Add existing group",
       name: "Name",
       todoName: "Todo name",
-      save: "Save"
+      save: "Save",
+      reminder: "Reminder"
    },
    appointmentItem: {
       edit: "Edit",
@@ -758,7 +783,10 @@ export const enAU = {
 				allDay: "LL",
 				specificTime: "LT"
 			}
-		}
+		},
+      todo: {
+         title: "Don't forget..."
+      }
 	}
 };
 //#endregion
@@ -784,7 +812,8 @@ export const deDE = {
       addExistingGroup: "Bestehende Gruppe hinzufügen",
       name: "Name",
       todoName: "Name des Todos",
-      save: "Speichern"
+      save: "Speichern",
+      reminder: "Erinnerung"
    },
    appointmentItem: {
       edit: "Bearbeiten",
@@ -869,7 +898,10 @@ export const deDE = {
 				allDay: "LL",
 				specificTime: "LT"
 			}
-		}
+		},
+      todo: {
+         title: "Nicht vergessen..."
+      }
 	}
 };
 
@@ -893,7 +925,8 @@ export const deAT = {
       addExistingGroup: "Bestehende Gruppe hinzufügen",
       name: "Name",
       todoName: "Name des Todos",
-      save: "Speichern"
+      save: "Speichern",
+      reminder: "Erinnerung"
    },
    appointmentItem: {
       edit: "Bearbeiten",
@@ -978,7 +1011,10 @@ export const deAT = {
 				allDay: "LL",
 				specificTime: "LT"
 			}
-		}
+		},
+      todo: {
+         title: "Nicht vergessen..."
+      }
 	}
 };
 
@@ -1002,7 +1038,8 @@ export const deCH = {
       addExistingGroup: "Bestehende Gruppe hinzufügen",
       name: "Name",
       todoName: "Name des Todos",
-      save: "Speichern"
+      save: "Speichern",
+      reminder: "Erinnerung"
    },
    appointmentItem: {
       edit: "Bearbeiten",
@@ -1087,7 +1124,10 @@ export const deCH = {
 				allDay: "LL",
 				specificTime: "LT"
 			}
-		}
+		},
+      todo: {
+         title: "Nicht vergessen..."
+      }
 	}
 };
 //#endregion

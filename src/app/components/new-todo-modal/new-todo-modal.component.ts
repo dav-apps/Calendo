@@ -4,6 +4,8 @@ declare var $: any;
 import { Todo, CreateTodo, GetAllTodoGroups } from '../../models/Todo';
 import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
+import { SubscribePushNotifications, CreateNotification } from 'dav-npm';
+import * as moment from 'moment';
 
 @Component({
    selector: "calendo-new-todo-modal",
@@ -14,35 +16,57 @@ import { DataService } from '../../services/data-service';
 })
 export class NewTodoModalComponent{
    locale = enUS.newTodoModal;
+   notificationLocale = enUS.notifications.todo;
    @Output() save = new EventEmitter();
    @ViewChild('createTodoModal') todoModal: ElementRef;
    newTodoDate: NgbDateStruct;
    newTodoName: string;
-   newTodoSetDateCheckboxChecked: boolean;
+   newTodoSetDateCheckboxChecked: boolean = true
+   newTodoReminderCheckboxChecked: boolean = false
    newGroupName: string = "";
    todoGroups: string[] = [];
    allGroups: string[] = [];
+   todoReminderTime: {hour: number, minute: number};
+   showReminderOption: boolean = true;
 
    constructor(private modalService: NgbModal,
                private dataService: DataService){
       this.locale = this.dataService.GetLocale().newTodoModal;
+      this.notificationLocale = this.dataService.GetLocale().notifications.todo;
    }
 
-   ngOnInit(){}
+	ngOnInit(){}
 
    Show(date?: number){
       this.ResetNewObjects(date);
       this.GetAllTodoGroups();
 
-      this.modalService.open(this.todoModal).result.then(() => {
+      // Check if push is supported
+		this.showReminderOption = ('serviceWorker' in navigator) 
+                                 && ('PushManager' in window)
+                                 && this.dataService.user.IsLoggedIn
+                                 && Notification.permission != "denied";
+
+      this.modalService.open(this.todoModal).result.then(async () => {
          // Save new todo
          var todoTimeUnix: number = 0;
          if(this.newTodoSetDateCheckboxChecked){
             var todoTime = new Date(this.newTodoDate.year, this.newTodoDate.month - 1, this.newTodoDate.day, 0, 0, 0, 0);
             todoTimeUnix = Math.floor(todoTime.getTime() / 1000);
          }
-
          var todo = new Todo("", false, todoTimeUnix, this.newTodoName, this.todoGroups);
+
+         if(this.newTodoReminderCheckboxChecked){
+            // Ask the user for notification permission
+            if(await this.dataService.GetNotificationPermission() && await SubscribePushNotifications()){
+               // Create the notification
+               let notificationTime = moment.unix(todoTimeUnix).startOf('day').unix() 
+                           + this.todoReminderTime.hour * 60 * 60
+                           + this.todoReminderTime.minute * 60;
+               todo.notificationUuid = await CreateNotification(notificationTime, 0, this.GenerateNotificationProperties(todo));
+            }
+         }
+
          todo.uuid = CreateTodo(todo);
 
          this.save.emit(todo);
@@ -52,10 +76,20 @@ export class NewTodoModalComponent{
          checkboxClass: 'icheckbox_square-blue',
          radioClass: 'iradio_square'
       });
-
       $('#new-todo-set-date-checkbox').iCheck('check');
       $('#new-todo-set-date-checkbox').on('ifChecked', (event) => this.newTodoSetDateCheckboxChecked = true);
-      $('#new-todo-set-date-checkbox').on('ifUnchecked', (event) => this.newTodoSetDateCheckboxChecked = false);
+      $('#new-todo-set-date-checkbox').on('ifUnchecked', (event) => {
+         this.newTodoSetDateCheckboxChecked = false;
+         this.newTodoReminderCheckboxChecked = false;
+         $('#new-todo-reminder-checkbox').iCheck('uncheck');
+      });
+
+      $('#new-todo-reminder-checkbox').iCheck({
+         checkboxClass: 'icheckbox_square-blue',
+			radioClass: 'iradio_square',
+		});
+      $('#new-todo-reminder-checkbox').on('ifChecked', (event) => this.newTodoReminderCheckboxChecked = true);
+      $('#new-todo-reminder-checkbox').on('ifUnchecked', (event) => this.newTodoReminderCheckboxChecked = false);
    }
 
    ResetNewObjects(date?: number){
@@ -70,6 +104,8 @@ export class NewTodoModalComponent{
       this.todoGroups = [];
       this.newGroupName = "";
       this.allGroups = [];
+      this.todoReminderTime = {hour: 10, minute: 0};
+      this.newTodoReminderCheckboxChecked = false;
    }
 
    AddGroup(name: string){
@@ -99,6 +135,13 @@ export class NewTodoModalComponent{
       if(index !== -1){
          this.todoGroups.splice(index, 1);
          this.GetAllTodoGroups();
+      }
+   }
+
+   GenerateNotificationProperties(todo: Todo) : {title: string, message: string}{
+      return {
+         title: this.notificationLocale.title,
+         message: todo.name
       }
    }
 }

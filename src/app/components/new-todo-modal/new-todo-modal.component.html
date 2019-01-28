@@ -6,14 +6,28 @@
 		</button>
 	</div>
 	<div class="modal-body row">
-		<div class="mx-auto">
-			<p><input type="checkbox" id="new-todo-set-date-checkbox"><label for="new-todo-set-date-checkbox" class="ml-3">{{ locale.setDate }}</label></p>
+		<div class="mx-auto mb-4 px-4">
+			<!-- Set Date checkbox -->
+			<p>
+				<input type="checkbox" id="new-todo-set-date-checkbox">
+				<label for="new-todo-set-date-checkbox" class="ml-3">{{ locale.setDate }}</label>
+			</p>
 			<ngb-datepicker #dp [(ngModel)]="newTodoDate" 
 								(navigate)="date = $event.next" 
 								[disabled]="!newTodoSetDateCheckboxChecked"></ngb-datepicker>
 		</div>
+		<div class="mx-auto mb-4 px-4" [style.display]="showReminderOption ? 'block' : 'none'">
+			<!-- Reminder checkbox -->
+			<p>
+				<input type="checkbox" id="new-todo-reminder-checkbox" [disabled]="!newTodoSetDateCheckboxChecked">
+				<label for="new-todo-reminder-checkbox" 
+						[ngClass]="newTodoSetDateCheckboxChecked ? 'ml-3' : 'ml-3 text-muted'">{{ locale.reminder }}</label>
+			</p>
+			<ngb-timepicker id="todo-reminder-time" class="mx-auto" style="width: 100px" [disabled]="!newTodoReminderCheckboxChecked"
+								[(ngModel)]="todoReminderTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
+		</div>
 
-		<div class="mx-auto mt-4 col-10 offset-1">
+		<div class="mx-auto col-10 offset-1">
 			<div class="form-group">
 				<label for="new-group-name" class="col-form-label">{{ locale.addNewGroup }}</label>
 
