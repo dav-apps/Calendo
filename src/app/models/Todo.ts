@@ -1,4 +1,4 @@
-import { GetTableObject, TableObject, GetAllTableObjects } from 'dav-npm';
+import { GetTableObject, TableObject, GetAllTableObjects, DeleteNotification } from 'dav-npm';
 import { environment } from "../../environments/environment";
 
 export class Todo{
@@ -6,7 +6,8 @@ export class Todo{
                public completed: boolean, 
                public time: number, 
 					public name: string,
-					public groups: string[]){}
+					public groups: string[],
+					public notificationUuid: string = ""){}
 
 	AddGoup(name: string){
 		if(this.groups.findIndex(n => n === name) === -1){
@@ -34,6 +35,11 @@ export class Todo{
 	async Delete(){
 		var tableObject = await GetTableObject(this.uuid);
 		if(tableObject){
+			if(this.notificationUuid){
+				// Delete the notification
+				DeleteNotification(this.notificationUuid);
+			}
+
 			tableObject.Delete();
 		}
 	}
@@ -47,6 +53,10 @@ export class Todo{
 				{ name: environment.todoTimeKey, value: this.time.toString() },
 				{ name: environment.todoGroupsKey, value: ConvertGroupsArrayToString(this.groups) }
 			]);
+
+			if(this.notificationUuid){
+				tableObject.SetPropertyValue(environment.notificationUuidKey, this.notificationUuid);
+			}
       }
 	}
 }
@@ -99,6 +109,10 @@ export function CreateTodo(todo: Todo): string{
 		propertiesArray.push({name: environment.todoGroupsKey, value: groupsString});
 	}
 
+	if(todo.notificationUuid){
+		propertiesArray.push({name: environment.notificationUuidKey, value: todo.notificationUuid});
+	}
+
 	tableObject.SetPropertyValues(propertiesArray);
 
 	return tableObject.Uuid;
@@ -125,7 +139,10 @@ export function ConvertTableObjectToTodo(tableObject: TableObject): Todo{
 		});
 	}
 
-	return new Todo(tableObject.Uuid, completed, todoTime, tableObject.GetPropertyValue(environment.todoNameKey), groups);
+	var tableObjectNotificationUuid = tableObject.GetPropertyValue(environment.notificationUuidKey);
+	var notificationUuid = tableObjectNotificationUuid ? tableObjectNotificationUuid : "";
+
+	return new Todo(tableObject.Uuid, completed, todoTime, tableObject.GetPropertyValue(environment.todoNameKey), groups, notificationUuid);
 }
 
 function ConvertGroupsArrayToString(groups: string[]): string{

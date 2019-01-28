@@ -64,7 +64,7 @@ export async function CreateAppointment(appointment: Appointment): Promise<strin
 	]);
 
 	if(appointment.notificationUuid){
-		tableObject.SetPropertyValue(environment.appointmentNotificationUuidKey, appointment.notificationUuid);
+		tableObject.SetPropertyValue(environment.notificationUuidKey, appointment.notificationUuid);
 	}
 
    return tableObject.Uuid;
@@ -82,8 +82,8 @@ export async function UpdateAppointment(appointment: Appointment){
 			{ name: environment.appointmentColorKey, value: appointment.color }
 		]);
 		
-		if(tableObject.GetPropertyValue(environment.appointmentNotificationUuidKey) || appointment.notificationUuid){
-			await tableObject.SetPropertyValue(environment.appointmentNotificationUuidKey, appointment.notificationUuid);
+		if(tableObject.GetPropertyValue(environment.notificationUuidKey) || appointment.notificationUuid){
+			await tableObject.SetPropertyValue(environment.notificationUuidKey, appointment.notificationUuid);
 		}
 	}
 }
@@ -112,11 +112,8 @@ export function ConvertTableObjectToAppointment(tableObject: TableObject): Appoi
 		color = tableObjectAppointmentColor;
 	}
 
-	var notificationUuid = "";
-	var tableObjectNotificationUuid = tableObject.GetPropertyValue(environment.appointmentNotificationUuidKey);
-	if(tableObjectNotificationUuid){
-		notificationUuid = tableObjectNotificationUuid;
-	}
+	var tableObjectNotificationUuid = tableObject.GetPropertyValue(environment.notificationUuidKey);
+	var notificationUuid = tableObjectNotificationUuid ? tableObjectNotificationUuid : "";
 
 	return new Appointment(tableObject.Uuid, 
 									tableObject.GetPropertyValue(environment.appointmentNameKey),
