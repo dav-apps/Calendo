@@ -25,7 +25,7 @@
               "src/manifest.json",
               {
                 "glob": "**/*",
-                "input": "../node_modules/dav-npm/dist/lib/workers/",
+                "input": "node_modules/dav-npm/dist/lib/workers/",
                 "output": "./"
               }
             ],
