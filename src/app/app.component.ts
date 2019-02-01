@@ -27,7 +27,16 @@ export class AppComponent {
 	ngOnInit(){
 		this.setSize();
 
-		Dav.Initialize(environment.production, environment.appId, [environment.todoTableId, environment.appointmentTableId], [], {
+		let notificationOptions = {
+			icon: "/assets/icons/icon-192x192.png",
+			badge: "/favicon.png"
+		}
+
+		Dav.Initialize(environment.production, 
+							environment.appId, 
+							[environment.todoTableId, environment.appointmentTableId], 
+							[], 
+							notificationOptions, {
 			UpdateAllOfTable: (tableId: number) => {
 				if(tableId === environment.appointmentTableId){
 					this.dataService.LoadAllAppointments();
@@ -67,16 +76,6 @@ export class AppComponent {
 					if(todo){
 						this.dataService.RemoveTodo(todo);
 					}
-				}
-			},
-			ReceiveNotification: async (notification: {title: string, message: string}) => {
-				if('serviceWorker' in navigator){
-					let registration = await navigator.serviceWorker.getRegistration();
-					registration.showNotification(notification.title, {
-						icon: "/assets/icons/icon-192x192.png",
-						//badge: "/favicon.png",
-						body: notification.message
-					});
 				}
 			}
 		});
