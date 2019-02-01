@@ -24,8 +24,8 @@
               "src/web.config",
               "src/manifest.json",
               {
-                "glob": "**/*", 
-                "input": "node_modules/dav-npm/dist/lib/workers/", 
+                "glob": "**/*",
+                "input": "../node_modules/dav-npm/dist/lib/workers/",
                 "output": "./"
               }
             ],
