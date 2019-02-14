@@ -23,6 +23,7 @@
               "src/assets",
               "src/web.config",
               "src/manifest.json",
+              "src/.well-known/assetlinks.json",
               {
                 "glob": "**/*",
                 "input": "node_modules/dav-npm/dist/lib/workers/",

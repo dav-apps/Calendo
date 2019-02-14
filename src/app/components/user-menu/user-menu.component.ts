@@ -31,8 +31,9 @@ export class UserMenuComponent{
    }
 
    Logout(){
-      this.dataService.user.Logout();
-      window.location.href = "/";
+      this.dataService.user.Logout().then(() => {
+         window.location.href = "/";
+      });
    }
 
    ShowLoginPage(){
