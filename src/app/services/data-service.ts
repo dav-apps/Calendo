@@ -297,10 +297,8 @@ export class DataService{
 	}
 
 	AddTodoToStartPage(todo: Todo){
-		if(todo.time < moment().startOf('day').unix() && todo.time != 0) return;
-
 		// Check if the day of the todo is already in the array
-		let index = todo.time == 0 ? 0 : this.startDaysDates.findIndex(t => t == todo.time);
+		let index = todo.time < moment().startOf('day').unix() ? 0 : this.startDaysDates.findIndex(t => t == todo.time);
 
 		if(index !== -1){
 			// Check if the todo is already in the todos array of the day
