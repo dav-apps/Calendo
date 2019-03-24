@@ -60,6 +60,7 @@ export class CalendarPageComponent{
 		$("#mobileCalendarContainer").scroll(() => this.onScroll());
 
 		$(document).keydown((e) => {
+			if(this.showMobileLayout) return;
          if(e.keyCode === 38 || e.keyCode === 37){
 				// Arrow up or Arrow left
 				this.ShowPrevious();
@@ -70,6 +71,7 @@ export class CalendarPageComponent{
       });
 
       $(document).bind('mousewheel', (e) => {
+			if(this.showMobileLayout) return;
          if(e.originalEvent.wheelDelta > 0){
             // Wheel up
             this.ShowPrevious();
@@ -259,7 +261,14 @@ export class CalendarPageComponent{
 	}
 	
 	onResize(){
-      this.setSize();
+		let showMobileLayoutBefore = this.showMobileLayout;
+		this.setSize();
+		
+		// If it was desktop before and is now mobile
+		if(!showMobileLayoutBefore && this.showMobileLayout){
+			// Scroll to the current page
+			this.scrollToDate(moment())
+		}
 	}
 
 	dayClicked(date: number){
