@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
 import { TodosPageComponent } from './pages/todos-page/todos-page.component';
 import { AppointmentsPageComponent } from './pages/appointments-page/appointments-page.component';
+import { AccountPageComponent } from './pages/account-page/account-page.component';
 import { SettingsPageComponent } from './pages/settings-page/settings-page.component';
 import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
 import { CalendarDayPageComponent } from './pages/calendar-day-page/calendar-day-page.component';
@@ -30,6 +31,7 @@ import { environment } from '../environments/environment';
 		StartPageComponent,
 		TodosPageComponent,
 		AppointmentsPageComponent,
+		AccountPageComponent,
 		SettingsPageComponent,
 		CalendarPageComponent,
 		CalendarDayPageComponent,
@@ -48,11 +50,12 @@ import { environment } from '../environments/environment';
 		FormsModule,
 		RouterModule.forRoot([
 			{ path: '', component: StartPageComponent },
+			{ path: 'calendar', component: CalendarPageComponent },
+			{ path: 'calendar/day/:time', component: CalendarDayPageComponent },
 			{ path: 'todos', component: TodosPageComponent },
 			{ path: 'appointments', component: AppointmentsPageComponent },
-			{ path: 'settings', component: SettingsPageComponent },
-			{ path: 'calendar', component: CalendarPageComponent },
-			{ path: 'calendar/day/:time', component: CalendarDayPageComponent }
+			{ path: 'account', component: AccountPageComponent },
+			{ path: 'settings', component: SettingsPageComponent }
 		], {
 			useHash: false
 		}),
