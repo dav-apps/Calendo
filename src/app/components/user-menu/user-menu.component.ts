@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import * as Dav from 'dav-npm';
-import { environment } from '../../../environments/environment';
 import { enUS } from '../../../locales/locales';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data-service';
@@ -28,15 +26,5 @@ export class UserMenuComponent{
             }
          }
       });
-   }
-
-   Logout(){
-      this.dataService.user.Logout().then(() => {
-         window.location.href = "/";
-      });
-   }
-
-   ShowLoginPage(){
-      Dav.ShowLoginPage(environment.apiKey, environment.baseUrl);
    }
 }

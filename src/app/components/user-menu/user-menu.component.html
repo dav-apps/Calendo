@@ -1,15 +1,12 @@
-<button type="button" class="btn btn-sm btn-light" (click)="ShowLoginPage()" *ngIf="!dataService.user.IsLoggedIn">
-   {{ locale.login }}
-</button>
-
-<div ngbDropdown class="d-inline-block default-font" placement="bottom-right" *ngIf="dataService.user.IsLoggedIn">
+<div ngbDropdown class="d-inline-block default-font" placement="bottom-right">
    <button class="btn btn-primary" ngbDropdownToggle id="user-menu-dropdown">
-      <img [src]="dataService.user.Avatar" class="rounded-circle" height="35" width="35" />
+      <img *ngIf="dataService.user.IsLoggedIn" [src]="dataService.user.Avatar" class="rounded-circle" />
+      <i *ngIf="!dataService.user.IsLoggedIn" class="fas fa-user-circle" style="font-size: 25px; margin-top: 6px;"></i>
    </button>
    <div ngbDropdownMenu aria-labelledby="user-menu-dropdown">
-      <p class="font-weight-light my-auto py-1" style="font-size: 17px; margin-left: 23px;">{{ dataService.user.Username }}</p>
-      <div class="dropdown-divider"></div>
+      <p *ngIf="dataService.user.IsLoggedIn" class="font-weight-light my-auto py-1" style="font-size: 16px; margin-left: 23px;">{{ dataService.user.Username }}</p>
+		<div class="dropdown-divider" *ngIf="dataService.user.IsLoggedIn"></div>
+		<button class="dropdown-item" routerLink="/account">{{ locale.account }}</button>
       <button class="dropdown-item" routerLink="/settings">{{ locale.settings }}</button>
-      <button class="dropdown-item" (click)="Logout()">{{ locale.logout }}</button>
    </div>
 </div>
