@@ -1,0 +1,26 @@
+<div class="container mb-4">
+   <h1 class="text-center mt-3">{{ locale.header }}</h1>
+   <h5 class="text-center mt-4">{{ locale.text1 }}</h5>
+
+   <div class="row mt-3">
+      <div class="col-6 col-md-4 offset-md-1 text-center">
+         <i class="fas fa-sync" style="font-size: 60px"></i>
+         <p class="mt-4" style="font-size: 22px;">{{ locale.text2 }}</p>
+      </div>
+
+      <div class="col-6 col-md-4 offset-md-2 text-center">
+			<i class="fas fa-lock" style="font-size: 60px"></i>
+         <p class="mt-4" style="font-size: 22px;">{{ locale.text3 }}</p>
+      </div>
+	</div>
+	
+	<h3 class="text-center mt-5">{{ locale.text4 }}</h3>
+	<div class="d-flex justify-content-center mt-4">
+		<button type="button" class="btn btn-primary mr-2" (click)="ShowLoginPage()">{{ locale.login }}</button>
+		<button type="button" class="btn btn-primary ml-2" (click)="ShowSignupPage()">{{ locale.signup }}</button>
+	</div>
+
+	<div class="d-flex justify-content-center">
+		<a class="mt-4" href="https://dav-apps.tech" target="blank">{{ locale.linkText }}</a>
+	</div>
+</div>

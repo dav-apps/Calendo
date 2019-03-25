@@ -90,6 +90,16 @@ const enDefaults = {
          currentDay: "dddd, MMMM D, YYYY"
       }
    },
+   accountPage: {
+      header: "Your Account",
+      text1: "Save your calendar and access it from anywhere",
+      text2: "Access the same calendar on all your devices",
+      text3: "Make sure your todos and appointments don't get lost when you lose or reset your device",
+      text4: "Try it out for free",
+      login: "Log in",
+      signup: "Sign up",
+      linkText: "Visit dav-apps.tech"
+   },
    settingsPage: {
       header: "Settings",
       sortTodosBy: "Sort todos by",
@@ -228,6 +238,16 @@ const deDefaults = {
       formats: {
          currentDay: "dddd, D. MMMM YYYY"
       }
+   },
+   accountPage: {
+      header: "Dein Account",
+      text1: "Sichere dein Kalender und greife von überall darauf zu",
+      text2: "Nutze den gleichen Kalender auf all deinen Geräten",
+      text3: "Stelle sicher, dass deine Termine und Todos nicht verloren gehen, wenn du dein Gerät verlierst oder zurücksetzt",
+      text4: "Kostenlos ausprobieren",
+      login: "Anmelden",
+      signup: "Registrieren",
+      linkText: "Besuche dav-apps.tech"
    },
    settingsPage: {
       header: "Einstellungen",
