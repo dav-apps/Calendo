@@ -119,7 +119,7 @@ export class AppointmentModalComponent{
 				// Create the new appointment
 				var appointment = new Appointment("", this.appointmentName, startUnix, endUnix, this.appointmentAllDayCheckboxChecked, color);
 
-				if(this.reminderCheckboxChecked){
+				if(this.reminderCheckboxChecked && this.dataService.user.IsLoggedIn){
 					// Ask the user for notification permission
 					if(await this.dataService.GetNotificationPermission() && await SubscribePushNotifications()){
 						// Create the notification
