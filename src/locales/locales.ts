@@ -7,8 +7,7 @@ const enDefaults = {
       appointments: "Appointments"
    },
    userMenu: {
-      login: "Login",
-      logout: "Logout",
+		account: "Your Account",
       settings: "Settings"
    },
    newTodoModal: {
@@ -147,8 +146,7 @@ const deDefaults = {
       appointments: "Termine"
    },
    userMenu: {
-      login: "Anmelden",
-      logout: "Abmelden",
+		account: "Dein Account",
       settings: "Einstellungen"
    },
    newTodoModal: {
