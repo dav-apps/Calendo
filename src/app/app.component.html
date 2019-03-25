@@ -27,6 +27,6 @@
 	<calendo-user-menu style="margin-right: -6px" *ngIf="!isWindowSmall"></calendo-user-menu>
 </nav>
 
-<div (window:resize)="onResize($event)" [style.width.px]="windowWidth">
+<div (window:resize)="onResize($event)" [style.width.px]="windowWidth" class="default-font">
 	<router-outlet></router-outlet>
 </div>
