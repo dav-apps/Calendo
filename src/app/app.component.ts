@@ -15,7 +15,6 @@ import { ConvertTableObjectToTodo } from './models/Todo';
 })
 export class AppComponent {
 	locale = enUS.navbar;
-	isCollapsed = false;
 	isWindowSmall = false;
 	smallWindowMaxSize: number = 768;
 	windowWidth: number = 500;
