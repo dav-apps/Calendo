@@ -58,6 +58,7 @@ export class DataService{
 	//#region All pages
 	showOldAppointments: boolean = false;
 	sortTodosByDate: boolean = true;
+	isNavbarCollapsed: boolean = false;
 	//#endregion
 	
 	constructor(){
@@ -442,6 +443,14 @@ export class DataService{
 
 				if(index !== -1){
 					todoDay.todos.splice(index, 1);
+
+					// If the todoDay is empty, remove it
+					if(todoDay.todos.length == 0){
+						index = this.todoDays.indexOf(todoDay);
+						if(index !== -1){
+							this.todoDays.splice(index, 1);
+						}
+					}
 				}
 			});
 		}
@@ -457,6 +466,14 @@ export class DataService{
 
 				if(index !== -1){
 					todoGroup.todos.splice(index, 1);
+
+					// If the todoGroup is empty, remove it
+					if(todoGroup.todos.length == 0){
+						index = this.todoGroups.indexOf(todoGroup);
+						if(index !== -1){
+							this.todoGroups.splice(index, 1);
+						}
+					}
 				}
 			});
 		}

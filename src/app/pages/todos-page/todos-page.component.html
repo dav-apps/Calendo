@@ -8,6 +8,13 @@
 		</div>
 	</h1>
 
+	<p class="font-weight-light text-center mt-3" 
+		style="font-size: 18px; font-family: 'Segoe UI'" 
+		*ngIf="dataService.todoDaysWithoutDate.todos.length == 0 && dataService.todoDays.length == 0
+					&& dataService.todosWithoutGroup.length == 0 && dataService.todoGroups.length == 0">
+		{{ locale.noTodos }}
+	</p>
+
 	<div class="row">
 		<!-- Sort by date -->
 		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4" *ngIf="dataService.todoDaysWithoutDate.todos.length > 0">

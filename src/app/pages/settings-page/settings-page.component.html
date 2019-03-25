@@ -1,7 +1,7 @@
 <div class="container">
-   <h1 class="text-center">{{ locale.header }}</h1>
+   <h1 class="text-center mt-2">{{ locale.header }}</h1>
 
-   <div class="form-group" style="font-size: 18px; width: 150px">
+   <div class="form-group mt-4" style="font-size: 18px; width: 150px">
       <label for="sort-todos-select">{{ locale.sortTodosBy }}</label>
       <select class="form-control" id="sort-todos-select2" (change)="onSortTodosSelectChanged($event.target.value)">
          <option value="0" [selected]="sortTodoByDateSelected">{{ locale.sortTodosByDate }}</option>

@@ -69,13 +69,15 @@ const enDefaults = {
       header: "Todos",
       sortByGroup: "Sort by group",
       sortByDate: "Sort by date",
-      newTodo: "New Todo"
+      newTodo: "New Todo",
+      noTodos: "You have no todos"
    },
    appointmentsPage: {
       header: "Appointments",
       showOldAppointments: "Show old appointments",
       hideOldAppointments: "Hide old appointments",
-      newAppointment: "New appointment"
+      newAppointment: "New appointment",
+      noAppointments: "You have no appointments"
    },
    calendarPage: {
       todo: "Todo",
@@ -218,13 +220,15 @@ const deDefaults = {
       header: "Todos",
       sortByGroup: "Nach Gruppe sortieren",
       sortByDate: "Nach Datum sortieren",
-      newTodo: "Neues Todo"
+      newTodo: "Neues Todo",
+      noTodos: "Du hast keine Todos"
    },
    appointmentsPage: {
       header: "Termine",
       showOldAppointments: "Alte Termine einblenden",
       hideOldAppointments: "Alte Termine ausblenden",
-      newAppointment: "Neuer Termin"
+      newAppointment: "Neuer Termin",
+      noAppointments: "Du hast keine Termine"
    },
    calendarPage: {
       todo: "Todo",
