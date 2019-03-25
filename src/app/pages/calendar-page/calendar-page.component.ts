@@ -27,13 +27,13 @@ export class CalendarPageComponent{
 	calendarDayHeight: number = this.showMobileLayout ? this.calendarHeight / 7 :  this.calendarHeight / 5;
    calendarDayWidth: number = window.innerWidth / 7;
 
-	topDay: moment.Moment = moment();
+	topDay: moment.Moment = moment();	// The day at the very top of the mobile view
 	currentDay: moment.Moment = moment();
 	currentDayOfWeek: number = 0;
 	position: number = 1;
 	visibleRows: number = 5;		// The number of days that are visible
-	dayBuffer: number = 14;			// The number of days before and after the current day at the beginning
-	scrolled: boolean = false;
+	dayBuffer: number = 14;			// The number of days of each before and after the current day
+	scrolled: boolean = false;		// If true, load the todos and appointments in the days after the 2 seconds interval
 	currentWeekDays: string[] = ["1", "2", "3", "4", "5", "6", "7"];
 
 	constructor(public dataService: DataService,
@@ -112,23 +112,26 @@ export class CalendarPageComponent{
 	}
 	
 	onScroll(){
-		if(!this.isInitializing){
-			if(this.showMobileLayout){
-				let bufferHeight = this.dayBuffer * this.calendarDayHeight;
-				let calendarHeightWithoutBuffer = (this.dataService.mobileCalendarDaysDates.length * this.calendarDayHeight) - bufferHeight;
+		if(!this.isInitializing && this.showMobileLayout){
+			let bufferAbove = this.dayBuffer * this.calendarDayHeight;		// The height of all days before the current day
+			let bufferBelow = (this.dataService.mobileCalendarDaysDates.length * this.calendarDayHeight) - bufferAbove;		// The height of the days from the current day to the last one
 
-				if(this.mobileCalendarContainer.nativeElement.scrollTop < bufferHeight){
-					this.addDayTop();
-					this.scrolled = true;
-				}else if(this.mobileCalendarContainer.nativeElement.scrollTop > calendarHeightWithoutBuffer){
-					this.addDayBottom();
-					this.scrolled = true;
-				}else{
-					this.position = Math.floor(this.mobileCalendarContainer.nativeElement.scrollTop / this.calendarDayHeight);
-					this.currentDay = moment.unix(this.topDay.unix()).add(this.position, 'days');
-					
-					this.updateCurrentWeekDays();
-				}
+			if(this.mobileCalendarContainer.nativeElement.scrollTop < bufferAbove){
+				// The user scrolled into the buffer above
+				this.addDayTop();
+				this.scrolled = true;
+
+				// Update the scrollTop value (only needed in EdgeHTML)
+				this.mobileCalendarContainer.nativeElement.scrollTop += this.calendarDayHeight;
+			}else if(this.mobileCalendarContainer.nativeElement.scrollTop > bufferBelow){
+				// The user scrolled into the buffer below
+				this.addDayBottom();
+				this.scrolled = true;
+			}else{
+				this.position = Math.floor(this.mobileCalendarContainer.nativeElement.scrollTop / this.calendarDayHeight);
+				this.currentDay = moment.unix(this.topDay.unix()).add(this.position, 'days');
+				
+				this.updateCurrentWeekDays();
 			}
 		}
 	}
@@ -205,6 +208,7 @@ export class CalendarPageComponent{
    addDayTop(){
       this.topDay.subtract(1, 'day');
 
+		// Add a new entry at the beginning of the mobileCalendarDaysDates and the todos and appointments arrays
 		this.dataService.mobileCalendarDaysDates.unshift(this.topDay.startOf('day').unix());
 		this.dataService.mobileCalendarDaysAppointments.unshift([]);
 		this.dataService.mobileCalendarDaysTodos.unshift([]);
@@ -213,6 +217,7 @@ export class CalendarPageComponent{
    addDayBottom(){
 		let date = moment.unix(this.topDay.unix()).startOf('day').add(this.dataService.mobileCalendarDaysDates.length, 'days').startOf('day');
 
+		// Add a new entry at the end of the mobileCalendarDaysDates and the todos and appointments arrays
 		this.dataService.mobileCalendarDaysDates.push(date.unix());
 		this.dataService.mobileCalendarDaysAppointments.push([]);
 		this.dataService.mobileCalendarDaysTodos.push([]);
