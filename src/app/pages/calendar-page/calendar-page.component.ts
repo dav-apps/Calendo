@@ -4,6 +4,7 @@ import * as moment from 'moment';
 declare var $: any;
 import { DataService } from '../../services/data-service';
 import { enUS } from '../../../locales/locales';
+import * as platform from 'platform';
 
 @Component({
    selector: "calendo-calendar-page",
@@ -121,8 +122,10 @@ export class CalendarPageComponent{
 				this.addDayTop();
 				this.scrolled = true;
 
-				// Update the scrollTop value (only needed in EdgeHTML)
-				this.mobileCalendarContainer.nativeElement.scrollTop += this.calendarDayHeight;
+				// Update the scrollTop value (only needed in Edge and Firefox)
+				if(platform.name.includes("Firefox") || platform.name.includes("Edge")){
+					this.mobileCalendarContainer.nativeElement.scrollTop += this.calendarDayHeight;
+				}
 			}else if(this.mobileCalendarContainer.nativeElement.scrollTop > bufferBelow){
 				// The user scrolled into the buffer below
 				this.addDayBottom();
