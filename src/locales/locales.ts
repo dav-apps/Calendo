@@ -110,7 +110,10 @@ const enDefaults = {
       sortTodosBy: "Sort todos by",
       sortTodosByDate: "date",
       sortTodosByGroup: "group",
-      showOldAppointments: "Show old appointments"
+      showOldAppointments: "Show old appointments",
+      privacy: "Privacy Policy",
+      github: "Calendo on GitHub",
+      android: "Calendo for Android"
 	},
 	notifications: {
 		appointment: {
@@ -264,7 +267,10 @@ const deDefaults = {
       sortTodosBy: "Sortiere Todos nach",
       sortTodosByDate: "Datum",
       sortTodosByGroup: "Gruppe",
-      showOldAppointments: "Alte Termine anzeigen"
+      showOldAppointments: "Alte Termine anzeigen",
+      privacy: "Datenschutzerklärung",
+      github: "Calendo auf GitHub",
+      android: "Calendo für Android"
 	},
 	notifications: {
 		appointment: {

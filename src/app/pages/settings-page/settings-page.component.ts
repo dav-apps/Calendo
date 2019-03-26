@@ -14,10 +14,12 @@ declare var $: any;
 export class SettingsPageComponent{
    locale = enUS.settingsPage;
    sortTodoByDateSelected: boolean = false;
-   version: string = environment.version;
+	version: string = environment.version;
+	isWindows: boolean = false;
 
    constructor(public dataService: DataService){
-      this.locale = this.dataService.GetLocale().settingsPage;
+		this.locale = this.dataService.GetLocale().settingsPage;
+		this.isWindows = window["Windows"] != null;
    }
 
    async ngOnInit(){

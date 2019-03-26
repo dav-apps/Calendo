@@ -16,8 +16,9 @@
    <!-- App information -->
    <div class="mt-5">
       <p>
-         <a href="https://dav-apps.tech/privacy" target="blank" class="text-secondary">Privacy Policy</a><br>
-         <a href="https://github.com/Dav2070/Calendo" target="blank" class="text-secondary">Calendo on GitHub</a>
+         <a href="https://dav-apps.tech/privacy" target="blank" class="text-secondary">{{ locale.privacy }}</a><br>
+         <a href="https://github.com/Dav2070/Calendo" target="blank" class="text-secondary">{{ locale.github }}</a><br>
+         <a href="https://play.google.com/store/apps/details?id=app.dav.calendo" target="blank" class="text-secondary" *ngIf="isWindows">{{ locale.android }}</a>
       </p>
       <p>
          Version {{ version }}<br>

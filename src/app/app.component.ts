@@ -19,7 +19,7 @@ export class AppComponent {
 	smallWindowMaxSize: number = 768;
 	windowWidth: number = 500;
 
-	constructor(private dataService: DataService){
+	constructor(public dataService: DataService){
 		this.locale = this.dataService.GetLocale().navbar;
 	}
 
