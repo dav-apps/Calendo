@@ -1,7 +1,7 @@
 <div ngbDropdown class="d-inline-block default-font" placement="bottom-right">
    <button class="btn btn-primary" ngbDropdownToggle id="user-menu-dropdown">
-      <img *ngIf="dataService.user.IsLoggedIn" [src]="dataService.user.Avatar" class="rounded-circle" />
-      <i *ngIf="!dataService.user.IsLoggedIn" class="fas fa-user-circle" style="font-size: 25px; margin-top: 6px;"></i>
+      <span *ngIf="!dataService.user.IsLoggedIn"><i class="fas fa-user-circle" style="font-size: 25px; margin-top: 6px;"></i></span>
+      <img *ngIf="dataService.user.IsLoggedIn" [src]="dataService.user.Avatar" class="rounded-circle" height="34" width="34" />
    </button>
    <div ngbDropdownMenu aria-labelledby="user-menu-dropdown">
       <p *ngIf="dataService.user.IsLoggedIn" class="font-weight-light my-auto py-1" style="font-size: 16px; margin-left: 23px;">{{ dataService.user.Username }}</p>

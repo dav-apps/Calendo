@@ -99,8 +99,11 @@ const enDefaults = {
       text3: "Make sure your todos and appointments don't get lost when you lose or reset your device",
       text4: "Try it out for free",
       login: "Log in",
+      logout: "Log out",
       signup: "Sign up",
-      linkText: "Visit dav-apps.tech"
+      linkText: "Visit dav-apps.tech",
+      storageUsed: "{0} GB of {1} GB used",
+      upgradeLink: "Need more?"
    },
    settingsPage: {
       header: "Settings",
@@ -250,8 +253,11 @@ const deDefaults = {
       text3: "Stelle sicher, dass deine Termine und Todos nicht verloren gehen, wenn du dein Gerät verlierst oder zurücksetzt",
       text4: "Kostenlos ausprobieren",
       login: "Anmelden",
+      logout: "Abmelden",
       signup: "Registrieren",
-      linkText: "Besuche dav-apps.tech"
+      linkText: "Besuche dav-apps.tech",
+      storageUsed: "{0} GB von {1} GB verwendet",
+      upgradeLink: "Brauchst du mehr?"
    },
    settingsPage: {
       header: "Einstellungen",

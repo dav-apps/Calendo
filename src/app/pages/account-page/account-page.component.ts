@@ -13,7 +13,7 @@ export class AccountPageComponent{
 
    constructor(public dataService: DataService){
       this.locale = this.dataService.GetLocale().accountPage;
-   }
+	}
    
    ShowLoginPage(){
       Dav.ShowLoginPage(environment.apiKey, environment.baseUrl);
@@ -27,5 +27,14 @@ export class AccountPageComponent{
       this.dataService.user.Logout().then(() => {
          window.location.href = "/";
       });
-   }
+	}
+	
+	bytesToGigabytes(bytes: number, rounding: number){
+		if(bytes == 0) return 0;
+		return Math.round(bytes / 1000000000).toFixed(rounding);
+	}
+
+	getUsedStoragePercentage(){
+		return (this.dataService.user.UsedStorage / this.dataService.user.TotalStorage) * 100;
+	}
 }
