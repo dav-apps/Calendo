@@ -20,6 +20,7 @@ import { SmallAppointmentItemComponent } from './components/small-appointment-it
 import { NewTodoModalComponent } from './components/new-todo-modal/new-todo-modal.component';
 import { AppointmentModalComponent } from './components/appointment-modal/appointment-modal.component';
 import { DeleteAppointmentModalComponent } from './components/delete-appointment-modal/delete-appointment-modal.component';
+import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
 import { TodoGroupBadgeComponent } from './components/todo-group-badge/todo-group-badge.component';
 import { DataService } from './services/data-service';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -43,6 +44,7 @@ import { environment } from '../environments/environment';
 		NewTodoModalComponent,
 		AppointmentModalComponent,
 		DeleteAppointmentModalComponent,
+		LogoutModalComponent,
 		TodoGroupBadgeComponent
   	],
   	imports: [

@@ -57,6 +57,12 @@ const enDefaults = {
       deleteWarning: "Are you sure you want to delete the following appointment?",
       delete: "Delete"
    },
+   logoutModal: {
+      header: "Log out",
+      message: "Are you sure you want to log out?",
+      logout: "Log out",
+      cancel: "Cancel"
+   },
    startPage: {
 		appointments: "Appointments",
 		todos: "Todos",
@@ -213,6 +219,12 @@ const deDefaults = {
       header: "Termin löschen",
       deleteWarning: "Bist du dir sicher, dass du diesen Termin löschen willst?",
       delete: "Löschen"
+	},
+	logoutModal: {
+      header: "Abmelden",
+      message: "Bist du dir sicher, dass du dich abmelden möchtest?",
+      logout: "Abmelden",
+      cancel: "Abbrechen"
    },
    startPage: {
 		appointments: "Termine",
