@@ -41,6 +41,7 @@ export class CalendarPageComponent{
 					private router: Router){
 		this.locale = this.dataService.GetLocale().calendarPage;
 		moment.locale(this.dataService.locale);
+		window["Windows"].UI.Core.SystemNavigationManager.getForCurrentView().appViewBackButtonVisibility = window["Windows"].UI.Core.AppViewBackButtonVisibility.collapsed;
 		
 		// Set the weekday labels in the current language
 		let weekdays = moment.weekdaysMin();

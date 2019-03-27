@@ -19,7 +19,8 @@ export class SettingsPageComponent{
 
    constructor(public dataService: DataService){
 		this.locale = this.dataService.GetLocale().settingsPage;
-		this.isWindows = window["Windows"] != null;
+      this.isWindows = window["Windows"] != null;
+		window["Windows"].UI.Core.SystemNavigationManager.getForCurrentView().appViewBackButtonVisibility = window["Windows"].UI.Core.AppViewBackButtonVisibility.collapsed;
    }
 
    async ngOnInit(){

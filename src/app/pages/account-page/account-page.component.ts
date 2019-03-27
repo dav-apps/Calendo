@@ -16,6 +16,7 @@ export class AccountPageComponent{
 
    constructor(public dataService: DataService){
       this.locale = this.dataService.GetLocale().accountPage;
+      window["Windows"].UI.Core.SystemNavigationManager.getForCurrentView().appViewBackButtonVisibility = window["Windows"].UI.Core.AppViewBackButtonVisibility.collapsed;
 	}
    
    ShowLoginPage(){

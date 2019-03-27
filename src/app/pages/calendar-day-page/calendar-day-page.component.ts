@@ -24,6 +24,7 @@ export class CalendarDayPageComponent{
                private route: ActivatedRoute){
       this.locale = this.dataService.GetLocale().calendarDayPage;
       moment.locale(this.dataService.locale);
+      window["Windows"].UI.Core.SystemNavigationManager.getForCurrentView().appViewBackButtonVisibility = window["Windows"].UI.Core.AppViewBackButtonVisibility.collapsed;
    }
 
    ngOnInit(){

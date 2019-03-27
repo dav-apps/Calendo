@@ -18,6 +18,7 @@ export class AppointmentsPageComponent{
 
    constructor(public dataService: DataService){
       this.locale = this.dataService.GetLocale().appointmentsPage;
+      window["Windows"].UI.Core.SystemNavigationManager.getForCurrentView().appViewBackButtonVisibility = window["Windows"].UI.Core.AppViewBackButtonVisibility.collapsed;
    }
 
    ngOnInit(){}

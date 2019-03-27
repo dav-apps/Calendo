@@ -29,7 +29,7 @@ export class AppComponent {
 
 		let notificationOptions = {
 			icon: "/assets/icons/icon-192x192.png",
-			badge: "/favicon.png"
+			badge: "/favicon.ico"
 		}
 
 		Dav.Initialize(environment.production, 
