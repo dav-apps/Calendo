@@ -25,6 +25,7 @@ export class AppComponent {
 
 	ngOnInit(){
 		this.setSize();
+		this.setTitleBarColor();
 
 		let notificationOptions = {
 			icon: "/assets/icons/icon-192x192.png",
@@ -89,5 +90,25 @@ export class AppComponent {
 	setSize(){
 		this.isWindowSmall = (window.innerWidth < this.smallWindowMaxSize);
 		this.windowWidth = window.innerWidth - 15;
+	}
+
+	setTitleBarColor(){
+		if(window["Windows"] && window["Windows"].UI.ViewManagement){
+			// #007bff
+			var themeColor = {
+				r: 0,
+				g: 123,
+				b: 255,
+				a: 255
+			}
+
+			let titleBar = window["Windows"].UI.ViewManagement.ApplicationView.getForCurrentView().titleBar;
+			titleBar.foregroundColor = themeColor;
+			titleBar.backgroundColor = themeColor;
+			titleBar.buttonBackgroundColor = themeColor;
+			titleBar.buttonInactiveBackgroundColor = themeColor;
+			titleBar.inactiveForegroundColor = themeColor;
+			titleBar.inactiveBackgroundColor = themeColor;
+		}
 	}
 }
