@@ -44,7 +44,9 @@
 			
 			<p class="mt-2" style="margin-bottom: 2px">{{ locale.storageUsed.replace("{0}", bytesToGigabytes(dataService.user.UsedStorage, 1)).replace("{1}", bytesToGigabytes(dataService.user.TotalStorage, 0)) }}</p>
 			<a href="https://dav-apps.tech/pricing" target="blank">{{ locale.upgradeLink }}</a><br>
-			<button type="button" class="btn btn-outline-danger btn-sm" style="margin-top: 13px" (click)="Logout()">{{ locale.logout }}</button>
+			<button type="button" class="btn btn-outline-danger btn-sm" style="margin-top: 13px" (click)="ShowLogoutModal()">{{ locale.logout }}</button>
 		</div>
 	</div>
+
+	<calendo-logout-modal (logout)="Logout()"></calendo-logout-modal>
 </div>
