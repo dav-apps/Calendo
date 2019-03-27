@@ -55,7 +55,8 @@ const enDefaults = {
    deleteAppointmentModal: {
       header: "Delete appointment",
       deleteWarning: "Are you sure you want to delete the following appointment?",
-      delete: "Delete"
+      delete: "Delete",
+      cancel: "Cancel"
    },
    logoutModal: {
       header: "Log out",
@@ -218,7 +219,8 @@ const deDefaults = {
    deleteAppointmentModal: {
       header: "Termin löschen",
       deleteWarning: "Bist du dir sicher, dass du diesen Termin löschen willst?",
-      delete: "Löschen"
+      delete: "Löschen",
+      cancel: "Abbrechen"
 	},
 	logoutModal: {
       header: "Abmelden",
