@@ -1,28 +1,30 @@
-<div class="container">
+<div class="container d-flex flex-column">
    <h1 class="text-center mt-2">{{ locale.header }}</h1>
 
-   <div class="form-group mt-4" style="font-size: 18px; width: 150px">
-      <label for="sort-todos-select">{{ locale.sortTodosBy }}</label>
-      <select class="form-control" id="sort-todos-select2" (change)="onSortTodosSelectChanged($event.target.value)">
-         <option value="0" [selected]="sortTodoByDateSelected">{{ locale.sortTodosByDate }}</option>
-         <option value="1" [selected]="!sortTodoByDateSelected">{{ locale.sortTodosByGroup }}</option>
-      </select>
-   </div>
-
-   <p style="font-size: 18px" class="mt-4">
-      <input type="checkbox" id="show-old-appointments-checkbox"><label for="show-old-appointments-checkbox" class="ml-3">{{ locale.showOldAppointments }}</label>
-   </p>
-
-   <!-- App information -->
-   <div class="mt-5">
-      <p>
-         <a href="https://dav-apps.tech/privacy" target="blank" class="text-secondary">{{ locale.privacy }}</a><br>
-         <a href="https://github.com/Dav2070/Calendo" target="blank" class="text-secondary">{{ locale.github }}</a><br>
-         <a href="https://play.google.com/store/apps/details?id=app.dav.calendo" target="blank" class="text-secondary" *ngIf="isWindows">{{ locale.android }}</a>
-      </p>
-      <p>
-         Version {{ version }}<br>
-         Copyright &copy; 2019 by dav
-      </p>
-   </div>
+	<div class="mx-auto">
+		<div class="form-group mt-4" style="font-size: 18px; width: 200px">
+			<label for="sort-todos-select">{{ locale.sortTodosBy }}</label>
+			<select class="form-control" id="sort-todos-select2" (change)="onSortTodosSelectChanged($event.target.value)">
+				<option value="0" [selected]="sortTodoByDateSelected">{{ locale.sortTodosByDate }}</option>
+				<option value="1" [selected]="!sortTodoByDateSelected">{{ locale.sortTodosByGroup }}</option>
+			</select>
+		</div>
+	
+		<p style="font-size: 18px" class="mt-4">
+			<input type="checkbox" id="show-old-appointments-checkbox"><label for="show-old-appointments-checkbox" class="ml-3">{{ locale.showOldAppointments }}</label>
+		</p>
+	
+		<!-- App information -->
+		<div class="mt-5">
+			<p>
+				<a href="https://dav-apps.tech/privacy" target="blank" class="text-secondary">{{ locale.privacy }}</a><br>
+				<a href="https://github.com/Dav2070/Calendo" target="blank" class="text-secondary">{{ locale.github }}</a><br>
+				<a href="https://play.google.com/store/apps/details?id=app.dav.calendo" target="blank" class="text-secondary" *ngIf="isWindows">{{ locale.android }}</a>
+			</p>
+			<p>
+				Version {{ version }}<br>
+				Copyright &copy; 2019 by dav
+			</p>
+		</div>
+	</div>
 </div>
