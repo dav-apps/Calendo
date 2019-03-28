@@ -211,6 +211,9 @@ export class AppointmentModalComponent{
       this.appointmentStartTime = { hour: 15, minute: 0 };
 		this.appointmentEndTime = { hour: 16, minute: 0 };
 		this.reminderCheckboxChecked = true;
+
+		// Select a random color
+		this.selectedColor = Math.floor(Math.random() * this.availableColors.length);
    }
 
    SetAppointmentSaveButtonDisabled(): boolean{
