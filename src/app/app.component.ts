@@ -27,6 +27,9 @@ export class AppComponent {
 		this.setSize();
 		this.setTitleBarColor();
 
+		// Set the background colors
+		this.dataService.SetTheme();
+
 		let notificationOptions = {
 			icon: "/assets/icons/icon-192x192.png",
 			badge: "/favicon.ico"

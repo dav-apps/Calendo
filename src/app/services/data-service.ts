@@ -59,6 +59,7 @@ export class DataService{
 	showOldAppointments: boolean = false;
 	sortTodosByDate: boolean = true;
 	isNavbarCollapsed: boolean = false;
+	darkTheme: boolean = false;
 	//#endregion
 	
 	constructor(){
@@ -232,6 +233,14 @@ export class DataService{
 	HideWindowsBackButton(){
 		if(window["Windows"]){
 			window["Windows"].UI.Core.SystemNavigationManager.getForCurrentView().appViewBackButtonVisibility = window["Windows"].UI.Core.AppViewBackButtonVisibility.collapsed;
+		}
+	}
+
+	SetTheme(){
+		if(this.darkTheme){
+			document.body.setAttribute("theme", "dark");
+		}else{
+			document.body.setAttribute("theme", "light");
 		}
 	}
 
