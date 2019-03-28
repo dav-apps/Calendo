@@ -141,10 +141,12 @@ export var enUS = enDefaults;
 export var enGB = enDefaults;
 enGB.startPage.formats.smallDate = "D/M";
 enGB.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY";
+enGB.appointmentModal.color = "Colour";
 
 export var enNZ = enDefaults;
 enNZ.startPage.formats.smallDate = "D/M";
 enNZ.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY";
+enNZ.appointmentModal.color = "Colour";
 
 export var enIL = enDefaults;
 enIL.startPage.formats.smallDate = "D/M";
