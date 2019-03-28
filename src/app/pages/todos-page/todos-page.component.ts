@@ -18,7 +18,7 @@ export class TodosPageComponent{
 
 	constructor(public dataService: DataService){
 		this.locale = this.dataService.GetLocale().todosPage;
-		window["Windows"].UI.Core.SystemNavigationManager.getForCurrentView().appViewBackButtonVisibility = window["Windows"].UI.Core.AppViewBackButtonVisibility.collapsed;
+		this.dataService.HideWindowsBackButton();
 	}
 
 	ShowNewTodoModal(){

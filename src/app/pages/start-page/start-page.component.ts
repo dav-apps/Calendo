@@ -32,8 +32,8 @@ export class StartPageComponent{
 		this.locale = this.dataService.GetLocale().startPage;
 		moment.locale(this.dataService.locale);
 
-		// Disable the back button on Windows
-		window["Windows"].UI.Core.SystemNavigationManager.getForCurrentView().appViewBackButtonVisibility = window["Windows"].UI.Core.AppViewBackButtonVisibility.collapsed;
+		// Hide the title bar back button on Windows
+		this.dataService.HideWindowsBackButton();
 	}
 
 	ngOnInit(){

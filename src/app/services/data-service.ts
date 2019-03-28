@@ -229,6 +229,12 @@ export class DataService{
 		return locales.enUS;
 	}
 
+	HideWindowsBackButton(){
+		if(window["Windows"]){
+			window["Windows"].UI.Core.SystemNavigationManager.getForCurrentView().appViewBackButtonVisibility = window["Windows"].UI.Core.AppViewBackButtonVisibility.collapsed;
+		}
+	}
+
 	//#region StartPage
 	AddAppointmentToStartPage(appointment: Appointment){
 		if(appointment.start < moment().startOf('day').unix()) return;
