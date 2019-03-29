@@ -20,7 +20,7 @@ export class SettingsPageComponent{
    constructor(public dataService: DataService){
 		this.locale = this.dataService.GetLocale().settingsPage;
       this.isWindows = window["Windows"] != null;
-		this.dataService.HideWindowsBackButton();
+      this.dataService.HideWindowsBackButton();
    }
 
    async ngOnInit(){
