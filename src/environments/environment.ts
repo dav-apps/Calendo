@@ -21,9 +21,19 @@ export const environment = {
 	appointmentColorKey: "color",
 	appointmentDefaultColor: "1565C0",
 	notificationUuidKey: "notification_uuid",
+	visitKey: "visit",
+	// Settings keys
 	settingsSortTodosByDateKey: "settings-sortTodosByDate",
-	settingsShowOldAppointments: "settings-showOldAppointments",
-	visitKey: "visit"
+	settingsShowOldAppointmentsKey: "settings-showOldAppointments",
+	settingsThemeKey: "settings-theme",
+	// Settings defaults
+	settingsSortTodosByDateDefault: true,
+	settingsShowOldAppointmentsDefault: false,
+	settingsThemeDefault: "light",
+	// Other constants
+	lightThemeKey: "light",
+	darkThemeKey: "dark",
+	systemThemeKey: "system"
 };
 
 /*
