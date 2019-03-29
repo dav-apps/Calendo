@@ -1,7 +1,7 @@
 <div class="container">
-   <h1 class="text-center">{{ getCurrentDate() }}</h1>
+   <h1 class="text-center mt-2 text-color">{{ getCurrentDate() }}</h1>
 
-   <div class="d-flex flex-column">
+   <div class="d-flex flex-column text-color">
       <h2 class="mt-4 mb-3">
          {{ locale.appointments }}
          <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="showNewAppointmentModal()"><i class="fas fa-plus"></i></button>
@@ -11,7 +11,7 @@
       <calendo-small-appointment-item class="d-inline-flex" [appointment]="appointment" *ngFor="let appointment of dataService.selectedDayAppointments"></calendo-small-appointment-item>
    </div>
    
-   <div>
+   <div class="text-color">
       <h2 class="mt-4 mb-3">
          {{ locale.todos }}
          <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="showNewTodoModal()"><i class="fas fa-plus"></i></button>
