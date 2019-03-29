@@ -1,11 +1,11 @@
 <ng-template #deleteAppointmentModal let-c="close" let-d="dismiss">
-   <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">{{ locale.header }}</h4>
+   <div class="modal-header theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
+      <h4 class="modal-title text-color" id="modal-basic-title">{{ locale.header }}</h4>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-         <span aria-hidden="true">&times;</span>
+         <span aria-hidden="true" class="text-color">&times;</span>
       </button>
    </div>
-   <div class="modal-body">
+   <div class="modal-body theme-background-color-primary text-color">
       <p>{{ locale.deleteWarning }}</p>
       <div class="d-flex">
          <span *ngIf="!appointment.allday" class="mr-2">
@@ -14,7 +14,7 @@
          {{ appointment.name }}
       </div>
    </div>
-   <div class="modal-footer">
+   <div class="modal-footer theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
       <button type="button" class="btn btn-secondary" (click)="d()">{{ locale.cancel }}</button>
       <button type="button" class="btn btn-danger" (click)="c()">{{ locale.delete }}</button>
    </div>
