@@ -35,7 +35,7 @@ export class AppComponent {
 			badge: "/favicon.ico"
 		}
 
-		Dav.Initialize(environment.production, 
+		Dav.Initialize(environment.production ? Dav.DavEnvironment.Production : Dav.DavEnvironment.Development, 
 							environment.appId, 
 							[environment.todoTableId, environment.appointmentTableId], 
 							[], 
@@ -80,7 +80,8 @@ export class AppComponent {
 						this.dataService.RemoveTodo(todo);
 					}
 				}
-			}
+			},
+			SyncFinished: () => {}
 		});
 
 		Dav.Log(environment.apiKey, environment.visitKey);
