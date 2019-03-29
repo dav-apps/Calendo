@@ -60,6 +60,7 @@ export class DataService{
 	sortTodosByDate: boolean = true;
 	isNavbarCollapsed: boolean = false;
 	darkTheme: boolean = false;
+	windowsUiSettings = null
 	//#endregion
 	
 	constructor(){
@@ -78,10 +79,10 @@ export class DataService{
       });
 	}
 
-	private InitLocalforage(){
+	private async InitLocalforage(){
 		if(bowser.firefox){
 			// Use localstorage as driver
-			localforage.setDriver(localforage.LOCALSTORAGE);
+			await localforage.setDriver(localforage.LOCALSTORAGE);
 		}
 	}
 
@@ -236,7 +237,43 @@ export class DataService{
 		}
 	}
 
-	SetTheme(){
+	async ApplyTheme(theme: string){
+		if(theme == null){
+			// Get the theme from the settings
+			theme = await localforage.getItem(environment.settingsThemeKey);
+		}
+
+		switch (theme) {
+			case environment.darkThemeKey:
+				// Dark theme
+				this.darkTheme = true;
+				break;
+			case environment.systemThemeKey:
+				// Get the Windows theme
+				if(window["Windows"]){
+					if(this.windowsUiSettings == null){
+						this.windowsUiSettings = new window["Windows"].UI.ViewManagement.UISettings();
+					}
+					
+					var color = this.windowsUiSettings.getColorValue(
+						window["Windows"].UI.ViewManagement.UIColorType.background
+					);
+
+					this.darkTheme = color.r == 0;
+
+					// Observe the system theme
+					this.windowsUiSettings.oncolorvalueschanged = () => {
+						this.ApplyTheme(null);
+					}
+
+					break;
+				}
+			default:
+				// Light theme
+				this.darkTheme = false;
+				break;
+		}
+
 		if(this.darkTheme){
 			document.body.setAttribute("theme", "dark");
 		}else{
@@ -675,26 +712,37 @@ export class DataService{
 	//#endregion
 
 	//#region SettingsPage
-	SetSortTodosByDate(value: boolean){
-		this.InitLocalforage();
-		localforage.setItem(environment.settingsSortTodosByDateKey, value);
+	async SetSortTodosByDate(value: boolean){
+		await this.InitLocalforage();
+		await localforage.setItem(environment.settingsSortTodosByDateKey, value);
 	}
 
 	async GetSortTodosByDate(): Promise<boolean>{
-		this.InitLocalforage();
+		await this.InitLocalforage();
 		var value = await localforage.getItem(environment.settingsSortTodosByDateKey) as boolean;
-		return value == null || value;
+		return value ? value : environment.settingsSortTodosByDateDefault;
 	}
 
-	SetShowOldAppointments(value: boolean){
-		this.InitLocalforage();
-		localforage.setItem(environment.settingsShowOldAppointments, value);
+	async SetShowOldAppointments(value: boolean){
+		await this.InitLocalforage();
+		await localforage.setItem(environment.settingsShowOldAppointmentsKey, value);
 	}
 
 	async GetShowOldAppointments(){
-		this.InitLocalforage();
-		var value = await localforage.getItem(environment.settingsShowOldAppointments) as boolean;
-		return value != null && value;
+		await this.InitLocalforage();
+		var value = await localforage.getItem(environment.settingsShowOldAppointmentsKey) as boolean;
+		return value ? value : environment.settingsShowOldAppointmentsDefault;
+	}
+
+	async SetTheme(value: string){
+		await this.InitLocalforage();
+		await localforage.setItem(environment.settingsThemeKey, value);
+	}
+
+	async GetTheme(){
+		await this.InitLocalforage();
+		var value = await localforage.getItem(environment.settingsThemeKey) as string;
+		return value ? value : environment.settingsThemeDefault;
 	}
 	//#endregion
 
