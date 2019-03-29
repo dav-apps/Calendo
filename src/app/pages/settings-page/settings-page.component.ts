@@ -26,9 +26,9 @@ export class SettingsPageComponent{
    async ngOnInit(){
       this.sortTodoByDateSelected = await this.dataService.GetSortTodosByDate();
 
-      $('#show-old-appointments-checkbox').iCheck({
+      $('input').iCheck({
          checkboxClass: 'icheckbox_square-blue',
-         radioClass: 'iradio_square'
+         radioClass: 'iradio_square-blue'
       });
 
       if(await this.dataService.GetShowOldAppointments()){
@@ -36,6 +36,26 @@ export class SettingsPageComponent{
       }
       $('#show-old-appointments-checkbox').on('ifChecked', (event) => this.onHideAppointmentsCheckboxChanged(true));
       $('#show-old-appointments-checkbox').on('ifUnchecked', (event) => this.onHideAppointmentsCheckboxChanged(false));
+
+      // Set the correct theme radio button to checked
+		let theme = await this.dataService.GetTheme();
+      if(theme == environment.darkThemeKey){
+			// Dark theme
+			$('#dark-theme-radio-button').iCheck('check');
+      }else if(theme == environment.systemThemeKey && window["Windows"]){
+			// System theme
+			$('#system-theme-radio-button').iCheck('check');
+      }else{
+			// Light theme
+			$('#light-theme-radio-button').iCheck('check');
+      }
+
+      $('#light-theme-radio-button').on('ifChecked', (event) => this.changeTheme(environment.lightThemeKey));
+		$('#dark-theme-radio-button').on('ifChecked', (event) => this.changeTheme(environment.darkThemeKey));
+		
+		if(window["Windows"]){
+			$('#system-theme-radio-button').on('ifChecked', (event) => this.changeTheme(environment.systemThemeKey));
+		}
    }
 
    onSortTodosSelectChanged(value){
@@ -44,5 +64,10 @@ export class SettingsPageComponent{
 
    onHideAppointmentsCheckboxChanged(value: boolean){
       this.dataService.SetShowOldAppointments(value);
+   }
+
+   changeTheme(theme: string){
+      this.dataService.SetTheme(theme);
+      this.dataService.ApplyTheme(theme);
    }
 }
