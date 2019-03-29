@@ -1,10 +1,10 @@
 <div (window:resize)="onResize()">
    <div id="calendar-top-bar">
-		<h3 class="mt-1 ml-3">
-			<button id="calendar-show-previous-button" class="btn btn-light" *ngIf="!showMobileLayout" (click)="ShowPrevious()" type="button" style="height: 36px">
+		<h3 class="mt-1 ml-3 font-color">
+			<button id="calendar-show-previous-button" class="btn theme-background-color-secondary font-color" *ngIf="!showMobileLayout" (click)="ShowPrevious()" type="button" style="height: 36px">
 				<i class="fas fa-angle-left" style="font-size: 17px"></i>
 			</button>
-			<button id="calendar-show-next-button" class="btn btn-light ml-2 mr-3" *ngIf="!showMobileLayout" (click)="ShowNext()" type="button" style="height: 36px">
+			<button id="calendar-show-next-button" class="btn theme-background-color-secondary text-color ml-2 mr-3" *ngIf="!showMobileLayout" (click)="ShowNext()" type="button" style="height: 36px">
 				<i class="fas fa-angle-right" style="font-size: 17px"></i>
 			</button>
 			{{ getCurrentMonth() }} {{ getCurrentYear() }}
@@ -12,7 +12,7 @@
    </div>
    <div id="calendar-label-div" class="position-absolute ml-1">
       <span class="position-absolute" *ngFor="let day of weekDayLabels; let i = index;" [style.margin-left.px]="calendarDayWidth * i">
-			<span class="font-weight-light">{{ day }}</span><br>
+			<span class="font-weight-light text-color">{{ day }}</span><br>
 			<span [style.background-color]="currentDayOfWeek == i ? '#e3e4e5' : ''" 
 					[style.padding-left.px]="currentDayOfWeek == i ? 2 : 0"
 					[style.padding-right.px]="currentDayOfWeek == i ? 2 : 0"
@@ -25,12 +25,12 @@
 			[style.width.px]="calendarWidth" 
 			style="margin-top: 30px;">
 		<div class="d-flex" *ngFor="let week of dataService.desktopCalendarDaysDates; let i = index;">
-			<div class="border" *ngFor="let date of week; let j = index;" 
+			<div [ngClass]="dataService.darkTheme ? 'border border-dark' : 'border'" *ngFor="let date of week; let j = index;" 
 					[style.height.px]="calendarDayHeight" 
 					[style.width.px]="calendarDayWidth" 
 					[style.background-color]="getDayBackgroundColor(i, j)"
 					(click)="dayClicked(date)">
-				<span>{{ getDayOfDate(date) }}</span>
+				<span class="text-color">{{ getDayOfDate(date) }}</span>
 
 				<!-- Render todos -->
 				<span class="badge badge-primary ml-1" *ngIf='dataService.desktopCalendarDaysTodos[i][j].length > 0'>{{ dataService.desktopCalendarDaysTodos[i][j].length }} {{ locale.todo }}<span *ngIf="dataService.desktopCalendarDaysTodos[i][j].length > 1">{{ locale.s }}</span></span>

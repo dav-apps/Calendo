@@ -312,11 +312,14 @@ export class CalendarPageComponent{
 		var date = moment.unix(this.dataService.desktopCalendarDaysDates[i][j]);
 
       if(this.isToday(date)){
-         return "#dddddd";
+			// Current day
+			return this.dataService.darkTheme ? "#3d4753" : "#dddddd";
       }else if(date.month() == this.currentDay.month()){
-         return "#f9f9f9"
+			// Current month
+			return this.dataService.darkTheme ? "#1c2938" : "#f9f9f9";
       }else{
-         return "#ffffff"
+			// Last or next month
+			return this.dataService.darkTheme ? "#15202b" : "#ffffff";
       }
 	}
 
