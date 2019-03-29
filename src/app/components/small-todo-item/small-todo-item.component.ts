@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Todo } from '../../models/Todo';
+import { DataService } from '../../services/data-service';
 declare var $: any;
 
 @Component({
@@ -14,7 +15,7 @@ export class SmallTodoItemComponent{
    @Input() showBadge: boolean = true;
    @Output() delete = new EventEmitter();
 
-   constructor(){}
+   constructor(public dataService: DataService){}
 
    ngOnInit(){
       setTimeout(() => {
