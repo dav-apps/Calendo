@@ -2,6 +2,7 @@
    <h1 class="text-center mt-2 text-color">{{ locale.header }}</h1>
 
 	<div class="mx-auto">
+		<!-- Sort todos by -->
 		<div class="form-group mt-4" style="font-size: 18px; width: 200px">
 			<label for="sort-todos-select" class="text-color">{{ locale.sortTodosBy }}</label>
 			<select class="form-control" id="sort-todos-select2" (change)="onSortTodosSelectChanged($event.target.value)">
@@ -10,9 +11,25 @@
 			</select>
 		</div>
 	
+		<!-- Show old appointments -->
 		<p style="font-size: 18px" class="mt-4 text-color">
 			<input type="checkbox" id="show-old-appointments-checkbox"><label for="show-old-appointments-checkbox" class="ml-3">{{ locale.showOldAppointments }}</label>
 		</p>
+		
+		<!-- Theme -->
+		<p class="text-color mt-4" style="font-size: 18px">{{ locale.theme }}</p>
+		<div class="form-check px-0 mb-2">
+			<input type="radio" name="theme-radio-button" id="light-theme-radio-button">
+			<label for="light-theme-radio-button" class="form-check-label text-color ml-3">{{ locale.lightTheme }}</label>
+		</div>
+		<div class="form-check px-0 mb-2">
+			<input type="radio" name="theme-radio-button" id="dark-theme-radio-button">
+			<label for="dark-theme-radio-button" class="form-check-label text-color ml-3">{{ locale.darkTheme }}</label>
+		</div>
+		<div class="form-check px-0 mb-2" *ngIf="isWindows">
+			<input type="radio" name="theme-radio-button" id="system-theme-radio-button">
+			<label for="system-theme-radio-button" class="form-check-label text-color ml-3">{{ locale.systemTheme }}</label>
+		</div>
 	
 		<!-- App information -->
 		<div class="mt-5 text-color">

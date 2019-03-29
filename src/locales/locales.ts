@@ -118,6 +118,10 @@ const enDefaults = {
       sortTodosByDate: "date",
       sortTodosByGroup: "group",
       showOldAppointments: "Show old appointments",
+      theme: "Theme",
+      lightTheme: "Light",
+      darkTheme: "Dark",
+      systemTheme: "Use system setting",
       privacy: "Privacy Policy",
       github: "Calendo on GitHub",
       android: "Calendo for Android"
@@ -284,6 +288,10 @@ const deDefaults = {
       sortTodosByDate: "Datum",
       sortTodosByGroup: "Gruppe",
       showOldAppointments: "Alte Termine anzeigen",
+      theme: "Thema",
+      lightTheme: "Hell",
+      darkTheme: "Dunkel",
+      systemTheme: "Systemeinstellung verwenden",
       privacy: "Datenschutzerklärung",
       github: "Calendo auf GitHub",
       android: "Calendo für Android"
