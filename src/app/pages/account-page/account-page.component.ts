@@ -4,13 +4,16 @@ import { enUS } from '../../../locales/locales';
 import { environment } from '../../../environments/environment';
 import * as Dav from 'dav-npm';
 import { LogoutModalComponent } from '../../components/logout-modal/logout-modal.component';
+import { faSync, faLock } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
    selector: "calendo-account-page",
    templateUrl: "./account-page.component.html"
 })
 export class AccountPageComponent{
-	locale = enUS.accountPage;
+   locale = enUS.accountPage;
+   faSync = faSync;
+   faLock = faLock;
 	@ViewChild(LogoutModalComponent)
 	private logoutModalComponent: LogoutModalComponent;
 

@@ -1,11 +1,11 @@
 <div (window:resize)="onResize()">
    <div id="calendar-top-bar">
-		<h3 class="mt-1 ml-3 font-color">
-			<button id="calendar-show-previous-button" class="btn theme-background-color-secondary font-color" *ngIf="!showMobileLayout" (click)="ShowPrevious()" type="button" style="height: 36px">
-				<i class="fas fa-angle-left" style="font-size: 17px"></i>
+		<h3 class="mt-1 ml-3 text-color">
+			<button id="calendar-show-previous-button" class="btn theme-background-color-secondary text-color" *ngIf="!showMobileLayout" (click)="ShowPrevious()" type="button" style="height: 36px">
+				<fa-icon [icon]="faAngleLeft" size="lg"></fa-icon>
 			</button>
 			<button id="calendar-show-next-button" class="btn theme-background-color-secondary text-color ml-2 mr-3" *ngIf="!showMobileLayout" (click)="ShowNext()" type="button" style="height: 36px">
-				<i class="fas fa-angle-right" style="font-size: 17px"></i>
+				<fa-icon [icon]="faAngleRight" size="lg"></fa-icon>
 			</button>
 			{{ getCurrentMonth() }} {{ getCurrentYear() }}
 		</h3>

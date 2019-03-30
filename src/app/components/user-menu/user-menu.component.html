@@ -1,6 +1,6 @@
 <div ngbDropdown class="d-inline-block default-font" placement="bottom-right">
    <button class="btn btn-primary" ngbDropdownToggle id="user-menu-dropdown">
-      <span *ngIf="!dataService.user.IsLoggedIn"><i class="fas fa-user-circle" style="font-size: 25px; margin-top: 6px;"></i></span>
+      <span *ngIf="!dataService.user.IsLoggedIn"><fa-icon [icon]="faUserCircle" style="font-size: 25px; margin-top: 6px;"></fa-icon></span>
       <img *ngIf="dataService.user.IsLoggedIn" [src]="dataService.user.Avatar" class="rounded-circle" height="34" width="34" />
    </button>
    <div ngbDropdownMenu aria-labelledby="user-menu-dropdown" class="theme-background-color-tertiary">

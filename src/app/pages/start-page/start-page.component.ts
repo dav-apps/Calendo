@@ -1,14 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import fontawesome from '@fortawesome/fontawesome';
-import solid from '@fortawesome/fontawesome-free-solid';
 import { Todo } from '../../models/Todo';
 import { DataService } from '../../services/data-service';
 import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-modal.component';
 import { AppointmentModalComponent } from '../../components/appointment-modal/appointment-modal.component';
 import { enUS } from '../../../locales/locales';
 import { Appointment } from 'src/app/models/Appointment';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
    selector: "calendo-start-page",
@@ -19,6 +18,7 @@ import { Appointment } from 'src/app/models/Appointment';
 })
 export class StartPageComponent{
 	locale = enUS.startPage;
+	faPlus = faPlus;
 	@ViewChild(NewTodoModalComponent)
 	private newTodoModalComponent: NewTodoModalComponent;
 	@ViewChild(AppointmentModalComponent)
@@ -28,7 +28,6 @@ export class StartPageComponent{
 
 	constructor(public dataService: DataService,
 					private router: Router){
-		fontawesome.library.add(solid);
 		this.locale = this.dataService.GetLocale().startPage;
 		moment.locale(this.dataService.locale);
 

@@ -5,6 +5,7 @@ declare var $: any;
 import { DataService } from '../../services/data-service';
 import { enUS } from '../../../locales/locales';
 import * as platform from 'platform';
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
    selector: "calendo-calendar-page",
@@ -15,6 +16,8 @@ import * as platform from 'platform';
 })
 export class CalendarPageComponent{
 	locale = enUS.calendarPage;
+	faAngleLeft = faAngleLeft;
+	faAngleRight = faAngleRight;
 	@ViewChild("calendarContainer", { read: ElementRef }) calendarContainer: ElementRef<any>;
 	@ViewChild("mobileCalendarContainer", {read: ElementRef}) mobileCalendarContainer: ElementRef<any>;
 	weekDayLabels: string[] = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
@@ -42,7 +45,7 @@ export class CalendarPageComponent{
 		this.locale = this.dataService.GetLocale().calendarPage;
 		moment.locale(this.dataService.locale);
 		this.dataService.HideWindowsBackButton();
-		
+
 		// Set the weekday labels in the current language
 		let weekdays = moment.weekdaysMin();
 

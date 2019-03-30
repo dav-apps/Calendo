@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Todo } from '../../models/Todo';
 import { DataService } from '../../services/data-service';
 declare var $: any;
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
    selector: "calendo-small-todo-item",
@@ -11,6 +12,7 @@ declare var $: any;
    ]
 })
 export class SmallTodoItemComponent{
+   faTimes = faTimes;
    @Input() todo: Todo = new Todo("", false, 0, "", []);
    @Input() showBadge: boolean = true;
    @Output() delete = new EventEmitter();

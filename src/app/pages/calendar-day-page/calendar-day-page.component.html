@@ -4,7 +4,7 @@
    <div class="d-flex flex-column text-color">
       <h2 class="mt-4 mb-3">
          {{ locale.appointments }}
-         <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="showNewAppointmentModal()"><i class="fas fa-plus"></i></button>
+         <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="showNewAppointmentModal()"><fa-icon [icon]="faPlus"></fa-icon></button>
       </h2>
 
       <p class="font-weight-light" style="font-size: 18px; font-family: 'Segoe UI'" *ngIf="dataService.selectedDayAppointments.length == 0">{{ locale.noAppointments }}</p>
@@ -14,7 +14,7 @@
    <div class="text-color">
       <h2 class="mt-4 mb-3">
          {{ locale.todos }}
-         <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="showNewTodoModal()"><i class="fas fa-plus"></i></button>
+         <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="showNewTodoModal()"><fa-icon [icon]="faPlus"></fa-icon></button>
       </h2>
       <p class="font-weight-light" style="font-size: 18px; font-family: 'Segoe UI'" *ngIf="dataService.selectedDayTodos.length == 0">{{ locale.noTodos }}</p>
       

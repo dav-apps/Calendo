@@ -33,7 +33,7 @@
 				<label for="new-group-name" class="col-form-label text-color">{{ locale.addNewGroup }}</label>
 
 				<div class="d-flex">
-					<button type="button" class="btn btn-outline-primary btn-sm" (click)="AddGroup(newGroupName)"><i class="fas fa-plus"></i></button>
+					<button type="button" class="btn btn-outline-primary btn-sm" (click)="AddGroup(newGroupName)"><fa-icon [icon]="faPlus"></fa-icon></button>
 					<input id="new-group-name" class="form-control"
 							type="text" [placeholder]="locale.groupName" [(ngModel)]="newGroupName" />
 				</div>

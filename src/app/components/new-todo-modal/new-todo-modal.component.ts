@@ -6,6 +6,7 @@ import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
 import { SubscribePushNotifications, CreateNotification } from 'dav-npm';
 import * as moment from 'moment';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
    selector: "calendo-new-todo-modal",
@@ -17,6 +18,7 @@ import * as moment from 'moment';
 export class NewTodoModalComponent{
    locale = enUS.newTodoModal;
    notificationLocale = enUS.notifications.todo;
+   faPlus = faPlus;
    @Output() save = new EventEmitter();
    @ViewChild('createTodoModal') todoModal: ElementRef;
    newTodoDate: NgbDateStruct;

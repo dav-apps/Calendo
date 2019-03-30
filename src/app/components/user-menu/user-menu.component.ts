@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { enUS } from '../../../locales/locales';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data-service';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
    selector: "calendo-user-menu",
@@ -12,6 +13,7 @@ import { DataService } from '../../services/data-service';
 })
 export class UserMenuComponent{
    locale = enUS.userMenu;
+   faUserCircle = faUserCircle;
 
    constructor(private activatedRoute: ActivatedRoute,
                public dataService: DataService){

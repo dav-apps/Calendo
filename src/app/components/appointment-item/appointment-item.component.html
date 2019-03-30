@@ -3,7 +3,7 @@
 
 <li class="list-group-item theme-background-color-secondary">
    <label for="appointment-item-{{ appointment.uuid }}" class="col-form-label d-flex" ngbDropdown placement="bottom-right">
-		<i class="fas fa-check" style="margin-left: -30px; margin-top: 4px; position: absolute; color: green" *ngIf="IsCompleted() && !appointment.allday"></i>
+		<fa-icon [icon]="faCheck" style="margin-left: -30px; margin-top: 4px; position: absolute; color: green" *ngIf="IsCompleted() && !appointment.allday"></fa-icon>
 		<div *ngIf="!appointment.allday" class="appointment-item-{{ appointment.uuid }} mr-2 text-color" style=" margin-top: -10px">
 			<span class="font-italic position-absolute" style="margin-bottom: -5px;">{{ ConvertUnixTimestampToTime(appointment.start) }}</span><br>
 			<span class="font-italic position-absolute" style="margin-top: -5px;">{{ ConvertUnixTimestampToTime(appointment.end) }}</span>
@@ -12,7 +12,7 @@
 		<button type="button" 
 				class="btn ml-auto py-0 theme-background-color-secondary text-color" 
 				id="appointment-item-menu-button" ngbDropdownToggle>
-			<i class="fas fa-ellipsis-h"></i>
+			<fa-icon [icon]="faEllipsisH"></fa-icon>
 		</button>
 		<div ngbDropdownMenu class="theme-background-color-tertiary">
 			<button class="dropdown-item text-color" (click)="Edit()">{{ locale.edit }}</button>

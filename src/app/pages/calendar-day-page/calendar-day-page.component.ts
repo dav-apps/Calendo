@@ -7,6 +7,7 @@ import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-
 import { Appointment } from '../../models/Appointment';
 import { Todo } from '../../models/Todo';
 import { enUS } from '../../../locales/locales';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
    selector: "calendo-calendar-day-page",
@@ -14,6 +15,7 @@ import { enUS } from '../../../locales/locales';
 })
 export class CalendarDayPageComponent{
    locale = enUS.calendarDayPage;
+   faPlus = faPlus;
    @ViewChild(AppointmentModalComponent)
    private newAppointmentModalComponent: AppointmentModalComponent;
    @ViewChild(NewTodoModalComponent)

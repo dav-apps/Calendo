@@ -3,6 +3,7 @@ import { DataService } from '../../services/data-service';
 import { AppointmentModalComponent } from '../../components/appointment-modal/appointment-modal.component';
 import { Appointment } from '../../models/Appointment';
 import { enUS } from '../../../locales/locales';
+import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
    selector: "calendo-appointments-page",
@@ -13,6 +14,7 @@ import { enUS } from '../../../locales/locales';
 })
 export class AppointmentsPageComponent{
    locale = enUS.appointmentsPage;
+   faEllipsisH = faEllipsisH;
    @ViewChild(AppointmentModalComponent)
    private newAppointmentModalComponent: AppointmentModalComponent;
 

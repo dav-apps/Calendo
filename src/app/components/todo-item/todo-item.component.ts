@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Todo } from '../../models/Todo';
 declare var $: any;
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
    selector: "calendo-todo-item",
@@ -10,13 +11,12 @@ declare var $: any;
    ]
 })
 export class TodoItemComponent{
+   faTimes = faTimes;
    @Input() todo: Todo = new Todo("", false, 0, "", []);
    @Input() showBadge: boolean = true;
    @Output() delete = new EventEmitter();
 
-   constructor(){
-      
-   }
+   constructor(){}
 
    ngOnInit(){
       setTimeout(() => {

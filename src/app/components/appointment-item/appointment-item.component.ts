@@ -6,6 +6,7 @@ import { Appointment } from '../../models/Appointment';
 import { DataService } from '../../services/data-service';
 import { environment } from '../../../environments/environment';
 import { enUS } from '../../../locales/locales';
+import { faCheck, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
    selector: "calendo-appointment-item",
@@ -16,6 +17,8 @@ import { enUS } from '../../../locales/locales';
 })
 export class AppointmentItemComponent{
    locale = enUS.appointmentItem;
+   faCheck = faCheck;
+   faEllipsisH = faEllipsisH;
    @Input() appointment: Appointment = new Appointment("", "", 0, 0, false, environment.appointmentDefaultColor);
    @Input() showCompleted: boolean = false;
    @ViewChild(AppointmentModalComponent)

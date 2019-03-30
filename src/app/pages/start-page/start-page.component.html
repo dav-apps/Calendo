@@ -11,7 +11,7 @@
 				<ul class="list-group list-group-flush">
 					<calendo-appointment-item [appointment]="appointment" [showCompleted]="true" *ngFor="let appointment of dataService.startDaysAppointments[0]"></calendo-appointment-item>
 					<li class="list-group-item theme-background-color-secondary">
-						<button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(0)"><i class="fas fa-plus"></i></button>
+						<button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(0)"><fa-icon [icon]="faPlus"></fa-icon></button>
 					</li>
 				</ul>
 			</div>
@@ -23,7 +23,7 @@
 				<ul class="list-group list-group-flush">
 					<calendo-todo-item [todo]="todo" *ngFor="let todo of dataService.startDaysTodos[0]" (delete)="DeleteTodo(todo)"></calendo-todo-item>
 					<li class="list-group-item theme-background-color-secondary">
-						<button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(1)"><i class="fas fa-plus"></i></button>
+						<button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(1)"><fa-icon [icon]="faPlus"></fa-icon></button>
 					</li>
 				</ul>
 			</div>

@@ -3,6 +3,7 @@ import { Todo } from '../../models/Todo';
 import { DataService } from '../../services/data-service';
 import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-modal.component';
 import { enUS } from '../../../locales/locales';
+import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
    selector: "calendo-todos-page",
@@ -13,6 +14,7 @@ import { enUS } from '../../../locales/locales';
 })
 export class TodosPageComponent{
 	locale = enUS.todosPage;
+	faEllipsisH = faEllipsisH;
 	@ViewChild(NewTodoModalComponent)
 	private newTodoModalComponent: NewTodoModalComponent;
 
