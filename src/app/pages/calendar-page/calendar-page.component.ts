@@ -326,6 +326,10 @@ export class CalendarPageComponent{
       }
 	}
 
+	isTimestampToday(timestamp: number) : boolean{
+		return this.isToday(moment.unix(timestamp));
+	}
+
 	isToday(date: moment.Moment): boolean{
 		return date.startOf('day').unix() == moment().startOf('day').unix();
 	}

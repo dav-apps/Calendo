@@ -13,10 +13,11 @@
    <div id="calendar-label-div" class="position-absolute ml-1">
       <span class="position-absolute" *ngFor="let day of weekDayLabels; let i = index;" [style.margin-left.px]="calendarDayWidth * i">
 			<span class="font-weight-light text-color">{{ day }}</span><br>
-			<span [style.background-color]="currentDayOfWeek == i ? '#e3e4e5' : ''" 
+			<span [style.background-color]="currentDayOfWeek == i ? (dataService.darkTheme ? '#3d4753' : '#e3e4e5') : ''" 
 					[style.padding-left.px]="currentDayOfWeek == i ? 2 : 0"
 					[style.padding-right.px]="currentDayOfWeek == i ? 2 : 0"
 					(click)="goToWeekday(i)"
+					class="text-color"
 					*ngIf="showMobileLayout">{{ currentWeekDays[i] }}</span>
 		</span>
    </div>
@@ -25,7 +26,8 @@
 			[style.width.px]="calendarWidth" 
 			style="margin-top: 30px;">
 		<div class="d-flex" *ngFor="let week of dataService.desktopCalendarDaysDates; let i = index;">
-			<div [ngClass]="dataService.darkTheme ? 'border border-dark' : 'border'" *ngFor="let date of week; let j = index;" 
+			<div [ngClass]="dataService.darkTheme ? 'border border-dark' : 'border'" 
+					*ngFor="let date of week; let j = index;" 
 					[style.height.px]="calendarDayHeight" 
 					[style.width.px]="calendarDayWidth" 
 					[style.background-color]="getDayBackgroundColor(i, j)"
@@ -50,11 +52,13 @@
 			style="overflow: scroll; margin-top: 60px;" 
 			[style.height.px]="calendarHeight" 
 			[style.width.px]="calendarWidth">
-		<div class="border" *ngFor="let date of dataService.mobileCalendarDaysDates; let i = index;"
+		<div class="border" 
+				[ngClass]="isTimestampToday(date) ? (dataService.darkTheme ? 'border-dark theme-background-color-primary' : 'light-theme-calendar-day') : (dataService.darkTheme ? 'border-dark theme-background-color-secondary' : 'theme-background-color-primary')"
+				*ngFor="let date of dataService.mobileCalendarDaysDates; let i = index;"
 				[style.height.px]="calendarDayHeight"
-				style="position: relative; background-color: white"
+				style="position: relative;"
 				(click)="dayClicked(date)">
-			<span>{{ getFullDayOfDate(date) }}</span>
+			<span class="text-color">{{ getFullDayOfDate(date) }}</span>
 
 			<!-- Render todos -->
 			<span class="badge badge-primary ml-2" *ngIf='dataService.mobileCalendarDaysTodos[i].length > 0'>
