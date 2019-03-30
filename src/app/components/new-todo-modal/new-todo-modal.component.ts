@@ -128,7 +128,12 @@ export class NewTodoModalComponent{
    async GetAllTodoGroups(){
       this.allGroups = [];
       var todoGroups = await GetAllTodoGroups();
-      todoGroups.forEach(group => this.allGroups.push(group));
+      todoGroups.forEach(group => {
+         // Check if the group is already selected
+         if(this.todoGroups.findIndex(g => g == group) == -1){
+            this.allGroups.push(group);
+         }
+      });
    }
 
    RemoveGroup(name: string){
