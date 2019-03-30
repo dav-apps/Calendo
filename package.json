@@ -1,6 +1,6 @@
 {
   "name": "calendo",
-  "version": "0.6",
+  "version": "0.6.0",
   "description": "Calendo makes it easy to keep track of your todos and appointments. You can set specific dates for your todos, sort them in groups and see your todos and appointments in your calendar.",
   "scripts": {
     "ng": "ng",
@@ -23,8 +23,9 @@
     "@angular/pwa": "^0.6.8",
     "@angular/router": "^7.2.2",
     "@angular/service-worker": "^7.2.2",
-    "@fortawesome/fontawesome": "^1.1.8",
-    "@fortawesome/fontawesome-free-solid": "^5.0.13",
+    "@fortawesome/angular-fontawesome": "^0.3.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.17",
+    "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@ng-bootstrap/ng-bootstrap": "^4.0.1",
     "bootstrap": "^4.1.1",
     "bowser": "^1.9.4",
@@ -39,9 +40,9 @@
     "zone.js": "^0.8.29"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.12.3",
+    "@angular-devkit/build-angular": "^0.13.7",
     "@angular/cli": "~7.2.3",
-    "@angular/compiler-cli": "^7.2.2",
+    "@angular/compiler-cli": "^7.2.11",
     "@angular/language-service": "^7.2.2",
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.3",
@@ -50,7 +51,7 @@
     "codelyzer": "~4.2.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "^4.0.0",
+    "karma": "^4.0.1",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.0",
     "karma-jasmine": "~1.1.1",

@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppComponent } from './app.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
@@ -62,6 +63,7 @@ import { environment } from '../environments/environment';
 			useHash: false
 		}),
 		NgbModule.forRoot(),
+		FontAwesomeModule,
 		ServiceWorkerModule.register('/sw.js', { enabled: environment.production })
   	],
   	providers: [
@@ -69,4 +71,4 @@ import { environment } from '../environments/environment';
 	],
   	bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
