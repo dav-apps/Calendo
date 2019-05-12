@@ -47,7 +47,7 @@ export class Todo{
 	private async Save(){
 		var tableObject = await GetTableObject(this.uuid);
       if(tableObject){
-			tableObject.SetPropertyValues([
+			await tableObject.SetPropertyValues([
 				{ name: environment.todoNameKey, value: this.name},
 				{ name: environment.todoCompletedKey, value: this.completed.toString() },
 				{ name: environment.todoTimeKey, value: this.time.toString() },
@@ -55,7 +55,7 @@ export class Todo{
 			]);
 
 			if(this.notificationUuid){
-				tableObject.SetPropertyValue(environment.notificationUuidKey, this.notificationUuid);
+				await tableObject.SetPropertyValue(environment.notificationUuidKey, this.notificationUuid);
 			}
       }
 	}

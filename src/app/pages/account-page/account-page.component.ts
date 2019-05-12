@@ -40,12 +40,12 @@ export class AccountPageComponent{
       });
 	}
 	
-	bytesToGigabytes(bytes: number, rounding: number){
-		if(bytes == 0) return 0;
+	bytesToGigabytes(bytes: number, rounding: number) : string{
+		if(bytes == 0) return "0";
 		return Math.round(bytes / 1000000000).toFixed(rounding);
 	}
 
-	getUsedStoragePercentage(){
+	getUsedStoragePercentage() : number{
 		return (this.dataService.user.UsedStorage / this.dataService.user.TotalStorage) * 100;
 	}
 }
