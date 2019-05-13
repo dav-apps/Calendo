@@ -25,7 +25,7 @@ export const environment = {
 	// Settings defaults
 	settingsSortTodosByDateDefault: true,
 	settingsShowOldAppointmentsDefault: false,
-	settingsThemeDefault: "light",
+	settingsThemeDefault: "system",
 	// Other constants
 	lightThemeKey: "light",
 	darkThemeKey: "dark",
