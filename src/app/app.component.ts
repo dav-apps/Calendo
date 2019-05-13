@@ -47,7 +47,7 @@ export class AppComponent {
 					this.dataService.LoadAllTodos();
 				}
 			},
-			UpdateTableObject: (tableObject: Dav.TableObject) => {
+			UpdateTableObject: (tableObject: Dav.TableObject, downloaded: boolean = false) => {
 				if(tableObject.TableId == environment.appointmentTableId){
 					// Update appointment
 					var appointment = ConvertTableObjectToAppointment(tableObject);
