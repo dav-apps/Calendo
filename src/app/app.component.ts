@@ -5,6 +5,7 @@ import { enUS } from '../locales/locales';
 import { DataService } from './services/data-service';
 import { ConvertTableObjectToAppointment } from './models/Appointment';
 import { ConvertTableObjectToTodo } from './models/Todo';
+import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 
 @Component({
   	selector: 'app-root',
@@ -20,7 +21,8 @@ export class AppComponent {
 	windowWidth: number = 500;
 
 	constructor(public dataService: DataService){
-		this.locale = this.dataService.GetLocale().navbar;
+      this.locale = this.dataService.GetLocale().navbar;
+      initializeIcons();
 	}
 
 	ngOnInit(){
