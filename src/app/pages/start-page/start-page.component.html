@@ -18,11 +18,11 @@
 		</div>
 		
 		<div class="card col-10 offset-1 col-md-4 offset-md-2 mb-5 theme-background-color-secondary">
-			<div class="card-body">
+			<div class="card-body" style="padding-bottom: 0px">
 				<h5 class="card-title text-color">{{ locale.todos }}</h5>
 				<ul class="list-group list-group-flush">
 					<calendo-todo-item [todo]="todo" *ngFor="let todo of dataService.startDaysTodos[0]" (delete)="DeleteTodo(todo)"></calendo-todo-item>
-					<li class="list-group-item theme-background-color-secondary">
+					<li class="list-group-item theme-background-color-secondary" style="padding: 14px 0px">
 						<button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(1)"><fa-icon [icon]="faPlus"></fa-icon></button>
 					</li>
 				</ul>
