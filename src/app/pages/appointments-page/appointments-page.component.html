@@ -2,16 +2,16 @@
    <h1 class="text-center mt-2 text-color" ngbDropdown placement="bottom-right">
       {{ locale.header }}
       <button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle><fa-icon [icon]="faEllipsisH"></fa-icon></button>
-      <div ngbDropdownMenu class="theme-background-color-tertiary">
-         <button class="dropdown-item text-color" (click)="ShowOrHideOldAppointments()">{{ dataService.showOldAppointments ? locale.hideOldAppointments : locale.showOldAppointments }}</button>
-         <button class="dropdown-item text-color" (click)="ShowNewAppointmentModal()">{{ locale.newAppointment }}</button>
+      <div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+         <button class="dropdown-item text-color cursor" (click)="ShowOrHideOldAppointments()">{{ dataService.showOldAppointments ? locale.hideOldAppointments : locale.showOldAppointments }}</button>
+         <button class="dropdown-item text-color cursor" (click)="ShowNewAppointmentModal()">{{ locale.newAppointment }}</button>
       </div>
    </h1>
 
    <p class="font-weight-light text-center mt-3 text-color" style="font-size: 18px; font-family: 'Segoe UI'" *ngIf="dataService.appointmentDays.length == 0">{{ locale.noAppointments }}</p>
    
    <div class="row">
-      <div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary" *ngFor="let appointmentDay of dataService.appointmentDays">
+      <div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" *ngFor="let appointmentDay of dataService.appointmentDays">
          <div class="card-body">
             <h5 class="card-title mb-3 text-color">{{ appointmentDay.date }}</h5>
             <ul class="list-group list-group-flush d-flex flex-column" *ngFor="let appointment of appointmentDay.appointments">

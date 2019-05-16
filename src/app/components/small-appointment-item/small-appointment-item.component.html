@@ -13,9 +13,9 @@
       <p *ngIf="compact">{{ getStartTime() }} {{ appointment.name }}</p>
    </div>
 
-   <div ngbDropdownMenu class="theme-background-color-tertiary">
-      <button class="dropdown-item text-color" (click)="Edit()">{{ locale.edit }}</button>
-      <button class="dropdown-item text-color" (click)="Delete()">{{ locale.delete }}</button>
+   <div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+      <button class="dropdown-item text-color cursor" (click)="Edit()">{{ locale.edit }}</button>
+      <button class="dropdown-item text-color cursor" (click)="Delete()">{{ locale.delete }}</button>
    </div>
 </div>
 
