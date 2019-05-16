@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { FabCheckboxModule } from '@angular-react/fabric';
+import { FabCheckboxModule, FabButtonModule } from '@angular-react/fabric';
 
 import { AppComponent } from './app.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
@@ -47,7 +47,7 @@ import { environment } from '../environments/environment';
 		AppointmentModalComponent,
 		DeleteAppointmentModalComponent,
 		LogoutModalComponent,
-		TodoGroupBadgeComponent
+      TodoGroupBadgeComponent
   	],
   	imports: [
 		AngularReactBrowserModule,
@@ -66,7 +66,8 @@ import { environment } from '../environments/environment';
 		NgbModule.forRoot(),
 		FontAwesomeModule,
       ServiceWorkerModule.register('/sw.js', { enabled: environment.production }),
-      FabCheckboxModule
+      FabCheckboxModule,
+      FabButtonModule
   	],
   	providers: [
 		DataService

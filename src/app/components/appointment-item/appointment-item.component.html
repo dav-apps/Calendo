@@ -4,19 +4,19 @@
 <li class="list-group-item theme-background-color-secondary" style="padding: 10px 0px 10px 10px;">
    <label for="appointment-item-{{ appointment.uuid }}" class="col-form-label d-flex" ngbDropdown placement="bottom-right">
 		<fa-icon [icon]="faCheck" style="margin-left: -30px; margin-top: 4px; position: absolute; color: green" *ngIf="IsCompleted() && !appointment.allday"></fa-icon>
-		<div *ngIf="!appointment.allday" class="appointment-item-{{ appointment.uuid }} mr-2 text-color" style=" margin-top: -10px">
-			<span class="font-italic position-absolute" style="margin-bottom: -5px;">{{ ConvertUnixTimestampToTime(appointment.start) }}</span><br>
-			<span class="font-italic position-absolute" style="margin-top: -5px;">{{ ConvertUnixTimestampToTime(appointment.end) }}</span>
+		<div *ngIf="!appointment.allday" class="appointment-item-{{ appointment.uuid }} mr-2 text-color ms-fontSize-14" style=" margin-top: -8px">
+			<span class="font-italic position-absolute">{{ ConvertUnixTimestampToTime(appointment.start) }}</span><br>
+			<span class="font-italic position-absolute">{{ ConvertUnixTimestampToTime(appointment.end) }}</span>
 		</div>
-      <span class="text-color" [ngClass]="appointment.allday ? '' : 'ml-5'">{{ appointment.name }}</span>
-		<button type="button" 
-				class="btn ml-auto py-0 theme-background-color-secondary text-color" 
-				id="appointment-item-menu-button" ngbDropdownToggle>
-			<fa-icon [icon]="faEllipsisH"></fa-icon>
-		</button>
-		<div ngbDropdownMenu class="theme-background-color-tertiary">
-			<button class="dropdown-item text-color" (click)="Edit()">{{ locale.edit }}</button>
-			<button class="dropdown-item text-color" (click)="Delete()">{{ locale.delete }}</button>
+		<span class="text-color" [ngClass]="appointment.allday ? '' : 'ml-5'">{{ appointment.name }}</span>
+		
+		<div class="ml-auto" ngbDropdownToggle>
+			<fab-icon-button [iconProps]="menuButtonIconProps"></fab-icon-button>
+		</div>
+
+		<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+			<button class="dropdown-item text-color cursor" (click)="Edit()">{{ locale.edit }}</button>
+			<button class="dropdown-item text-color cursor" (click)="Delete()">{{ locale.delete }}</button>
 		</div>
    </label>
 </li>

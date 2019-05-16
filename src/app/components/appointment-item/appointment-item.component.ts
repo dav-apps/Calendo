@@ -7,6 +7,7 @@ import { DataService } from '../../services/data-service';
 import { environment } from '../../../environments/environment';
 import { enUS } from '../../../locales/locales';
 import { faCheck, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import { IIconProps } from 'office-ui-fabric-react';
 
 @Component({
    selector: "calendo-appointment-item",
@@ -25,6 +26,13 @@ export class AppointmentItemComponent{
    private newAppointmentModalComponent: AppointmentModalComponent;
    @ViewChild(DeleteAppointmentModalComponent)
    private deleteAppointmentModalComponent: DeleteAppointmentModalComponent;
+   menuButtonIconProps: IIconProps = {
+      iconName: "More",
+      style: {
+         fontSize: 16,
+         color: this.dataService.darkTheme ? "white" : "black"
+      }
+   }
 
    constructor(public dataService: DataService){
       this.locale = this.dataService.GetLocale().appointmentItem;
