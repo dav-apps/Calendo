@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Todo } from '../../models/Todo';
-declare var $: any;
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({

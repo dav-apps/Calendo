@@ -1,6 +1,8 @@
 <div class="border rounded d-inline-flex align-items-center pl-3 pr-2 mb-2 mr-2 theme-background-color-secondary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
-   <input type="checkbox" class="todo-checkbox todo-item-{{ todo.uuid }}" [checked]="todo.completed" id="todo-item-{{ todo.uuid }}">
-   <label for="todo-item-{{ todo.uuid }}" class="col-form-label mx-3 text-color" [ngClass]="todo.completed ? 'strikethrough' : ''">
+	<div style="margin-bottom: -8px">
+		<fab-checkbox (onChange)="ToggleCheckbox()" [checked]="todo.completed"></fab-checkbox>
+	</div>
+   <label for="todo-item-{{ todo.uuid }}" class="col-form-label mx-3 text-color cursor ms-fontSize-14" [ngClass]="todo.completed ? 'strikethrough' : ''" (click)="ToggleCheckbox()">
       {{ todo.name }}<span *ngIf="showBadge"><calendo-todo-group-badge *ngFor="let todoGroup of todo.groups" [groupName]="todoGroup" class="ml-2"></calendo-todo-group-badge></span>
    </label>
 
