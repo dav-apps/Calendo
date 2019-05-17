@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-declare var $: any;
 import { Todo, CreateTodo, GetAllTodoGroups } from '../../models/Todo';
 import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
@@ -37,8 +36,6 @@ export class NewTodoModalComponent{
       this.notificationLocale = this.dataService.GetLocale().notifications.todo;
    }
 
-	ngOnInit(){}
-
    Show(date?: number){
       this.ResetNewObjects(date);
       this.GetAllTodoGroups();
@@ -73,25 +70,6 @@ export class NewTodoModalComponent{
 
          this.save.emit(todo);
       }, () => {});
-
-      $('#new-todo-set-date-checkbox').iCheck({
-         checkboxClass: 'icheckbox_square-blue',
-         radioClass: 'iradio_square'
-      });
-      $('#new-todo-set-date-checkbox').iCheck('check');
-      $('#new-todo-set-date-checkbox').on('ifChecked', (event) => this.newTodoSetDateCheckboxChecked = true);
-      $('#new-todo-set-date-checkbox').on('ifUnchecked', (event) => {
-         this.newTodoSetDateCheckboxChecked = false;
-         this.newTodoReminderCheckboxChecked = false;
-         $('#new-todo-reminder-checkbox').iCheck('uncheck');
-      });
-
-      $('#new-todo-reminder-checkbox').iCheck({
-         checkboxClass: 'icheckbox_square-blue',
-			radioClass: 'iradio_square',
-		});
-      $('#new-todo-reminder-checkbox').on('ifChecked', (event) => this.newTodoReminderCheckboxChecked = true);
-      $('#new-todo-reminder-checkbox').on('ifUnchecked', (event) => this.newTodoReminderCheckboxChecked = false);
    }
 
    ResetNewObjects(date?: number){
@@ -150,5 +128,18 @@ export class NewTodoModalComponent{
          title: this.notificationLocale.title,
          message: todo.name
       }
+   }
+
+   SetDateCheckboxChecked(event: {ev: MouseEvent, checked: boolean}){
+      if(event.checked){
+			this.newTodoSetDateCheckboxChecked = true
+		}else{
+			this.newTodoSetDateCheckboxChecked = false;
+         this.newTodoReminderCheckboxChecked = false;
+		}
+   }
+
+   ReminderCheckboxChecked(event: {ev: MouseEvent, checked: boolean}){
+      this.newTodoReminderCheckboxChecked = event.checked;
    }
 }

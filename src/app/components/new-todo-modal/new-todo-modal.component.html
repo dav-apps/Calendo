@@ -7,23 +7,22 @@
 	</div>
 	<div class="modal-body row theme-background-color-primary mx-0">
 		<div class="mx-auto mb-4 px-4 text-color">
-			<!-- Set Date checkbox -->
-			<p>
-				<input type="checkbox" id="new-todo-set-date-checkbox">
-				<label for="new-todo-set-date-checkbox" class="ml-3">{{ locale.setDate }}</label>
-			</p>
+         <!-- Set Date checkbox -->
+         <fab-checkbox [label]="locale.setDate" (onChange)="SetDateCheckboxChecked($event)" [checked]="newTodoSetDateCheckboxChecked"></fab-checkbox>
+
 			<ngb-datepicker #dp [(ngModel)]="newTodoDate" 
 								(navigate)="date = $event.next" 
 								[disabled]="!newTodoSetDateCheckboxChecked"
 								style="background-color: white;"></ngb-datepicker>
 		</div>
 		<div class="mx-auto mb-4 px-4 text-color" [style.display]="showReminderOption ? 'block' : 'none'">
-			<!-- Reminder checkbox -->
-			<p>
-				<input type="checkbox" id="new-todo-reminder-checkbox" [disabled]="!newTodoSetDateCheckboxChecked">
-				<label for="new-todo-reminder-checkbox" 
-						[ngClass]="newTodoSetDateCheckboxChecked ? 'ml-3' : 'ml-3 text-muted'">{{ locale.reminder }}</label>
-			</p>
+         <!-- Reminder checkbox -->
+			<fab-checkbox [label]="locale.reminder" 
+							(onChange)="ReminderCheckboxChecked($event)" 
+							[checked]="newTodoReminderCheckboxChecked"
+							[disabled]="!newTodoSetDateCheckboxChecked"
+							className="ml-4"></fab-checkbox>
+
 			<ngb-timepicker id="todo-reminder-time" class="mx-auto" style="width: 100px" [disabled]="!newTodoReminderCheckboxChecked"
 								[(ngModel)]="todoReminderTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
 		</div>
