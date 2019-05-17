@@ -10,11 +10,12 @@
 			<!-- Datepicker -->
 			<ngb-datepicker style="background-color: white;" #dp [(ngModel)]="appointmentDate" (navigate)="date = $event.next"></ngb-datepicker>
 
-			<!-- All Day Checkbox -->
-			<p class="mt-2 ml-1 text-color">
-				<input type="checkbox" id="appointment-all-day-checkbox">
-				<label for="appointment-all-day-checkbox" class="col-form-label ml-3">{{ locale.entireDay }}</label>
-			</p>
+         <!-- All Day Checkbox -->
+         <div class="mt-2 ml-1">
+            <fab-checkbox [label]="locale.entireDay" 
+							      (onChange)="AllDayCheckboxChecked($event)" 
+                           [checked]="appointmentAllDayCheckboxChecked"></fab-checkbox>
+         </div>
 		</div>
 
 		<div class="mx-auto mb-3">
@@ -39,7 +40,7 @@
 		<!-- Reminder -->
 		<div class="col-12 mt-2">
 			<div class="mx-auto" style="width: 250px;" [style.display]="showReminderOption ? 'block' : 'none'">
-				<input type="checkbox" id="appointment-reminder-checkbox"><label for="appointment-reminder-checkbox" class="ml-3 text-color">{{ locale.reminder }}</label>
+				<fab-checkbox [label]="locale.reminder" [checked]="reminderCheckboxChecked" (onChange)="ReminderCheckboxChecked($event)" [defaultChecked]="true"></fab-checkbox>
 	
 				<div class="form-group mt-2" style="width: 250px;">
 					<select class="form-control" [disabled]="!reminderCheckboxChecked" (change)="onReminderOptionChanged($event.target.value)">

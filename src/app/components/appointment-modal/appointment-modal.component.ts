@@ -165,38 +165,6 @@ export class AppointmentModalComponent{
 				this.save.emit(appointment);
 			}
       }, () => {});
-
-      $('#appointment-all-day-checkbox').iCheck({
-         checkboxClass: 'icheckbox_square-blue',
-         radioClass: 'iradio_square'
-		});
-		
-		$('#appointment-reminder-checkbox').iCheck({
-			checkboxClass: 'icheckbox_square-blue',
-         radioClass: 'iradio_square'
-		});
-
-		if(this.appointmentAllDayCheckboxChecked){
-			$('#appointment-all-day-checkbox').iCheck('check');
-		}
-      $('#appointment-all-day-checkbox').on('ifChecked', (event) => {
-			this.appointmentAllDayCheckboxChecked = true
-
-			// Set the notification time to 12 hours
-			this.SetReminderSelection(43200)
-		});
-		$('#appointment-all-day-checkbox').on('ifUnchecked', (event) => {
-			this.appointmentAllDayCheckboxChecked = false
-
-			// Set the notification time to 1 hour
-			this.SetReminderSelection(3600)
-		});
-		
-		$('#appointment-reminder-checkbox').on('ifChecked', (event) => this.reminderCheckboxChecked = true);
-		$('#appointment-reminder-checkbox').on('ifUnchecked', (event) => this.reminderCheckboxChecked = false);
-		if(this.reminderCheckboxChecked){
-			$('#appointment-reminder-checkbox').iCheck('check');
-		}
    }
 
    ResetNewObjects(date?: number){
@@ -270,5 +238,23 @@ export class AppointmentModalComponent{
 			title,
 			message
 		}
+   }
+   
+   AllDayCheckboxChecked(event: {ev: MouseEvent, checked: boolean}){
+      if(event.checked){
+			this.appointmentAllDayCheckboxChecked = true
+
+			// Set the notification time to 12 hours
+			this.SetReminderSelection(43200)
+      }else{
+			this.appointmentAllDayCheckboxChecked = false
+
+			// Set the notification time to 1 hour
+			this.SetReminderSelection(3600)
+      }
+	}
+	
+	ReminderCheckboxChecked(event: {ev: MouseEvent, checked: boolean}){
+		this.reminderCheckboxChecked = event.checked;
 	}
 }
