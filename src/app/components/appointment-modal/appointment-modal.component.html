@@ -51,13 +51,10 @@
             </div>
             
 				<div class="form-group mt-2" style="width: 250px;">
-					<select class="form-control" [disabled]="!reminderCheckboxChecked" (change)="onReminderOptionChanged($event.target.value)">
-						<option *ngFor="let item of reminderTimes" 
-									[value]="item.secondsBefore"
-									[selected]="item.selected">
-							{{ item.text }}
-						</option>
-					</select>
+					<fab-dropdown [options]="reminderOptions" 
+										[selectedKey]="notificationTime" 
+										[disabled]="!reminderCheckboxChecked"
+										(onChange)="ReminderDropdownChanged($event)"></fab-dropdown>
 				</div>
 			</div>
 

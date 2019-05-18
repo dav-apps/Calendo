@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { FabCheckboxModule, FabButtonModule } from '@angular-react/fabric';
+import { FabCheckboxModule, FabButtonModule, FabDropdownModule } from '@angular-react/fabric';
 
 import { AppComponent } from './app.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
@@ -67,7 +67,8 @@ import { environment } from '../environments/environment';
 		FontAwesomeModule,
       ServiceWorkerModule.register('/sw.js', { enabled: environment.production }),
       FabCheckboxModule,
-      FabButtonModule
+      FabButtonModule,
+      FabDropdownModule
   	],
   	providers: [
 		DataService

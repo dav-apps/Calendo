@@ -5,6 +5,7 @@ import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
 import { SubscribePushNotifications, CreateNotification, GetNotification, DeleteNotification, UpdateNotification } from 'dav-npm';
 import * as moment from 'moment';
+import { IDropdownOption } from 'office-ui-fabric-react';
 
 @Component({
    selector: "calendo-appointment-modal",
@@ -30,7 +31,7 @@ export class AppointmentModalComponent{
 	reminderCheckboxChecked: boolean = true;
 	notificationTime: number = 43200;				// Saves the time of the notification in seconds before the start of the appointment
 	showReminderOption: boolean = true;
-	reminderTimes: {secondsBefore: number, text: string, selected: boolean}[] = [];
+	reminderOptions: IDropdownOption[] = [];
 
 	constructor(private modalService: NgbModal,
 					private dataService: DataService){
@@ -46,17 +47,17 @@ export class AppointmentModalComponent{
 											&& Notification.permission != "denied";
 		
 		// Init reminderTimes
-		this.reminderTimes = [];
-		this.reminderTimes.push(
-			{ secondsBefore: 0, text: this.locale.reminderTimes.minutes0, selected: false }, 
-			{ secondsBefore: 900, text: this.locale.reminderTimes.minutes15, selected: false },
-			{ secondsBefore: 1800, text: this.locale.reminderTimes.minutes30, selected: false }, 
-			{ secondsBefore: 3600, text: this.locale.reminderTimes.hour1, selected: false },
-			{ secondsBefore: 10800, text: this.locale.reminderTimes.hours3, selected: false },
-			{ secondsBefore: 21600, text: this.locale.reminderTimes.hours6, selected: false },
-			{ secondsBefore: 43200, text: this.locale.reminderTimes.hours12, selected: true },
-			{ secondsBefore: 86400, text: this.locale.reminderTimes.day1, selected: false },
-			{ secondsBefore: 604800, text: this.locale.reminderTimes.week1, selected: false }
+		this.reminderOptions = [];
+		this.reminderOptions.push(
+			{ key: 0, text: this.locale.reminderTimes.minutes0 },
+			{ key: 900, text: this.locale.reminderTimes.minutes15 },
+			{ key: 1800, text: this.locale.reminderTimes.minutes30 },
+			{ key: 3600, text: this.locale.reminderTimes.hour1 },
+			{ key: 10800, text: this.locale.reminderTimes.hours3 },
+			{ key: 21600, text: this.locale.reminderTimes.hours6 },
+			{ key: 43200, text: this.locale.reminderTimes.hours12 },
+			{ key: 86400, text: this.locale.reminderTimes.day1 },
+			{ key: 604800, text: this.locale.reminderTimes.week1 }
 		);
 
       if(appointment){
@@ -65,8 +66,8 @@ export class AppointmentModalComponent{
 			this.new = false;
 			this.appointmentUuid = appointment.uuid;
 
-         var startDate = new Date(appointment.start*1000);
-			var endDate = new Date(appointment.end*1000);
+         var startDate = new Date(appointment.start * 1000);
+			var endDate = new Date(appointment.end * 1000);
 			
 			if(appointment.notificationUuid){
 				// Get the date of the notification
@@ -204,19 +205,6 @@ export class AppointmentModalComponent{
 		return !(this.appointmentName.length > 1 && timeOkay);
 	}
 
-	onReminderOptionChanged(secondsBefore: number){
-		this.SetReminderSelection(secondsBefore);
-	}
-
-	SetReminderSelection(secondsBefore: number){
-		this.notificationTime = secondsBefore;
-
-		// Set the appropriate item in reminderTimes to selected = true
-		for(let item of this.reminderTimes){
-			item.selected = item.secondsBefore == secondsBefore;
-		}
-	}
-
 	GenerateNotificationProperties(appointment: Appointment) : {title: string, message: string}{
 		// Format the time in the message correctly
 		let title = appointment.name;
@@ -237,7 +225,15 @@ export class AppointmentModalComponent{
 			title,
 			message
 		}
-   }
+	}
+
+	SetReminderSelection(secondsBefore: number){
+		this.notificationTime = secondsBefore;
+	}
+	
+	ReminderDropdownChanged(event: {ev: MouseEvent, index: number, option: IDropdownOption}){
+		this.SetReminderSelection(event.option.key as number);
+	}
 
 	ToggleAllDayCheckbox(){
 		if(!this.appointmentAllDayCheckboxChecked){
