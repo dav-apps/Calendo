@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-declare var $: any;
 import { Appointment, CreateAppointment, GetAppointment, UpdateAppointment } from '../../models/Appointment';
 import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
@@ -239,9 +238,9 @@ export class AppointmentModalComponent{
 			message
 		}
    }
-   
-   AllDayCheckboxChecked(event: {ev: MouseEvent, checked: boolean}){
-      if(event.checked){
+
+	ToggleAllDayCheckbox(){
+		if(!this.appointmentAllDayCheckboxChecked){
 			this.appointmentAllDayCheckboxChecked = true
 
 			// Set the notification time to 12 hours
@@ -253,8 +252,8 @@ export class AppointmentModalComponent{
 			this.SetReminderSelection(3600)
       }
 	}
-	
-	ReminderCheckboxChecked(event: {ev: MouseEvent, checked: boolean}){
-		this.reminderCheckboxChecked = event.checked;
+
+	ToggleReminderCheckbox(){
+		this.reminderCheckboxChecked = !this.reminderCheckboxChecked;
 	}
 }
