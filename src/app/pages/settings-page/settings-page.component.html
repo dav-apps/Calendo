@@ -3,12 +3,17 @@
 
 	<div class="mx-auto">
 		<!-- Sort todos by -->
-		<div class="form-group mt-4" style="font-size: 18px; width: 200px">
-			<label for="sort-todos-select" class="text-color">{{ locale.sortTodosBy }}</label>
-			<select class="form-control" id="sort-todos-select2" (change)="onSortTodosSelectChanged($event.target.value)">
-				<option value="0" [selected]="sortTodoByDateSelected">{{ locale.sortTodosByDate }}</option>
-				<option value="1" [selected]="!sortTodoByDateSelected">{{ locale.sortTodosByGroup }}</option>
-			</select>
+      <div class="form-group mt-4" style="font-size: 18px; width: 200px">
+         <label class="text-color">{{ locale.sortTodosBy }}</label>
+
+         <fab-dropdown [options]="sortTodosOptions" 
+                        [selectedKey]="sortTodosSelectedKey" 
+                        (onChange)="onSortTodosSelectChanged($event)">
+            <options>
+               <fab-dropdown-option optionKey="date" [text]="locale.sortTodosByDate"></fab-dropdown-option>
+               <fab-dropdown-option optionKey="group" [text]="locale.sortTodosByGroup"></fab-dropdown-option>
+            </options>
+         </fab-dropdown>
 		</div>
 	
 		<!-- Show old appointments -->

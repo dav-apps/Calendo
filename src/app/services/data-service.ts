@@ -719,8 +719,8 @@ export class DataService{
 
 	async GetSortTodosByDate(): Promise<boolean>{
 		await this.InitLocalforage();
-		var value = await localforage.getItem(environment.settingsSortTodosByDateKey) as boolean;
-		return value ? value : environment.settingsSortTodosByDateDefault;
+      let value = await localforage.getItem(environment.settingsSortTodosByDateKey) as boolean;
+		return value != null ? value : environment.settingsSortTodosByDateDefault;
 	}
 
 	async SetShowOldAppointments(value: boolean){

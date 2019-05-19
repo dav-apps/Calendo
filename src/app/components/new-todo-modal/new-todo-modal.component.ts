@@ -6,7 +6,6 @@ import { DataService } from '../../services/data-service';
 import { SubscribePushNotifications, CreateNotification } from 'dav-npm';
 import * as moment from 'moment';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { ITextFieldStyles } from 'office-ui-fabric-react';
 
 @Component({
    selector: "calendo-new-todo-modal",
@@ -30,44 +29,14 @@ export class NewTodoModalComponent{
    allGroups: string[] = [];
    todoReminderTime: {hour: number, minute: number};
 	showReminderOption: boolean = true;
-	groupTextFieldStyle: ITextFieldStyles = {
+	groupTextFieldStyle = {
 		root: {
 			width: 250,
-		},
-		fieldGroup: {},
-		prefix: {},
-		suffix: {},
-		field: {},
-		icon: {},
-		description: {},
-		wrapper: {},
-		errorMessage: {},
-		subComponentStyles: {
-			label: {
-				root: {
-					color: this.dataService.darkTheme ? "white" : "black"
-				}
-			}
 		}
 	}
-	nameTextFieldStyle: ITextFieldStyles = {
+	nameTextFieldStyle = {
 		root: {
 			width: 280,
-		},
-		fieldGroup: {},
-		prefix: {},
-		suffix: {},
-		field: {},
-		icon: {},
-		description: {},
-		wrapper: {},
-		errorMessage: {},
-		subComponentStyles: {
-			label: {
-				root: {
-					color: this.dataService.darkTheme ? "white" : "black"
-				}
-			}
 		}
 	}
 

@@ -3,6 +3,10 @@ import { DataService } from '../../services/data-service';
 import { environment } from '../../../environments/environment';
 import { enUS } from "../../../locales/locales";
 declare var $: any;
+import { IDropdownOption } from 'office-ui-fabric-react';
+
+const dateKey = "date";
+const groupKey = "group";
 
 @Component({
    selector: "calendo-settings-page",
@@ -13,7 +17,7 @@ declare var $: any;
 })
 export class SettingsPageComponent{
    locale = enUS.settingsPage;
-   sortTodoByDateSelected: boolean = false;
+   sortTodosSelectedKey: string = groupKey;
 	version: string = environment.version;
 	isWindows: boolean = false;
 
@@ -24,7 +28,7 @@ export class SettingsPageComponent{
    }
 
    async ngOnInit(){
-      this.sortTodoByDateSelected = await this.dataService.GetSortTodosByDate();
+		this.sortTodosSelectedKey = await this.dataService.GetSortTodosByDate() ? dateKey : groupKey;
 
       $('input').iCheck({
          checkboxClass: 'icheckbox_square-blue',
@@ -58,8 +62,9 @@ export class SettingsPageComponent{
 		}
    }
 
-   onSortTodosSelectChanged(value){
-      this.dataService.SetSortTodosByDate(value == 0);
+   onSortTodosSelectChanged(event: {ev: MouseEvent, option: IDropdownOption, index: number}){
+		this.sortTodosSelectedKey = event.index == 0 ? dateKey : groupKey;
+		this.dataService.SetSortTodosByDate(event.index == 0);
    }
 
    onHideAppointmentsCheckboxChanged(value: boolean){
