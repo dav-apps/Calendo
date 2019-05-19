@@ -7,8 +7,15 @@
 	</div>
 	<div class="modal-body row theme-background-color-primary mx-0">
 		<div class="mx-auto mb-4 px-4 text-color">
-         <!-- Set Date checkbox -->
-         <fab-checkbox [label]="locale.setDate" (onChange)="SetDateCheckboxChecked($event)" [checked]="newTodoSetDateCheckboxChecked"></fab-checkbox>
+			<!-- Set Date checkbox -->
+			<div class="mb-1">
+				<div class="d-inline-flex">
+					<fab-checkbox (onChange)="ToggleSetDateCheckbox()" [checked]="newTodoSetDateCheckboxChecked"></fab-checkbox>
+					<label class="col-form-label ml-2 text-color cursor ms-fontSize-14" style="margin-top: -8px" (click)="ToggleSetDateCheckbox()">
+						{{ locale.setDate }}
+					</label>
+				</div>
+			</div>
 
 			<ngb-datepicker #dp [(ngModel)]="newTodoDate" 
 								(navigate)="date = $event.next" 
@@ -16,41 +23,45 @@
 								style="background-color: white;"></ngb-datepicker>
 		</div>
 		<div class="mx-auto mb-4 px-4 text-color" [style.display]="showReminderOption ? 'block' : 'none'">
-         <!-- Reminder checkbox -->
-			<fab-checkbox [label]="locale.reminder" 
-							(onChange)="ReminderCheckboxChecked($event)" 
-							[checked]="newTodoReminderCheckboxChecked"
-							[disabled]="!newTodoSetDateCheckboxChecked"
-							className="ml-4"></fab-checkbox>
+			<!-- Reminder checkbox -->
+			<div class="d-inline-flex">
+				<fab-checkbox (onChange)="ToggleReminderCheckbox()" 
+								[checked]="newTodoReminderCheckboxChecked"
+								[disabled]="!newTodoSetDateCheckboxChecked"
+								className="ml-4"></fab-checkbox>
+				<label class="col-form-label ml-2 text-color ms-fontSize-14" [ngClass]="newTodoSetDateCheckboxChecked ? 'cursor' : ''" style="margin-top: -8px" (click)="ToggleReminderCheckbox()">
+					{{ locale.reminder }}
+				</label>
+			</div>
 
 			<ngb-timepicker id="todo-reminder-time" class="mx-auto" style="width: 100px" [disabled]="!newTodoReminderCheckboxChecked"
 								[(ngModel)]="todoReminderTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
 		</div>
 
-		<div class="mx-auto col-10 offset-1">
+		<div class="mx-auto col-10 offset-1" style="padding-left: 60px">
 			<div class="form-group">
 				<label for="new-group-name" class="col-form-label text-color">{{ locale.addNewGroup }}</label>
 
 				<div class="d-flex">
-					<button type="button" class="btn btn-outline-primary btn-sm" (click)="AddGroup(newGroupName)"><fa-icon [icon]="faPlus"></fa-icon></button>
-					<input id="new-group-name" class="form-control"
-							type="text" [placeholder]="locale.groupName" [(ngModel)]="newGroupName" />
+               <fab-text-field [(value)]="newGroupName" [placeholder]="locale.groupName" [styles]="groupTextFieldStyle"></fab-text-field>
+               <button type="button" class="btn btn-outline-primary btn-sm" (click)="AddGroup(newGroupName)"><fa-icon [icon]="faPlus"></fa-icon></button>
 				</div>
 			</div>
 
 			<div class="form-group" ngbDropdown placement="bottom-left" *ngIf="allGroups.length > 0">
-				<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle>{{ locale.addExistingGroup }}</button>
-				<div ngbDropdownMenu class="theme-background-color-tertiary">
-					<button class="dropdown-item text-color" (click)="AddGroup(groupName)" *ngFor="let groupName of allGroups">{{ groupName }}</button>
+				<button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>{{ locale.addExistingGroup }}</button>
+				<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+					<button class="dropdown-item text-color cursor" (click)="AddGroup(groupName)" *ngFor="let groupName of allGroups">{{ groupName }}</button>
 				</div>
 			</div>
 
-			<calendo-todo-group-badge *ngFor="let todoGroup of todoGroups" [groupName]="todoGroup" [canRemove]="true" (remove)="RemoveGroup($event)"></calendo-todo-group-badge>
+         <div style="margin-top: -8px">
+            <calendo-todo-group-badge *ngFor="let todoGroup of todoGroups" [groupName]="todoGroup" [canRemove]="true" (remove)="RemoveGroup($event)"></calendo-todo-group-badge>
+         </div>
 
-			<div class="form-group">
-				<label for="new-todo-name" class="col-form-label text-color">{{ locale.name }}</label>
-				<input id="new-todo-name" class="form-control" 
-						type="text" [placeholder]="locale.todoName" [(ngModel)]="newTodoName" />
+			<div class="form-group mt-2">
+            <label class="col-form-label text-color">{{ locale.name }}</label>
+            <fab-text-field [(value)]="newTodoName" [placeholder]="locale.todoName" [styles]="nameTextFieldStyle"></fab-text-field>
 			</div>
 		</div>
 	</div>

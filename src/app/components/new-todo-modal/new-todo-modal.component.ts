@@ -6,6 +6,7 @@ import { DataService } from '../../services/data-service';
 import { SubscribePushNotifications, CreateNotification } from 'dav-npm';
 import * as moment from 'moment';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { ITextFieldStyles } from 'office-ui-fabric-react';
 
 @Component({
    selector: "calendo-new-todo-modal",
@@ -28,7 +29,47 @@ export class NewTodoModalComponent{
    todoGroups: string[] = [];
    allGroups: string[] = [];
    todoReminderTime: {hour: number, minute: number};
-   showReminderOption: boolean = true;
+	showReminderOption: boolean = true;
+	groupTextFieldStyle: ITextFieldStyles = {
+		root: {
+			width: 250,
+		},
+		fieldGroup: {},
+		prefix: {},
+		suffix: {},
+		field: {},
+		icon: {},
+		description: {},
+		wrapper: {},
+		errorMessage: {},
+		subComponentStyles: {
+			label: {
+				root: {
+					color: this.dataService.darkTheme ? "white" : "black"
+				}
+			}
+		}
+	}
+	nameTextFieldStyle: ITextFieldStyles = {
+		root: {
+			width: 280,
+		},
+		fieldGroup: {},
+		prefix: {},
+		suffix: {},
+		field: {},
+		icon: {},
+		description: {},
+		wrapper: {},
+		errorMessage: {},
+		subComponentStyles: {
+			label: {
+				root: {
+					color: this.dataService.darkTheme ? "white" : "black"
+				}
+			}
+		}
+	}
 
    constructor(private modalService: NgbModal,
                private dataService: DataService){
@@ -129,17 +170,19 @@ export class NewTodoModalComponent{
          message: todo.name
       }
    }
-
-   SetDateCheckboxChecked(event: {ev: MouseEvent, checked: boolean}){
-      if(event.checked){
-			this.newTodoSetDateCheckboxChecked = true
-		}else{
+	
+	ToggleSetDateCheckbox(){
+		if(this.newTodoSetDateCheckboxChecked){
 			this.newTodoSetDateCheckboxChecked = false;
          this.newTodoReminderCheckboxChecked = false;
+		}else{
+			this.newTodoSetDateCheckboxChecked = true;
 		}
-   }
+	}
 
-   ReminderCheckboxChecked(event: {ev: MouseEvent, checked: boolean}){
-      this.newTodoReminderCheckboxChecked = event.checked;
-   }
+	ToggleReminderCheckbox(){
+		if(this.newTodoSetDateCheckboxChecked){
+			this.newTodoReminderCheckboxChecked = !this.newTodoReminderCheckboxChecked;
+		}
+	}
 }

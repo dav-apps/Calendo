@@ -63,7 +63,7 @@
 				<label class="text-color">{{ locale.color }}</label>
 	
 				<div class="row mx-auto">
-					<div class="rounded-circle m-1 appointment-color" 
+					<div class="rounded-circle m-1 appointment-color cursor" 
 							[style.background-color]="selectedColor == i ? (dataService.darkTheme ? '#15202b' : 'white') : '#' + color" 
 							[style.border]="selectedColor == i ? '5px solid #' + color : ''"
 							(click)="selectedColor = i"
@@ -73,9 +73,8 @@
 
 			<!-- Name -->
 			<div class="mx-auto mt-3" style="width: 250px;">
-				<label for="appointment-name" class="col-form-label text-color">{{ locale.name }}</label>
-				<input id="appointment-name" class="form-control mx-auto" 
-						type="text" [placeholder]="locale.appointmentName" [(ngModel)]="appointmentName" />
+				<label class="col-form-label text-color">{{ locale.name }}</label>
+				<fab-text-field [(value)]="appointmentName" [placeholder]="locale.appointmentName"></fab-text-field>
 			</div>
 		</div>
    </div>
