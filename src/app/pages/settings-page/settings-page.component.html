@@ -15,25 +15,20 @@
             </options>
          </fab-dropdown>
 		</div>
-	
-		<!-- Show old appointments -->
-		<p style="font-size: 18px" class="mt-4 text-color">
-			<input type="checkbox" id="show-old-appointments-checkbox"><label for="show-old-appointments-checkbox" class="ml-3">{{ locale.showOldAppointments }}</label>
-		</p>
 		
 		<!-- Theme -->
 		<p class="text-color mt-4" style="font-size: 18px">{{ locale.theme }}</p>
 		<div class="form-check px-0 mb-2">
 			<input type="radio" name="theme-radio-button" id="light-theme-radio-button">
-			<label for="light-theme-radio-button" class="form-check-label text-color ml-3">{{ locale.lightTheme }}</label>
+			<label for="light-theme-radio-button" class="form-check-label text-color ml-3 cursor">{{ locale.lightTheme }}</label>
 		</div>
 		<div class="form-check px-0 mb-2">
 			<input type="radio" name="theme-radio-button" id="dark-theme-radio-button">
-			<label for="dark-theme-radio-button" class="form-check-label text-color ml-3">{{ locale.darkTheme }}</label>
+			<label for="dark-theme-radio-button" class="form-check-label text-color ml-3 cursor">{{ locale.darkTheme }}</label>
 		</div>
 		<div class="form-check px-0 mb-2" *ngIf="isWindows">
 			<input type="radio" name="theme-radio-button" id="system-theme-radio-button">
-			<label for="system-theme-radio-button" class="form-check-label text-color ml-3">{{ locale.systemTheme }}</label>
+			<label for="system-theme-radio-button" class="form-check-label text-color ml-3 cursor">{{ locale.systemTheme }}</label>
 		</div>
 	
 		<!-- App information -->

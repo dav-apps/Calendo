@@ -24,11 +24,9 @@ export const environment = {
 	visitKey: "visit",
 	// Settings keys
 	settingsSortTodosByDateKey: "settings-sortTodosByDate",
-	settingsShowOldAppointmentsKey: "settings-showOldAppointments",
 	settingsThemeKey: "settings-theme",
 	// Settings defaults
 	settingsSortTodosByDateDefault: true,
-	settingsShowOldAppointmentsDefault: false,
 	settingsThemeDefault: "system",
 	// Other constants
 	lightThemeKey: "light",

@@ -19,12 +19,10 @@ export const environment = {
 	notificationUuidKey: "notification_uuid",
 	visitKey: "visit",
 	// Settings keys
-	settingsSortTodosByDateKey: "settings-sortTodosByDate",
-	settingsShowOldAppointmentsKey: "settings-showOldAppointments",
+   settingsSortTodosByDateKey: "settings-sortTodosByDate",
 	settingsThemeKey: "settings-theme",
 	// Settings defaults
 	settingsSortTodosByDateDefault: true,
-	settingsShowOldAppointmentsDefault: false,
 	settingsThemeDefault: "system",
 	// Other constants
 	lightThemeKey: "light",

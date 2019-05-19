@@ -35,12 +35,6 @@ export class SettingsPageComponent{
          radioClass: 'iradio_square-blue'
       });
 
-      if(await this.dataService.GetShowOldAppointments()){
-         $('#show-old-appointments-checkbox').iCheck('check');
-      }
-      $('#show-old-appointments-checkbox').on('ifChecked', (event) => this.onHideAppointmentsCheckboxChanged(true));
-      $('#show-old-appointments-checkbox').on('ifUnchecked', (event) => this.onHideAppointmentsCheckboxChanged(false));
-
       // Set the correct theme radio button to checked
 		let theme = await this.dataService.GetTheme();
       if(theme == environment.darkThemeKey){
@@ -65,10 +59,6 @@ export class SettingsPageComponent{
    onSortTodosSelectChanged(event: {ev: MouseEvent, option: IDropdownOption, index: number}){
 		this.sortTodosSelectedKey = event.index == 0 ? dateKey : groupKey;
 		this.dataService.SetSortTodosByDate(event.index == 0);
-   }
-
-   onHideAppointmentsCheckboxChanged(value: boolean){
-      this.dataService.SetShowOldAppointments(value);
    }
 
    changeTheme(theme: string){

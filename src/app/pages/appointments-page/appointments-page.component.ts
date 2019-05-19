@@ -23,8 +23,6 @@ export class AppointmentsPageComponent{
       this.dataService.HideWindowsBackButton();
    }
 
-   ngOnInit(){}
-
    ShowNewAppointmentModal(){
       this.newAppointmentModalComponent.Show();
    }

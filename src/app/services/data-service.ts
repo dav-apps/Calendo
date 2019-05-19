@@ -64,10 +64,6 @@ export class DataService{
 	//#endregion
 	
 	constructor(){
-		this.GetShowOldAppointments().then(value => {
-			this.showOldAppointments = value;
-		});
-		
 		this.GetSortTodosByDate().then(value => {
 			this.sortTodosByDate = value;
 		});
@@ -721,17 +717,6 @@ export class DataService{
 		await this.InitLocalforage();
       let value = await localforage.getItem(environment.settingsSortTodosByDateKey) as boolean;
 		return value != null ? value : environment.settingsSortTodosByDateDefault;
-	}
-
-	async SetShowOldAppointments(value: boolean){
-		await this.InitLocalforage();
-		await localforage.setItem(environment.settingsShowOldAppointmentsKey, value);
-	}
-
-	async GetShowOldAppointments(){
-		await this.InitLocalforage();
-		var value = await localforage.getItem(environment.settingsShowOldAppointmentsKey) as boolean;
-		return value ? value : environment.settingsShowOldAppointmentsDefault;
 	}
 
 	async SetTheme(value: string){
