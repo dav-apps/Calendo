@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Todo, CreateTodo, GetAllTodoGroups } from '../../models/Todo';
+import { Todo, GetAllTodoGroups } from '../../models/Todo';
 import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
 import { SubscribePushNotifications, CreateNotification } from 'dav-npm';
@@ -62,8 +62,9 @@ export class NewTodoModalComponent{
          if(this.newTodoSetDateCheckboxChecked){
             var todoTime = new Date(this.newTodoDate.year, this.newTodoDate.month - 1, this.newTodoDate.day, 0, 0, 0, 0);
             todoTimeUnix = Math.floor(todoTime.getTime() / 1000);
-         }
-         var todo = new Todo("", false, todoTimeUnix, this.newTodoName, this.todoGroups);
+			}
+			
+			let notificationUuid = null;
 
          if(this.newTodoReminderCheckboxChecked){
             // Ask the user for notification permission
@@ -72,11 +73,11 @@ export class NewTodoModalComponent{
                let notificationTime = moment.unix(todoTimeUnix).startOf('day').unix() 
                            + this.todoReminderTime.hour * 60 * 60
                            + this.todoReminderTime.minute * 60;
-               todo.notificationUuid = await CreateNotification(notificationTime, 0, this.GenerateNotificationProperties(todo));
+               notificationUuid = await CreateNotification(notificationTime, 0, this.GenerateNotificationProperties(this.newTodoName));
             }
          }
 
-         todo.uuid = CreateTodo(todo);
+         let todo = await Todo.Create(this.newTodoName, false, todoTimeUnix, this.todoGroups, notificationUuid);
 
          this.save.emit(todo);
       }, () => {});
@@ -133,10 +134,10 @@ export class NewTodoModalComponent{
       }
    }
 
-   GenerateNotificationProperties(todo: Todo) : {title: string, message: string}{
+   GenerateNotificationProperties(todoName: string) : {title: string, message: string}{
       return {
          title: this.notificationLocale.title,
-         message: todo.name
+         message: todoName
       }
    }
 	

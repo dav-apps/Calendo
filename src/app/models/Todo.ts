@@ -2,33 +2,55 @@ import { GetTableObject, TableObject, GetAllTableObjects, DeleteNotification } f
 import { environment } from "../../environments/environment";
 
 export class Todo{
-   constructor(public uuid: string, 
-               public completed: boolean, 
-               public time: number, 
-					public name: string,
-					public groups: string[],
-					public notificationUuid: string = ""){}
+	public uuid: string = null;
+	public name: string = "";
+	public completed: boolean = false;
+	public time: number = 0;
+	public groups: string[] = [];
+	public notificationUuid: string = null;
 
-	AddGoup(name: string){
+   constructor(
+		uuid: string,
+		name: string,
+		completed?: boolean,
+		time?: number,
+		groups?: string[],
+		notificationUuid?: string
+	){
+		this.uuid = uuid;
+		this.name = name;
+		this.completed = completed == null ? false : completed;
+		this.time = time ? time : 0;
+		this.groups = groups ? groups : [];
+		this.notificationUuid ? notificationUuid : null;
+	}
+
+	public static async Create(name: string, completed: boolean = false, time: number, groups: string[] = [], notificationUuid: string = null) : Promise<Todo>{
+		let todo = new Todo(null, name, completed, time, groups, notificationUuid);
+		await todo.Save();
+		return todo;
+	}
+
+	async AddGoup(name: string){
 		if(this.groups.findIndex(n => n === name) === -1){
 			this.groups.push(name);
-			this.Save();	
+			await this.Save();
 		}
 	}
 
-	RemoveGroup(name: string){
+	async RemoveGroup(name: string){
 		var index = this.groups.findIndex(n => n === name);
 
 		if(index !== -1){
 			this.groups.splice(index, 1);
-			this.Save();
+			await this.Save();
 		}
 	}
 
-   SetCompleted(completed: boolean){
+   async SetCompleted(completed: boolean){
       if(this.completed != completed){
          this.completed = completed;
-         this.Save();
+         await this.Save();
       }
 	}
 	
@@ -37,27 +59,44 @@ export class Todo{
 		if(tableObject){
 			if(this.notificationUuid){
 				// Delete the notification
-				DeleteNotification(this.notificationUuid);
+				await DeleteNotification(this.notificationUuid);
 			}
 
-			tableObject.Delete();
+			await tableObject.Delete();
 		}
 	}
 
 	private async Save(){
-		var tableObject = await GetTableObject(this.uuid);
-      if(tableObject){
-			await tableObject.SetPropertyValues([
-				{ name: environment.todoNameKey, value: this.name},
-				{ name: environment.todoCompletedKey, value: this.completed.toString() },
-				{ name: environment.todoTimeKey, value: this.time.toString() },
-				{ name: environment.todoGroupsKey, value: ConvertGroupsArrayToString(this.groups) }
-			]);
+		let tableObject = await GetTableObject(this.uuid);
 
-			if(this.notificationUuid){
-				await tableObject.SetPropertyValue(environment.notificationUuidKey, this.notificationUuid);
-			}
-      }
+		if(!tableObject){
+			// Create the table object
+			tableObject = new TableObject();
+			tableObject.TableId = environment.todoTableId;
+			this.uuid = tableObject.Uuid;
+		}
+
+		let properties: {name: string, value: string}[] = [
+			{ name: environment.todoNameKey, value: this.name},
+			{ name: environment.todoCompletedKey, value: this.completed.toString() },
+			{ name: environment.todoTimeKey, value: this.time.toString() }
+		]
+
+		if(this.groups.length > 0){
+			properties.push({
+				name: environment.todoGroupsKey,
+				value: this.groups.join(',')
+			});
+		}
+
+		if(this.notificationUuid){
+			properties.push({
+				name: environment.notificationUuidKey,
+				value: this.notificationUuid
+			});
+		}
+
+		await tableObject.SetPropertyValues(properties);
 	}
 }
 
@@ -94,30 +133,6 @@ export async function GetAllTodoGroups(): Promise<string[]>{
 	return todoGroups;
 }
 
-export function CreateTodo(todo: Todo): string{
-   var tableObject = new TableObject();
-	tableObject.TableId = environment.todoTableId;
-
-	var propertiesArray: {name: string, value: string}[] = [
-		{ name: environment.todoCompletedKey, value: todo.completed.toString() },
-		{ name: environment.todoTimeKey, value: todo.time.toString() },
-		{ name: environment.todoNameKey, value: todo.name }
-	];
-
-	var groupsString = ConvertGroupsArrayToString(todo.groups);
-	if(groupsString.length > 0){
-		propertiesArray.push({name: environment.todoGroupsKey, value: groupsString});
-	}
-
-	if(todo.notificationUuid){
-		propertiesArray.push({name: environment.notificationUuidKey, value: todo.notificationUuid});
-	}
-
-	tableObject.SetPropertyValues(propertiesArray);
-
-	return tableObject.Uuid;
-}
-
 export function ConvertTableObjectToTodo(tableObject: TableObject): Todo{
 	if(tableObject.TableId != environment.todoTableId) return null;
 
@@ -142,22 +157,14 @@ export function ConvertTableObjectToTodo(tableObject: TableObject): Todo{
 	var tableObjectNotificationUuid = tableObject.GetPropertyValue(environment.notificationUuidKey);
 	var notificationUuid = tableObjectNotificationUuid ? tableObjectNotificationUuid : "";
 
-	return new Todo(tableObject.Uuid, completed, todoTime, tableObject.GetPropertyValue(environment.todoNameKey), groups, notificationUuid);
-}
-
-function ConvertGroupsArrayToString(groups: string[]): string{
-	var groupsString = "";
-
-	groups.forEach(group => {
-		groupsString += group + ",";
-	});
-
-	// Remove the last comma from the string
-	if(groupsString.length > 0){
-		groupsString = groupsString.slice(0, groupsString.length - 1);
-	}
-
-	return groupsString;
+	return new Todo(
+		tableObject.Uuid, 
+		tableObject.GetPropertyValue(environment.todoNameKey),
+		completed,
+		todoTime,
+		groups,
+		notificationUuid
+	);
 }
 
 function ConvertGroupsStringToGroupsArray(groups: string): string[]{
