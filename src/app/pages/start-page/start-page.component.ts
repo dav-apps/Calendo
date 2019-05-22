@@ -2,9 +2,11 @@ import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { Todo } from '../../models/Todo';
+import { TodoList } from '../../models/TodoList';
 import { DataService } from '../../services/data-service';
 import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-modal.component';
 import { AppointmentModalComponent } from '../../components/appointment-modal/appointment-modal.component';
+import { TodoListModalComponent } from '../../components/todo-list-modal/todo-list-modal.component';
 import { enUS } from '../../../locales/locales';
 import { Appointment } from 'src/app/models/Appointment';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -22,7 +24,10 @@ export class StartPageComponent{
 	@ViewChild(NewTodoModalComponent)
 	private newTodoModalComponent: NewTodoModalComponent;
 	@ViewChild(AppointmentModalComponent)
-	private newAppointmentModalComponent: AppointmentModalComponent;
+   private newAppointmentModalComponent: AppointmentModalComponent;
+   @ViewChild(TodoListModalComponent)
+   private todoListModalComponent: TodoListModalComponent;
+
 	largeDateFormat: string = this.locale.formats.smallDate;
 	smallDateFormat: string = this.locale.formats.largeDate;
 
@@ -64,13 +69,20 @@ export class StartPageComponent{
 	}
 
 	ShowModal(index: number){
-		if(index == 0){
-			// Show the appointment modal
-			this.newAppointmentModalComponent.Show();
-		}else{
-			// Show the todo modal
-			this.newTodoModalComponent.Show();
-		}
+      switch (index) {
+         case 0:
+            // Show the appointment modal
+			   this.newAppointmentModalComponent.Show();
+            break;
+         case 1:
+            // Show the todo modal
+			   this.newTodoModalComponent.Show();
+            break;
+         case 2:
+            // Show the todo list modal
+            this.todoListModalComponent.Show();
+            break;
+      }
 	}
 
 	CreateTodo(todo: Todo){
@@ -79,7 +91,11 @@ export class StartPageComponent{
 
 	CreateAppointment(appointment: Appointment){
 		this.dataService.AddAppointment(appointment);
-	}
+   }
+   
+   CreateTodoList(todoList: TodoList){
+      
+   }
 
 	onResize(){
 		this.setSize();

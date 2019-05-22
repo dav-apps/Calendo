@@ -22,8 +22,12 @@
 				<h5 class="card-title text-color">{{ locale.todos }}</h5>
 				<ul class="list-group list-group-flush">
 					<calendo-todo-item [todo]="todo" *ngFor="let todo of dataService.startDaysTodos[0]" (delete)="DeleteTodo(todo)"></calendo-todo-item>
-					<li class="list-group-item theme-background-color-secondary" style="padding: 14px 0px 14px 5px;">
-						<button type="button" class="btn btn-outline-primary btn-sm" (click)="ShowModal(1)"><fa-icon [icon]="faPlus"></fa-icon></button>
+					<li class="list-group-item theme-background-color-secondary" style="padding: 14px 0px 14px 5px;" ngbDropdown placement="bottom-right">
+                  <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle><fa-icon [icon]="faPlus"></fa-icon></button>
+                  <div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+                     <button class="dropdown-item text-color cursor" (click)="ShowModal(1)">{{ locale.newTodo }}</button>
+                     <button class="dropdown-item text-color cursor" (click)="ShowModal(2)">{{ locale.newTodoList }}</button>
+                  </div>
 					</li>
 				</ul>
 			</div>
@@ -51,5 +55,6 @@
 	</div>
 
 	<calendo-appointment-modal (save)="CreateAppointment($event)"></calendo-appointment-modal>
-	<calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
+   <calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
+   <calendo-todo-list-modal (save)="CreateTodoList($event)"></calendo-todo-list-modal>
 </div>
