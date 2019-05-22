@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { Appointment, CreateAppointment, GetAppointment, UpdateAppointment } from '../../models/Appointment';
+import { Appointment, GetAppointment } from '../../models/Appointment';
 import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
 import { SubscribePushNotifications, CreateNotification, GetNotification, DeleteNotification, UpdateNotification } from 'dav-npm';
@@ -117,33 +117,28 @@ export class AppointmentModalComponent{
 
 			if(this.new){
 				// Create the new appointment
-				var appointment = new Appointment("", this.appointmentName, startUnix, endUnix, this.appointmentAllDayCheckboxChecked, color);
+				let notificationUuid = null;
 
 				if(this.reminderCheckboxChecked && this.dataService.user.IsLoggedIn){
 					// Ask the user for notification permission
 					if(await this.dataService.GetNotificationPermission() && await SubscribePushNotifications()){
 						// Create the notification
 						// Set the time of the notification to (the start of the day - seconds before) or (appointment start - seconds before)
-						let time = (this.appointmentAllDayCheckboxChecked ? moment.unix(appointment.start).startOf('day').unix() : appointment.start) - this.notificationTime;
-						appointment.notificationUuid = await CreateNotification(time, 0, this.GenerateNotificationProperties(appointment));
+						let time = (this.appointmentAllDayCheckboxChecked ? moment.unix(startUnix).startOf('day').unix() : startUnix) - this.notificationTime;
+						notificationUuid = await CreateNotification(time, 0, this.GenerateNotificationProperties(this.appointmentName, startUnix, endUnix));
 					}
 				}
 
-				appointment.uuid = await CreateAppointment(appointment);
+				let appointment = await Appointment.Create(this.appointmentName, startUnix, endUnix, this.appointmentAllDayCheckboxChecked, color, notificationUuid);
 				this.save.emit(appointment);
 			}else{
 				// Update the appointment
-				var appointment = await GetAppointment(this.appointmentUuid);
-
-				appointment.name = this.appointmentName;
-				appointment.start = startUnix;
-				appointment.end = endUnix;
-				appointment.allday = this.appointmentAllDayCheckboxChecked;
-				appointment.color = color;
+				let appointment = await GetAppointment(this.appointmentUuid);
+				let notificationUuid: string = appointment.notificationUuid;
 
 				if(this.reminderCheckboxChecked){
 					let time = (this.appointmentAllDayCheckboxChecked ? moment.unix(appointment.start).startOf('day').unix() : appointment.start) - this.notificationTime;
-					let notificationProperties = this.GenerateNotificationProperties(appointment);
+					let notificationProperties = this.GenerateNotificationProperties(this.appointmentName, startUnix, endUnix);
 
 					if(appointment.notificationUuid){
 						// There already is a notification; update it
@@ -151,17 +146,16 @@ export class AppointmentModalComponent{
 					}else{
 						// There was no notification before; create one
 						if(await this.dataService.GetNotificationPermission() && await SubscribePushNotifications()){
-							let notificationUuid = await CreateNotification(time, 0, notificationProperties);
-							appointment.notificationUuid = notificationUuid;
+							notificationUuid = await CreateNotification(time, 0, notificationProperties);
 						}
 					}
 				}else if(appointment.notificationUuid){
 					// Delete the notification
 					DeleteNotification(appointment.notificationUuid);
-					appointment.notificationUuid = "";
+					notificationUuid = null;
 				}
 
-				UpdateAppointment(appointment);
+				await appointment.Update(this.appointmentName, startUnix, endUnix, this.appointmentAllDayCheckboxChecked, color, notificationUuid);
 				this.save.emit(appointment);
 			}
       }, () => {});
@@ -205,16 +199,16 @@ export class AppointmentModalComponent{
 		return !(this.appointmentName.length > 1 && timeOkay);
 	}
 
-	GenerateNotificationProperties(appointment: Appointment) : {title: string, message: string}{
+	GenerateNotificationProperties(name: string, start: number, end: number) : {title: string, message: string}{
 		// Format the time in the message correctly
-		let title = appointment.name;
+		let title = name;
 		let message = "";
 		if(this.appointmentAllDayCheckboxChecked){
-			let appointmentMoment = moment.unix(appointment.start);
+			let appointmentMoment = moment.unix(start);
 			message = this.notificationLocale.messageSpecificTime + ", " + appointmentMoment.format(this.notificationLocale.formats.allDay);
 		}else{
-			let appointmentStartMoment = moment.unix(appointment.start);
-			let appointmentEndMoment = moment.unix(appointment.end);
+			let appointmentStartMoment = moment.unix(start);
+			let appointmentEndMoment = moment.unix(end);
 
 			message = appointmentStartMoment.format(this.notificationLocale.formats.specificTime)
 						+ " - "

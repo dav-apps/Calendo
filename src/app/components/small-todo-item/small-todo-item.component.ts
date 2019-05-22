@@ -12,7 +12,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 })
 export class SmallTodoItemComponent{
    faTimes = faTimes;
-   @Input() todo: Todo = new Todo("", false, 0, "", []);
+   @Input() todo: Todo = new Todo("", "");
    @Input() showBadge: boolean = true;
 	@Output() delete = new EventEmitter();
 	
