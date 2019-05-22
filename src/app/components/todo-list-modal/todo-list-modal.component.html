@@ -1,0 +1,14 @@
+<ng-template #todoListModal let-c="close" let-d="dismiss">
+	<div class="modal-header theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
+		<h4 class="modal-title text-color">{{ locale.header }}</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true" class="text-color">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body row theme-background-color-primary mx-0">
+		
+	</div>
+	<div class="modal-footer theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
+		<button type="button" class="btn btn-primary" [disabled]="todoListName.length < 2" (click)="c()">{{ locale.save }}</button>
+   </div>
+</ng-template>

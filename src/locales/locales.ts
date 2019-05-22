@@ -21,6 +21,10 @@ const enDefaults = {
       save: "Save",
       reminder: "Reminder"
    },
+   todoListModal: {
+      header: "New Todo-List",
+      save: "Save"
+   },
    appointmentItem: {
       edit: "Edit",
       delete: "Delete"
@@ -70,7 +74,9 @@ const enDefaults = {
       formats: {
 			smallDate: "M/D",
 			largeDate: "dddd"
-      }
+      },
+      newTodo: "New Todo",
+      newTodoList: "New Todo-List"
    },
    todosPage: {
       header: "Todos",
@@ -191,6 +197,10 @@ const deDefaults = {
       save: "Speichern",
       reminder: "Erinnerung"
    },
+   todoListModal: {
+      header: "Neue Todo-Liste",
+      save: "Speichern"
+   },
    appointmentItem: {
       edit: "Bearbeiten",
       delete: "Löschen"
@@ -240,7 +250,9 @@ const deDefaults = {
       formats: {
          smallDate: "D.M",
 			largeDate: "dddd"
-      }
+      },
+      newTodo: "Neues Todo",
+      newTodoList: "Neue Todo-Liste"
    },
    todosPage: {
       header: "Todos",
