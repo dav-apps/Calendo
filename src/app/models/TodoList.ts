@@ -21,7 +21,7 @@ export class TodoList{
       this.groups = groups ? groups : [];
    }
 
-	async Create(name: string, time: number = 0, todos: Todo[] = [], groups: string[] = []) : Promise<TodoList>{
+	public static async Create(name: string, time: number = 0, todos: Todo[] = [], groups: string[] = []) : Promise<TodoList>{
 		let list = new TodoList(name, time, todos, groups);
 		await list.Save();
 		return list;

@@ -6,6 +6,17 @@ const enDefaults = {
       todos: "Todos",
       appointments: "Appointments"
    },
+   setTodoGroups: {
+      addNewGroup: "Add a new group",
+      groupName: "Group name",
+      addExistingGroup: "Add existing group"
+   },
+   setName: {
+      name: "Name",
+      todoName: "Todo name",
+      todoListName: "Todo list name",
+      appointmentName: "Appointment name"
+   },
    userMenu: {
 		account: "Your Account",
       settings: "Settings"
@@ -13,16 +24,12 @@ const enDefaults = {
    newTodoModal: {
       header: "New Todo",
       setDate: "Set a date",
-      addNewGroup: "Add a new group",
-      groupName: "Group name",
-      addExistingGroup: "Add existing group",
-      name: "Name",
-      todoName: "Todo name",
       save: "Save",
       reminder: "Reminder"
    },
    todoListModal: {
       header: "New Todo-List",
+      setDate: "Set a date",
       save: "Save"
    },
    appointmentItem: {
@@ -40,8 +47,6 @@ const enDefaults = {
       start: "Start",
       end: "End",
       color: "Color",
-      name: "Name",
-      appointmentName: "Appointment name",
       save: "Save",
       reminder: "Reminder",
       reminderTimes: {
@@ -182,6 +187,17 @@ const deDefaults = {
       todos: "Todos",
       appointments: "Termine"
    },
+   setTodoGroups: {
+      addNewGroup: "Neue Gruppe hinzufügen",
+      groupName: "Name der Gruppe",
+      addExistingGroup: "Bestehende Gruppe hinzufügen"
+   },
+   setName: {
+      name: "Name",
+      todoName: "Name des Todos",
+      todoListName: "Name der Todo-Liste",
+      appointmentName: "Name des Termins"
+   },
    userMenu: {
 		account: "Dein Account",
       settings: "Einstellungen"
@@ -189,16 +205,12 @@ const deDefaults = {
    newTodoModal: {
       header: "Neues Todo",
       setDate: "Datum speichern",
-      addNewGroup: "Neue Gruppe hinzufügen",
-      groupName: "Name der Gruppe",
-      addExistingGroup: "Bestehende Gruppe hinzufügen",
-      name: "Name",
-      todoName: "Name des Todos",
       save: "Speichern",
       reminder: "Erinnerung"
    },
    todoListModal: {
       header: "Neue Todo-Liste",
+      setDate: "Datum speichern",
       save: "Speichern"
    },
    appointmentItem: {
@@ -216,8 +228,6 @@ const deDefaults = {
       start: "Anfang",
       end: "Ende",
       color: "Farbe",
-      name: "Name",
-      appointmentName: "Name des Termins",
       save: "Speichern",
       reminder: "Erinnerung",
       reminderTimes: {
