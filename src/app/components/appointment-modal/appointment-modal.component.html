@@ -73,8 +73,7 @@
 
 			<!-- Name -->
 			<div class="mx-auto mt-3" style="width: 250px;">
-				<label class="col-form-label text-color">{{ locale.name }}</label>
-				<fab-text-field [(value)]="appointmentName" [placeholder]="locale.appointmentName"></fab-text-field>
+				<calendo-set-name [(name)]="appointmentName" (nameChanged)="appointmentName = $event" [todo]="false" [width]="250"></calendo-set-name>
 			</div>
 		</div>
    </div>

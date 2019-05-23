@@ -11,20 +11,27 @@ export class SetNameComponent{
 	@Input()
 	todo: boolean = true;
 	@Input()
-   name: string = "";
+	name: string = "";
+	@Input()
+	width: number = 280;
    @Output()
    nameChanged = new EventEmitter<string>();
 	nameTextFieldStyle = {
 		root: {
-			width: 280,
+			width: this.width,
 		}
 	}
 
 	constructor(
       public dataService: DataService
    ){
-      this.locale = this.dataService.GetLocale().setName;
-   }
+		this.locale = this.dataService.GetLocale().setName;
+	}
+	
+	ngOnInit(){
+		// Update the width of the text field
+		this.nameTextFieldStyle.root.width = this.width;
+	}
 
    onChange(event: {ev: any, newValue: string}){
 		this.nameChanged.emit(event.newValue)
