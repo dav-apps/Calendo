@@ -17,7 +17,7 @@
 				</div>
 			</div>
 
-			<ngb-datepicker #dp [(ngModel)]="newTodoDate" 
+			<ngb-datepicker [(ngModel)]="newTodoDate" 
 								(navigate)="date = $event.next" 
 								[disabled]="!newTodoSetDateCheckboxChecked"
 								style="background-color: white;"></ngb-datepicker>
@@ -38,31 +38,10 @@
 								[(ngModel)]="todoReminderTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
 		</div>
 
-		<div class="mx-auto col-10 offset-1" style="padding-left: 60px">
-			<div class="form-group">
-				<label for="new-group-name" class="col-form-label text-color">{{ locale.addNewGroup }}</label>
+      <div class="mx-auto col-10 offset-1" style="padding-left: 60px">
+         <calendo-set-todo-groups [groups]="todoGroups" (groupsChanged)="todoGroups = $event"></calendo-set-todo-groups>
 
-				<div class="d-flex">
-               <fab-text-field [(value)]="newGroupName" [placeholder]="locale.groupName" [styles]="groupTextFieldStyle"></fab-text-field>
-               <button type="button" class="btn btn-outline-primary btn-sm" (click)="AddGroup(newGroupName)"><fa-icon [icon]="faPlus"></fa-icon></button>
-				</div>
-			</div>
-
-			<div class="form-group" ngbDropdown placement="bottom-left" *ngIf="allGroups.length > 0">
-				<button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>{{ locale.addExistingGroup }}</button>
-				<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
-					<button class="dropdown-item text-color cursor" (click)="AddGroup(groupName)" *ngFor="let groupName of allGroups">{{ groupName }}</button>
-				</div>
-			</div>
-
-         <div style="margin-top: -8px">
-            <calendo-todo-group-badge *ngFor="let todoGroup of todoGroups" [groupName]="todoGroup" [canRemove]="true" (remove)="RemoveGroup($event)"></calendo-todo-group-badge>
-         </div>
-
-			<div class="form-group mt-2">
-            <label class="col-form-label text-color">{{ locale.name }}</label>
-            <fab-text-field [(value)]="newTodoName" [placeholder]="locale.todoName" [styles]="nameTextFieldStyle"></fab-text-field>
-			</div>
+			<calendo-set-name [(name)]="newTodoName" (nameChanged)="newTodoName = $event"></calendo-set-name>
 		</div>
 	</div>
 	<div class="modal-footer theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">

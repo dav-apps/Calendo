@@ -89,7 +89,7 @@ export class NewTodoModalComponent{
          d = new Date(date * 1000);
       }
 
-      this.newTodoDate = {year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate()};
+      this.newTodoDate = { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate() };
       this.newTodoName = "";
       this.newTodoSetDateCheckboxChecked = true;
       this.todoGroups = [];
