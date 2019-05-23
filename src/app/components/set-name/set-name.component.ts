@@ -9,13 +9,14 @@ import { enUS } from '../../../locales/locales';
 export class SetNameComponent{
 	locale = enUS.setName;
 	@Input()
-	todo: boolean = true;
+	type: number = 0;		// Todo: 0, TodoList: 1, Appointment: 2
 	@Input()
 	name: string = "";
 	@Input()
 	width: number = 280;
    @Output()
-   nameChanged = new EventEmitter<string>();
+	nameChanged = new EventEmitter<string>();
+	textFieldPlaceholder: string = this.locale.todoName;
 	nameTextFieldStyle = {
 		root: {
 			width: this.width,
@@ -31,6 +32,19 @@ export class SetNameComponent{
 	ngOnInit(){
 		// Update the width of the text field
 		this.nameTextFieldStyle.root.width = this.width;
+
+		// Set the placeholder text
+		switch (this.type) {
+			case 0:	// Todo
+				this.textFieldPlaceholder = this.locale.todoName;
+				break;
+			case 1:	// TodoList
+				this.textFieldPlaceholder = this.locale.todoListName;
+				break;
+			case 2:	// Appointment
+				this.textFieldPlaceholder = this.locale.appointmentName;
+				break;
+		}
 	}
 
    onChange(event: {ev: any, newValue: string}){
