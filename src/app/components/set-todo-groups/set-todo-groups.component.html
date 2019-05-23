@@ -1,0 +1,19 @@
+<div class="form-group">
+   <label for="new-group-name" class="col-form-label text-color">{{ locale.addNewGroup }}</label>
+
+   <div class="d-flex">
+      <fab-text-field [(value)]="newGroupName" [placeholder]="locale.groupName" [styles]="groupTextFieldStyle"></fab-text-field>
+      <button type="button" class="btn btn-outline-primary btn-sm" (click)="AddGroup(newGroupName)"><fa-icon [icon]="faPlus"></fa-icon></button>
+   </div>
+</div>
+
+<div class="form-group" ngbDropdown placement="bottom-left" *ngIf="allGroups.length > 0">
+   <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>{{ locale.addExistingGroup }}</button>
+   <div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+      <button class="dropdown-item text-color cursor" (click)="AddGroup(groupName)" *ngFor="let groupName of allGroups">{{ groupName }}</button>
+   </div>
+</div>
+
+<div style="margin-top: -8px">
+   <calendo-todo-group-badge *ngFor="let todoGroup of todoGroups" [groupName]="todoGroup" [canRemove]="true" (remove)="RemoveGroup($event)"></calendo-todo-group-badge>
+</div>
