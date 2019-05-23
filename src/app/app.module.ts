@@ -26,6 +26,8 @@ import { TodoListModalComponent } from './components/todo-list-modal/todo-list-m
 import { DeleteAppointmentModalComponent } from './components/delete-appointment-modal/delete-appointment-modal.component';
 import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
 import { TodoGroupBadgeComponent } from './components/todo-group-badge/todo-group-badge.component';
+import { SetTodoGroupsComponent } from './components/set-todo-groups/set-todo-groups.component';
+import { SetNameComponent } from './components/set-name/set-name.component'
 import { DataService } from './services/data-service';
 import { environment } from '../environments/environment';
 
@@ -49,7 +51,9 @@ import { environment } from '../environments/environment';
       TodoListModalComponent,
 		DeleteAppointmentModalComponent,
 		LogoutModalComponent,
-      TodoGroupBadgeComponent
+      TodoGroupBadgeComponent,
+      SetTodoGroupsComponent,
+      SetNameComponent
   	],
   	imports: [
 		AngularReactBrowserModule,

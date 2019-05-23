@@ -1,0 +1,4 @@
+<div class="form-group mt-2">
+   <label class="col-form-label text-color">{{ locale.name }}</label>
+   <fab-text-field [(value)]="name" [placeholder]="todo ? locale.todoName : locale.appointmentName" [styles]="nameTextFieldStyle" (onChange)="onChange($event)"></fab-text-field>
+</div>
