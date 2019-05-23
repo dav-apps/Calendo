@@ -4,7 +4,8 @@
 		<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle><fa-icon [icon]="faEllipsisH"></fa-icon></button>
 		<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
 			<button class="dropdown-item text-color cursor" (click)="SortByGroupOrDate()">{{ dataService.sortTodosByDate ? locale.sortByGroup : locale.sortByDate }}</button>
-			<button class="dropdown-item text-color cursor" (click)="ShowNewTodoModal()">{{ locale.newTodo }}</button>
+         <button class="dropdown-item text-color cursor" (click)="ShowNewTodoModal()">{{ locale.newTodo }}</button>
+         <button class="dropdown-item text-color cursor" (click)="ShowNewTodoListModal()">{{ locale.newTodoList }}</button>
 		</div>
 	</h1>
 
@@ -51,5 +52,6 @@
 		</div>
 	</div>
 
-	<calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
+   <calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
+   <calendo-todo-list-modal (save)="CreateTodoList($event)"></calendo-todo-list-modal>
 </div>

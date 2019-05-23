@@ -81,13 +81,14 @@ const enDefaults = {
 			largeDate: "dddd"
       },
       newTodo: "New Todo",
-      newTodoList: "New Todo-List"
+      newTodoList: "New Todo list"
    },
    todosPage: {
       header: "Todos",
       sortByGroup: "Sort by group",
       sortByDate: "Sort by date",
       newTodo: "New Todo",
+      newTodoList: "New Todo list",
       noTodos: "You have no todos"
    },
    appointmentsPage: {
@@ -269,6 +270,7 @@ const deDefaults = {
       sortByGroup: "Nach Gruppe sortieren",
       sortByDate: "Nach Datum sortieren",
       newTodo: "Neues Todo",
+      newTodoList: "Neue Todo-Liste",
       noTodos: "Du hast keine Todos"
    },
    appointmentsPage: {
