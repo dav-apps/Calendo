@@ -11,9 +11,10 @@ export class TodoListModalComponent{
 	locale = enUS.todoListModal;
 	@Output() save = new EventEmitter();
 	@ViewChild('todoListModal') todoListModal: ElementRef;
-	saveDateCheckboxChecked: boolean = true;
-	selectedDate: NgbDateStruct;
-	todoListName: string = "";
+	setDateCheckboxChecked: boolean = true;
+	todoListDate: NgbDateStruct;
+   todoListName: string = "";
+   todoGroups: string[] = []
 
 	constructor(
 		private modalService: NgbModal,
@@ -22,9 +23,26 @@ export class TodoListModalComponent{
       this.locale = this.dataService.GetLocale().todoListModal;
    }
 
-	Show(){
+	Show(date?: number){
+		this.Reset(date);
+
 		this.modalService.open(this.todoListModal).result.then(async () => {
 			
 		}, () => {});
 	}
+	
+	Reset(date?: number){
+		let d = new Date();
+      if(date){
+         d = new Date(date * 1000);
+		}
+		
+		this.todoListDate = { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate() };
+		this.todoListName = "";
+		this.setDateCheckboxChecked = true;
+	}
+   
+   ToggleSetDateCheckbox(){
+      this.setDateCheckboxChecked = !this.setDateCheckboxChecked;
+   }
 }

@@ -6,7 +6,28 @@
 		</button>
 	</div>
 	<div class="modal-body row theme-background-color-primary mx-0">
-		
+		<div class="mx-auto mb-4 px-4 text-color">
+         <!-- Set Date checkbox -->
+         <div class="mb-1">
+				<div class="d-inline-flex">
+					<fab-checkbox (onChange)="ToggleSetDateCheckbox()" [checked]="setDateCheckboxChecked"></fab-checkbox>
+					<label class="col-form-label ml-2 text-color cursor ms-fontSize-14" style="margin-top: -8px" (click)="ToggleSetDateCheckbox()">
+						{{ locale.setDate }}
+					</label>
+				</div>
+			</div>
+
+			<ngb-datepicker [(ngModel)]="todoListDate" 
+								(navigate)="date = $event.next" 
+								[disabled]="!setDateCheckboxChecked"
+								style="background-color: white;"></ngb-datepicker>
+      </div>
+
+		<div class="mx-auto col-10 offset-1" style="padding-left: 60px">
+			<calendo-set-todo-groups [groups]="todoGroups" (groupsChanged)="todoGroups = $event"></calendo-set-todo-groups>
+
+			<calendo-set-name [(name)]="todoListName" (nameChanged)="todoListName = $event"></calendo-set-name>
+		</div>
 	</div>
 	<div class="modal-footer theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
 		<button type="button" class="btn btn-primary" [disabled]="todoListName.length < 2" (click)="c()">{{ locale.save }}</button>
