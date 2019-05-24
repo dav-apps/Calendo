@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Todo, GetAllTodos } from "../models/Todo";
 import { Appointment, GetAllAppointments } from "../models/Appointment";
+import { TodoList, GetAllTodoLists } from "../models/TodoList";
 import { DavUser } from "dav-npm";
 import * as moment from 'moment';
 import * as localforage from "localforage";
@@ -18,18 +19,21 @@ export class DataService{
 	startDaysDates: number[] = [];					// Contains the timestamps of the start of the days
 	startDaysAppointments: Appointment[][] = [];	// Contains the appointments for the individual days
 	startDaysTodos: Todo[][] = [];					// Contains the todos for the individual days
+	startDaysTodoLists: TodoList[][] = [];			// Contains the todo lists for the individual days
 	//#endregion
 
 	//#region TodosPage
-	todoDaysWithoutDate = {
+	todoDaysWithoutDate: { date: string, timestamp: number, todos: Todo[], todoLists: TodoList[] } = {
 		date: "",
 		timestamp: 0,
-		todos: []
+		todos: [],
+		todoLists: []
 	}
-	todoDays: {date: string, timestamp: number, todos: Todo[]}[] = [];
+	todoDays: { date: string, timestamp: number, todos: Todo[], todoLists: TodoList[] }[] = [];
 
 	todosWithoutGroup: Todo[] = [];
-	todoGroups: {name: string, todos: Todo[]}[] = [];
+	todoListsWithoutGroup: TodoList[] = [];
+	todoGroups: { name: string, todos: Todo[], todoLists: TodoList[] }[] = [];
 	//#endregion
 
 	//#region AppointmentsPage
@@ -86,11 +90,13 @@ export class DataService{
 		this.startDaysDates = [];
 		this.startDaysAppointments = [];
 		this.startDaysTodos = [];
+		this.startDaysTodoLists = [];
 
 		// Add the current day to the start page
 		this.startDaysDates.push(moment().startOf('day').unix());
 		this.startDaysAppointments.push([]);
 		this.startDaysTodos.push([]);
+		this.startDaysTodoLists.push([]);
 	}
 
 	async LoadAllAppointments(){
@@ -109,6 +115,7 @@ export class DataService{
 
 	async LoadAllTodos(){
 		this.todoDaysWithoutDate.todos = [];
+		this.todoDaysWithoutDate.todoLists = [];
 		this.todoDays = [];
 		this.todosWithoutGroup = [];
 		this.todoGroups = [];
@@ -116,11 +123,19 @@ export class DataService{
 		this.ClearCalendarDaysTodos();
 		this.selectedDayTodos = [];
 
+      // Load todos
 		var todos = await GetAllTodos();
 		for(let todo of todos){
 			this.AddTodoToStartPage(todo);
 			this.AddTodoToTodosPage(todo);
 			this.AddTodoToCalendarPage(todo);
+		}
+
+		// Load todo lists
+		let todoLists = await GetAllTodoLists();
+      for(let todoList of todoLists){
+			this.AddTodoListToStartPage(todoList);
+			this.AddTodoListToTodosPage(todoList);
 		}
 	}
 
@@ -200,6 +215,59 @@ export class DataService{
 			if(a.time < b.time){
 				return -1;
 			}else if(a.time > b.time){
+				return 1;
+			}else{
+				return 0;
+			}
+		});
+	}
+
+	SortTodoListsArray(todoLists: TodoList[]){
+		todoLists.sort((a: TodoList, b: TodoList) => {
+			if(a.time < b.time){
+				return -1;
+			}else if(a.time > b.time){
+				return 1;
+			}else{
+				return 0;
+			}
+		});
+	}
+
+	SortStartDays(){
+		for(let j = 0; j < this.startDaysDates.length; j++){
+			for(let i = 1; i < this.startDaysDates.length; i++){
+				if(this.startDaysDates[i - 1] > this.startDaysDates[i]){
+					// Swap the dates
+					let firstDate = this.startDaysDates[i - 1];
+					let secondDate = this.startDaysDates[i];
+					this.startDaysDates[i - 1] = secondDate;
+					this.startDaysDates[i] = firstDate;
+
+					let firstAppointments = this.startDaysAppointments[i - 1];
+					let secondAppointments = this.startDaysAppointments[i];
+					this.startDaysAppointments[i - 1] = secondAppointments;
+					this.startDaysAppointments[i] = firstAppointments;
+
+					let firstTodos = this.startDaysTodos[i - 1];
+					let secondTodos = this.startDaysTodos[i];
+					this.startDaysTodos[i - 1] = secondTodos;
+					this.startDaysTodos[i] = firstTodos;
+
+					let firstTodoLists = this.startDaysTodoLists[i - 1];
+					let secondTodoLists = this.startDaysTodoLists[i];
+					this.startDaysTodoLists[i - 1] = secondTodoLists;
+					this.startDaysTodoLists[i] = firstTodoLists;
+				}
+			}
+		}
+	}
+
+	SortTodoDays(){
+		this.todoDays.sort((a: {timestamp: number}, b: {timestamp: number}) => {
+			if(a.timestamp < b.timestamp){
+				return -1;
+			}else if(a.timestamp > b.timestamp){
 				return 1;
 			}else{
 				return 0;
@@ -294,37 +362,18 @@ export class DataService{
 			}else{
 				// Add the appointment
 				this.startDaysAppointments[index].push(appointment);
-			}
-
-			this.SortAppointmentsArray(this.startDaysAppointments[index]);
+         }
+         
+         this.SortAppointmentsArray(this.startDaysAppointments[index]);
 		}else{
 			// Create a new day
 			this.startDaysDates.push(moment.unix(appointment.start).startOf('day').unix());
 			this.startDaysAppointments.push([appointment]);
+			this.startDaysTodoLists.push([]);
 			this.startDaysTodos.push([]);
 
 			// Sort the arrays
-			for(let j = 0; j < this.startDaysDates.length; j++){
-				for(let i = 1; i < this.startDaysDates.length; i++){
-					if(this.startDaysDates[i - 1] > this.startDaysDates[i]){
-						// Swap the dates
-						let firstDate = this.startDaysDates[i - 1];
-						let secondDate = this.startDaysDates[i];
-						this.startDaysDates[i - 1] = secondDate;
-						this.startDaysDates[i] = firstDate;
-
-						let firstAppointments = this.startDaysAppointments[i - 1];
-						let secondAppointments = this.startDaysAppointments[i];
-						this.startDaysAppointments[i - 1] = secondAppointments;
-						this.startDaysAppointments[i] = firstAppointments;
-
-						let firstTodos = this.startDaysTodos[i - 1];
-						let secondTodos = this.startDaysTodos[i];
-						this.startDaysTodos[i - 1] = secondTodos;
-						this.startDaysTodos[i] = firstTodos;
-					}
-				}
-			}
+			this.SortStartDays();
 		}
 	}
 
@@ -359,37 +408,18 @@ export class DataService{
 			}else{
 				// Add the todo
 				this.startDaysTodos[index].push(todo);
-			}
-
-			this.SortTodosArray(this.startDaysTodos[index]);
+         }
+         
+         this.SortTodosArray(this.startDaysTodos[index]);
 		}else{
 			// Create a new day
 			this.startDaysDates.push(moment.unix(todo.time).startOf('day').unix());
 			this.startDaysAppointments.push([]);
+			this.startDaysTodoLists.push([]);
 			this.startDaysTodos.push([todo]);
 
 			// Sort the arrays
-			for(let j = 0; j < this.startDaysDates.length; j++){
-				for(let i = 1; i < this.startDaysDates.length; i++){
-					if(this.startDaysDates[i - 1] > this.startDaysDates[i]){
-						// Swap the dates
-						let firstDate = this.startDaysDates[i - 1];
-						let secondDate = this.startDaysDates[i];
-						this.startDaysDates[i - 1] = secondDate;
-						this.startDaysDates[i] = firstDate;
-
-						let firstAppointments = this.startDaysAppointments[i - 1];
-						let secondAppointments = this.startDaysAppointments[i];
-						this.startDaysAppointments[i - 1] = secondAppointments;
-						this.startDaysAppointments[i] = firstAppointments;
-
-						let firstTodos = this.startDaysTodos[i - 1];
-						let secondTodos = this.startDaysTodos[i];
-						this.startDaysTodos[i - 1] = secondTodos;
-						this.startDaysTodos[i] = firstTodos;
-					}
-				}
-			}
+			this.SortStartDays();
 		}
 	}
 
@@ -409,28 +439,58 @@ export class DataService{
 			}
 		}
 	}
+
+	AddTodoListToStartPage(todoList: TodoList){
+		// Check if the day of the todo list is already in the array
+		let index = todoList.time < moment().startOf('day').unix() ? 0 : this.startDaysDates.findIndex(t => t == todoList.time);
+
+		if(index !== -1){
+			// Add the list to the existing day
+			// Check if the list is already in the todos array of the day
+			let i = this.startDaysTodoLists[index].findIndex(t => t.uuid == todoList.uuid);
+
+			if(i !== -1){
+				// Replace the todo list
+				this.startDaysTodoLists[index][i] = todoList;
+			}else{
+				// Add the todo list
+				this.startDaysTodoLists[index].push(todoList);
+         }
+
+         this.SortTodoListsArray(this.startDaysTodoLists[index]);
+		}else{
+			// Create a new day
+			this.startDaysDates.push(moment.unix(todoList.time).startOf('day').unix());
+			this.startDaysAppointments.push([]);
+			this.startDaysTodoLists.push([todoList]);
+			this.startDaysTodos.push([]);
+
+			// Sort the arrays
+			this.SortStartDays();
+		}
+	}
 	//#endregion
 
 	//#region TodosPage
 	AddTodoToTodosPage(todo: Todo){
 		if(this.sortTodosByDate){
 			if(todo.time != 0){
-				var date: string = moment.unix(todo.time).format('dddd, D. MMMM YYYY');
+				var date: string = moment.unix(todo.time).format(this.GetLocale().todosPage.formats.date);
 				var timestampOfDate = moment.unix(todo.time).startOf('day').unix();
 	
 				// Check if the date already exists in the todoDays array
-				var todoDay = this.todoDays.find(obj => obj["timestamp"] == timestampOfDate);
+				var todoDay = this.todoDays.find(obj => obj.timestamp == timestampOfDate);
 	
 				if(todoDay){
 					// Add the todo to the array of the todoDay
-					var todosArray: Todo[] = todoDay["todos"];
-					todosArray.push(todo);
+					todoDay.todos.push(todo);
 				}else{
 					// Add a new day to the array
 					var newTodoDay = {
-						date: date,
+						date,
 						timestamp: timestampOfDate,
-						todos: [todo]
+						todos: [todo],
+						todoLists: []
 					}
 	
 					this.todoDays.push(newTodoDay);
@@ -440,16 +500,7 @@ export class DataService{
 			}
 	
 			// Sort the todoDays array
-			this.todoDays.sort((a: object, b: object) => {
-				var timestampString = "timestamp";
-				if(a[timestampString] < b[timestampString]){
-					return -1;
-				}else if(a[timestampString] > b[timestampString]){
-					return 1;
-				}else{
-					return 0;
-				}
-			});
+			this.SortTodoDays();
 		}else{
 			// Sort by group
 			if(todo.groups.length == 0){
@@ -461,16 +512,14 @@ export class DataService{
 	
 					if(index !== -1){
 						// Add the todo to the todoGroup
-						var todoGroup = this.todoGroups[index];
-						todoGroup.todos.push(todo);
+						this.todoGroups[index].todos.push(todo);
 					}else{
 						// Create the todoGroup
-						var todoGroup = {
+						var todoGroup: { name: string, todos: Todo[], todoLists: TodoList[] } = {
 							name: groupName,
-							todos: new Array<Todo>()
+							todos: [todo],
+							todoLists: []
 						};
-	
-						todoGroup.todos.push(todo);
 	
 						this.todoGroups.push(todoGroup);
 					}
@@ -493,7 +542,7 @@ export class DataService{
 					todoDay.todos.splice(index, 1);
 
 					// If the todoDay is empty, remove it
-					if(todoDay.todos.length == 0){
+					if(todoDay.todos.length == 0 && todoDay.todoLists.length == 0){
 						index = this.todoDays.indexOf(todoDay);
 						if(index !== -1){
 							this.todoDays.splice(index, 1);
@@ -516,7 +565,111 @@ export class DataService{
 					todoGroup.todos.splice(index, 1);
 
 					// If the todoGroup is empty, remove it
-					if(todoGroup.todos.length == 0){
+					if(todoGroup.todos.length == 0 && todoGroup.todoLists.length == 0){
+						index = this.todoGroups.indexOf(todoGroup);
+						if(index !== -1){
+							this.todoGroups.splice(index, 1);
+						}
+					}
+				}
+			});
+		}
+	}
+
+	AddTodoListToTodosPage(todoList: TodoList){
+		if(this.sortTodosByDate){
+			if(todoList.time != 0){
+				let date: string = moment.unix(todoList.time).format(this.GetLocale().todosPage.formats.date);
+				let timestampOfDate = moment.unix(todoList.time).startOf('day').unix();
+
+				// Check if the date already exists in the todoDays array
+				let todoDay = this.todoDays.find(obj => obj.timestamp == timestampOfDate);
+
+				if(todoDay){
+					// Add the todoList to the array of the todoDay
+					todoDay.todoLists.push(todoList);
+				}else{
+					// Add a new day to the array
+					let newTodoDay = {
+						date,
+						timestamp: timestampOfDate,
+						todos: [],
+						todoLists: [todoList]
+					}
+
+					this.todoDays.push(newTodoDay);
+				}
+			}else{
+				this.todoDaysWithoutDate.todoLists.push(todoList);
+			}
+
+			// Sort the todoDays array
+			this.SortTodoDays();
+		}else{
+			// Sort by group
+			if(todoList.groups.length == 0){
+				this.todoListsWithoutGroup.push(todoList);
+			}else{
+				todoList.groups.forEach(group => {
+					// Check if the todoGroup already exists
+					let index = this.todoGroups.findIndex(todoGroup => todoGroup.name == group);
+
+					if(index !== -1){
+						// Add the todoList to the todoGroup
+						this.todoGroups[index].todoLists.push(todoList);
+					}else{
+						// Create the todoGroup
+						let todoGroup: { name: string, todos: Todo[], todoLists: TodoList[] } = {
+							name: group,
+							todos: [],
+							todoLists: [todoList]
+						}
+						
+						this.todoGroups.push(todoGroup);
+					}
+				});
+			}
+		}
+	}
+
+	RemoveTodoListFromTodosPage(todoList: TodoList){
+		// Remove the todolist from the todoDays
+		let index = this.todoDaysWithoutDate.todoLists.findIndex(t => t.uuid == todoList.uuid);
+
+		if(index !== -1){
+			this.todoDaysWithoutDate.todoLists.splice(index, 1);
+		}else{
+			this.todoDays.forEach(todoDay => {
+				index = todoDay.todoLists.findIndex(t => t.uuid == todoList.uuid);
+
+				if(index !== -1){
+					todoDay.todoLists.splice(index, 1);
+
+					// If the todoDay is empty, remove it
+					if(todoDay.todos.length == 0 && todoDay.todoLists.length == 0){
+						index = this.todoDays.indexOf(todoDay);
+						if(index !== -1){
+							this.todoDays.splice(index, 1);
+						}
+					}
+				}
+			});
+		}
+
+		// Remove the todoList from the todoGroups
+		index = this.todosWithoutGroup.findIndex(t => t.uuid == todoList.uuid);
+
+		if(index !== -1){
+			this.todosWithoutGroup.splice(index, 1);
+		}else{
+			this.todoGroups.forEach(todoGroup => {
+				index = todoGroup.todoLists.findIndex(t => t.uuid == todoList.uuid);
+
+				if(index !== -1){
+					todoGroup.todoLists.splice(index, 1);
+					
+					// If the todoGroup is empty, remove it
+					if(todoGroup.todos.length == 0 && todoGroup.todoLists.length == 0){
 						index = this.todoGroups.indexOf(todoGroup);
 						if(index !== -1){
 							this.todoGroups.splice(index, 1);
