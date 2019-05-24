@@ -1,0 +1,8 @@
+<div class="border rounded d-inline-flex align-items-center pl-2 pr-2 mb-2 mr-2 theme-background-color-secondary cursor" 
+		[ngClass]="dataService.darkTheme ? 'border-dark' : ''" style="height: 35px">
+	<span class="mr-2" style="margin-bottom: -2px" *ngIf="todoList.todos.length != 0 && completedTodos == todoList.todos.length">
+		<fab-icon iconName="Accept" [styles]="iconStyles"></fab-icon>
+	</span>
+	<span class="font-weight-light" style="font-size: 14px; color: gray">{{ completedTodos }}/{{ todoList.todos.length }}</span>
+	<span class="ml-3">{{ todoList.name }}</span>
+</div>

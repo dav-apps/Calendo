@@ -1,4 +1,5 @@
-<div class="border rounded d-inline-flex align-items-center pl-3 pr-2 mb-2 mr-2 theme-background-color-secondary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
+<div class="border rounded d-inline-flex align-items-center pl-2 pr-2 mb-2 mr-2 theme-background-color-secondary" 
+		[ngClass]="dataService.darkTheme ? 'border-dark' : ''" style="height: 35px">
 	<div style="margin-bottom: -8px">
 		<fab-checkbox (onChange)="ToggleCheckbox()" [checked]="todo.completed"></fab-checkbox>
 	</div>
