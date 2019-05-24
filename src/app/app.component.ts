@@ -39,7 +39,7 @@ export class AppComponent {
 
 		Dav.Initialize(environment.production ? Dav.DavEnvironment.Production : Dav.DavEnvironment.Development, 
 							environment.appId, 
-							[environment.todoTableId, environment.appointmentTableId], 
+							[environment.todoTableId, environment.todoListTableId, environment.appointmentTableId], 
 							[], 
 							notificationOptions, {
 			UpdateAllOfTable: (tableId: number) => {

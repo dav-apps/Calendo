@@ -16,6 +16,7 @@ import { SettingsPageComponent } from './pages/settings-page/settings-page.compo
 import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
 import { CalendarDayPageComponent } from './pages/calendar-day-page/calendar-day-page.component';
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
+import { TodoListItemComponent } from './components/todo-list-item/todo-list-item.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { SmallTodoItemComponent } from './components/small-todo-item/small-todo-item.component';
 import { AppointmentItemComponent } from './components/appointment-item/appointment-item.component';
@@ -42,6 +43,7 @@ import { environment } from '../environments/environment';
 		CalendarPageComponent,
 		CalendarDayPageComponent,
 		UserMenuComponent,
+		TodoListItemComponent,
 		TodoItemComponent,
 		SmallTodoItemComponent,
 		AppointmentItemComponent,
