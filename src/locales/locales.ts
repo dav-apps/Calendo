@@ -89,7 +89,10 @@ const enDefaults = {
       sortByDate: "Sort by date",
       newTodo: "New Todo",
       newTodoList: "New Todo list",
-      noTodos: "You have no todos"
+		noTodos: "You have no todos",
+		formats: {
+			date: "dddd, MMMM D, YYYY"
+		}
    },
    appointmentsPage: {
       header: "Appointments",
@@ -157,27 +160,33 @@ export var enUS = enDefaults;
 export var enGB = enDefaults;
 enGB.startPage.formats.smallDate = "D/M";
 enGB.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY";
+enGB.todosPage.formats.date = "dddd, D MMMM YYYY";
 enGB.appointmentModal.color = "Colour";
 
 export var enNZ = enDefaults;
 enNZ.startPage.formats.smallDate = "D/M";
 enNZ.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY";
+enNZ.todosPage.formats.date = "dddd, D MMMM YYYY";
 enNZ.appointmentModal.color = "Colour";
 
 export var enIL = enDefaults;
 enIL.startPage.formats.smallDate = "D/M";
 enIL.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY";
+enIL.todosPage.formats.date = "dddd, D MMMM YYYY";
 
 export var enIE = enDefaults;
 enIE.startPage.formats.smallDate = "D-M";
 enIE.calendarDayPage.formats.currentDay = "dddd D MMMM YYYY";
+enIE.todosPage.formats.date = "dddd D MMMM YYYY";
 
 export var enCA = enDefaults;
 enCA.startPage.formats.smallDate = "M-D";
+enCA.todosPage.formats.date = "dddd, MMMM D, YYYY";
 
 export var enAU = enDefaults;
 enAU.startPage.formats.smallDate = "D/M";
 enAU.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY";
+enAU.todosPage.formats.date = "dddd, D MMMM YYYY";
 //#endregion
 
 //#region de
@@ -271,7 +280,10 @@ const deDefaults = {
       sortByDate: "Nach Datum sortieren",
       newTodo: "Neues Todo",
       newTodoList: "Neue Todo-Liste",
-      noTodos: "Du hast keine Todos"
+		noTodos: "Du hast keine Todos",
+		formats: {
+			date: "dddd, D. MMMM YYYY"
+		}
    },
    appointmentsPage: {
       header: "Termine",
