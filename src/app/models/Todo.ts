@@ -136,8 +136,7 @@ export async function GetAllTodoGroups(): Promise<string[]>{
 export function ConvertTableObjectToTodo(tableObject: TableObject): Todo{
 	if(tableObject.TableId != environment.todoTableId) return null;
 
-	var completed: boolean = (tableObject.GetPropertyValue(environment.todoCompletedKey) === 'true' || 
-										tableObject.GetPropertyValue(environment.todoCompletedKey) === 'True')
+	var completed: boolean = tableObject.GetPropertyValue(environment.todoCompletedKey).toLowerCase() === 'true';
 	
 	var todoTime: number = 0;
 	var tableObjectTodoTime = tableObject.GetPropertyValue(environment.todoTimeKey);
@@ -149,11 +148,11 @@ export function ConvertTableObjectToTodo(tableObject: TableObject): Todo{
 	var groupsString = tableObject.GetPropertyValue(environment.todoGroupsKey);
 
 	if(groupsString){
-		ConvertGroupsStringToGroupsArray(groupsString).forEach(group => {
+		groupsString.split(',').forEach(group => {
 			groups.push(group);
 		});
-	}
-
+   }
+   
 	var tableObjectNotificationUuid = tableObject.GetPropertyValue(environment.notificationUuidKey);
 	var notificationUuid = tableObjectNotificationUuid ? tableObjectNotificationUuid : "";
 
@@ -165,12 +164,4 @@ export function ConvertTableObjectToTodo(tableObject: TableObject): Todo{
 		groups,
 		notificationUuid
 	);
-}
-
-function ConvertGroupsStringToGroupsArray(groups: string): string[]{
-	if(groups){
-		return groups.split(',');	
-	}else{
-		return [];
-	}
 }
