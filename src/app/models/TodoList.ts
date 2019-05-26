@@ -6,7 +6,8 @@ export class TodoList{
    public uuid: string = null;
    public name: string = "";
    public time: number = 0;
-	public todos: Todo[] = [];
+   public todos: Todo[] = [];
+   public todoLists: TodoList[] = [];
 	public groups: string[] = [];
 
    constructor(
@@ -14,17 +15,19 @@ export class TodoList{
 		name: string,
       time?: number,
       todos?: Todo[],
+      todoLists?: TodoList[],
       groups?: string[]
 	){
       this.uuid = uuid;
       this.name = name;
       this.time = time ? time : 0;
-      this.todos = todos ? todos : [];
+		this.todos = todos ? todos : [];
+		this.todoLists = todoLists ? todoLists : [];
       this.groups = groups ? groups : [];
    }
 
-	public static async Create(name: string, time: number = 0, todos: Todo[] = [], groups: string[] = []) : Promise<TodoList>{
-		let list = new TodoList(null, name, time, todos, groups);
+	public static async Create(name: string, time: number = 0, todos: Todo[] = [], todoLists: TodoList[] = [], groups: string[] = []) : Promise<TodoList>{
+		let list = new TodoList(null, name, time, todos, todoLists, groups);
 		await list.Save();
 		return list;
 	}
@@ -42,14 +45,19 @@ export class TodoList{
 		// Create the todos string
 		let todoUuids: string[] = [];
 		this.todos.forEach((todo: Todo) => todoUuids.push(todo.uuid));
-
-		let todoUuidsString = todoUuids.join(",");
+      let todoUuidsString = todoUuids.join(",");
+      
+      // Create the todoLists string
+      let todoListUuids: string[] = [];
+      this.todoLists.forEach((todoList: TodoList) => todoUuids.push(todoList.uuid));
+      let todoListUuidsString = todoListUuids.join(",");
 
 		// Set the properties
 		await tableObject.SetPropertyValues([
 			{ name: environment.todoListNameKey, value: this.name },
 			{ name: environment.todoListTimeKey, value: this.time.toString() },
-			{ name: environment.todoListTodosKey, value: todoUuidsString },
+         { name: environment.todoListTodosKey, value: todoUuidsString },
+         { name: environment.todoListTodoListsKey, value: todoListUuidsString },
 			{ name: environment.todoListGroupsKey, value: this.groups.join(',') }
 		]);
 	}
@@ -96,6 +104,20 @@ export async function ConvertTableObjectToTodoList(tableObject: TableObject) : P
 		}
 	}
 
+	let todoLists: TodoList[] = [];
+	let todoListUuidsString = tableObject.GetPropertyValue(environment.todoListTodoListsKey);
+
+	if(todoListUuidsString){
+		for(let uuid of todoListUuidsString.split(',')){
+			// Get the todo list from the local storage
+			let todoListTableObject = await GetTableObject(uuid);
+			let todoList = await ConvertTableObjectToTodoList(todoListTableObject);
+			if(todoList){
+				todoLists.push(todoList);
+			}
+		}
+	}
+
 	let groups: string[] = [];
 	let groupsString = tableObject.GetPropertyValue(environment.todoListGroupsKey);
 	
@@ -105,5 +127,5 @@ export async function ConvertTableObjectToTodoList(tableObject: TableObject) : P
 		}
 	}
 
-	return new TodoList(tableObject.Uuid, name, time, todos, groups);
+	return new TodoList(tableObject.Uuid, name, time, todos, todoLists, groups);
 }

@@ -36,7 +36,7 @@ export class TodoListModalComponent{
 			}
 
 			// Create the todo list
-			let todoList = await TodoList.Create(this.todoListName, todoListTimeUnix, [], this.todoGroups);
+			let todoList = await TodoList.Create(this.todoListName, todoListTimeUnix, [], [], this.todoGroups);
 			this.save.emit(todoList);
 		}, () => {});
 	}
