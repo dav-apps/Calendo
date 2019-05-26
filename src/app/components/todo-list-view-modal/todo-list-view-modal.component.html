@@ -1,0 +1,26 @@
+<ng-template #todoListViewModal let-c="close" let-d="dismiss">
+	<div class="modal-header theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
+		<h4 class="modal-title text-color">{{ todoList.name }}</h4>
+		<button type="button" class="btn btn-light ml-2" style="padding: 3px 6px;" (click)="EditButtonClicked()">
+			<fab-icon iconName="Edit"></fab-icon>
+		</button>
+
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true" class="text-color">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body theme-background-color-primary mx-0">
+      <!-- Todo List Metadata -->
+		<p *ngIf="todoList.time != 0">{{ locale.date }}<span class="ml-2">{{ date }}</span></p>
+		<p style="margin-bottom: 4px" *ngIf="todoList.groups.length > 0">
+			{{ locale.groups }}
+			<span class="ml-2">
+				<calendo-todo-group-badge *ngFor="let todoGroup of todoList.groups" [groupName]="todoGroup"></calendo-todo-group-badge>
+			</span>
+		</p>
+
+		<!-- Todos list -->
+		<p class="ms-fontWeight-semibold ms-fontSize-18 mt-2">{{ locale.todos }}</p>
+
+	</div>
+</ng-template>

@@ -32,6 +32,14 @@ const enDefaults = {
       setDate: "Set a date",
       save: "Save"
    },
+   todoListViewModal: {
+      date: "Date: ",
+      groups: "Groups: ",
+      todos: "Todos: ",
+      formats: {
+         date: "L"
+      }
+   },
    appointmentItem: {
       edit: "Edit",
       delete: "Delete"
@@ -222,6 +230,14 @@ const deDefaults = {
       header: "Neue Todo-Liste",
       setDate: "Datum speichern",
       save: "Speichern"
+   },
+   todoListViewModal: {
+      date: "Datum: ",
+      groups: "Gruppen: ",
+      todos: "Todos: ",
+      formats: {
+         date: "L"
+      }
    },
    appointmentItem: {
       edit: "Bearbeiten",
