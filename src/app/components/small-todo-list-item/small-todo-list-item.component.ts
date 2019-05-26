@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/services/data-service';
 import { IIconStyles } from 'office-ui-fabric-react';
 import { TodoList } from 'src/app/models/TodoList';
+import { TodoListViewModalComponent } from '../todo-list-view-modal/todo-list-view-modal.component';
 
 @Component({
 	selector: "calendo-small-todo-list-item",
@@ -9,7 +10,10 @@ import { TodoList } from 'src/app/models/TodoList';
 })
 export class SmallTodoListItemComponent{
 	@Input()
-   todoList: TodoList = new TodoList(null, "");
+	todoList: TodoList = new TodoList(null, "");
+	@ViewChild(TodoListViewModalComponent)
+	private todoListViewModal: TodoListViewModalComponent;
+
    completedTodos: number = 0;
 	iconStyles: IIconStyles = {
 		root: {
@@ -30,5 +34,9 @@ export class SmallTodoListItemComponent{
       this.todoList.todos.forEach(todo => {
          if(todo.completed) this.completedTodos++;
       });
+   }
+
+   ShowModal(){
+		this.todoListViewModal.Show();
    }
 }
