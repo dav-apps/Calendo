@@ -18,35 +18,42 @@
 
 	<div class="row">
 		<!-- Sort by date -->
-		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" *ngIf="dataService.todoDaysWithoutDate.todos.length > 0">
+      <div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" 
+            *ngIf="dataService.todoDaysWithoutDate.todos.length > 0 || dataService.todoDaysWithoutDate.todoLists.length > 0">
 			<ul class="list-group list-group-flush">
-				<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.todoDaysWithoutDate.todos"></calendo-todo-item>
+            <calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.todoDaysWithoutDate.todos"></calendo-todo-item>
+            <calendo-todo-list-item [todoList]="todoList" *ngFor="let todoList of dataService.todoDaysWithoutDate.todoLists"></calendo-todo-list-item>
 			</ul>
 		</div>
 
-		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" *ngFor="let todoDay of dataService.todoDays" [ngClass]="todoDay.todos.length > 0 ? '' : 'hidden'">
+		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" 
+				*ngFor="let todoDay of dataService.todoDays" [ngClass]="todoDay.todos.length > 0 || todoDay.todoLists.length > 0 ? '' : 'hidden'">
 			<div class="card-body">
-				<h5 class="card-title text-color" *ngIf="todoDay.todos.length > 0">{{ todoDay.date }}</h5>
-				<ul class="list-group list-group-flush" *ngFor="let todo of todoDay.todos">
-					<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)"></calendo-todo-item>
+				<h5 class="card-title text-color" *ngIf="todoDay.todos.length > 0 || todoDay.todoLists.length > 0">{{ todoDay.date }}</h5>
+				<ul class="list-group list-group-flush">
+					<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of todoDay.todos"></calendo-todo-item>
+					<calendo-todo-list-item [todoList]="todoList" *ngFor="let todoList of todoDay.todoLists"></calendo-todo-list-item>
 				</ul>
 			</div>
 		</div>
 
 		<!-- Sort by group -->
-		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" *ngIf="dataService.todosWithoutGroup.length > 0">
+		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" 
+				*ngIf="dataService.todosWithoutGroup.length > 0 || dataService.todoListsWithoutGroup.length > 0">
 			<div class="card-body">
-				<ul class="list-group list-group-flush" *ngFor="let todo of dataService.todosWithoutGroup">
-					<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" [showBadge]="false"></calendo-todo-item>
+				<ul class="list-group list-group-flush">
+					<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" [showBadge]="false" *ngFor="let todo of dataService.todosWithoutGroup"></calendo-todo-item>
+					<calendo-todo-list-item [todoList]="todoList" *ngFor="let todoList of dataService.todoListsWithoutGroup"></calendo-todo-list-item>
 				</ul>
 			</div>
 		</div>
 
 		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" *ngFor="let todoGroup of dataService.todoGroups" [ngClass]="todoGroup.todos.length > 0 ? '' : 'hidden'">
 			<div class="card-body">
-				<h5 class="card-title text-color" *ngIf="todoGroup.todos.length > 0">{{ todoGroup.name }}</h5>
-				<ul class="list-group list-group-flush" *ngFor="let todo of todoGroup.todos">
-					<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" [showBadge]="false"></calendo-todo-item>
+				<h5 class="card-title text-color" *ngIf="todoGroup.todos.length > 0 || todoGroup.todoLists.length > 0">{{ todoGroup.name }}</h5>
+				<ul class="list-group list-group-flush">
+					<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" [showBadge]="false" *ngFor="let todo of todoGroup.todos"></calendo-todo-item>
+					<calendo-todo-list-item [todoList]="todoList" *ngFor="let todoList of todoGroup.todoLists"></calendo-todo-list-item>
 				</ul>
 			</div>
 		</div>
