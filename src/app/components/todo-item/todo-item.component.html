@@ -2,7 +2,7 @@
    <div style="margin-bottom: -8px">
 		<fab-checkbox (onChange)="ToggleCheckbox()" [checked]="todo.completed"></fab-checkbox>
 	</div>
-   <label for="todo-item-{{ todo.uuid }}" class="ml-3 mr-3 col-form-label text-color cursor ms-fontSize-14" [ngClass]="todo.completed ? 'strikethrough' : ''" (click)="ToggleCheckbox()">
+   <label class="ml-3 mr-3 col-form-label text-color cursor ms-fontSize-14" [ngClass]="todo.completed ? 'strikethrough' : ''" (click)="ToggleCheckbox()">
       {{ todo.name }}<span *ngIf="showBadge" class="ml-2"><calendo-todo-group-badge *ngFor="let todoGroup of todo.groups" [groupName]="todoGroup"></calendo-todo-group-badge></span>
    </label>
    

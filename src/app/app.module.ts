@@ -6,6 +6,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { FabCheckboxModule, FabButtonModule, FabDropdownModule, FabTextFieldModule, FabIconModule } from '@angular-react/fabric';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTreeModule, MatButtonModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
@@ -31,6 +33,7 @@ import { LogoutModalComponent } from './components/logout-modal/logout-modal.com
 import { TodoGroupBadgeComponent } from './components/todo-group-badge/todo-group-badge.component';
 import { SetTodoGroupsComponent } from './components/set-todo-groups/set-todo-groups.component';
 import { SetNameComponent } from './components/set-name/set-name.component'
+import { TodoListTreeComponent } from './components/todo-list-tree/todo-list-tree.component';
 import { DataService } from './services/data-service';
 import { environment } from '../environments/environment';
 
@@ -59,7 +62,8 @@ import { environment } from '../environments/environment';
 		LogoutModalComponent,
       TodoGroupBadgeComponent,
       SetTodoGroupsComponent,
-      SetNameComponent
+      SetNameComponent,
+      TodoListTreeComponent
   	],
   	imports: [
 		AngularReactBrowserModule,
@@ -82,7 +86,10 @@ import { environment } from '../environments/environment';
       FabButtonModule,
 		FabDropdownModule,
       FabTextFieldModule,
-      FabIconModule
+      FabIconModule,
+      BrowserAnimationsModule,
+      MatTreeModule,
+      MatButtonModule
   	],
   	providers: [
 		DataService
