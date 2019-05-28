@@ -3,7 +3,7 @@
 	<span class="mr-2" style="margin-bottom: -2px" *ngIf="todoList.todos.length != 0 && completedTodos == todoList.todos.length">
 		<fab-icon iconName="Accept" [styles]="iconStyles"></fab-icon>
 	</span>
-	<span class="font-weight-light" style="font-size: 14px; color: gray">{{ completedTodos }}/{{ todoList.todos.length }}</span>
+	<span style="font-size: 14px; color: gray">{{ completedTodos }}/{{ todoList.todos.length }}</span>
    <span class="ml-3">{{ todoList.name }}</span>
 	
 	<span class="ml-2">

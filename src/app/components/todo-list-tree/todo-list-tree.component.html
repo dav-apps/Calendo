@@ -1,10 +1,10 @@
 <ul style="padding: 0px; margin: 0px">
 	<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
 		<mat-tree-node *matTreeNodeDef="let node">
-			<div style="margin-bottom: -8px; margin-left: 5px">
-				<fab-checkbox></fab-checkbox>
+			<div style="margin-bottom: -8px; margin-left: 5px;">
+				<fab-checkbox [checked]="node.completed" (onChange)="ToggleTodoCheckbox(node.uuid)"></fab-checkbox>
 			</div>
-			<label class="ml-2 col-form-label text-color cursor ms-fontSize-14">
+			<label class="ml-2 col-form-label text-color cursor ms-fontSize-14" (click)="ToggleTodoCheckbox(node.uuid)">
 				{{ node.name }}
 			</label>
 		</mat-tree-node>
@@ -14,10 +14,13 @@
 				<button mat-icon-button matTreeNodeToggle style="height: 30px; width: 30px; outline: none; padding: 0px">
 					<fab-icon [iconName]="treeControl.isExpanded(node) ? 'ChevronDownMed' : 'ChevronRightMed'" [styles]="iconStyles"></fab-icon>
 				</button>
-				{{ node.name }}
+				<span class="cursor" matTreeNodeToggle>
+					<span class="cursor" style="font-size: 14px; color: gray" matTreeNodeToggle>{{ node.completedCount }}/{{ node.children.length }}</span>
+					{{ node.name }}
+				</span>
 			</div>
 
-			<div style="margin-left: 25px" [style.display]="treeControl.isExpanded(node) ? '' : 'none'">
+			<div style="margin-left: 25px;" [style.display]="treeControl.isExpanded(node) ? '' : 'none'">
 				<ng-container matTreeNodeOutlet></ng-container>
 			</div>
 		</mat-nested-tree-node>
