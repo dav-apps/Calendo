@@ -2,10 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
    selector: "calendo-todo-group-badge",
-   templateUrl: "./todo-group-badge.component.html",
-   styleUrls: [
-      "./todo-group-badge.component.scss"
-   ]
+   templateUrl: "./todo-group-badge.component.html"
 })
 export class TodoGroupBadgeComponent{
    @Input() groupName: string = "";

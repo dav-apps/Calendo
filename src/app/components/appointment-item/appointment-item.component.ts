@@ -11,10 +11,7 @@ import { IIconProps } from 'office-ui-fabric-react';
 
 @Component({
    selector: "calendo-appointment-item",
-   templateUrl: "./appointment-item.component.html",
-   styleUrls: [
-      "./appointment-item.component.scss"
-   ]
+   templateUrl: "./appointment-item.component.html"
 })
 export class AppointmentItemComponent{
    locale = enUS.appointmentItem;

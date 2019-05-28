@@ -6,10 +6,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
    selector: "calendo-user-menu",
-   templateUrl: "./user-menu.component.html",
-   styleUrls: [
-      "./user-menu.component.scss"
-   ]
+   templateUrl: "./user-menu.component.html"
 })
 export class UserMenuComponent{
    locale = enUS.userMenu;

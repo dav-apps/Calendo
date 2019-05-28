@@ -61,10 +61,18 @@ body{
 	color: var(--text-color);
 }
 
+.dropdown-toggle::after {
+	display:none;
+}
+
 .text-color{
 	color: var(--text-color);
 }
 
 .cursor:hover{
    cursor: pointer;
+}
+
+.hidden{
+   display: none;
 }

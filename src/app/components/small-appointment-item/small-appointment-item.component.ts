@@ -9,10 +9,7 @@ import { enUS } from '../../../locales/locales';
 
 @Component({
    selector: "calendo-small-appointment-item",
-   templateUrl: "./small-appointment-item.component.html",
-   styleUrls: [
-      './small-appointment-item.component.scss'
-   ]
+   templateUrl: "./small-appointment-item.component.html"
 })
 export class SmallAppointmentItemComponent{
    locale = enUS.smallAppointmentItem;

@@ -9,10 +9,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
    selector: "calendo-new-todo-modal",
-   templateUrl: "./new-todo-modal.component.html",
-   styleUrls: [
-      "./new-todo-modal.component.scss"
-   ]
+   templateUrl: "./new-todo-modal.component.html"
 })
 export class NewTodoModalComponent{
    locale = enUS.newTodoModal;
