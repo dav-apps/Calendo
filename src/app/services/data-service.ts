@@ -159,7 +159,11 @@ export class DataService{
 		for(let date of this.mobileCalendarDaysDates){
 			date = 0;
 		}
-	}
+   }
+   
+   RemoveTodoList(todoList: TodoList){
+		this.RemoveTodoListFromTodosPage(todoList);
+   }
 
 	AddTodo(todo: Todo){
 		this.AddTodoToStartPage(todo);

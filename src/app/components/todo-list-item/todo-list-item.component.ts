@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { DeleteTodoListModalComponent } from '../delete-todo-list-modal/delete-todo-list-modal.component';
 import { TodoList } from 'src/app/models/TodoList';
 import { IIconProps } from 'office-ui-fabric-react';
 import { DataService } from '../../services/data-service';
@@ -12,6 +13,8 @@ export class TodoListItemComponent{
 	locale = enUS.todoListItem;
    @Input()
    todoList: TodoList = new TodoList(null, "");
+   @ViewChild(DeleteTodoListModalComponent)
+   private deleteTodoListModalComponent: DeleteTodoListModalComponent;
    menuButtonIconProps: IIconProps = {
       iconName: "More",
       style: {
@@ -31,6 +34,10 @@ export class TodoListItemComponent{
 	}
 
 	Delete(){
-
-	}
+		this.deleteTodoListModalComponent.Show();
+   }
+   
+   Remove(){
+      this.dataService.RemoveTodoList(this.todoList);
+   }
 }
