@@ -27,8 +27,12 @@ const enDefaults = {
       save: "Save",
       reminder: "Reminder"
    },
+   todoListItem: {
+      edit: "Edit",
+      delete: "Delete"
+   },
    todoListModal: {
-      header: "New Todo-List",
+      header: "New Todo list",
       setDate: "Set a date",
       save: "Save"
    },
@@ -39,6 +43,12 @@ const enDefaults = {
       formats: {
          date: "L"
       }
+   },
+   deleteTodoListModal: {
+      header: "Delete Todo list",
+      message: "Are you sure you want to delete the Todo list and all its todos?",
+      delete: "Delete",
+      cancel: "Cancel"
    },
    appointmentItem: {
       edit: "Edit",
@@ -226,6 +236,10 @@ const deDefaults = {
       save: "Speichern",
       reminder: "Erinnerung"
    },
+   todoListItem: {
+      edit: "Bearbeiten",
+      delete: "Löschen"
+   },
    todoListModal: {
       header: "Neue Todo-Liste",
       setDate: "Datum speichern",
@@ -238,6 +252,12 @@ const deDefaults = {
       formats: {
          date: "L"
       }
+   },
+   deleteTodoListModal: {
+      header: "Todo-Liste löschen",
+      message: "Bist du dir sicher, dass du die Todo-Liste und alle dazugehörigen Todos löschen willst?",
+      delete: "Löschen",
+      cancel: "Abbrechen"
    },
    appointmentItem: {
       edit: "Bearbeiten",

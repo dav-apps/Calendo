@@ -1,3 +1,14 @@
-<li class="list-group-item theme-background-color-secondary">
-   {{ todoList.name }}
+<li class="list-group-item theme-background-color-secondary" style="padding: 10px 0px 10px 10px;">
+	<label class="col-form-label d-flex" ngbDropdown placement="bottom-right" style="padding: 0px">
+		<span class="my-auto">{{ todoList.name }}</span>
+
+		<div class="ml-auto" ngbDropdownToggle>
+			<fab-icon-button [iconProps]="menuButtonIconProps"></fab-icon-button>
+		</div>
+		
+		<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+			<button class="dropdown-item text-color cursor" (click)="Edit()">{{ locale.edit }}</button>
+			<button class="dropdown-item text-color cursor" (click)="Delete()">{{ locale.delete }}</button>
+		</div>
+	</label>
 </li>
