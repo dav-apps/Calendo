@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { BehaviorSubject } from 'rxjs';
 import { IIconStyles } from 'office-ui-fabric-react';
 import { Todo } from '../../models/Todo';
 import { TodoList } from '../../models/TodoList';
+import { generateUUID } from 'dav-npm';
 
 @Component({
 	selector: "calendo-todo-list-tree",
@@ -53,7 +54,7 @@ export class TodoListTreeComponent{
 		this.dataChange.next(this.todoItems);
 	}
 
-	hasNestedChild = (i: number, nodeData: TodoNode) => { return nodeData.children.length > 0 };
+	hasNestedChild = (i: number, nodeData: TodoNode) => { return nodeData.list };
 
 	ngOnInit(){
 		this.AddTodoItems(this.todoList, this.todoItems);
@@ -62,6 +63,7 @@ export class TodoListTreeComponent{
 		this.rootTodoItem = {
 			uuid: this.todoList.uuid,
 			name: this.todoList.name,
+			list: true,
 			children: this.todoItems,
 			completed: false,
 			completedCount: 0,
@@ -99,6 +101,7 @@ export class TodoListTreeComponent{
 			todoItems.push({
 				uuid: todo.uuid,
 				name: todo.name,
+				list: false,
 				children: [],
 				completed: todo.completed,
 				completedCount: 0,
@@ -114,6 +117,7 @@ export class TodoListTreeComponent{
 			todoItems.push({
 				uuid: todoList.uuid,
 				name: todoList.name,
+				list: true,
 				children: newTodoItems,
 				completed: false,
 				completedCount: 0,
@@ -143,11 +147,64 @@ export class TodoListTreeComponent{
 
 		rootItem.completedCount = todosCompleted;
 	}
+
+	GetNodeChildrenCount(node: TodoNode){
+		let children = 0;
+		node.children.forEach(item => !item.newTodo && !item.newTodoList ? children++ : 0 )
+		return children;
+   }
+
+   RemoveAllInputNodes(todoNodes: TodoNode[]){
+      let removeNodes: TodoNode[] = [];
+
+      for(let node of todoNodes){
+         if(node.newTodo || node.newTodoList){
+            // Remove the node
+            removeNodes.push(node);
+         }else if(node.children.length > 0){
+            this.RemoveAllInputNodes(node.children);
+         }
+		}
+		
+		for(let node of removeNodes){
+			let index = todoNodes.indexOf(node);
+			if(index != -1){
+				todoNodes.splice(index, 1);
+			}
+		}
+   }
+
+	AddInputToTodoList(todo: TodoNode, list: boolean = false){
+		// Remove all input nodes
+		this.RemoveAllInputNodes(this.todoItems);
+
+		// Insert the input node
+		let index = todo.children.findIndex(item => item.children.length > 0);
+		if(index == -1){
+			index = todo.children.length;
+		}
+
+		todo.children.splice(index, 0, {
+			uuid: generateUUID(),
+			name: "",
+			list,
+			children: [],
+			completed: false,
+			completedCount: 0,
+			newTodo: !list,
+			newTodoList: list
+		});
+
+		// Update the UI
+		this.dataChange.next([]);
+		this.dataChange.next(this.todoItems);
+	}
 }
 
 interface TodoNode{
 	uuid: string;
 	name: string;
+	list: boolean;
 	children: TodoNode[];
 	completed: boolean;
 	completedCount: number;
