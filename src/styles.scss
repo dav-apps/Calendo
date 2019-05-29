@@ -61,7 +61,11 @@ body{
 	color: var(--text-color);
 }
 
-.dropdown-toggle::after {
+.dropdown-toggle::after{
+	display:none;
+}
+
+.dropup .dropdown-toggle::after{
 	display:none;
 }
 

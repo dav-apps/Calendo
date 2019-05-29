@@ -17,6 +17,7 @@ export class TodoListTreeComponent{
 	dataChange: BehaviorSubject<TodoNode[]> = new BehaviorSubject<TodoNode[]>([]);
 	rootTodoItem: TodoNode;
 	todoItems: TodoNode[] = [];
+	inputValue: string = "";
 	iconStyles: IIconStyles = {
 		root: {
 			fontSize: 14
@@ -54,7 +55,7 @@ export class TodoListTreeComponent{
 		this.dataChange.next(this.todoItems);
 	}
 
-	hasNestedChild = (i: number, nodeData: TodoNode) => { return nodeData.list };
+	hasNestedChild = (i: number, nodeData: TodoNode) => { return nodeData.list && !nodeData.newTodoList };
 
 	ngOnInit(){
 		this.AddTodoItems(this.todoList, this.todoItems);
@@ -76,17 +77,17 @@ export class TodoListTreeComponent{
 
 	ToggleTodoCheckbox(uuid: string){
 		// Find the todo in the tree and change the completed value
-		let item = this.FindTodoInTree(uuid, this.rootTodoItem);
+		let item = this.FindNodeInTree(uuid, this.rootTodoItem);
 		item.completed = !item.completed;
 		this.LoadTodoListCompletedCount(this.rootTodoItem);
 	}
 
-	FindTodoInTree(uuid: string, rootItem: TodoNode) : TodoNode{
+	FindNodeInTree(uuid: string, rootItem: TodoNode) : TodoNode{
 		for(let item of rootItem.children){
 			if(item.children.length == 0 && item.uuid == uuid){
 				return item;
 			}else if(item.children.length > 0){
-				let foundItem = this.FindTodoInTree(uuid, item);
+				let foundItem = this.FindNodeInTree(uuid, item);
 				if(foundItem){
 					return foundItem;
 				}
@@ -131,7 +132,7 @@ export class TodoListTreeComponent{
 		let todosCompleted: number = 0;
 
 		rootItem.children.forEach((item: TodoNode) => {
-			if(item.children.length == 0){
+			if(!item.list){
 				// Todo
 				if(item.completed){
 					todosCompleted++;
@@ -139,7 +140,7 @@ export class TodoListTreeComponent{
 			}else{
 				// Todo list
 				this.LoadTodoListCompletedCount(item);
-				if(item.completedCount == item.children.length){
+				if(item.completedCount == this.GetNodeChildrenCount(item)){
 					todosCompleted++;
 				}
 			}
@@ -154,15 +155,24 @@ export class TodoListTreeComponent{
 		return children;
    }
 
-   RemoveAllInputNodes(todoNodes: TodoNode[]){
+   RemoveAllInputNodes(){
+		this.RemoveInputNodes(this.todoItems);
+		
+		// Update the UI
+		this.inputValue = "";
+		this.dataChange.next([]);
+      this.dataChange.next(this.todoItems);
+   }
+
+   RemoveInputNodes(todoNodes: TodoNode[]){
       let removeNodes: TodoNode[] = [];
 
       for(let node of todoNodes){
          if(node.newTodo || node.newTodoList){
             // Remove the node
             removeNodes.push(node);
-         }else if(node.children.length > 0){
-            this.RemoveAllInputNodes(node.children);
+         }else if(node.list){
+            this.RemoveInputNodes(node.children);
          }
 		}
 		
@@ -176,15 +186,10 @@ export class TodoListTreeComponent{
 
 	AddInputToTodoList(todo: TodoNode, list: boolean = false){
 		// Remove all input nodes
-		this.RemoveAllInputNodes(this.todoItems);
+		this.RemoveAllInputNodes();
 
 		// Insert the input node
-		let index = todo.children.findIndex(item => item.children.length > 0);
-		if(index == -1){
-			index = todo.children.length;
-		}
-
-		todo.children.splice(index, 0, {
+		let newTodoNode = {
 			uuid: generateUUID(),
 			name: "",
 			list,
@@ -193,11 +198,47 @@ export class TodoListTreeComponent{
 			completedCount: 0,
 			newTodo: !list,
 			newTodoList: list
-		});
+		}
+
+		if(list){
+			// Add the node at the end of the children
+			todo.children.push(newTodoNode);
+		}else{
+			// Add the node at the end of the todos
+			let index = todo.children.findIndex(item => item.list);
+			if(index == -1){
+				todo.children.push(newTodoNode);
+			}else{
+				todo.children.splice(index, 0, newTodoNode);
+			}
+		}
 
 		// Update the UI
 		this.dataChange.next([]);
-		this.dataChange.next(this.todoItems);
+      this.dataChange.next(this.todoItems);
+      this.treeControl.expand(todo);
+	}
+
+	ChangeInputToNode(node: TodoNode, list: boolean = false){
+		if(list){
+			node.name = this.inputValue;
+			node.list = true;
+			node.newTodo = false;
+			node.newTodoList = false;
+		}else{
+			node.name = this.inputValue;
+			node.list = false;
+			node.newTodo = false;
+			node.newTodoList = false;
+		}
+
+		// Update the count of the completed children in the parent
+		this.LoadTodoListCompletedCount(this.rootTodoItem);
+
+		// Update the UI
+		this.inputValue = "";
+		this.dataChange.next([]);
+      this.dataChange.next(this.todoItems);
 	}
 }
 
