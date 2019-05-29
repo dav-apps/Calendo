@@ -4,7 +4,7 @@
 		<button type="button" class="btn btn-light ml-2" style="padding: 3px 6px;" (click)="EditButtonClicked()">
 			<fab-icon iconName="Edit"></fab-icon>
       </button>
-      <button type="button" class="btn btn-light ml-2" style="padding: 3px 6px;" (click)="EditButtonClicked()">
+      <button type="button" class="btn btn-light ml-2" style="padding: 3px 6px;" (click)="DeleteButtonClicked()">
 			<fab-icon iconName="Delete"></fab-icon>
 		</button>
 
@@ -23,7 +23,19 @@
 		</p>
 
 		<!-- Todos list -->
-		<p class="ms-fontWeight-semibold ms-fontSize-18 mt-2">{{ locale.todos }}</p>
-		<calendo-todo-list-tree></calendo-todo-list-tree>
+		<div ngbDropdown placement="top-left">
+			<p class="ms-fontWeight-semibold ms-fontSize-18 mt-2">
+				{{ locale.todos }}
+				<button type="button" class="btn btn-light ml-2" style="height: 30px; width: 30px; padding: 2px 0px 0px 0px" ngbDropdownToggle>
+					<fab-icon iconName="Add"></fab-icon>
+				</button>
+			</p>
+
+			<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+				<button class="dropdown-item text-color cursor" (click)="todoListTree.AddInputToTodoList(todoListTree.rootTodoItem, false)">Add Todo</button>
+				<button class="dropdown-item text-color cursor" (click)="todoListTree.AddInputToTodoList(todoListTree.rootTodoItem, true)">Add Todo list</button>
+			</div>
+		</div>
+		<calendo-todo-list-tree #todoListTree></calendo-todo-list-tree>
 	</div>
 </ng-template>

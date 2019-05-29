@@ -39,7 +39,7 @@ const enDefaults = {
    todoListViewModal: {
       date: "Date: ",
       groups: "Groups: ",
-      todos: "Todos: ",
+      todos: "Todos",
       formats: {
          date: "L"
       }
@@ -248,7 +248,7 @@ const deDefaults = {
    todoListViewModal: {
       date: "Datum: ",
       groups: "Gruppen: ",
-      todos: "Todos: ",
+      todos: "Todos",
       formats: {
          date: "L"
       }

@@ -1,9 +1,9 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 import { DataService } from '../../services/data-service';
 import { enUS } from '../../../locales/locales';
 import { TodoList } from 'src/app/models/TodoList';
-import * as moment from 'moment';
 
 @Component({
 	selector: "calendo-todo-list-view-modal",
@@ -29,9 +29,13 @@ export class TodoListViewModalComponent{
 		this.modalService.open(this.todoListViewModal).result.then(() => {
 			
 		}, () => {});
-	}
+   }
 
 	EditButtonClicked(){
 		
-	}
+   }
+   
+   DeleteButtonClicked(){
+
+   }
 }
