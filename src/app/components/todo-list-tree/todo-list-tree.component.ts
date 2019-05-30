@@ -236,7 +236,7 @@ export class TodoListTreeComponent{
 			let parentNode = this.FindParentNodeInTree(node.uuid, this.rootTodoItem);
 
 			if(parentNode){
-				let todoList = await TodoList.Create(node.name, this.todoList.time, [], [], [], node.uuid);
+				let todoList = await TodoList.Create(node.name, this.todoList.time, [], [], [], parentNode.uuid, node.uuid);
 
 				// Update the parent todo list
 				let parentTodoList = await GetTodoList(parentNode.uuid);

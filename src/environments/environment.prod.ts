@@ -12,6 +12,7 @@ export const environment = {
    todoListTodosKey: "todos",
    todoListTodoListsKey: "todo_lists",
    todoListGroupsKey: "groups",
+   todoListListKey: "list",
 	todoCompletedKey: "completed",
 	todoTimeKey: "time",
 	todoNameKey: "name",
