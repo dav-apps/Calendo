@@ -16,6 +16,7 @@ export const environment = {
 	todoTimeKey: "time",
 	todoNameKey: "name",
    todoGroupsKey: "groups",
+   todoListKey: "list",
 	appointmentNameKey: "name",
 	appointmentStartKey: "start",
 	appointmentEndKey: "end",

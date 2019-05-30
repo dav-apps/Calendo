@@ -74,7 +74,7 @@ export class NewTodoModalComponent{
             }
          }
 
-         let todo = await Todo.Create(this.newTodoName, false, todoTimeUnix, this.todoGroups, notificationUuid);
+         let todo = await Todo.Create(this.newTodoName, false, todoTimeUnix, this.todoGroups, null, notificationUuid);
 
          this.save.emit(todo);
       }, () => {});

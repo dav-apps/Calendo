@@ -7,6 +7,7 @@ export class Todo{
 	public completed: boolean = false;
 	public time: number = 0;
 	public groups: string[] = [];
+	public list: string = null;
 	public notificationUuid: string = null;
 
    constructor(
@@ -15,6 +16,7 @@ export class Todo{
 		completed?: boolean,
 		time?: number,
 		groups?: string[],
+		list?: string,
 		notificationUuid?: string
 	){
 		this.uuid = uuid;
@@ -22,11 +24,12 @@ export class Todo{
 		this.completed = completed == null ? false : completed;
 		this.time = time ? time : 0;
 		this.groups = groups ? groups : [];
-		this.notificationUuid ? notificationUuid : null;
+		this.list = list;
+		this.notificationUuid = notificationUuid;
 	}
 
-	public static async Create(name: string, completed: boolean = false, time: number, groups: string[] = [], notificationUuid: string = null, uuid: string = null) : Promise<Todo>{
-		let todo = new Todo(uuid, name, completed, time, groups, notificationUuid);
+	public static async Create(name: string, completed: boolean = false, time: number, groups: string[] = [], list: string = null, notificationUuid: string = null, uuid: string = null) : Promise<Todo>{
+		let todo = new Todo(uuid, name, completed, time, groups, list, notificationUuid);
 		await todo.Save();
 		return todo;
    }
@@ -71,7 +74,7 @@ export class Todo{
 
 		if(!tableObject){
 			// Create the table object
-			tableObject = new TableObject();
+			tableObject = new TableObject(this.uuid);
 			tableObject.TableId = environment.todoTableId;
 			this.uuid = tableObject.Uuid;
 		}
@@ -86,6 +89,13 @@ export class Todo{
 			properties.push({
 				name: environment.todoGroupsKey,
 				value: this.groups.join(',')
+			});
+		}
+
+		if(this.list){
+			properties.push({
+				name: environment.todoListKey,
+				value: this.list
 			});
 		}
 

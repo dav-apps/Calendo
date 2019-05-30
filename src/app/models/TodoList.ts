@@ -131,7 +131,8 @@ export async function ConvertTableObjectToTodoList(tableObject: TableObject) : P
 	if(todoUuidsString){
 		for(let uuid of todoUuidsString.split(',')){
 			// Get the todo from the local storage
-			let todoTableObject = await GetTableObject(uuid);
+         let todoTableObject = await GetTableObject(uuid);
+         if(!todoTableObject) continue;
 			let todo = ConvertTableObjectToTodo(todoTableObject);
 			if(todo){
 				todos.push(todo);
