@@ -25,11 +25,11 @@ export class Todo{
 		this.notificationUuid ? notificationUuid : null;
 	}
 
-	public static async Create(name: string, completed: boolean = false, time: number, groups: string[] = [], notificationUuid: string = null) : Promise<Todo>{
-		let todo = new Todo(null, name, completed, time, groups, notificationUuid);
+	public static async Create(name: string, completed: boolean = false, time: number, groups: string[] = [], notificationUuid: string = null, uuid: string = null) : Promise<Todo>{
+		let todo = new Todo(uuid, name, completed, time, groups, notificationUuid);
 		await todo.Save();
 		return todo;
-	}
+   }
 
 	async AddGoup(name: string){
 		if(this.groups.findIndex(n => n === name) === -1){
@@ -113,6 +113,11 @@ export async function GetAllTodos(): Promise<Todo[]>{
 	}
 
 	return todos;
+}
+
+export async function GetTodo(uuid: string) : Promise<Todo>{
+	let tableObject = await GetTableObject(uuid);
+	return ConvertTableObjectToTodo(tableObject);
 }
 
 export async function GetAllTodoGroups(): Promise<string[]>{

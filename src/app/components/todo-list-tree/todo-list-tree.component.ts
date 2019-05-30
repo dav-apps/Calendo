@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { BehaviorSubject } from 'rxjs';
 import { IIconStyles } from 'office-ui-fabric-react';
-import { Todo } from '../../models/Todo';
-import { TodoList } from '../../models/TodoList';
+import { Todo, GetTodo } from '../../models/Todo';
+import { TodoList, GetTodoList } from '../../models/TodoList';
 import { generateUUID } from 'dav-npm';
 
 @Component({
@@ -15,6 +15,8 @@ export class TodoListTreeComponent{
 	dataSource: MatTreeNestedDataSource<TodoNode>;
 	treeControl: NestedTreeControl<TodoNode>;
 	dataChange: BehaviorSubject<TodoNode[]> = new BehaviorSubject<TodoNode[]>([]);
+	@Input()
+	todoList: TodoList;
 	rootTodoItem: TodoNode;
 	todoItems: TodoNode[] = [];
 	inputValue: string = "";
@@ -23,28 +25,6 @@ export class TodoListTreeComponent{
 			fontSize: 14
 		}
 	}
-
-	todoList: TodoList = new TodoList(
-		"1234567",
-		"First todo list",
-		0,
-		[
-			new Todo("123456", "Todo 1", false, 0, [], null),
-      	new Todo("234567", "Todo 2", false, 0, [], null),
-      	new Todo("345678", "Todo 3", false, 0, [], null),
-      	new Todo("456789", "Todo 4", false, 0, [], null),
-		],
-		[
-			new TodoList("23456789", "Hello World 1", 0, [
-				new Todo("9289585", "Hello World Todo 1", true, 0, [], null),
-			], [
-				new TodoList("213123", "Nested TodoList", 0, [
-					new Todo("8792", "Nested Todo 1", false, 0, [], null),
-					new Todo("03420234", "Nested Todo 2", true, 0, [], null)
-				], [], [])
-			], [])
-		]
-	)
 
 	constructor(){
 		this.dataSource = new MatTreeNestedDataSource();
@@ -75,18 +55,28 @@ export class TodoListTreeComponent{
 		this.LoadTodoListCompletedCount(this.rootTodoItem);
 	}
 
-	ToggleTodoCheckbox(uuid: string){
+	async ToggleTodoCheckbox(uuid: string){
 		// Find the todo in the tree and change the completed value
 		let item = this.FindNodeInTree(uuid, this.rootTodoItem);
-		item.completed = !item.completed;
-		this.LoadTodoListCompletedCount(this.rootTodoItem);
+
+		if(item){
+			item.completed = !item.completed;
+			this.LoadTodoListCompletedCount(this.rootTodoItem);
+
+			// Update the todo
+			let todo = await GetTodo(uuid);
+
+			if(todo){
+				await todo.SetCompleted(item.completed);
+			}
+		}
 	}
 
 	FindNodeInTree(uuid: string, rootItem: TodoNode) : TodoNode{
 		for(let item of rootItem.children){
-			if(item.children.length == 0 && item.uuid == uuid){
+			if(item.uuid == uuid){
 				return item;
-			}else if(item.children.length > 0){
+			}else if(item.list){
 				let foundItem = this.FindNodeInTree(uuid, item);
 				if(foundItem){
 					return foundItem;
@@ -97,7 +87,23 @@ export class TodoListTreeComponent{
 		return null;
 	}
 
+	FindParentNodeInTree(uuid: string, rootItem: TodoNode){
+		for(let item of rootItem.children){
+			if(item.uuid == uuid){
+				return rootItem;
+			}else if(item.list){
+				let foundItem = this.FindParentNodeInTree(uuid, item);
+				if(foundItem){
+					return item;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	AddTodoItems(todoList: TodoList, todoItems: TodoNode[]){
+		// Create a todoNode for each todo and todoList in the TodoList
 		todoList.todos.forEach((todo: Todo) => {
 			todoItems.push({
 				uuid: todo.uuid,
@@ -219,17 +225,43 @@ export class TodoListTreeComponent{
       this.treeControl.expand(todo);
 	}
 
-	ChangeInputToNode(node: TodoNode, list: boolean = false){
+	async ChangeInputToNode(node: TodoNode, list: boolean = false){
 		if(list){
 			node.name = this.inputValue;
 			node.list = true;
 			node.newTodo = false;
 			node.newTodoList = false;
+
+			// Create the todo list
+			let parentNode = this.FindParentNodeInTree(node.uuid, this.rootTodoItem);
+
+			if(parentNode){
+				let todoList = await TodoList.Create(node.name, this.todoList.time, [], [], [], node.uuid);
+
+				// Update the parent todo list
+				let parentTodoList = await GetTodoList(parentNode.uuid);
+				if(parentTodoList){
+					await parentTodoList.AddTodoList(todoList);
+				}
+			}
 		}else{
 			node.name = this.inputValue;
 			node.list = false;
 			node.newTodo = false;
 			node.newTodoList = false;
+
+			// Create the todo
+			let parentNode = this.FindParentNodeInTree(node.uuid, this.rootTodoItem);
+			
+			if(parentNode){
+				let todo = await Todo.Create(node.name, false, this.todoList.time, [], null, node.uuid);
+
+				// Update the todo list
+				let parentTodoList = await GetTodoList(parentNode.uuid);
+				if(parentTodoList){
+					await parentTodoList.AddTodo(todo);
+				}
+			}
 		}
 
 		// Update the count of the completed children in the parent

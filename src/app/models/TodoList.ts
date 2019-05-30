@@ -26,11 +26,21 @@ export class TodoList{
       this.groups = groups ? groups : [];
    }
 
-	public static async Create(name: string, time: number = 0, todos: Todo[] = [], todoLists: TodoList[] = [], groups: string[] = []) : Promise<TodoList>{
-		let list = new TodoList(null, name, time, todos, todoLists, groups);
+	public static async Create(name: string, time: number = 0, todos: Todo[] = [], todoLists: TodoList[] = [], groups: string[] = [], uuid: string = null) : Promise<TodoList>{
+		let list = new TodoList(uuid, name, time, todos, todoLists, groups);
 		await list.Save();
 		return list;
-	}
+   }
+   
+   async AddTodo(todo: Todo){
+      this.todos.push(todo);
+      await this.Save();
+   }
+
+   async AddTodoList(todoList: TodoList){
+      this.todoLists.push(todoList);
+      await this.Save();
+   }
 
 	private async Save(){
 		let tableObject = await GetTableObject(this.uuid);
@@ -49,7 +59,7 @@ export class TodoList{
       
       // Create the todoLists string
       let todoListUuids: string[] = [];
-      this.todoLists.forEach((todoList: TodoList) => todoUuids.push(todoList.uuid));
+      this.todoLists.forEach((todoList: TodoList) => todoListUuids.push(todoList.uuid));
       let todoListUuidsString = todoListUuids.join(",");
 
 		// Set the properties
@@ -96,6 +106,11 @@ export async function GetAllTodoLists() : Promise<TodoList[]>{
 	}
 
 	return todoLists;
+}
+
+export async function GetTodoList(uuid: string) : Promise<TodoList>{
+	let tableObject = await GetTableObject(uuid);
+	return await ConvertTableObjectToTodoList(tableObject);
 }
 
 export async function ConvertTableObjectToTodoList(tableObject: TableObject) : Promise<TodoList>{
