@@ -151,14 +151,17 @@ export async function GetAllTodoGroups(): Promise<string[]>{
 export function ConvertTableObjectToTodo(tableObject: TableObject): Todo{
 	if(tableObject.TableId != environment.todoTableId) return null;
 
+	// completed
 	var completed: boolean = tableObject.GetPropertyValue(environment.todoCompletedKey).toLowerCase() === 'true';
 	
+	// time
 	var todoTime: number = 0;
 	var tableObjectTodoTime = tableObject.GetPropertyValue(environment.todoTimeKey);
 	if(tableObjectTodoTime){
 		todoTime = Number.parseInt(tableObjectTodoTime);
 	}
 
+	// Groups
 	var groups: string[] = [];
 	var groupsString = tableObject.GetPropertyValue(environment.todoGroupsKey);
 
@@ -166,8 +169,12 @@ export function ConvertTableObjectToTodo(tableObject: TableObject): Todo{
 		groupsString.split(',').forEach(group => {
 			groups.push(group);
 		});
-   }
-   
+	}
+	
+	// list
+	let list = tableObject.GetPropertyValue(environment.todoListKey);
+	
+	// Notification uuid
 	var tableObjectNotificationUuid = tableObject.GetPropertyValue(environment.notificationUuidKey);
 	var notificationUuid = tableObjectNotificationUuid ? tableObjectNotificationUuid : "";
 
@@ -177,6 +184,7 @@ export function ConvertTableObjectToTodo(tableObject: TableObject): Todo{
 		completed,
 		todoTime,
 		groups,
+		list,
 		notificationUuid
 	);
 }
