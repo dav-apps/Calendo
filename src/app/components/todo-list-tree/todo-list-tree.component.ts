@@ -6,12 +6,15 @@ import { IIconStyles } from 'office-ui-fabric-react';
 import { Todo, GetTodo } from '../../models/Todo';
 import { TodoList, GetTodoList } from '../../models/TodoList';
 import { generateUUID } from 'dav-npm';
+import { enUS } from '../../../locales/locales';
+import { DataService } from 'src/app/services/data-service';
 
 @Component({
 	selector: "calendo-todo-list-tree",
 	templateUrl: "./todo-list-tree.component.html"
 })
 export class TodoListTreeComponent{
+   locale = enUS.todoListTree;
 	dataSource: MatTreeNestedDataSource<TodoNode>;
 	treeControl: NestedTreeControl<TodoNode>;
 	dataChange: BehaviorSubject<TodoNode[]> = new BehaviorSubject<TodoNode[]>([]);
@@ -28,7 +31,8 @@ export class TodoListTreeComponent{
 		}
 	}
 
-	constructor(){
+	constructor(public dataService: DataService){
+      this.locale = this.dataService.GetLocale().todoListTree;
 		this.dataSource = new MatTreeNestedDataSource();
 		this.treeControl = new NestedTreeControl<TodoNode>((dataNode: TodoNode) => dataNode.children);
 

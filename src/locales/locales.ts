@@ -42,7 +42,16 @@ const enDefaults = {
       todos: "Todos",
       formats: {
          date: "L"
-      }
+      },
+      newTodo: "Add Todo",
+      newTodoList: "Add Todo list"
+   },
+   todoListTree: {
+      newTodo: "Add Todo",
+      newTodoList: "Add Todo list",
+      add: "Add",
+      todoName: "Todo name",
+      todoListName: "Todo list name"
    },
    deleteTodoListModal: {
       header: "Delete Todo list",
@@ -98,15 +107,15 @@ const enDefaults = {
 			smallDate: "M/D",
 			largeDate: "dddd"
       },
-      newTodo: "New Todo",
-      newTodoList: "New Todo list"
+      newTodo: "Add Todo",
+      newTodoList: "Add Todo list"
    },
    todosPage: {
       header: "Todos",
       sortByGroup: "Sort by group",
       sortByDate: "Sort by date",
-      newTodo: "New Todo",
-      newTodoList: "New Todo list",
+      newTodo: "Add Todo",
+      newTodoList: "Add Todo list",
 		noTodos: "You have no todos",
 		formats: {
 			date: "dddd, MMMM D, YYYY"
@@ -116,7 +125,7 @@ const enDefaults = {
       header: "Appointments",
       showOldAppointments: "Show old appointments",
       hideOldAppointments: "Hide old appointments",
-      newAppointment: "New appointment",
+      newAppointment: "Add Appointment",
       noAppointments: "You have no appointments"
    },
    calendarPage: {
@@ -251,7 +260,16 @@ const deDefaults = {
       todos: "Todos",
       formats: {
          date: "L"
-      }
+      },
+      newTodo: "Todo hinzufügen",
+      newTodoList: "Todo-Liste hinzufügen"
+   },
+   todoListTree: {
+      newTodo: "Todo hinzufügen",
+      newTodoList: "Todo-Liste hinzufügen",
+      add: "Hinzufügen",
+      todoName: "Name des Todos",
+      todoListName: "Name der Todo-Liste"
    },
    deleteTodoListModal: {
       header: "Todo-Liste löschen",
@@ -307,15 +325,15 @@ const deDefaults = {
          smallDate: "D.M",
 			largeDate: "dddd"
       },
-      newTodo: "Neues Todo",
-      newTodoList: "Neue Todo-Liste"
+      newTodo: "Todo hinzufügen",
+      newTodoList: "Todo-Liste hinzufügen"
    },
    todosPage: {
       header: "Todos",
       sortByGroup: "Nach Gruppe sortieren",
       sortByDate: "Nach Datum sortieren",
-      newTodo: "Neues Todo",
-      newTodoList: "Neue Todo-Liste",
+      newTodo: "Todo hinzufügen",
+      newTodoList: "Todo-Liste hinzufügen",
 		noTodos: "Du hast keine Todos",
 		formats: {
 			date: "dddd, D. MMMM YYYY"
@@ -325,7 +343,7 @@ const deDefaults = {
       header: "Termine",
       showOldAppointments: "Alte Termine einblenden",
       hideOldAppointments: "Alte Termine ausblenden",
-      newAppointment: "Neuer Termin",
+      newAppointment: "Termin hinzufügen",
       noAppointments: "Du hast keine Termine"
    },
    calendarPage: {

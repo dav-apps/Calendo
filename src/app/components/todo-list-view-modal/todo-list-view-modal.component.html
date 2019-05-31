@@ -32,8 +32,8 @@
 			</p>
 
 			<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
-				<button class="dropdown-item text-color cursor" (click)="todoListTree.AddInputToTodoList(todoListTree.rootTodoItem, false)">Add Todo</button>
-				<button class="dropdown-item text-color cursor" (click)="todoListTree.AddInputToTodoList(todoListTree.rootTodoItem, true)">Add Todo list</button>
+				<button class="dropdown-item text-color cursor" (click)="todoListTree.AddInputToTodoList(todoListTree.rootTodoItem, false)">{{ locale.newTodo }}</button>
+				<button class="dropdown-item text-color cursor" (click)="todoListTree.AddInputToTodoList(todoListTree.rootTodoItem, true)">{{ locale.newTodoList }}</button>
 			</div>
 		</div>
       <calendo-todo-list-tree #todoListTree [todoList]="todoList" (update)="Update()"></calendo-todo-list-tree>

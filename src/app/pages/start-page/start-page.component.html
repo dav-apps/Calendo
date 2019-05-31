@@ -24,7 +24,7 @@
                <calendo-todo-item [todo]="todo" *ngFor="let todo of dataService.startDaysTodos[0]" (delete)="DeleteTodo(todo)"></calendo-todo-item>
                <calendo-todo-list-item [todoList]="todoList" *ngFor="let todoList of dataService.startDaysTodoLists[0]"></calendo-todo-list-item>
 
-					<li class="list-group-item theme-background-color-secondary" style="padding: 14px 0px 14px 5px;" ngbDropdown placement="bottom-right">
+					<li class="list-group-item theme-background-color-secondary" style="padding: 14px 0px 14px 5px;" ngbDropdown placement="bottom-left">
                   <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle><fa-icon [icon]="faPlus"></fa-icon></button>
                   <div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
                      <button class="dropdown-item text-color cursor" (click)="ShowModal(1)">{{ locale.newTodo }}</button>
