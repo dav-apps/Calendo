@@ -19,10 +19,21 @@ export class TodoListTreeComponent{
 	treeControl: NestedTreeControl<TodoNode>;
 	dataChange: BehaviorSubject<TodoNode[]> = new BehaviorSubject<TodoNode[]>([]);
 	@Input()
-   todoList: TodoList;
+	todoList: TodoList;
+	@Input()
+	showRoot: boolean = false;
    @Output()
    update = new EventEmitter();
-	rootTodoItem: TodoNode;
+	rootTodoItem: TodoNode = {
+		uuid: this.todoList ? this.todoList.uuid : "",
+		name: this.todoList ? this.todoList.name : "",
+		list: true,
+		children: [],
+		completed: false,
+		completedCount: 0,
+		newTodo: false,
+		newTodoList: false
+	}
 	todoItems: TodoNode[] = [];
 	inputValue: string = "";
 	iconStyles: IIconStyles = {
@@ -37,15 +48,12 @@ export class TodoListTreeComponent{
 		this.treeControl = new NestedTreeControl<TodoNode>((dataNode: TodoNode) => dataNode.children);
 
 		this.dataChange.subscribe(data => this.dataSource.data = data);
-
-		this.dataChange.next(this.todoItems);
 	}
 
 	hasNestedChild = (i: number, nodeData: TodoNode) => { return nodeData.list && !nodeData.newTodoList };
 
 	ngOnInit(){
 		this.AddTodoItems(this.todoList, this.todoItems);
-		this.dataChange.next(this.todoItems);
 
 		this.rootTodoItem = {
 			uuid: this.todoList.uuid,
@@ -59,6 +67,7 @@ export class TodoListTreeComponent{
 		}
 		
 		this.LoadTodoListCompletedCount(this.rootTodoItem);
+		this.dataChange.next(this.showRoot ? [this.rootTodoItem] : this.todoItems);
 	}
 
 	async ToggleTodoCheckbox(uuid: string){
@@ -174,7 +183,7 @@ export class TodoListTreeComponent{
 		// Update the UI
 		this.inputValue = "";
 		this.dataChange.next([]);
-      this.dataChange.next(this.todoItems);
+      this.dataChange.next(this.showRoot ? [this.rootTodoItem] : this.todoItems);
    }
 
    RemoveInputNodes(todoNodes: TodoNode[]){
@@ -228,7 +237,7 @@ export class TodoListTreeComponent{
 
 		// Update the UI
 		this.dataChange.next([]);
-      this.dataChange.next(this.todoItems);
+      this.dataChange.next(this.showRoot ? [this.rootTodoItem] : this.todoItems);
       this.treeControl.expand(todo);
 	}
 
@@ -277,7 +286,7 @@ export class TodoListTreeComponent{
 		// Update the UI
 		this.inputValue = "";
 		this.dataChange.next([]);
-		this.dataChange.next(this.todoItems);
+		this.dataChange.next(this.showRoot ? [this.rootTodoItem] : this.todoItems);
 		this.update.emit();
 	}
 }
