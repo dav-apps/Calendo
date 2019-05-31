@@ -36,6 +36,6 @@
 				<button class="dropdown-item text-color cursor" (click)="todoListTree.AddInputToTodoList(todoListTree.rootTodoItem, true)">Add Todo list</button>
 			</div>
 		</div>
-		<calendo-todo-list-tree #todoListTree [todoList]="todoList"></calendo-todo-list-tree>
+      <calendo-todo-list-tree #todoListTree [todoList]="todoList" (update)="Update()"></calendo-todo-list-tree>
 	</div>
 </ng-template>

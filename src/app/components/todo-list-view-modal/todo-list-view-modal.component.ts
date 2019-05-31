@@ -1,9 +1,9 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { DataService } from '../../services/data-service';
 import { enUS } from '../../../locales/locales';
-import { TodoList } from 'src/app/models/TodoList';
+import { TodoList, GetTodoList } from 'src/app/models/TodoList';
 
 @Component({
 	selector: "calendo-todo-list-view-modal",
@@ -12,8 +12,8 @@ import { TodoList } from 'src/app/models/TodoList';
 export class TodoListViewModalComponent{
 	locale = enUS.todoListViewModal;
 	@Input()
-	todoList: TodoList;
-	@ViewChild('todoListViewModal') todoListViewModal: ElementRef;
+   todoList: TodoList;
+   @ViewChild('todoListViewModal') todoListViewModal: ElementRef;
 	date: string = "";
 
 	constructor(
@@ -37,5 +37,9 @@ export class TodoListViewModalComponent{
    
    DeleteButtonClicked(){
 
+   }
+
+   async Update(){
+      this.dataService.UpdateTodoList(await GetTodoList(this.todoList.uuid));
    }
 }

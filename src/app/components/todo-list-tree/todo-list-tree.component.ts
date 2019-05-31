@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { BehaviorSubject } from 'rxjs';
@@ -16,7 +16,9 @@ export class TodoListTreeComponent{
 	treeControl: NestedTreeControl<TodoNode>;
 	dataChange: BehaviorSubject<TodoNode[]> = new BehaviorSubject<TodoNode[]>([]);
 	@Input()
-	todoList: TodoList;
+   todoList: TodoList;
+   @Output()
+   update = new EventEmitter();
 	rootTodoItem: TodoNode;
 	todoItems: TodoNode[] = [];
 	inputValue: string = "";
@@ -67,7 +69,8 @@ export class TodoListTreeComponent{
 			let todo = await GetTodo(uuid);
 
 			if(todo){
-				await todo.SetCompleted(item.completed);
+            await todo.SetCompleted(item.completed);
+				this.update.emit();
 			}
 		}
 	}
@@ -270,7 +273,8 @@ export class TodoListTreeComponent{
 		// Update the UI
 		this.inputValue = "";
 		this.dataChange.next([]);
-      this.dataChange.next(this.todoItems);
+		this.dataChange.next(this.todoItems);
+		this.update.emit();
 	}
 }
 
