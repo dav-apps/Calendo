@@ -13,8 +13,9 @@ export class SmallTodoListItemComponent{
 	todoList: TodoList = new TodoList(null, "");
 	@ViewChild(TodoListViewModalComponent)
 	private todoListViewModal: TodoListViewModalComponent;
-
-   completedTodos: number = 0;
+	totalTodos: number = 0;
+	completedTodos: number = 0;
+	todoTreeCopy: TodoElement;
 	iconStyles: IIconStyles = {
 		root: {
 			fontSize: 15,
@@ -27,16 +28,80 @@ export class SmallTodoListItemComponent{
    ){}
    
    ngOnInit(){
-		this.UpdateCompletedTodos();
+		this.LoadTree();
    }
 
-   UpdateCompletedTodos(){
-      this.todoList.todos.forEach(todo => {
-         if(todo.completed) this.completedTodos++;
-      });
-   }
+	LoadTree(){
+		// Create a copy of the tree of todoList
+		this.todoTreeCopy = {
+			uuid: this.todoList.uuid,
+			list: true,
+			children: [],
+			completed: false,
+			completedCount: 0
+		}
+
+		this.LoadTreeElement(this.todoTreeCopy, this.todoList);
+		this.LoadTreeElementCount(this.todoTreeCopy);
+		this.totalTodos = this.todoTreeCopy.children.length;
+		this.completedTodos = this.todoTreeCopy.completedCount;
+	}
+
+	LoadTreeElement(element: TodoElement, todoList: TodoList){
+		todoList.todos.forEach(todo => {
+			element.children.push({
+				uuid: todo.uuid,
+				list: false,
+				children: [],
+				completed: todo.completed,
+				completedCount: 0
+			});
+		});
+
+		todoList.todoLists.forEach(todoList => {
+			let newElement: TodoElement = {
+				uuid: todoList.uuid,
+				list: true,
+				children: [],
+				completed: false,
+				completedCount: 0
+			}
+
+			this.LoadTreeElement(newElement, todoList);
+			element.children.push(newElement);
+		});
+	}
+
+	LoadTreeElementCount(rootItem: TodoElement){
+		let todosCompleted: number = 0;
+
+		rootItem.children.forEach(item => {
+			if(!item.list){
+				// Todo
+				if(item.completed){
+					todosCompleted++;
+				}
+			}else{
+				// Todo list
+				this.LoadTreeElementCount(item);
+				if(item.completedCount == item.children.length){
+					todosCompleted++;
+				}
+			}
+		});
+		
+		rootItem.completedCount = todosCompleted;
+	}
 
    ShowModal(){
 		this.todoListViewModal.Show();
    }
+}
+
+interface TodoElement{
+	uuid: string;
+	list: boolean;
+	children: TodoElement[];
+	completed: boolean;
+	completedCount: number;
 }
