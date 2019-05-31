@@ -11,7 +11,6 @@ import * as bowser from "bowser";
 
 @Injectable()
 export class DataService{
-
 	user: DavUser;
    locale: string = navigator.language;
 
@@ -160,8 +159,19 @@ export class DataService{
 			date = 0;
 		}
    }
+
+   AddTodoList(todoList: TodoList){
+      this.AddTodoListToStartPage(todoList);
+      this.AddTodoListToTodosPage(todoList);
+   }
+
+   UpdateTodoList(todoList: TodoList){
+      this.RemoveTodoList(todoList);
+      this.AddTodoList(todoList);
+   }
    
    RemoveTodoList(todoList: TodoList){
+      this.RemoveTodoListFromStartPage(todoList);
 		this.RemoveTodoListFromTodosPage(todoList);
    }
 
@@ -399,6 +409,9 @@ export class DataService{
 	}
 
 	AddTodoToStartPage(todo: Todo){
+		// Don't add the todo if it belongs to a list
+		if(todo.list) return;
+
 		// Check if the day of the todo is already in the array
 		let index = todo.time < moment().startOf('day').unix() ? 0 : this.startDaysDates.findIndex(t => t == todo.time);
 
@@ -435,9 +448,14 @@ export class DataService{
 			if(index !== -1){
 				this.startDaysTodos[i].splice(index, 1);
 
-				if(this.startDaysAppointments[i].length == 0 && this.startDaysTodos[i].length == 0 && i != 0){
+				if(this.startDaysAppointments[i].length == 0 
+					&& this.startDaysTodos[i].length == 0 
+					&& this.startDaysTodoLists[i].length == 0
+					&& i != 0){
+					// Remove the day
 					this.startDaysAppointments.splice(i, 1);
 					this.startDaysTodos.splice(i, 1);
+					this.startDaysTodoLists.splice(i, 1);
 					this.startDaysDates.splice(i, 1);
 				}
 			}
@@ -445,6 +463,9 @@ export class DataService{
 	}
 
 	AddTodoListToStartPage(todoList: TodoList){
+		// Don't add the list if it belongs to another list
+		if(todoList.list) return;
+
 		// Check if the day of the todo list is already in the array
 		let index = todoList.time < moment().startOf('day').unix() ? 0 : this.startDaysDates.findIndex(t => t == todoList.time);
 
@@ -472,11 +493,35 @@ export class DataService{
 			// Sort the arrays
 			this.SortStartDays();
 		}
-	}
+   }
+   
+   RemoveTodoListFromStartPage(todoList: TodoList){
+		// Remove the todo list from all arrays
+		for(let i = 0; i < this.startDaysTodoLists.length; i++){
+			let index = this.startDaysTodoLists[i].findIndex(t => t.uuid == todoList.uuid);
+
+			if(index !== -1){
+				this.startDaysTodoLists[i].splice(index, 1);
+
+				if(this.startDaysAppointments[i].length == 0 
+					&& this.startDaysTodos[i].length == 0
+					&& this.startDaysTodoLists[i].length == 0
+					&& i != 0){
+					// Remove the day
+					this.startDaysAppointments.splice(i, 1);
+					this.startDaysTodos.splice(i, 1);
+					this.startDaysTodoLists.splice(i, 1);
+					this.startDaysDates.splice(i, 1);
+				}
+			}
+		}
+   }
 	//#endregion
 
 	//#region TodosPage
 	AddTodoToTodosPage(todo: Todo){
+		if(todo.list) return;
+
 		if(this.sortTodosByDate){
 			if(todo.time != 0){
 				var date: string = moment.unix(todo.time).format(this.GetLocale().todosPage.formats.date);
@@ -581,6 +626,8 @@ export class DataService{
 	}
 
 	AddTodoListToTodosPage(todoList: TodoList){
+		if(todoList.list) return;
+
 		if(this.sortTodosByDate){
 			if(todoList.time != 0){
 				let date: string = moment.unix(todoList.time).format(this.GetLocale().todosPage.formats.date);
@@ -826,6 +873,8 @@ export class DataService{
 	}
 
 	AddTodoToCalendarPage(todo: Todo){
+		if(todo.list) return;
+
 		this.allTodos.push(todo);
 		this.SortTodosArray(this.allTodos);
 
