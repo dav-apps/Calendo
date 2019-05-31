@@ -32,13 +32,20 @@ export class TodoListTreeComponent{
 		completed: false,
 		completedCount: 0,
 		newTodo: false,
-		newTodoList: false
+		newTodoList: false,
+		groups: this.todoList ? this.todoList.groups : []
 	}
 	todoItems: TodoNode[] = [];
 	inputValue: string = "";
-	iconStyles: IIconStyles = {
+	chevronIconStyles: IIconStyles = {
 		root: {
 			fontSize: 14
+		}
+	}
+	checkIconStyles: IIconStyles = {
+		root: {
+			fontSize: 15,
+			color: "#1da520"
 		}
 	}
 
@@ -63,7 +70,8 @@ export class TodoListTreeComponent{
 			completed: false,
 			completedCount: 0,
 			newTodo: false,
-			newTodoList: false
+			newTodoList: false,
+			groups: this.todoList.groups
 		}
 		
 		this.LoadTodoListCompletedCount(this.rootTodoItem);
@@ -129,7 +137,8 @@ export class TodoListTreeComponent{
 				completed: todo.completed,
 				completedCount: 0,
 				newTodo: false,
-				newTodoList: false
+				newTodoList: false,
+				groups: []
 			});
 		});
 
@@ -145,7 +154,8 @@ export class TodoListTreeComponent{
 				completed: false,
 				completedCount: 0,
 				newTodo: false,
-				newTodoList: false
+				newTodoList: false,
+				groups: []
 			});
 		});
 	}
@@ -219,7 +229,8 @@ export class TodoListTreeComponent{
 			completed: false,
 			completedCount: 0,
 			newTodo: !list,
-			newTodoList: list
+			newTodoList: list,
+			groups: []
 		}
 
 		if(list){
@@ -300,4 +311,5 @@ interface TodoNode{
 	completedCount: number;
 	newTodo: boolean;
 	newTodoList: boolean;
+	groups: string[];
 }
