@@ -1,10 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { TodoList, GetTodoList } from 'src/app/models/TodoList';
 import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
 import * as moment from 'moment';
 import { TodoListTreeComponent } from '../../components/todo-list-tree/todo-list-tree.component';
+import { DeleteTodoListModalComponent } from 'src/app/components/delete-todo-list-modal/delete-todo-list-modal.component';
 
 @Component({
 	selector: 'calendo-todo-list-details-page',
@@ -13,12 +15,14 @@ import { TodoListTreeComponent } from '../../components/todo-list-tree/todo-list
 export class TodoListDetailsPageComponent{
    locale = enUS.todoListDetailsPage;
    @ViewChild('todoListTree') todoListTree: TodoListTreeComponent;
+   @ViewChild('deleteTodoListModal') deleteTodoListModal: DeleteTodoListModalComponent;
 	todoList: TodoList = new TodoList(null, "");
 	date: string = "";
 
 	constructor(
 		private dataService: DataService,
-		private route: ActivatedRoute
+      private route: ActivatedRoute,
+      private location: Location
 	){
       moment.locale(this.dataService.locale);
 		this.locale = this.dataService.GetLocale().todoListDetailsPage;
@@ -46,7 +50,7 @@ export class TodoListDetailsPageComponent{
 	}
 
 	GoBack(){
-
+      this.location.back();
 	}
 
 	ShowEditModal(){
@@ -54,6 +58,11 @@ export class TodoListDetailsPageComponent{
 	}
 
 	ShowDeleteModal(){
-		
-	}
+		this.deleteTodoListModal.Show();
+   }
+   
+   Remove(){
+      this.dataService.RemoveTodoList(this.todoList);
+      this.location.back();
+   }
 }
