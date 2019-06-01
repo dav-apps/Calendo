@@ -37,7 +37,10 @@
 						<calendo-todo-group-badge *ngFor="let todoGroup of node.groups" [groupName]="todoGroup"></calendo-todo-group-badge>
 					</span>
 				</span>
-				<button type="button" class="btn btn-light ml-2" style="height: 30px; width: 30px; padding: 2px 0px 0px 0px" ngbDropdownToggle>
+            <button type="button" 
+                     class="btn btn-light ml-2" style="height: 30px; width: 30px; padding: 2px 0px 0px 0px; margin-bottom: 4px" 
+                     ngbDropdownToggle
+                     *ngIf="!readonly">
 					<fab-icon iconName="Add"></fab-icon>
 				</button>
 

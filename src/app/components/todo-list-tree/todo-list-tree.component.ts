@@ -21,7 +21,9 @@ export class TodoListTreeComponent{
 	@Input()
 	todoList: TodoList;
 	@Input()
-	showRoot: boolean = false;
+   showRoot: boolean = false;
+   @Input()
+   readonly: boolean = false;
    @Output()
    update = new EventEmitter();
 	rootTodoItem: TodoNode = {
