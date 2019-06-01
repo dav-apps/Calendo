@@ -11,7 +11,7 @@ import { TodoListTreeComponent } from '../../components/todo-list-tree/todo-list
 	templateUrl: './todo-list-details-page.component.html'
 })
 export class TodoListDetailsPageComponent{
-   locale = enUS.todoListViewModal;
+   locale = enUS.todoListDetailsPage;
    @ViewChild('todoListTree') todoListTree: TodoListTreeComponent;
 	todoList: TodoList = new TodoList(null, "");
 	date: string = "";
@@ -21,7 +21,7 @@ export class TodoListDetailsPageComponent{
 		private route: ActivatedRoute
 	){
       moment.locale(this.dataService.locale);
-		this.locale = this.dataService.GetLocale().todoListViewModal;
+		this.locale = this.dataService.GetLocale().todoListDetailsPage;
 	}
 
 	ngOnInit(){

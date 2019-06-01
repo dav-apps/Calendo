@@ -32,16 +32,6 @@ const enDefaults = {
       setDate: "Set a date",
       save: "Save"
    },
-   todoListViewModal: {
-      date: "Date: ",
-      groups: "Groups: ",
-      todos: "Todos",
-      formats: {
-         date: "L"
-      },
-      newTodo: "Add Todo",
-      newTodoList: "Add Todo list"
-   },
    todoListTree: {
       newTodo: "Add Todo",
       newTodoList: "Add Todo list",
@@ -136,6 +126,16 @@ const enDefaults = {
       formats: {
          currentDay: "dddd, MMMM D, YYYY"
       }
+   },
+   todoListDetailsPage: {
+      date: "Date: ",
+      groups: "Groups: ",
+      todos: "Todos",
+      formats: {
+         date: "L"
+      },
+      newTodo: "Add Todo",
+      newTodoList: "Add Todo list"
    },
    accountPage: {
       header: "Your Account",
@@ -246,16 +246,6 @@ const deDefaults = {
       setDate: "Datum speichern",
       save: "Speichern"
    },
-   todoListViewModal: {
-      date: "Datum: ",
-      groups: "Gruppen: ",
-      todos: "Todos",
-      formats: {
-         date: "L"
-      },
-      newTodo: "Todo hinzufügen",
-      newTodoList: "Todo-Liste hinzufügen"
-   },
    todoListTree: {
       newTodo: "Todo hinzufügen",
       newTodoList: "Todo-Liste hinzufügen",
@@ -350,6 +340,16 @@ const deDefaults = {
       formats: {
          currentDay: "dddd, D. MMMM YYYY"
       }
+   },
+   todoListDetailsPage: {
+      date: "Datum: ",
+      groups: "Gruppen: ",
+      todos: "Todos",
+      formats: {
+         date: "L"
+      },
+      newTodo: "Todo hinzufügen",
+      newTodoList: "Todo-Liste hinzufügen"
    },
    accountPage: {
       header: "Dein Account",
