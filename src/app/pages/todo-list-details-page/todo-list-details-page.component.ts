@@ -6,6 +6,7 @@ import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
 import * as moment from 'moment';
 import { TodoListTreeComponent } from '../../components/todo-list-tree/todo-list-tree.component';
+import { TodoListModalComponent } from 'src/app/components/todo-list-modal/todo-list-modal.component';
 import { DeleteTodoListModalComponent } from 'src/app/components/delete-todo-list-modal/delete-todo-list-modal.component';
 
 @Component({
@@ -14,8 +15,9 @@ import { DeleteTodoListModalComponent } from 'src/app/components/delete-todo-lis
 })
 export class TodoListDetailsPageComponent{
    locale = enUS.todoListDetailsPage;
-   @ViewChild('todoListTree') todoListTree: TodoListTreeComponent;
-   @ViewChild('deleteTodoListModal') deleteTodoListModal: DeleteTodoListModalComponent;
+	@ViewChild('todoListTree') todoListTree: TodoListTreeComponent;
+	@ViewChild('todoListModal') todoListModal: TodoListModalComponent;
+	@ViewChild('deleteTodoListModal') deleteTodoListModal: DeleteTodoListModalComponent;
 	todoList: TodoList = new TodoList(null, "");
 	date: string = "";
 
@@ -38,15 +40,25 @@ export class TodoListDetailsPageComponent{
          this.todoList.list = list.list;
          this.todoList.todos = list.todos;
          this.todoList.todoLists = list.todoLists;
-
          this.date = moment.unix(this.todoList.time).format(this.locale.formats.date);
          
          this.todoListTree.ngOnInit();
       });
 	}
 	
-	async Update(){
-		this.dataService.UpdateTodoList(await GetTodoList(this.todoList.uuid));
+	async Update(updatedTodoList?: TodoList){
+		if(updatedTodoList){
+			this.dataService.UpdateTodoList(updatedTodoList);
+
+			// Update the local properties
+			this.todoList.name = updatedTodoList.name;
+			this.todoList.time = updatedTodoList.time;
+			this.todoList.groups = updatedTodoList.groups;
+
+			this.date = moment.unix(this.todoList.time).format(this.locale.formats.date);
+		}else{
+			this.dataService.UpdateTodoList(await GetTodoList(this.todoList.uuid));
+		}
 	}
 
 	GoBack(){
@@ -54,7 +66,7 @@ export class TodoListDetailsPageComponent{
 	}
 
 	ShowEditModal(){
-		
+		this.todoListModal.Show(this.todoList);
 	}
 
 	ShowDeleteModal(){

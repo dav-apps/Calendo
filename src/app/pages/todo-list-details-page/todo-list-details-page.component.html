@@ -15,7 +15,7 @@
 		</button>
 	</div>
 	<div class="theme-background-color-primary mx-0 pt-3 border-top">
-		<!-- Todo List Metadata -->
+		<!-- Todo List metadata -->
 		<p *ngIf="todoList.time != 0">{{ locale.date }}<span class="ml-2">{{ date }}</span></p>
 		<p style="margin-bottom: 4px" *ngIf="todoList.groups.length > 0">
 			{{ locale.groups }}
@@ -45,4 +45,5 @@
 	</div>
 </div>
 
+<calendo-todo-list-modal #todoListModal (save)="Update($event)"></calendo-todo-list-modal>
 <calendo-delete-todo-list-modal #deleteTodoListModal [todoList]="todoList" (remove)="Remove()"></calendo-delete-todo-list-modal>
