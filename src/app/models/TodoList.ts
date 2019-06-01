@@ -34,6 +34,14 @@ export class TodoList{
 		await todoList.Save();
 		return todoList;
    }
+
+   async Update(name?: string, time?: number, groups?: string[], list?: string){
+      if(name != null) this.name = name;
+      if(time != null) this.time = time;
+      if(groups) this.groups = groups;
+      if(list != null) this.list = list;
+      await this.Save();
+   }
    
    async AddTodo(todo: Todo){
       this.todos.push(todo);

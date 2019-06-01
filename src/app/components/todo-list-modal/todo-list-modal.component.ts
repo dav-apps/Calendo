@@ -2,20 +2,22 @@ import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular
 import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../../services/data-service';
 import { enUS } from '../../../locales/locales';
-import { TodoList } from '../../models/TodoList';
+import { TodoList, GetTodoList } from '../../models/TodoList';
 
 @Component({
 	selector: "calendo-todo-list-modal",
 	templateUrl: "./todo-list-modal.component.html"
 })
 export class TodoListModalComponent{
-	locale = enUS.todoListModal;
+   locale = enUS.todoListModal;
 	@Output() save = new EventEmitter<TodoList>();
 	@ViewChild('todoListModal') todoListModal: ElementRef;
 	setDateCheckboxChecked: boolean = true;
 	todoListDate: NgbDateStruct;
    todoListName: string = "";
-   todoGroups: string[] = []
+	todoGroups: string[] = [];
+	new: boolean = true;
+	todoListUuid: string;
 
 	constructor(
 		private modalService: NgbModal,
@@ -24,8 +26,41 @@ export class TodoListModalComponent{
       this.locale = this.dataService.GetLocale().todoListModal;
    }
 
-	Show(date?: number){
-		this.Reset(date);
+	Show(todoList?: TodoList, date?: number){
+      if(todoList){
+			// Update todo list
+			this.new = false;
+			this.todoListUuid = todoList.uuid;
+
+         let date = new Date();
+         if(todoList.time != 0){
+            date = new Date(todoList.time * 1000);
+         }
+
+         this.todoListDate = {
+            year: date.getFullYear(),
+            month: date.getMonth() + 1,
+            day: date.getDate()
+			}
+			
+			this.todoListDate.year = date.getFullYear();
+			this.todoListDate.month = date.getMonth() + 1;
+			this.todoListDate.day = date.getDate();
+
+         this.todoListName = todoList.name;
+			
+			this.todoGroups = [];
+			todoList.groups.forEach(group => {
+				this.todoGroups.push(group);
+			});
+			
+			setTimeout(() => {
+				this.setDateCheckboxChecked = todoList.time != 0;
+			}, 1);
+      }else{
+         // New todo list
+         this.Reset(date);
+      }
 
 		this.modalService.open(this.todoListModal).result.then(async () => {
 			// Calculate the unix timestamp
@@ -35,9 +70,15 @@ export class TodoListModalComponent{
 				todoListTimeUnix = Math.floor(todoListTime.getTime() / 1000);
 			}
 
-			// Create the todo list
-			let todoList = await TodoList.Create(this.todoListName, todoListTimeUnix, [], [], this.todoGroups);
-			this.save.emit(todoList);
+			if(this.new){
+				// Create the todo list
+				let todoList = await TodoList.Create(this.todoListName, todoListTimeUnix, [], [], this.todoGroups);
+				this.save.emit(todoList);
+			}else{
+				let todoList = await GetTodoList(this.todoListUuid);
+				await todoList.Update(this.todoListName, todoListTimeUnix, this.todoGroups);
+				this.save.emit(todoList);
+			}
 		}, () => {});
 	}
 	
