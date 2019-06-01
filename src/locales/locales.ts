@@ -27,10 +27,6 @@ const enDefaults = {
       save: "Save",
       reminder: "Reminder"
    },
-   todoListItem: {
-      edit: "Edit",
-      delete: "Delete"
-   },
    todoListModal: {
       header: "New Todo list",
       setDate: "Set a date",
@@ -244,10 +240,6 @@ const deDefaults = {
       setDate: "Datum speichern",
       save: "Speichern",
       reminder: "Erinnerung"
-   },
-   todoListItem: {
-      edit: "Bearbeiten",
-      delete: "Löschen"
    },
    todoListModal: {
       header: "Neue Todo-Liste",

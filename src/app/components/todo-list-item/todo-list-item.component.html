@@ -1,18 +1,7 @@
-<li class="list-group-item theme-background-color-secondary d-flex" style="padding: 10px 0px 10px 10px;">
-	<label class="col-form-label my-auto" style="padding: 0px">
-		{{ todoList.name }}
-   </label>
+<li class="list-group-item theme-background-color-secondary d-flex" style="padding: 10px 0px;">
+	<calendo-todo-list-tree [todoList]="todoList" showRoot="true" readonly="true"></calendo-todo-list-tree>
 	
-	<div ngbDropdown placement="bottom-right" class="ml-auto">
-		<div ngbDropdownToggle>
-			<fab-icon-button [iconProps]="menuButtonIconProps"></fab-icon-button>
-		</div>
-		
-		<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
-			<button class="dropdown-item text-color cursor" (click)="Edit()">{{ locale.edit }}</button>
-			<button class="dropdown-item text-color cursor" (click)="Delete()">{{ locale.delete }}</button>
-		</div>
+	<div class="ml-auto">
+		<fab-icon-button [iconProps]="menuButtonIconProps" (click)="ShowDetails()"></fab-icon-button>
 	</div>
 </li>
-
-<calendo-delete-todo-list-modal [todoList]="todoList" (remove)="Remove()"></calendo-delete-todo-list-modal>
