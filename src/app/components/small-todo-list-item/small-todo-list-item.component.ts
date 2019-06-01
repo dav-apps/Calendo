@@ -1,8 +1,8 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data-service';
 import { IIconStyles } from 'office-ui-fabric-react';
 import { TodoList } from 'src/app/models/TodoList';
-import { TodoListViewModalComponent } from '../todo-list-view-modal/todo-list-view-modal.component';
 
 @Component({
 	selector: "calendo-small-todo-list-item",
@@ -11,8 +11,6 @@ import { TodoListViewModalComponent } from '../todo-list-view-modal/todo-list-vi
 export class SmallTodoListItemComponent{
 	@Input()
 	todoList: TodoList = new TodoList(null, "");
-	@ViewChild(TodoListViewModalComponent)
-	private todoListViewModal: TodoListViewModalComponent;
 	totalTodos: number = 0;
 	completedTodos: number = 0;
 	todoTreeCopy: TodoElement;
@@ -24,7 +22,8 @@ export class SmallTodoListItemComponent{
 	}
 
 	constructor(
-		public dataService: DataService
+		public dataService: DataService,
+		private router: Router
    ){}
    
    ngOnInit(){
@@ -93,8 +92,8 @@ export class SmallTodoListItemComponent{
 		rootItem.completedCount = todosCompleted;
 	}
 
-   ShowModal(){
-		this.todoListViewModal.Show();
+   ShowDetails(){
+		this.router.navigate(['todolist', this.todoList.uuid]);
    }
 }
 

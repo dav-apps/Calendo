@@ -1,5 +1,5 @@
 <div class="border rounded d-inline-flex align-items-center pl-2 pr-2 mb-2 mr-2 theme-background-color-secondary cursor" 
-		[ngClass]="dataService.darkTheme ? 'border-dark' : ''" style="height: 35px" (click)="ShowModal()">
+		[ngClass]="dataService.darkTheme ? 'border-dark' : ''" style="height: 35px" (click)="ShowDetails()">
 	<span class="mr-2" style="margin-bottom: -2px" *ngIf="todoTreeCopy.children.length != 0 && completedTodos == totalTodos">
 		<fab-icon iconName="Accept" [styles]="iconStyles"></fab-icon>
 	</span>
@@ -10,5 +10,3 @@
 		<calendo-todo-group-badge *ngFor="let todoGroup of todoList.groups" [groupName]="todoGroup"></calendo-todo-group-badge>
 	</span>
 </div>
-
-<calendo-todo-list-view-modal [todoList]="todoList"></calendo-todo-list-view-modal>
