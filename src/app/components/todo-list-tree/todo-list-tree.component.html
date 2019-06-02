@@ -8,6 +8,11 @@
 				<label class="ml-2 col-form-label text-color cursor ms-fontSize-14" (click)="ToggleTodoCheckbox(node.uuid)">
 					{{ node.name }}
 				</label>
+				
+				<!-- Remove button for todos -->
+            <button *ngIf="!node.list && node.completed" type="button" class="close ml-3" aria-label="Delete" (click)="DeleteTodo(node.uuid)">
+               <fa-icon [icon]="faTimes" class="text-color" style="font-size: 15px; display: block"></fa-icon>
+            </button>
 			</ng-container>
 			<ng-container *ngIf="node.newTodo">
 				<fab-text-field [(value)]="inputValue" [placeholder]="locale.todoName"></fab-text-field>

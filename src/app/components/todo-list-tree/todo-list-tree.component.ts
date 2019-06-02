@@ -8,13 +8,15 @@ import { TodoList, GetTodoList } from '../../models/TodoList';
 import { generateUUID } from 'dav-npm';
 import { enUS } from '../../../locales/locales';
 import { DataService } from 'src/app/services/data-service';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
 	selector: "calendo-todo-list-tree",
 	templateUrl: "./todo-list-tree.component.html"
 })
 export class TodoListTreeComponent{
-   locale = enUS.todoListTree;
+	locale = enUS.todoListTree;
+	faTimes = faTimes;
 	dataSource: MatTreeNestedDataSource<TodoNode>;
 	treeControl: NestedTreeControl<TodoNode>;
 	dataChange: BehaviorSubject<TodoNode[]> = new BehaviorSubject<TodoNode[]>([]);
@@ -80,24 +82,6 @@ export class TodoListTreeComponent{
 		this.dataChange.next(this.showRoot ? [this.rootTodoItem] : this.todoItems);
 	}
 
-	async ToggleTodoCheckbox(uuid: string){
-		// Find the todo in the tree and change the completed value
-		let item = this.FindNodeInTree(uuid, this.rootTodoItem);
-
-		if(item){
-			item.completed = !item.completed;
-			this.LoadTodoListCompletedCount(this.rootTodoItem);
-
-			// Update the todo
-			let todo = await GetTodo(uuid);
-
-			if(todo){
-            await todo.SetCompleted(item.completed);
-				this.update.emit();
-			}
-		}
-	}
-
 	FindNodeInTree(uuid: string, rootItem: TodoNode) : TodoNode{
 		for(let item of rootItem.children){
 			if(item.uuid == uuid){
@@ -113,7 +97,7 @@ export class TodoListTreeComponent{
 		return null;
 	}
 
-	FindParentNodeInTree(uuid: string, rootItem: TodoNode){
+	FindParentNodeInTree(uuid: string, rootItem: TodoNode) : TodoNode{
 		for(let item of rootItem.children){
 			if(item.uuid == uuid){
 				return rootItem;
@@ -160,6 +144,12 @@ export class TodoListTreeComponent{
 				groups: []
 			});
 		});
+	}
+
+	ReloadTree(){
+		this.dataChange.next([]);
+		this.dataChange.next(this.showRoot ? [this.rootTodoItem] : this.todoItems);
+		this.update.emit();
 	}
 
 	LoadTodoListCompletedCount(rootItem: TodoNode){
@@ -298,10 +288,50 @@ export class TodoListTreeComponent{
 
 		// Update the UI
 		this.inputValue = "";
-		this.dataChange.next([]);
-		this.dataChange.next(this.showRoot ? [this.rootTodoItem] : this.todoItems);
-		this.update.emit();
+		this.ReloadTree();
 	}
+
+	//#region Event handlers
+	async ToggleTodoCheckbox(uuid: string){
+		// Find the todo in the tree and change the completed value
+		let item = this.FindNodeInTree(uuid, this.rootTodoItem);
+
+		if(item){
+			item.completed = !item.completed;
+			this.LoadTodoListCompletedCount(this.rootTodoItem);
+
+			// Update the todo
+			let todo = await GetTodo(uuid);
+
+			if(todo){
+            await todo.SetCompleted(item.completed);
+				this.update.emit();
+			}
+		}
+	}
+
+	async DeleteTodo(uuid: string){
+		// Get the todo and delete it
+		let todo = await GetTodo(uuid);
+		await todo.Delete();
+
+		// Remove the todo from the todo list
+		let todoList = await GetTodoList(this.todoList.uuid);
+		if(todoList){
+			await todoList.RemoveTodo(uuid);
+		}
+
+		// Remove the todo from the tree
+		let node = this.FindParentNodeInTree(uuid, this.rootTodoItem);
+		if(node){
+			let index = node.children.findIndex(child => child.uuid == uuid);
+			if(index !== -1){
+				node.children.splice(index, 1);
+				this.ReloadTree();
+			}
+		}
+	}
+	//#endregion
 }
 
 interface TodoNode{

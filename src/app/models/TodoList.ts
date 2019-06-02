@@ -48,9 +48,29 @@ export class TodoList{
       await this.Save();
    }
 
+   async RemoveTodo(todo: Todo | string){
+      let uuid = typeof todo == 'string' ? todo : todo.uuid;
+
+		let index = this.todos.findIndex(t => t.uuid == uuid);
+      if(index !== -1){
+			this.todos.splice(index, 1);
+         await this.Save();
+      }
+   }
+
    async AddTodoList(todoList: TodoList){
       this.todoLists.push(todoList);
       await this.Save();
+   }
+
+   async RemoveTodoList(todoList: TodoList | string){
+		let uuid = typeof todoList == 'string' ? todoList : todoList.uuid;
+
+      let index = this.todoLists.findIndex(t => t.uuid == uuid);
+      if(index !== -1){
+         this.todoLists.splice(index, 1);
+         await this.Save();
+      }
    }
 
 	private async Save(){
