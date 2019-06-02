@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { BehaviorSubject } from 'rxjs';
@@ -9,6 +9,8 @@ import { generateUUID } from 'dav-npm';
 import { enUS } from '../../../locales/locales';
 import { DataService } from 'src/app/services/data-service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { DeleteTodoListModalComponent } from '../delete-todo-list-modal/delete-todo-list-modal.component';
+import { TodoListModalComponent } from '../todo-list-modal/todo-list-modal.component';
 
 @Component({
 	selector: "calendo-todo-list-tree",
@@ -20,6 +22,8 @@ export class TodoListTreeComponent{
 	dataSource: MatTreeNestedDataSource<TodoNode>;
 	treeControl: NestedTreeControl<TodoNode>;
 	dataChange: BehaviorSubject<TodoNode[]> = new BehaviorSubject<TodoNode[]>([]);
+	@ViewChild('todoListModal') todoListModal: TodoListModalComponent;
+   @ViewChild('deleteTodoListModal') deleteTodoListModal: DeleteTodoListModalComponent;
 	@Input()
 	todoList: TodoList;
 	@Input()
@@ -148,7 +152,8 @@ export class TodoListTreeComponent{
 
 	ReloadTree(){
 		this.dataChange.next([]);
-		this.dataChange.next(this.showRoot ? [this.rootTodoItem] : this.todoItems);
+      this.dataChange.next(this.showRoot ? [this.rootTodoItem] : this.todoItems);
+      this.LoadTodoListCompletedCount(this.rootTodoItem);
 		this.update.emit();
 	}
 
@@ -330,6 +335,22 @@ export class TodoListTreeComponent{
 				this.ReloadTree();
 			}
 		}
+	}
+
+	ShowEditTodoListModal(node: TodoNode){
+		
+	}
+
+	UpdateTodoList(todoList: TodoList){
+
+	}
+
+	ShowDeleteTodoListModal(node: TodoNode){
+
+	}
+
+	DeleteTodoList(todoList: TodoList){
+
 	}
 	//#endregion
 }

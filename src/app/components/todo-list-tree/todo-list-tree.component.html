@@ -27,11 +27,11 @@
 		</mat-tree-node>
 
 		<mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
-			<div ngbDropdown placement="top-left">
+			<div class="d-flex">
 				<button mat-icon-button matTreeNodeToggle style="height: 30px; width: 30px; outline: none; padding: 0px">
 					<fab-icon [iconName]="treeControl.isExpanded(node) ? 'ChevronDownMed' : 'ChevronRightMed'" [styles]="chevronIconStyles"></fab-icon>
 				</button>
-				<span class="cursor" matTreeNodeToggle>
+				<span class="cursor my-auto" matTreeNodeToggle>
 					<span class="mr-2" *ngIf="node.completedCount == GetNodeChildrenCount(node)">
 						<fab-icon iconName="Accept" [styles]="checkIconStyles"></fab-icon>
 					</span>
@@ -41,17 +41,33 @@
 					<span class="ml-2" *ngIf="showRoot">
 						<calendo-todo-group-badge *ngFor="let todoGroup of node.groups" [groupName]="todoGroup"></calendo-todo-group-badge>
 					</span>
-				</span>
-            <button type="button" 
-                     class="btn btn-light ml-2" style="height: 30px; width: 30px; padding: 2px 0px 0px 0px; margin-bottom: 4px" 
-                     ngbDropdownToggle
-                     *ngIf="!readonly">
-					<fab-icon iconName="Add"></fab-icon>
-				</button>
+            </span>
+            <div ngbDropdown placement="top-left" style="margin-top: 2px">
+               <button type="button" 
+                        class="btn btn-light ml-2" 
+                        style="height: 30px; width: 30px; padding: 2px 0px 0px 0px;" 
+                        ngbDropdownToggle *ngIf="!readonly">
+                  <fab-icon iconName="Add"></fab-icon>
+               </button>
 
-				<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
-					<button class="dropdown-item text-color cursor" (click)="AddInputToTodoList(node, false)">{{ locale.newTodo }}</button>
-					<button class="dropdown-item text-color cursor" (click)="AddInputToTodoList(node, true)">{{ locale.newTodoList }}</button>
+               <div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+                  <button class="dropdown-item text-color cursor" (click)="AddInputToTodoList(node, false)">{{ locale.newTodo }}</button>
+                  <button class="dropdown-item text-color cursor" (click)="AddInputToTodoList(node, true)">{{ locale.newTodoList }}</button>
+               </div>
+            </div>
+				
+				<div ngbDropdown placement="top-left" style="margin-top: 2px">
+					<button type="button"
+							class="btn btn-light ml-2"
+							style="height: 30px; width: 30px; padding: 2px 0px 0px 0px;" 
+							ngbDropdownToggle *ngIf="!readonly">
+						<fab-icon iconName="More"></fab-icon>
+					</button>
+
+					<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+						<button class="dropdown-item text-color cursor" (click)="ShowEditTodoListModal(node)">{{ locale.edit }}</button>
+						<button class="dropdown-item text-color cursor" (click)="ShowDeleteTodoListModal(node)">{{ locale.delete }}</button>
+					</div>
 				</div>
 			</div>
 
@@ -61,3 +77,6 @@
 		</mat-nested-tree-node>
 	</mat-tree>
 </ul>
+
+<calendo-todo-list-modal #todoListModal (save)="UpdateTodoList($event)"></calendo-todo-list-modal>
+<calendo-delete-todo-list-modal #deleteTodoListModal [todoList]="todoList" (remove)="DeleteTodoList($event)"></calendo-delete-todo-list-modal>

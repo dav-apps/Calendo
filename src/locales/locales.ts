@@ -37,7 +37,9 @@ const enDefaults = {
       newTodoList: "Add Todo list",
       add: "Add",
       todoName: "Todo name",
-      todoListName: "Todo list name"
+		todoListName: "Todo list name",
+		edit: "Edit",
+      delete: "Delete"
    },
    deleteTodoListModal: {
       header: "Delete Todo list",
@@ -133,11 +135,11 @@ const enDefaults = {
       date: "Date: ",
       groups: "Groups: ",
       todos: "Todos",
+      newTodo: "Add Todo",
+      newTodoList: "Add Todo list",
       formats: {
          date: "L"
-      },
-      newTodo: "Add Todo",
-      newTodoList: "Add Todo list"
+      }
    },
    accountPage: {
       header: "Your Account",
@@ -253,7 +255,9 @@ const deDefaults = {
       newTodoList: "Todo-Liste hinzufügen",
       add: "Hinzufügen",
       todoName: "Name des Todos",
-      todoListName: "Name der Todo-Liste"
+		todoListName: "Name der Todo-Liste",
+		edit: "Bearbeiten",
+      delete: "Löschen"
    },
    deleteTodoListModal: {
       header: "Todo-Liste löschen",
@@ -349,11 +353,11 @@ const deDefaults = {
       date: "Datum: ",
       groups: "Gruppen: ",
       todos: "Todos",
+      newTodo: "Todo hinzufügen",
+      newTodoList: "Todo-Liste hinzufügen",
       formats: {
          date: "L"
-      },
-      newTodo: "Todo hinzufügen",
-      newTodoList: "Todo-Liste hinzufügen"
+      }
    },
    accountPage: {
       header: "Dein Account",
