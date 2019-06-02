@@ -55,7 +55,8 @@ export class DataService{
 
 	selectedDay: moment.Moment = moment();
 	selectedDayAppointments: Appointment[] = [];
-	selectedDayTodos: Todo[] = [];
+   selectedDayTodos: Todo[] = [];
+   selectedDayTodoLists: TodoList[] = [];
 	//#endregion
 
 	//#region All pages

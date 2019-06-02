@@ -88,13 +88,13 @@ const enDefaults = {
    },
    startPage: {
 		appointments: "Appointments",
-		todos: "Todos",
+      todos: "Todos",
+      newTodo: "Add Todo",
+      newTodoList: "Add Todo list",
       formats: {
 			smallDate: "M/D",
 			largeDate: "dddd"
-      },
-      newTodo: "Add Todo",
-      newTodoList: "Add Todo list"
+      }
    },
    todosPage: {
       header: "Todos",
@@ -121,6 +121,8 @@ const enDefaults = {
    calendarDayPage: {
       appointments: "Appointments",
       todos: "Todos",
+      newTodo: "Add Todo",
+      newTodoList: "Add Todo list",
       noAppointments: "No appointments",
       noTodos: "No todos",
       formats: {
@@ -302,13 +304,13 @@ const deDefaults = {
    },
    startPage: {
 		appointments: "Termine",
-		todos: "Todos",
+      todos: "Todos",
+      newTodo: "Todo hinzufügen",
+      newTodoList: "Todo-Liste hinzufügen",
       formats: {
          smallDate: "D.M",
 			largeDate: "dddd"
-      },
-      newTodo: "Todo hinzufügen",
-      newTodoList: "Todo-Liste hinzufügen"
+      }
    },
    todosPage: {
       header: "Todos",
@@ -335,6 +337,8 @@ const deDefaults = {
    calendarDayPage: {
       appointments: "Termine",
       todos: "Todos",
+      newTodo: "Todo hinzufügen",
+      newTodoList: "Todo-Liste hinzufügen",
       noAppointments: "Keine Termine",
       noTodos: "Keine Todos",
       formats: {

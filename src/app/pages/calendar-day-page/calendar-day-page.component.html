@@ -4,7 +4,7 @@
    <div class="d-flex flex-column text-color">
       <h2 class="mt-4 mb-3">
          {{ locale.appointments }}
-         <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="showNewAppointmentModal()"><fa-icon [icon]="faPlus"></fa-icon></button>
+         <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="ShowNewAppointmentModal()"><fa-icon [icon]="faPlus"></fa-icon></button>
       </h2>
 
       <p class="font-weight-light" style="font-size: 18px; font-family: 'Segoe UI'" *ngIf="dataService.selectedDayAppointments.length == 0">{{ locale.noAppointments }}</p>
@@ -12,15 +12,24 @@
    </div>
    
    <div class="text-color">
-      <h2 class="mt-4 mb-3">
-         {{ locale.todos }}
-         <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="showNewTodoModal()"><fa-icon [icon]="faPlus"></fa-icon></button>
+      <h2 class="mt-4 mb-3" ngbDropdown placement="bottom-left">
+			{{ locale.todos }}
+			<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle>
+				<fa-icon [icon]="faPlus"></fa-icon>
+			</button>
+			
+			<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+				<button class="dropdown-item text-color cursor" (click)="ShowNewTodoModal()">{{ locale.newTodo }}</button>
+				<button class="dropdown-item text-color cursor" (click)="ShowTodoListModal()">{{ locale.newTodoList }}</button>
+			</div>
       </h2>
       <p class="font-weight-light" style="font-size: 18px; font-family: 'Segoe UI'" *ngIf="dataService.selectedDayTodos.length == 0">{{ locale.noTodos }}</p>
       
-      <calendo-small-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.selectedDayTodos"></calendo-small-todo-item>
+		<calendo-small-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.selectedDayTodos"></calendo-small-todo-item>
+		<calendo-small-todo-list-item [todoList]="todoList" *ngFor="let todoList of dataService.selectedDayTodoLists"></calendo-small-todo-list-item>
    </div>
 
    <calendo-appointment-modal (save)="CreateAppointment($event)"></calendo-appointment-modal>
    <calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
+   <calendo-todo-list-modal #todoListModal (save)="CreateTodoList($event)"></calendo-todo-list-modal>
 </div>

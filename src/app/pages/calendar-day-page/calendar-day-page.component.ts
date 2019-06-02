@@ -6,8 +6,10 @@ import { AppointmentModalComponent } from '../../components/appointment-modal/ap
 import { NewTodoModalComponent } from '../../components/new-todo-modal/new-todo-modal.component';
 import { Appointment } from '../../models/Appointment';
 import { Todo } from '../../models/Todo';
+import { TodoList } from '../../models/TodoList';
 import { enUS } from '../../../locales/locales';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { TodoListModalComponent } from 'src/app/components/todo-list-modal/todo-list-modal.component';
 
 @Component({
    selector: "calendo-calendar-day-page",
@@ -20,6 +22,8 @@ export class CalendarDayPageComponent{
    private newAppointmentModalComponent: AppointmentModalComponent;
    @ViewChild(NewTodoModalComponent)
    private newTodoModalComponent: NewTodoModalComponent;
+   @ViewChild('todoListModal')
+   private todoListModal: TodoListModalComponent;
    date: moment.Moment = moment();
 
    constructor(public dataService: DataService,
@@ -45,16 +49,16 @@ export class CalendarDayPageComponent{
       return this.date.format(this.locale.formats.currentDay);
    }
 
-   showNewTodoModal(){
-      this.newTodoModalComponent.Show(this.date.unix());
-   }
-
-   showNewAppointmentModal(){
+   ShowNewAppointmentModal(){
       this.newAppointmentModalComponent.Show(null, this.date.unix());
    }
 
    CreateAppointment(appointment: Appointment){
       this.dataService.AddAppointment(appointment);
+   }
+
+   ShowNewTodoModal(){
+      this.newTodoModalComponent.Show(this.date.unix());
    }
 
    CreateTodo(todo: Todo){
@@ -63,5 +67,13 @@ export class CalendarDayPageComponent{
 
    DeleteTodo(todo: Todo){
       this.dataService.RemoveTodo(todo);
+   }
+
+   ShowTodoListModal(){
+      this.todoListModal.Show(null, this.date.unix());
+   }
+
+   CreateTodoList(todoList: TodoList){
+      this.dataService.AddTodoList(todoList);
    }
 }
