@@ -120,7 +120,7 @@ export class TodoListTreeComponent{
 			}else if(item.list){
 				let foundItem = this.FindParentNodeInTree(uuid, item);
 				if(foundItem){
-					return item;
+					return foundItem;
 				}
 			}
 		}

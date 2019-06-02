@@ -58,7 +58,7 @@ export class TodoList{
 
 		if(!tableObject){
 			// Create the table object
-			tableObject = new TableObject();
+			tableObject = new TableObject(this.uuid);
 			tableObject.TableId = environment.todoListTableId;
 			this.uuid = tableObject.Uuid;
 		}
