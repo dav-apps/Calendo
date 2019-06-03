@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Todo, GetAllTodos } from "../models/Todo";
 import { Appointment, GetAllAppointments } from "../models/Appointment";
-import { TodoList, GetAllTodoLists } from "../models/TodoList";
+import { TodoList, GetAllTodoLists, GetTodoList } from "../models/TodoList";
 import { DavUser } from "dav-npm";
 import * as moment from 'moment';
 import * as localforage from "localforage";
@@ -68,6 +68,7 @@ export class DataService{
 	windowsUiSettings = null
 	isLoadingAllAppointments: boolean = false;	// If true, LoadAllAppointments is currently running
 	isLoadingAllTodos: boolean = false;
+	updatedTodoLists: string[] = [];
 	//#endregion
 	
 	constructor(){
@@ -749,7 +750,7 @@ export class DataService{
 				}
 			});
 		}
-	}
+   }
 	//#endregion
 
 	//#region AppointmentsPage
@@ -958,7 +959,7 @@ export class DataService{
 		if(index !== -1){
 			this.selectedDayTodoLists.splice(index, 1);
 		}
-	}
+   }
 	//#endregion
 
 	//#region SettingsPage
@@ -997,6 +998,25 @@ export class DataService{
 	GetNestedTodosInTodoList(todoList: TodoList, todos: Todo[]){
 		todoList.todos.forEach(todo => todos.push(todo));
 		todoList.todoLists.forEach(list => this.GetNestedTodosInTodoList(list, todos));
+   }
+	
+	// Save the todo list uuid in updatedTodoLists if it is not there yet
+   AddTodoListToUpdatedTodoLists(uuid: string){
+		let index = this.updatedTodoLists.findIndex(t => t == uuid);
+		if(index == -1){
+			// Add the todo list uuid
+			this.updatedTodoLists.push(uuid);
+		}
+	}
+	
+	// Reload the todo lists in updatedTodoLists
+	async UpdateUpdatedTodoLists(){
+		for(let uuid of this.updatedTodoLists){
+			let todoList = await GetTodoList(uuid);
+			if(todoList) this.UpdateTodoList(todoList);
+		}
+
+		this.updatedTodoLists = [];
 	}
 	//#endregion
 }

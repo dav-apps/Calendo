@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
 import * as Dav from 'dav-npm';
 import { environment } from '../environments/environment';
 import { enUS } from '../locales/locales';
@@ -20,9 +21,18 @@ export class AppComponent {
 	smallWindowMaxSize: number = 768;
 	windowWidth: number = 500;
 
-	constructor(public dataService: DataService){
+	constructor(
+      public dataService: DataService,
+      private router: Router){
       this.locale = this.dataService.GetLocale().navbar;
       initializeIcons();
+
+      this.router.events.forEach(data => {
+			if(data instanceof NavigationStart){
+				// Update the updated todo lists
+				this.dataService.UpdateUpdatedTodoLists();
+			}
+		});
 	}
 
 	ngOnInit(){
