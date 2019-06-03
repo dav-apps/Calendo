@@ -70,7 +70,7 @@ export class TodoListDetailsPageComponent{
 	}
 
 	ShowDeleteModal(){
-		this.deleteTodoListModal.Show();
+		this.deleteTodoListModal.Show(this.todoList);
    }
    
    Remove(){

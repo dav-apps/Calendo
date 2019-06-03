@@ -296,6 +296,17 @@ export class TodoListTreeComponent{
 		this.ReloadTree();
 	}
 
+	RemoveNode(uuid: string){
+		let node = this.FindParentNodeInTree(uuid, this.rootTodoItem);
+		if(node){
+			let index = node.children.findIndex(child => child.uuid == uuid);
+			if(index !== -1){
+				node.children.splice(index, 1);
+				this.ReloadTree();
+			}
+		}
+	}
+
 	//#region Event handlers
 	async ToggleTodoCheckbox(uuid: string){
 		// Find the todo in the tree and change the completed value
@@ -321,20 +332,16 @@ export class TodoListTreeComponent{
 		await todo.Delete();
 
 		// Remove the todo from the todo list
-		let todoList = await GetTodoList(this.todoList.uuid);
-		if(todoList){
-			await todoList.RemoveTodo(uuid);
+		let parentNode = this.FindParentNodeInTree(uuid, this.rootTodoItem);
+		if(parentNode){
+			let todoList = await GetTodoList(parentNode.uuid);
+			if(todoList){
+				await todoList.RemoveTodo(uuid);
+			}
 		}
 
 		// Remove the todo from the tree
-		let node = this.FindParentNodeInTree(uuid, this.rootTodoItem);
-		if(node){
-			let index = node.children.findIndex(child => child.uuid == uuid);
-			if(index !== -1){
-				node.children.splice(index, 1);
-				this.ReloadTree();
-			}
-		}
+		this.RemoveNode(uuid);
 	}
 
 	ShowEditTodoListModal(node: TodoNode){
@@ -345,12 +352,26 @@ export class TodoListTreeComponent{
 
 	}
 
-	ShowDeleteTodoListModal(node: TodoNode){
-
+	async ShowDeleteTodoListModal(node: TodoNode){
+		// Get the todo list
+		let todoList = await GetTodoList(node.uuid);
+		if(todoList){
+			this.deleteTodoListModal.Show(todoList);
+		}
 	}
 
-	DeleteTodoList(todoList: TodoList){
+	async RemoveTodoList(todoList: TodoList){
+		// Remove the todo list from the parent todo list
+		let parentNode = this.FindParentNodeInTree(todoList.uuid, this.rootTodoItem);
+		if(parentNode){
+			let list = await GetTodoList(parentNode.uuid);
+			if(list){
+				await list.RemoveTodoList(todoList);
+			}
+		}
 
+		// Remove the todo list from the tree
+		this.RemoveNode(todoList.uuid);
 	}
 	//#endregion
 }
