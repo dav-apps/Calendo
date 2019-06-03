@@ -43,7 +43,11 @@ const enDefaults = {
    },
    deleteTodoListModal: {
       header: "Delete Todo list",
-      message: "Are you sure you want to delete the Todo list and all its todos?",
+      message: "Are you sure you want to delete the Todo list and all its todos and todo lists?",
+      todo: "Todo",
+      todos: "Todos",
+      todoList: "Todo list",
+		todoLists: "Todo lists",
       delete: "Delete",
       cancel: "Cancel"
    },
@@ -261,7 +265,11 @@ const deDefaults = {
    },
    deleteTodoListModal: {
       header: "Todo-Liste löschen",
-      message: "Bist du dir sicher, dass du die Todo-Liste und alle dazugehörigen Todos löschen willst?",
+      message: "Bist du dir sicher, dass du die Todo-Liste und alle dazugehörigen Todos und Todo-Listen löschen willst?",
+      todo: "Todo",
+      todos: "Todos",
+      todoList: "Todo-Liste",
+		todoLists: "Todo-Listen",
       delete: "Löschen",
       cancel: "Abbrechen"
    },

@@ -9,8 +9,8 @@ import { TodoList } from 'src/app/models/TodoList';
 	templateUrl: "./delete-todo-list-modal.component.html"
 })
 export class DeleteTodoListModalComponent{
-	locale = enUS.deleteTodoListModal;
-	@Input() todoList: TodoList;
+   locale = enUS.deleteTodoListModal;
+   todoList: TodoList = new TodoList(null, "");
 	@Output() remove = new EventEmitter();
 	@ViewChild('deleteTodoListModal') todoListModal: ElementRef;
 
@@ -21,10 +21,12 @@ export class DeleteTodoListModalComponent{
 		this.locale = this.dataService.GetLocale().deleteTodoListModal;
    }
    
-   Show(){
+   Show(todoList: TodoList){
+      this.todoList = todoList;
+
       this.modalService.open(this.todoListModal).result.then(async () => {
-			await this.todoList.Delete();
-			this.remove.emit(null);
+         await this.todoList.Delete();
+			this.remove.emit(this.todoList);
       }, () => {});
    }
 }
