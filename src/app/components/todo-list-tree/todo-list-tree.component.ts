@@ -41,6 +41,7 @@ export class TodoListTreeComponent{
 		completedCount: 0,
 		newTodo: false,
 		newTodoList: false,
+		editTodoList: false,
 		groups: this.todoList ? this.todoList.groups : []
 	}
 	todoItems: TodoNode[] = [];
@@ -79,6 +80,7 @@ export class TodoListTreeComponent{
 			completedCount: 0,
 			newTodo: false,
 			newTodoList: false,
+			editTodoList: false,
 			groups: this.todoList.groups
 		}
 		
@@ -128,6 +130,7 @@ export class TodoListTreeComponent{
 				completedCount: 0,
 				newTodo: false,
 				newTodoList: false,
+				editTodoList: false,
 				groups: []
 			});
 		});
@@ -145,6 +148,7 @@ export class TodoListTreeComponent{
 				completedCount: 0,
 				newTodo: false,
 				newTodoList: false,
+				editTodoList: false,
 				groups: []
 			});
 		});
@@ -218,7 +222,7 @@ export class TodoListTreeComponent{
 		this.RemoveAllInputNodes();
 
 		// Insert the input node
-		let newTodoNode = {
+		let newTodoNode: TodoNode = {
 			uuid: generateUUID(),
 			name: "",
 			list,
@@ -227,6 +231,7 @@ export class TodoListTreeComponent{
 			completedCount: 0,
 			newTodo: !list,
 			newTodoList: list,
+			editTodoList: false,
 			groups: []
 		}
 
@@ -344,12 +349,23 @@ export class TodoListTreeComponent{
 		this.RemoveNode(uuid);
 	}
 
-	ShowEditTodoListModal(node: TodoNode){
-		
+	EditTodoList(node: TodoNode){
+		// Change the node to input
+		node.editTodoList = true;
+		this.ReloadTree();
 	}
 
-	UpdateTodoList(todoList: TodoList){
+	async UpdateTodoList(node: TodoNode){
+		// Save the new name of the todo list
+		let list = await GetTodoList(node.uuid);
+		await list.SetName(node.name);
 
+		// Remove the input
+		node.editTodoList = false;
+		this.ReloadTree();
+
+		let rootTodoList = await GetTodoList(this.todoList.uuid);
+		this.dataService.UpdateTodoList(rootTodoList);
 	}
 
 	async ShowDeleteTodoListModal(node: TodoNode){
@@ -385,5 +401,6 @@ interface TodoNode{
 	completedCount: number;
 	newTodo: boolean;
 	newTodoList: boolean;
+	editTodoList: boolean;
 	groups: string[];
 }

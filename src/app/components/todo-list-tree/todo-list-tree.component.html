@@ -31,7 +31,7 @@
 				<button mat-icon-button matTreeNodeToggle style="height: 30px; width: 30px; outline: none; padding: 0px">
 					<fab-icon [iconName]="treeControl.isExpanded(node) ? 'ChevronDownMed' : 'ChevronRightMed'" [styles]="chevronIconStyles"></fab-icon>
 				</button>
-				<span class="cursor my-auto" matTreeNodeToggle>
+				<span class="cursor my-auto" matTreeNodeToggle *ngIf="!node.editTodoList">
 					<span class="mr-2" *ngIf="node.completedCount == GetNodeChildrenCount(node)">
 						<fab-icon iconName="Accept" [styles]="checkIconStyles"></fab-icon>
 					</span>
@@ -41,8 +41,10 @@
 					<span class="ml-2" *ngIf="showRoot">
 						<calendo-todo-group-badge *ngFor="let todoGroup of node.groups" [groupName]="todoGroup"></calendo-todo-group-badge>
 					</span>
-            </span>
-            <div ngbDropdown placement="top-left" style="margin-top: 2px">
+				</span>
+
+				<!-- Add dropdown -->
+            <div ngbDropdown placement="top-left" style="margin-top: 2px" *ngIf="!node.editTodoList">
                <button type="button" 
                         class="btn btn-light ml-2" 
                         style="height: 30px; width: 30px; padding: 2px 0px 0px 0px;" 
@@ -56,7 +58,8 @@
                </div>
             </div>
 				
-				<div ngbDropdown placement="top-left" style="margin-top: 2px">
+				<!-- Options dropdown -->
+				<div ngbDropdown placement="top-left" style="margin-top: 2px" *ngIf="!node.editTodoList">
 					<button type="button"
 							class="btn btn-light ml-2"
 							style="height: 30px; width: 30px; padding: 2px 0px 0px 0px;" 
@@ -65,9 +68,15 @@
 					</button>
 
 					<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
-						<button class="dropdown-item text-color cursor" (click)="ShowEditTodoListModal(node)">{{ locale.edit }}</button>
+						<button class="dropdown-item text-color cursor" (click)="EditTodoList(node)">{{ locale.rename }}</button>
 						<button class="dropdown-item text-color cursor" (click)="ShowDeleteTodoListModal(node)">{{ locale.delete }}</button>
 					</div>
+				</div>
+
+				<!-- Edit buttons -->
+				<div *ngIf="node.editTodoList" class="d-flex">
+					<fab-text-field [(value)]="node.name" [placeholder]="locale.todoListName"></fab-text-field>
+					<button type="button" class="btn btn-outline-primary btn-sm ml-2" (click)="UpdateTodoList(node)" [disabled]="node.name.length < 2">{{ locale.save }}</button>
 				</div>
 			</div>
 
@@ -78,5 +87,4 @@
 	</mat-tree>
 </ul>
 
-<calendo-todo-list-modal #todoListModal (save)="UpdateTodoList($event)"></calendo-todo-list-modal>
 <calendo-delete-todo-list-modal #deleteTodoListModal (remove)="RemoveTodoList($event)"></calendo-delete-todo-list-modal>

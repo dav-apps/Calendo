@@ -38,8 +38,9 @@ const enDefaults = {
       add: "Add",
       todoName: "Todo name",
 		todoListName: "Todo list name",
-		edit: "Edit",
-      delete: "Delete"
+      rename: "Rename",
+      delete: "Delete",
+      save: "Save"
    },
    deleteTodoListModal: {
       header: "Delete Todo list",
@@ -260,8 +261,9 @@ const deDefaults = {
       add: "Hinzufügen",
       todoName: "Name des Todos",
 		todoListName: "Name der Todo-Liste",
-		edit: "Bearbeiten",
-      delete: "Löschen"
+		rename: "Umbenennen",
+      delete: "Löschen",
+      save: "Speichern"
    },
    deleteTodoListModal: {
       header: "Todo-Liste löschen",

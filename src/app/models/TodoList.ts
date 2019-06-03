@@ -41,7 +41,14 @@ export class TodoList{
       if(groups) this.groups = groups;
       if(list != null) this.list = list;
       await this.Save();
-   }
+	}
+	
+	async SetName(name: string){
+		if(this.name == name) return;
+
+		this.name = name;
+		await this.Save();
+	}
    
    async AddTodo(todo: Todo){
       this.todos.push(todo);
