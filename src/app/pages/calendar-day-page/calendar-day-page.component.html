@@ -23,7 +23,9 @@
 				<button class="dropdown-item text-color cursor" (click)="ShowTodoListModal()">{{ locale.newTodoList }}</button>
 			</div>
       </h2>
-      <p class="font-weight-light" style="font-size: 18px; font-family: 'Segoe UI'" *ngIf="dataService.selectedDayTodos.length == 0">{{ locale.noTodos }}</p>
+		<p class="font-weight-light" 
+			style="font-size: 18px; font-family: 'Segoe UI'" 
+			*ngIf="dataService.selectedDayTodos.length == 0 && dataService.selectedDayTodoLists.length == 0">{{ locale.noTodos }}</p>
       
 		<calendo-small-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.selectedDayTodos"></calendo-small-todo-item>
 		<calendo-small-todo-list-item [todoList]="todoList" *ngFor="let todoList of dataService.selectedDayTodoLists"></calendo-small-todo-list-item>

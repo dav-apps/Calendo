@@ -129,13 +129,11 @@ export class TodoList{
       for(let i = 0; i < this.todos.length; i++){
 			await this.todos[i].Delete();
 		}
-		this.todos = [];
 
 		// Delete each child todo list
 		for(let i = 0; i < this.todoLists.length; i++){
 			await this.todoLists[i].Delete();
 		}
-      this.todoLists = [];
       
       // Self-destruction!
 		let tableObject = await GetTableObject(this.uuid);

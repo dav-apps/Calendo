@@ -42,8 +42,9 @@ export class DataService{
 	//#region CalendarPage
 	private updatingCalendarDays: boolean = false;
 	private updateCalendarDaysAgain: boolean = false;
-	allAppointments: Appointment[] = [];
+	allAppointments: Appointment[] = [];		// Save all objects to add them to the selected calendar day, in UpdateCalendarDays
 	allTodos: Todo[] = [];
+	allTodoLists: TodoList[] = [];
 
 	mobileCalendarDaysDates: number[] = [];
 	mobileCalendarDaysAppointments: Appointment[][] = [];
@@ -65,6 +66,8 @@ export class DataService{
 	isNavbarCollapsed: boolean = false;
 	darkTheme: boolean = false;
 	windowsUiSettings = null
+	isLoadingAllAppointments: boolean = false;	// If true, LoadAllAppointments is currently running
+	isLoadingAllTodos: boolean = false;
 	//#endregion
 	
 	constructor(){
@@ -100,6 +103,9 @@ export class DataService{
 	}
 
 	async LoadAllAppointments(){
+		if(this.isLoadingAllAppointments) return;
+		this.isLoadingAllAppointments = true;
+
 		this.appointmentDays = [];
 		this.allAppointments = [];
 		this.ClearCalendarDaysAppointments();
@@ -111,17 +117,24 @@ export class DataService{
 			this.AddAppointmentToAppointmentsPage(appointment);
 			this.AddAppointmentToCalendarPage(appointment);
 		}
+
+		this.isLoadingAllAppointments = false;
 	}
 
 	async LoadAllTodos(){
+		if(this.isLoadingAllTodos) return;
+		this.isLoadingAllTodos = true;
+
 		this.todoDaysWithoutDate.todos = [];
 		this.todoDaysWithoutDate.todoLists = [];
 		this.todoDays = [];
 		this.todosWithoutGroup = [];
 		this.todoGroups = [];
 		this.allTodos = [];
+		this.allTodoLists = [];
 		this.ClearCalendarDaysTodos();
 		this.selectedDayTodos = [];
+		this.selectedDayTodoLists = [];
 
       // Load todos
 		var todos = await GetAllTodos();
@@ -133,10 +146,14 @@ export class DataService{
 
 		// Load todo lists
 		let todoLists = await GetAllTodoLists();
+
       for(let todoList of todoLists){
 			this.AddTodoListToStartPage(todoList);
 			this.AddTodoListToTodosPage(todoList);
+			this.AddTodoListToCalendarPage(todoList);
 		}
+
+		this.isLoadingAllTodos = false;
 	}
 
 	ClearCalendarDaysAppointments(){
@@ -163,7 +180,8 @@ export class DataService{
 
    AddTodoList(todoList: TodoList){
       this.AddTodoListToStartPage(todoList);
-      this.AddTodoListToTodosPage(todoList);
+		this.AddTodoListToTodosPage(todoList);
+		this.AddTodoListToCalendarPage(todoList);
    }
 
    UpdateTodoList(todoList: TodoList){
@@ -174,6 +192,7 @@ export class DataService{
    RemoveTodoList(todoList: TodoList){
       this.RemoveTodoListFromStartPage(todoList);
 		this.RemoveTodoListFromTodosPage(todoList);
+		this.RemoveTodoListFromCalendarPage(todoList);
    }
 
 	AddTodo(todo: Todo){
@@ -874,12 +893,10 @@ export class DataService{
 	}
 
 	AddTodoToCalendarPage(todo: Todo){
-		if(todo.list) return;
-
 		this.allTodos.push(todo);
 		this.SortTodosArray(this.allTodos);
 
-		if(moment.unix(todo.time).startOf('day').unix() == this.selectedDay.startOf('day').unix()){
+		if(moment.unix(todo.time).startOf('day').unix() == this.selectedDay.startOf('day').unix() && !todo.list){
 			this.selectedDayTodos.push(todo);
 			this.SortTodosArray(this.selectedDayTodos);
 		}
@@ -887,6 +904,7 @@ export class DataService{
 		this.UpdateCalendarDays();
 	}
 
+	// Get the todos of the given day to show them on the calendar page
 	GetTodosOfDay(day: moment.Moment, completed: boolean){
 		var todos: Todo[] = [];
 
@@ -911,6 +929,35 @@ export class DataService{
 		}
 
 		this.UpdateCalendarDays();
+	}
+
+	AddTodoListToCalendarPage(todoList: TodoList){
+		if(todoList.list) return;
+
+		this.allTodoLists.push(todoList);
+		this.SortTodoListsArray(this.allTodoLists);
+
+		if(moment.unix(todoList.time).startOf('day').unix() == this.selectedDay.startOf('day').unix()){
+			this.selectedDayTodoLists.push(todoList);
+			this.SortTodoListsArray(this.selectedDayTodoLists);
+		}
+	}
+
+	RemoveTodoListFromCalendarPage(todoList: TodoList){
+		// Remove the todos of the todo list
+		let todos: Todo[] = [];
+		this.GetNestedTodosInTodoList(todoList, todos);
+		todos.forEach(todo => this.RemoveTodoFromCalendarPage(todo));
+
+		let index = this.allTodoLists.findIndex(t => t.uuid == todoList.uuid);
+		if(index !== -1){
+			this.allTodoLists.splice(index, 1);
+		}
+
+		index = this.selectedDayTodoLists.findIndex(t => t.uuid == todoList.uuid);
+		if(index !== -1){
+			this.selectedDayTodoLists.splice(index, 1);
+		}
 	}
 	//#endregion
 
@@ -944,6 +991,12 @@ export class DataService{
 			return result == "granted";
 		});
 		return permissionResult == "granted";
+	}
+
+	// Get the todos of todoList and add them to todos
+	GetNestedTodosInTodoList(todoList: TodoList, todos: Todo[]){
+		todoList.todos.forEach(todo => todos.push(todo));
+		todoList.todoLists.forEach(list => this.GetNestedTodosInTodoList(list, todos));
 	}
 	//#endregion
 }

@@ -94,7 +94,7 @@ export class StartPageComponent{
    }
    
    CreateTodoList(todoList: TodoList){
-      
+      this.dataService.AddTodoList(todoList);
    }
 
 	onResize(){
