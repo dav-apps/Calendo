@@ -49,6 +49,6 @@ export class TodosPageComponent{
    }
 
    CreateTodoList(todoList: TodoList){
-
+      this.dataService.AddTodoList(todoList);
    }
 }

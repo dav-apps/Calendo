@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { BehaviorSubject } from 'rxjs';
@@ -10,7 +11,7 @@ import { enUS } from '../../../locales/locales';
 import { DataService } from 'src/app/services/data-service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { DeleteTodoListModalComponent } from '../delete-todo-list-modal/delete-todo-list-modal.component';
-import { TodoListModalComponent } from '../todo-list-modal/todo-list-modal.component';
+import { UpgradeRequiredModalComponent } from '../upgrade-required-modal/upgrade-required-modal.component';
 
 @Component({
 	selector: "calendo-todo-list-tree",
@@ -22,8 +23,8 @@ export class TodoListTreeComponent{
 	dataSource: MatTreeNestedDataSource<TodoNode>;
 	treeControl: NestedTreeControl<TodoNode>;
 	dataChange: BehaviorSubject<TodoNode[]> = new BehaviorSubject<TodoNode[]>([]);
-	@ViewChild('todoListModal') todoListModal: TodoListModalComponent;
-   @ViewChild('deleteTodoListModal') deleteTodoListModal: DeleteTodoListModalComponent;
+	@ViewChild('deleteTodoListModal') deleteTodoListModal: DeleteTodoListModalComponent;
+	@ViewChild('upgradeRequiredModal') upgradeRequiredModal: UpgradeRequiredModalComponent;
 	@Input()
 	todoList: TodoList;
 	@Input()
@@ -58,7 +59,10 @@ export class TodoListTreeComponent{
 		}
 	}
 
-	constructor(public dataService: DataService){
+	constructor(
+      public dataService: DataService,
+      public router: Router
+   ){
       this.locale = this.dataService.GetLocale().todoListTree;
 		this.dataSource = new MatTreeNestedDataSource();
 		this.treeControl = new NestedTreeControl<TodoNode>((dataNode: TodoNode) => dataNode.children);
@@ -218,6 +222,12 @@ export class TodoListTreeComponent{
    }
 
 	AddInputToTodoList(todo: TodoNode, list: boolean = false){
+		// Check if user is on dav Plus to create nested todo lists
+		if(list && this.dataService.user.Plan == 0){
+			this.upgradeRequiredModal.Show(0, 0);
+			return;
+		}
+
 		// Remove all input nodes
 		this.RemoveAllInputNodes();
 
@@ -388,7 +398,12 @@ export class TodoListTreeComponent{
 
 		// Remove the todo list from the tree
 		this.RemoveNode(todoList.uuid);
-	}
+   }
+   
+   LearnMoreClicked(){
+      // Navigate to the Account page
+      this.router.navigate(['account']);
+   }
 	//#endregion
 }
 
