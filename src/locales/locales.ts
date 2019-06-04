@@ -86,7 +86,14 @@ const enDefaults = {
       deleteWarning: "Are you sure you want to delete the following appointment?",
       delete: "Delete",
       cancel: "Cancel"
-   },
+	},
+	upgradeRequiredModal: {
+      headerPlus: "dav Plus required",
+      headerPro: "dav Pro required",
+      messageNestedTodoLists: "Upgrade to dav Plus to create nested todo lists.",
+      learnMore: "Learn more",
+      close: "Close"
+	},
    logoutModal: {
       header: "Log out",
       message: "Are you sure you want to log out?",
@@ -310,12 +317,19 @@ const deDefaults = {
       delete: "Löschen",
       cancel: "Abbrechen"
 	},
+	upgradeRequiredModal: {
+      headerPlus: "dav Plus benötigt",
+      headerPro: "dav Pro benötigt",
+      messageNestedTodoLists: "Wechsel auf dav Plus, um verschachtelte Todo-Listen zu erstellen.",
+      learnMore: "Mehr erfahren",
+      close: "Schließen"
+	},
 	logoutModal: {
       header: "Abmelden",
       message: "Bist du dir sicher, dass du dich abmelden möchtest?",
       logout: "Abmelden",
       cancel: "Abbrechen"
-   },
+	},
    startPage: {
 		appointments: "Termine",
       todos: "Todos",
