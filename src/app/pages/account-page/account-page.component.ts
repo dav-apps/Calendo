@@ -30,6 +30,10 @@ export class AccountPageComponent{
       Dav.ShowSignupPage(environment.baseUrl);
    }
 
+   ShowPlansAccountPage(){
+      window.open("https://dav-apps.tech/user#plans", 'blank');
+   }
+
    ShowLogoutModal(){
 		this.logoutModalComponent.Show();
    }

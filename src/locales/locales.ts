@@ -163,8 +163,15 @@ const enDefaults = {
       logout: "Log out",
       signup: "Sign up",
       linkText: "Visit dav-apps.tech",
-      storageUsed: "{0} GB of {1} GB used",
-      upgradeLink: "Need more?"
+		storageUsed: "{0} GB of {1} GB used",
+		planFree: "Free",
+		planPlus: "Plus",
+		planPro: "Pro",
+		pricePlus: "3 € per month",
+		upgradeTitle: "Upgrade your plan to make Calendo even better",
+		plusFeature1: "Create nested todo lists",
+		plusFeature2: "Support the development of new apps and features",
+		upgrade: "Upgrade"
    },
    settingsPage: {
       header: "Settings",
@@ -394,7 +401,14 @@ const deDefaults = {
       signup: "Registrieren",
       linkText: "Besuche dav-apps.tech",
       storageUsed: "{0} GB von {1} GB verwendet",
-      upgradeLink: "Brauchst du mehr?"
+      planFree: "Free",
+		planPlus: "Plus",
+		planPro: "Pro",
+		pricePlus: "3 € pro Monat",
+		upgradeTitle: "Verbessere dein Abo, um Calendo noch besser zu machen",
+		plusFeature1: "Erstelle verschachtelte Todo-Listen",
+		plusFeature2: "Unterstütze die Entwicklung von neuen Apps und Funktionen",
+		upgrade: "Auswählen"
    },
    settingsPage: {
       header: "Einstellungen",
