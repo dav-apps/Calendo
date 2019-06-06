@@ -11,6 +11,8 @@ import { enUS } from '../../../locales/locales';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { TodoListModalComponent } from 'src/app/components/todo-list-modal/todo-list-modal.component';
 import { MatSnackBar } from '@angular/material';
+import { IIconStyles } from 'office-ui-fabric-react';
+import { Location } from '@angular/common';
 
 @Component({
    selector: "calendo-calendar-day-page",
@@ -27,11 +29,17 @@ export class CalendarDayPageComponent{
    @ViewChild('todoListModal')
    private todoListModal: TodoListModalComponent;
    date: moment.Moment = moment();
+   backButtonIconStyles: IIconStyles = {
+		root: {
+         fontSize: 19
+		}
+	}
 
    constructor(
 		public dataService: DataService,
 		private router: Router,
-		private route: ActivatedRoute,
+      private route: ActivatedRoute,
+      private location: Location,
 		private snackBar: MatSnackBar
 	){
 		this.locale = this.dataService.GetLocale().calendarDayPage;
@@ -109,5 +117,9 @@ export class CalendarDayPageComponent{
 			// Show the todo list
 			this.router.navigate(["todolist", todoList.uuid]);
 		});
+   }
+
+   GoBack(){
+      this.location.back();
    }
 }

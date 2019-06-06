@@ -1,5 +1,15 @@
 <div class="container">
-   <h1 class="text-center mt-2 text-color">{{ getCurrentDate() }}</h1>
+	<div class="d-flex">
+		<div class="mx-auto d-flex">
+			<button type="button" 
+						class="btn btn-light my-auto" 
+						style="height: 40px; width: 45px; padding: 2px 0px 0px 0px; background-color: white; border-color: white;"
+						(click)="GoBack()">
+				<fab-icon iconName="Back" [styles]="backButtonIconStyles"></fab-icon>
+			</button>
+			<h1 class="text-center mt-2 ml-3 text-color">{{ getCurrentDate() }}</h1>
+		</div>
+	</div>
 
    <div class="d-flex flex-column text-color">
       <h2 class="mt-4 mb-3">
