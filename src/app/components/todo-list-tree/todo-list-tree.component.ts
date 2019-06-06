@@ -49,7 +49,8 @@ export class TodoListTreeComponent{
 	inputValue: string = "";
 	chevronIconStyles: IIconStyles = {
 		root: {
-			fontSize: 14
+         fontSize: 14,
+         marginBottom: 20
 		}
 	}
 	checkIconStyles: IIconStyles = {

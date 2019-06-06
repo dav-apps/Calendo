@@ -49,7 +49,7 @@
 		</div>
 	</div>
 
-	<div style="margin-top: 70px">
+	<div style="margin-top: 70px" *ngIf="dataService.user.Plan == 0">
 		<h4 class="mt-5 text-center">{{ locale.upgradeTitle }}</h4>
 
 		<div class="card text-center shadow mx-auto" style="width: 300px; margin-top: 35px">
