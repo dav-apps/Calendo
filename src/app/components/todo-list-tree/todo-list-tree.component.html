@@ -16,12 +16,12 @@
 			</ng-container>
 			<ng-container *ngIf="node.newTodo">
 				<fab-text-field [(value)]="inputValue" [placeholder]="locale.todoName"></fab-text-field>
-				<button type="button" class="btn btn-outline-primary btn-sm ml-2" (click)="ChangeInputToNode(node, false)">{{ locale.add }}</button>
+				<button type="button" class="btn btn-outline-primary btn-sm ml-2" (click)="ChangeInputToNode(node, false)" [disabled]="inputValue.length < 2">{{ locale.add }}</button>
 				<button type="button" class="btn btn-light btn-sm ml-2" style="padding: 5px 8px 3px 8px" (click)="RemoveAllInputNodes()"><fab-icon iconName="Cancel"></fab-icon></button>
 			</ng-container>
 			<ng-container *ngIf="node.newTodoList && !node.newTodo">
             <fab-text-field [(value)]="inputValue" [placeholder]="locale.todoListName"></fab-text-field>
-				<button type="button" class="btn btn-outline-primary btn-sm ml-2" (click)="ChangeInputToNode(node, true)">{{ locale.add }}</button>
+				<button type="button" class="btn btn-outline-primary btn-sm ml-2" (click)="ChangeInputToNode(node, true)" [disabled]="inputValue.length < 2">{{ locale.add }}</button>
 				<button type="button" class="btn btn-light btn-sm ml-2" style="padding: 5px 8px 3px 8px" (click)="RemoveAllInputNodes()"><fab-icon iconName="Cancel"></fab-icon></button>
 			</ng-container>
 		</mat-tree-node>

@@ -12,6 +12,7 @@ import { DataService } from 'src/app/services/data-service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { DeleteTodoListModalComponent } from '../delete-todo-list-modal/delete-todo-list-modal.component';
 import { UpgradeRequiredModalComponent } from '../upgrade-required-modal/upgrade-required-modal.component';
+declare var $: any;
 
 @Component({
 	selector: "calendo-todo-list-tree",
@@ -24,7 +25,7 @@ export class TodoListTreeComponent{
 	treeControl: NestedTreeControl<TodoNode>;
 	dataChange: BehaviorSubject<TodoNode[]> = new BehaviorSubject<TodoNode[]>([]);
 	@ViewChild('deleteTodoListModal') deleteTodoListModal: DeleteTodoListModalComponent;
-	@ViewChild('upgradeRequiredModal') upgradeRequiredModal: UpgradeRequiredModalComponent;
+   @ViewChild('upgradeRequiredModal') upgradeRequiredModal: UpgradeRequiredModalComponent;
 	@Input()
 	todoList: TodoList;
 	@Input()
@@ -263,6 +264,9 @@ export class TodoListTreeComponent{
 		this.dataChange.next([]);
       this.dataChange.next(this.showRoot ? [this.rootTodoItem] : this.todoItems);
       this.treeControl.expand(todo);
+
+		// Set focus on the text field
+		$(".ms-TextField-field, .field-65").focus();
 	}
 
 	async ChangeInputToNode(node: TodoNode, list: boolean = false){
