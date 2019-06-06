@@ -10,6 +10,7 @@ import { TodoListModalComponent } from '../../components/todo-list-modal/todo-li
 import { enUS } from '../../../locales/locales';
 import { Appointment } from 'src/app/models/Appointment';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
    selector: "calendo-start-page",
@@ -20,6 +21,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 })
 export class StartPageComponent{
 	locale = enUS.startPage;
+	snackbarLocale = enUS.snackbar;
 	faPlus = faPlus;
 	@ViewChild(NewTodoModalComponent)
 	private newTodoModalComponent: NewTodoModalComponent;
@@ -32,8 +34,11 @@ export class StartPageComponent{
 	smallDateFormat: string = this.locale.formats.largeDate;
 
 	constructor(public dataService: DataService,
-					private router: Router){
+					private router: Router,
+					private snackBar: MatSnackBar
+	){
 		this.locale = this.dataService.GetLocale().startPage;
+		this.snackbarLocale = this.dataService.GetLocale().snackbar;
 		moment.locale(this.dataService.locale);
 
 		// Hide the title bar back button on Windows
@@ -87,14 +92,36 @@ export class StartPageComponent{
 
 	CreateTodo(todo: Todo){
 		this.dataService.AddTodo(todo);
+
+		// Show snackbar
+		if(todo.time == 0){
+			this.snackBar.open(this.snackbarLocale.todoCreated, null, {duration: 3000});
+		}else{
+			this.snackBar.open(this.snackbarLocale.todoCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
+				// Show the day of the todo
+				this.router.navigate(["calendar/day", todo.time]);
+			});
+		}
 	}
 
 	CreateAppointment(appointment: Appointment){
 		this.dataService.AddAppointment(appointment);
+
+		// Show snackbar
+		this.snackBar.open(this.snackbarLocale.appointmentCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
+			// Show the day of the appointment
+			this.router.navigate(["calendar/day", appointment.start]);
+		});
    }
    
    CreateTodoList(todoList: TodoList){
-      this.dataService.AddTodoList(todoList);
+		this.dataService.AddTodoList(todoList);
+		
+		// Show snackbar
+		this.snackBar.open(this.snackbarLocale.todoListCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
+			// Show the todo list
+			this.router.navigate(["todolist", todoList.uuid]);
+		});
    }
 
 	onResize(){

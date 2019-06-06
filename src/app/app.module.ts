@@ -7,7 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { FabCheckboxModule, FabButtonModule, FabDropdownModule, FabTextFieldModule, FabIconModule } from '@angular-react/fabric';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTreeModule, MatButtonModule } from '@angular/material';
+import { MatTreeModule, MatButtonModule, MatSnackBarModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
@@ -94,7 +94,8 @@ import { environment } from '../environments/environment';
       FabIconModule,
       BrowserAnimationsModule,
       MatTreeModule,
-      MatButtonModule
+      MatButtonModule,
+      MatSnackBarModule
   	],
   	providers: [
 		DataService

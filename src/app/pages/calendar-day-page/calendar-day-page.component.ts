@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { DataService } from '../../services/data-service';
 import { AppointmentModalComponent } from '../../components/appointment-modal/appointment-modal.component';
@@ -10,13 +10,15 @@ import { TodoList } from '../../models/TodoList';
 import { enUS } from '../../../locales/locales';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { TodoListModalComponent } from 'src/app/components/todo-list-modal/todo-list-modal.component';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
    selector: "calendo-calendar-day-page",
    templateUrl: "./calendar-day-page.component.html"
 })
 export class CalendarDayPageComponent{
-   locale = enUS.calendarDayPage;
+	locale = enUS.calendarDayPage;
+	snackbarLocale = enUS.snackbar;
    faPlus = faPlus;
    @ViewChild(AppointmentModalComponent)
    private newAppointmentModalComponent: AppointmentModalComponent;
@@ -26,9 +28,14 @@ export class CalendarDayPageComponent{
    private todoListModal: TodoListModalComponent;
    date: moment.Moment = moment();
 
-   constructor(public dataService: DataService,
-               private route: ActivatedRoute){
-      this.locale = this.dataService.GetLocale().calendarDayPage;
+   constructor(
+		public dataService: DataService,
+		private router: Router,
+		private route: ActivatedRoute,
+		private snackBar: MatSnackBar
+	){
+		this.locale = this.dataService.GetLocale().calendarDayPage;
+		this.snackbarLocale = this.dataService.GetLocale().snackbar;
       moment.locale(this.dataService.locale);
       this.dataService.HideWindowsBackButton();
    }
@@ -36,7 +43,7 @@ export class CalendarDayPageComponent{
    ngOnInit(){
       this.route.params.subscribe(param => {
          if(param.time){
-            this.date = moment.unix(param.time);
+            this.date = moment.unix(param.time).startOf('day');
             this.dataService.selectedDay = this.date;
             
             this.dataService.LoadAllAppointments();
@@ -54,7 +61,16 @@ export class CalendarDayPageComponent{
    }
 
    CreateAppointment(appointment: Appointment){
-      this.dataService.AddAppointment(appointment);
+		this.dataService.AddAppointment(appointment);
+		
+		// Show snackbar if the appointment was created for another day
+		if(this.date.unix() != moment(appointment.start * 1000).startOf('day').unix()){
+			// Another day
+			this.snackBar.open(this.snackbarLocale.appointmentCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
+				// Show the day of the appointment
+				this.router.navigate(["calendar/day", appointment.start]);
+			});
+		}
    }
 
    ShowNewTodoModal(){
@@ -62,7 +78,19 @@ export class CalendarDayPageComponent{
    }
 
    CreateTodo(todo: Todo){
-      this.dataService.AddTodo(todo);
+		this.dataService.AddTodo(todo);
+		
+		// Show snackbar if the todo was created for another day
+		if(todo.time == 0){
+			// Show snackbar without action
+			this.snackBar.open(this.snackbarLocale.todoCreated, null, {duration: 3000});
+		}else if(this.date.unix() != todo.time){
+			// Another day
+			this.snackBar.open(this.snackbarLocale.todoCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
+				// Show the day of the todo
+				this.router.navigate(["calendar/day", todo.time]);
+			});
+		}
    }
 
    DeleteTodo(todo: Todo){
@@ -74,6 +102,12 @@ export class CalendarDayPageComponent{
    }
 
    CreateTodoList(todoList: TodoList){
-      this.dataService.AddTodoList(todoList);
+		this.dataService.AddTodoList(todoList);
+		
+		// Show snackbar
+		this.snackBar.open(this.snackbarLocale.todoListCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
+			// Show the todo list
+			this.router.navigate(["todolist", todoList.uuid]);
+		});
    }
 }
