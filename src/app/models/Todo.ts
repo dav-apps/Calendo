@@ -149,7 +149,7 @@ export async function GetAllTodoGroups(): Promise<string[]>{
 }
 
 export function ConvertTableObjectToTodo(tableObject: TableObject): Todo{
-	if(tableObject.TableId != environment.todoTableId) return null;
+	if(!tableObject || tableObject.TableId != environment.todoTableId) return null;
 
 	// completed
 	var completed: boolean = tableObject.GetPropertyValue(environment.todoCompletedKey).toLowerCase() === 'true';

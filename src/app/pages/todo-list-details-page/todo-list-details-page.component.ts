@@ -22,7 +22,7 @@ export class TodoListDetailsPageComponent{
 	date: string = "";
 
 	constructor(
-		private dataService: DataService,
+      private dataService: DataService,
       private route: ActivatedRoute,
       private location: Location
 	){
@@ -32,7 +32,12 @@ export class TodoListDetailsPageComponent{
 
 	ngOnInit(){
       this.route.params.subscribe(async param => {
-			let list = await GetTodoList(param.uuid);
+         let list = await GetTodoList(param.uuid);
+         
+         if(!list){
+            this.location.back();
+         }
+
 			this.todoList.uuid = list.uuid;
 			this.todoList.name = list.name;
 			this.todoList.time = list.time;

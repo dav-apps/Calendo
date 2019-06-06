@@ -171,7 +171,7 @@ export async function GetTodoList(uuid: string) : Promise<TodoList>{
 }
 
 export async function ConvertTableObjectToTodoList(tableObject: TableObject) : Promise<TodoList>{
-	if(tableObject.TableId != environment.todoListTableId) return null;
+	if(!tableObject || tableObject.TableId != environment.todoListTableId) return null;
 
 	// name
 	let name = tableObject.GetPropertyValue(environment.todoListNameKey);
