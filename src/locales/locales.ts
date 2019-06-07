@@ -28,7 +28,8 @@ const enDefaults = {
       reminder: "Reminder"
    },
    todoListModal: {
-      header: "New Todo list",
+      newTodoList: "New Todo list",
+      editTodoList: "Edit Todo list",
       setDate: "Set a date",
       save: "Save"
    },
@@ -271,7 +272,8 @@ const deDefaults = {
       reminder: "Erinnerung"
    },
    todoListModal: {
-      header: "Neue Todo-Liste",
+      newTodoList: "Neue Todo-Liste",
+      editTodoList: "Todo-Liste bearbeiten",
       setDate: "Datum speichern",
       save: "Speichern"
    },
@@ -411,7 +413,7 @@ const deDefaults = {
 		planPlus: "Plus",
 		planPro: "Pro",
 		pricePlus: "3 € pro Monat",
-		upgradeTitle: "Verbessere dein Abo, um Calendo noch besser zu machen",
+		upgradeTitle: "Ändere dein Abo, um Calendo noch besser zu machen",
 		plusFeature1: "Erstelle verschachtelte Todo-Listen",
 		plusFeature2: "Unterstütze die Entwicklung von neuen Apps und Funktionen",
 		upgrade: "Auswählen"
