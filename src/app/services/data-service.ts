@@ -755,7 +755,25 @@ export class DataService{
 				}
 			});
 		}
-   }
+	}
+	
+	// This is called from TodosPage in SortByGroups when a todo list is updated, to update all of the same todo list on the page
+	async UpdateTodoListsOnSortByGroupTodoPage(uuid: string, todoGroupName: string){
+		// Get the todo list from the database
+		let todoList = await GetTodoList(uuid);
+
+		// Update the todo list in all todoGroups where the todoGroup name is different
+		for(let todoGroup of this.todoGroups){
+			if(todoGroup.name != todoGroupName){
+				// Find the todo list in the todoGroup
+				let index = todoGroup.todoLists.findIndex(t => t.uuid == uuid);
+
+				if(index !== -1){
+					todoGroup.todoLists[index] = todoList;
+				}
+			}
+		}
+	}
 	//#endregion
 
 	//#region AppointmentsPage

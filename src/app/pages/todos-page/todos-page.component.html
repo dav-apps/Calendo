@@ -57,7 +57,7 @@
 				<h5 class="card-title text-color" *ngIf="todoGroup.todos.length > 0 || todoGroup.todoLists.length > 0">{{ todoGroup.name }}</h5>
 				<ul class="list-group list-group-flush">
 					<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" [showBadge]="false" *ngFor="let todo of todoGroup.todos"></calendo-todo-item>
-					<calendo-todo-list-item [todoList]="todoList" *ngFor="let todoList of todoGroup.todoLists"></calendo-todo-list-item>
+					<calendo-todo-list-item [todoList]="todoList" (update)="TodoListUpdated(todoList.uuid, todoGroup.name)" *ngFor="let todoList of todoGroup.todoLists"></calendo-todo-list-item>
 				</ul>
 			</div>
 		</div>

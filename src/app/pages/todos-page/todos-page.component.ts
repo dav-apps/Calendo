@@ -75,4 +75,9 @@ export class TodosPageComponent{
 			this.router.navigate(["todolist", todoList.uuid]);
 		});
    }
+
+	// This is called when a todo list in the Sort By Groups mode was updated; Update all todo lists of the same object
+   TodoListUpdated(todoListUuid: string, todoGroup: string){
+		this.dataService.UpdateTodoListsOnSortByGroupTodoPage(todoListUuid, todoGroup);
+   }
 }

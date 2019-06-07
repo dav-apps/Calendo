@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { TodoList } from 'src/app/models/TodoList';
 import { IIconProps } from 'office-ui-fabric-react';
@@ -11,6 +11,8 @@ import { DataService } from '../../services/data-service';
 export class TodoListItemComponent{
    @Input()
 	todoList: TodoList = new TodoList(null, "");
+	@Output()
+	update = new EventEmitter();
    menuButtonIconProps: IIconProps = {
       iconName: "More",
       style: {
@@ -29,6 +31,7 @@ export class TodoListItemComponent{
 	}
 	
 	async UpdateTodoList(){
-      this.dataService.AddTodoListToUpdatedTodoLists(this.todoList.uuid);
+		this.dataService.AddTodoListToUpdatedTodoLists(this.todoList.uuid);
+		this.update.emit();
 	}
 }
