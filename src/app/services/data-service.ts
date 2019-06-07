@@ -22,7 +22,7 @@ export class DataService{
 	//#endregion
 
 	//#region TodosPage
-	todoDaysWithoutDate: { date: string, timestamp: number, todos: Todo[], todoLists: TodoList[] } = {
+	todosWithoutDate: { date: string, timestamp: number, todos: Todo[], todoLists: TodoList[] } = {
 		date: "",
 		timestamp: 0,
 		todos: [],
@@ -126,8 +126,8 @@ export class DataService{
 		if(this.isLoadingAllTodos) return;
 		this.isLoadingAllTodos = true;
 
-		this.todoDaysWithoutDate.todos = [];
-		this.todoDaysWithoutDate.todoLists = [];
+		this.todosWithoutDate.todos = [];
+		this.todosWithoutDate.todoLists = [];
 		this.todoDays = [];
 		this.todosWithoutGroup = [];
 		this.todoGroups = [];
@@ -570,7 +570,7 @@ export class DataService{
 					this.todoDays.push(newTodoDay);
 				}
 			}else{
-				this.todoDaysWithoutDate.todos.push(todo);
+				this.todosWithoutDate.todos.push(todo);
 			}
 	
 			// Sort the todoDays array
@@ -604,10 +604,10 @@ export class DataService{
 
 	RemoveTodoFromTodosPage(todo: Todo){
 		// Remove the todo from the todoDays
-		let index = this.todoDaysWithoutDate.todos.findIndex(t => t.uuid == todo.uuid);
+		let index = this.todosWithoutDate.todos.findIndex(t => t.uuid == todo.uuid);
 
 		if(index !== -1){
-			this.todoDaysWithoutDate.todos.splice(index, 1);
+			this.todosWithoutDate.todos.splice(index, 1);
 		}else{
 			this.todoDays.forEach(todoDay => {
 				index = todoDay.todos.findIndex(t => t.uuid == todo.uuid);
@@ -676,7 +676,7 @@ export class DataService{
 					this.todoDays.push(newTodoDay);
 				}
 			}else{
-				this.todoDaysWithoutDate.todoLists.push(todoList);
+				this.todosWithoutDate.todoLists.push(todoList);
 			}
 
 			// Sort the todoDays array
@@ -710,10 +710,10 @@ export class DataService{
 
 	RemoveTodoListFromTodosPage(todoList: TodoList){
 		// Remove the todolist from the todoDays
-		let index = this.todoDaysWithoutDate.todoLists.findIndex(t => t.uuid == todoList.uuid);
+		let index = this.todosWithoutDate.todoLists.findIndex(t => t.uuid == todoList.uuid);
 
 		if(index !== -1){
-			this.todoDaysWithoutDate.todoLists.splice(index, 1);
+			this.todosWithoutDate.todoLists.splice(index, 1);
 		}else{
 			this.todoDays.forEach(todoDay => {
 				index = todoDay.todoLists.findIndex(t => t.uuid == todoList.uuid);

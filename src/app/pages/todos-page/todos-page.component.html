@@ -11,8 +11,8 @@
 
 	<p class="font-weight-light text-center mt-3 text-color" 
 		style="font-size: 18px; font-family: 'Segoe UI'" 
-		*ngIf="dataService.todoDaysWithoutDate.todos.length == 0 
-					&& dataService.todoDaysWithoutDate.todoLists.length == 0
+		*ngIf="dataService.todosWithoutDate.todos.length == 0 
+					&& dataService.todosWithoutDate.todoLists.length == 0
 					&& dataService.todoDays.length == 0
 					&& dataService.todosWithoutGroup.length == 0 
 					&& dataService.todoListsWithoutGroup.length == 0
@@ -23,10 +23,10 @@
 	<div class="row">
 		<!-- Sort by date -->
       <div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" 
-            *ngIf="dataService.todoDaysWithoutDate.todos.length > 0 || dataService.todoDaysWithoutDate.todoLists.length > 0">
+            *ngIf="dataService.todosWithoutDate.todos.length > 0 || dataService.todosWithoutDate.todoLists.length > 0">
 			<ul class="list-group list-group-flush">
-            <calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.todoDaysWithoutDate.todos"></calendo-todo-item>
-            <calendo-todo-list-item [todoList]="todoList" *ngFor="let todoList of dataService.todoDaysWithoutDate.todoLists"></calendo-todo-list-item>
+            <calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.todosWithoutDate.todos"></calendo-todo-item>
+            <calendo-todo-list-item [todoList]="todoList" *ngFor="let todoList of dataService.todosWithoutDate.todoLists"></calendo-todo-list-item>
 			</ul>
 		</div>
 
