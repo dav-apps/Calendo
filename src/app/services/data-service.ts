@@ -130,6 +130,7 @@ export class DataService{
 		this.todosWithoutDate.todoLists = [];
 		this.todoDays = [];
 		this.todosWithoutGroup = [];
+		this.todoListsWithoutGroup = [];
 		this.todoGroups = [];
 		this.allTodos = [];
 		this.allTodoLists = [];

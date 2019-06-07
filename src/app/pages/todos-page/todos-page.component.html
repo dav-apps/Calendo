@@ -52,7 +52,7 @@
 			</div>
 		</div>
 
-		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" *ngFor="let todoGroup of dataService.todoGroups" [ngClass]="todoGroup.todos.length > 0 ? '' : 'hidden'">
+		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" *ngFor="let todoGroup of dataService.todoGroups" [ngClass]="todoGroup.todos.length > 0 || todoGroup.todoLists.length > 0 ? '' : 'hidden'">
 			<div class="card-body">
 				<h5 class="card-title text-color" *ngIf="todoGroup.todos.length > 0 || todoGroup.todoLists.length > 0">{{ todoGroup.name }}</h5>
 				<ul class="list-group list-group-flush">
