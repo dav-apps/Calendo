@@ -378,9 +378,6 @@ export class TodoListTreeComponent{
 		// Remove the input
 		node.editTodoList = false;
 		this.ReloadTree();
-
-		let rootTodoList = await GetTodoList(this.todoList.uuid);
-		this.dataService.UpdateTodoList(rootTodoList);
 	}
 
 	async ShowDeleteTodoListModal(node: TodoNode){

@@ -939,8 +939,12 @@ export class DataService{
 	}
 
 	AddTodoListToCalendarPage(todoList: TodoList){
-		// Add the todos of the list to allTodos
-		for(let todo of todoList.todos){
+      if(todoList.list) return;
+
+      // Add the todos of the list to allTodos
+      let todos: Todo[] = [];
+      this.GetNestedTodosInTodoList(todoList, todos);
+		for(let todo of todos){
 			this.allTodos.push(todo);
 		}
 

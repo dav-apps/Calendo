@@ -11,8 +11,12 @@
 
 	<p class="font-weight-light text-center mt-3 text-color" 
 		style="font-size: 18px; font-family: 'Segoe UI'" 
-		*ngIf="dataService.todoDaysWithoutDate.todos.length == 0 && dataService.todoDays.length == 0
-					&& dataService.todosWithoutGroup.length == 0 && dataService.todoGroups.length == 0">
+		*ngIf="dataService.todoDaysWithoutDate.todos.length == 0 
+					&& dataService.todoDaysWithoutDate.todoLists.length == 0
+					&& dataService.todoDays.length == 0
+					&& dataService.todosWithoutGroup.length == 0 
+					&& dataService.todoListsWithoutGroup.length == 0
+					&& dataService.todoGroups.length == 0">
 		{{ locale.noTodos }}
 	</p>
 
