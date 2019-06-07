@@ -42,7 +42,7 @@ export class DataService{
 	//#region CalendarPage
 	private updatingCalendarDays: boolean = false;
 	private updateCalendarDaysAgain: boolean = false;
-	allAppointments: Appointment[] = [];		// Save all objects to add them to the selected calendar day, in UpdateCalendarDays
+	allAppointments: Appointment[] = [];		// Save all objects to add them to the calendar days in UpdateCalendarDays
 	allTodos: Todo[] = [];
 	allTodoLists: TodoList[] = [];
 
@@ -186,8 +186,8 @@ export class DataService{
    }
 
    UpdateTodoList(todoList: TodoList){
-      this.RemoveTodoList(todoList);
-      this.AddTodoList(todoList);
+		this.RemoveTodoList(todoList);
+		this.AddTodoList(todoList);
    }
    
    RemoveTodoList(todoList: TodoList){
@@ -420,7 +420,11 @@ export class DataService{
 			if(index !== -1){
 				this.startDaysAppointments[i].splice(index, 1);
 
-				if(this.startDaysAppointments[i].length == 0 && this.startDaysTodos[i].length == 0 && i != 0){
+            if(this.startDaysAppointments[i].length == 0 
+               && this.startDaysTodos[i].length == 0 
+               && this.startDaysTodoLists[i].length == 0
+               && i != 0){
+               // Remove the day
 					this.startDaysAppointments.splice(i, 1);
 					this.startDaysTodos.splice(i, 1);
 					this.startDaysDates.splice(i, 1);
@@ -851,6 +855,19 @@ export class DataService{
 			this.updateCalendarDaysAgain = false;
 			this.UpdateCalendarDays();
 		}
+   }
+   
+   // Get the todos of the given day to show them on the calendar page
+	GetTodosOfDay(day: moment.Moment, completed: boolean){
+		var todos: Todo[] = [];
+
+		this.allTodos.forEach((todo) => {
+			if(moment.unix(todo.time).startOf('day').unix() === day.startOf('day').unix() && (completed || !todo.completed)){
+				todos.push(todo);
+			}
+		});
+
+		return todos;
 	}
 
 	AddAppointmentToCalendarPage(appointment: Appointment){
@@ -894,6 +911,8 @@ export class DataService{
 	}
 
 	AddTodoToCalendarPage(todo: Todo){
+		if(todo.list) return;
+
 		this.allTodos.push(todo);
 		this.SortTodosArray(this.allTodos);
 
@@ -903,19 +922,6 @@ export class DataService{
 		}
 
 		this.UpdateCalendarDays();
-	}
-
-	// Get the todos of the given day to show them on the calendar page
-	GetTodosOfDay(day: moment.Moment, completed: boolean){
-		var todos: Todo[] = [];
-
-		this.allTodos.forEach((todo) => {
-			if(moment.unix(todo.time).startOf('day').unix() === day.startOf('day').unix() && (completed || !todo.completed)){
-				todos.push(todo);
-			}
-		});
-
-		return todos;
 	}
 
 	RemoveTodoFromCalendarPage(todo: Todo){
@@ -933,6 +939,11 @@ export class DataService{
 	}
 
 	AddTodoListToCalendarPage(todoList: TodoList){
+		// Add the todos of the list to allTodos
+		for(let todo of todoList.todos){
+			this.allTodos.push(todo);
+		}
+
 		if(todoList.list) return;
 
 		this.allTodoLists.push(todoList);
@@ -941,14 +952,21 @@ export class DataService{
 		if(moment.unix(todoList.time).startOf('day').unix() == this.selectedDay.startOf('day').unix()){
 			this.selectedDayTodoLists.push(todoList);
 			this.SortTodoListsArray(this.selectedDayTodoLists);
-		}
+      }
+
+      this.UpdateCalendarDays();
 	}
 
 	RemoveTodoListFromCalendarPage(todoList: TodoList){
 		// Remove the todos of the todo list
 		let todos: Todo[] = [];
 		this.GetNestedTodosInTodoList(todoList, todos);
-		todos.forEach(todo => this.RemoveTodoFromCalendarPage(todo));
+		for(let todo of todos){
+			let i = this.allTodos.findIndex(t => t.uuid == todo.uuid);
+			if(i !== -1){
+				this.allTodos.splice(i, 1);
+			}
+		}
 
 		let index = this.allTodoLists.findIndex(t => t.uuid == todoList.uuid);
 		if(index !== -1){
@@ -958,7 +976,9 @@ export class DataService{
 		index = this.selectedDayTodoLists.findIndex(t => t.uuid == todoList.uuid);
 		if(index !== -1){
 			this.selectedDayTodoLists.splice(index, 1);
-		}
+      }
+
+      this.UpdateCalendarDays();
    }
 	//#endregion
 

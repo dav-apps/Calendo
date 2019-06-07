@@ -71,7 +71,7 @@ export class AppComponent {
 					// Update todo
 					var todo = ConvertTableObjectToTodo(tableObject);
 
-					if(todo){
+					if(todo && !todo.list){
 						this.dataService.UpdateTodo(todo);
 					}
 				}

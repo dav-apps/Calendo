@@ -89,8 +89,9 @@ export class TodoListModalComponent{
 		}
 		
 		this.todoListDate = { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate() };
-		this.todoListName = "";
-		this.setDateCheckboxChecked = true;
+      this.todoListName = "";
+      this.setDateCheckboxChecked = true;
+      this.todoGroups = [];
 	}
    
    ToggleSetDateCheckbox(){
