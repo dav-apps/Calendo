@@ -734,10 +734,10 @@ export class DataService{
 		}
 
 		// Remove the todoList from the todoGroups
-		index = this.todosWithoutGroup.findIndex(t => t.uuid == todoList.uuid);
+		index = this.todoListsWithoutGroup.findIndex(t => t.uuid == todoList.uuid);
 
 		if(index !== -1){
-			this.todosWithoutGroup.splice(index, 1);
+			this.todoListsWithoutGroup.splice(index, 1);
 		}else{
 			this.todoGroups.forEach(todoGroup => {
 				index = todoGroup.todoLists.findIndex(t => t.uuid == todoList.uuid);
