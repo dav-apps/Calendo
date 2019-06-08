@@ -5,7 +5,7 @@ import { AppointmentModalComponent } from '../../components/appointment-modal/ap
 import { Appointment } from '../../models/Appointment';
 import { enUS } from '../../../locales/locales';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
    selector: "calendo-appointments-page",

@@ -7,7 +7,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { FabCheckboxModule, FabButtonModule, FabDropdownModule, FabTextFieldModule, FabIconModule } from '@angular-react/fabric';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTreeModule, MatButtonModule, MatSnackBarModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTreeModule } from '@angular/material/tree';
 
 import { AppComponent } from './app.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
