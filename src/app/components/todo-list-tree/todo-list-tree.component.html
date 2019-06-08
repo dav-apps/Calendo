@@ -1,6 +1,6 @@
 <ul style="padding: 0px; margin: 0px">
 	<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-		<mat-tree-node *matTreeNodeDef="let node">
+		<mat-tree-node *matTreeNodeDef="let node" [ngClass]="showRoot ? 'theme-background-color-secondary' : 'theme-background-color-primary'">
 			<ng-container *ngIf="!node.newTodo && !node.newTodoList">
 				<div style="margin-bottom: -8px; margin-left: 5px;">
 					<fab-checkbox [checked]="node.completed" (onChange)="ToggleTodoCheckbox(node.uuid)"></fab-checkbox>
@@ -16,19 +16,31 @@
 			</ng-container>
 			<ng-container *ngIf="node.newTodo">
 				<fab-text-field [(value)]="inputValue" [placeholder]="locale.todoName"></fab-text-field>
-				<button type="button" class="btn btn-outline-primary btn-sm ml-2" (click)="ChangeInputToNode(node, false)" [disabled]="inputValue.length < 2">{{ locale.add }}</button>
-				<button type="button" class="btn btn-light btn-sm ml-2" style="padding: 5px 8px 3px 8px" (click)="RemoveAllInputNodes()"><fab-icon iconName="Cancel"></fab-icon></button>
+            <button type="button" 
+                  class="btn btn-outline-primary btn-sm ml-2" 
+                  [disabled]="inputValue.length < 2"
+                  (click)="ChangeInputToNode(node, false)">{{ locale.add }}</button>
+            <button type="button" 
+                  class="btn btn-light btn-sm ml-2 text-color theme-background-color-primary theme-border-color-primary" 
+                  style="padding: 5px 8px 3px 8px" 
+                  (click)="RemoveAllInputNodes()"><fab-icon iconName="Cancel"></fab-icon></button>
 			</ng-container>
 			<ng-container *ngIf="node.newTodoList && !node.newTodo">
             <fab-text-field [(value)]="inputValue" [placeholder]="locale.todoListName"></fab-text-field>
-				<button type="button" class="btn btn-outline-primary btn-sm ml-2" (click)="ChangeInputToNode(node, true)" [disabled]="inputValue.length < 2">{{ locale.add }}</button>
-				<button type="button" class="btn btn-light btn-sm ml-2" style="padding: 5px 8px 3px 8px" (click)="RemoveAllInputNodes()"><fab-icon iconName="Cancel"></fab-icon></button>
+            <button type="button" 
+                  class="btn btn-outline-primary btn-sm ml-2" 
+                  [disabled]="inputValue.length < 2"
+                  (click)="ChangeInputToNode(node, true)">{{ locale.add }}</button>
+            <button type="button" 
+                  class="btn btn-light btn-sm ml-2 text-color theme-background-color-primary theme-border-color-primary" 
+                  style="padding: 5px 8px 3px 8px" 
+                  (click)="RemoveAllInputNodes()"><fab-icon iconName="Cancel"></fab-icon></button>
 			</ng-container>
 		</mat-tree-node>
 
-		<mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
-			<div class="d-flex">
-				<button mat-icon-button matTreeNodeToggle style="height: 35px; width: 35px; outline: none;">
+		<mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild" [ngClass]="showRoot ? 'theme-background-color-secondary' : 'theme-background-color-primary'">
+			<div class="d-flex" [ngClass]="showRoot ? 'theme-background-color-secondary' : 'theme-background-color-primary'">
+				<button mat-icon-button matTreeNodeToggle class="text-color" style="height: 35px; width: 35px; outline: none;">
 					<fab-icon [iconName]="treeControl.isExpanded(node) ? 'ChevronDownMed' : 'ChevronRightMed'" [styles]="chevronIconStyles"></fab-icon>
 				</button>
 				<span class="cursor my-auto" matTreeNodeToggle *ngIf="!node.editTodoList">
@@ -36,7 +48,7 @@
 						<fab-icon iconName="Accept" [styles]="checkIconStyles"></fab-icon>
 					</span>
 					<span style="font-size: 14px; color: gray" matTreeNodeToggle>{{ node.completedCount }}/{{ GetNodeChildrenCount(node) }}</span>
-					<span class="ml-3">{{ node.name }}</span>
+					<span class="ml-3 text-color">{{ node.name }}</span>
 
 					<span class="ml-2" *ngIf="showRoot">
 						<calendo-todo-group-badge *ngFor="let todoGroup of node.groups" [groupName]="todoGroup"></calendo-todo-group-badge>
@@ -46,7 +58,7 @@
 				<!-- Add dropdown -->
             <div ngbDropdown placement="top-left" style="margin-top: 2px" *ngIf="!node.editTodoList">
                <button type="button" 
-                        class="btn btn-light ml-2" 
+                        class="btn btn-light ml-2 text-color theme-background-color-primary theme-border-color-primary" 
                         style="height: 30px; width: 30px; padding: 2px 0px 0px 0px;" 
                         ngbDropdownToggle *ngIf="!readonly">
                   <fab-icon iconName="Add"></fab-icon>
@@ -61,7 +73,7 @@
 				<!-- Options dropdown -->
 				<div ngbDropdown placement="top-left" style="margin-top: 2px" *ngIf="!node.editTodoList">
 					<button type="button"
-							class="btn btn-light ml-2"
+							class="btn btn-light ml-2 text-color theme-background-color-primary theme-border-color-primary"
 							style="height: 30px; width: 30px; padding: 2px 0px 0px 0px;" 
 							ngbDropdownToggle *ngIf="!readonly">
 						<fab-icon iconName="More"></fab-icon>
@@ -80,7 +92,7 @@
 				</div>
 			</div>
 
-			<div style="margin-left: 25px;" [style.display]="treeControl.isExpanded(node) ? '' : 'none'">
+			<div [ngClass]="showRoot ? 'theme-background-color-secondary' : 'theme-background-color-primary'" style="padding-left: 25px;" [style.display]="treeControl.isExpanded(node) ? '' : 'none'">
 				<ng-container matTreeNodeOutlet></ng-container>
 			</div>
 		</mat-nested-tree-node>

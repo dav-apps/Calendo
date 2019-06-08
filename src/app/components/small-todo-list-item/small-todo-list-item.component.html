@@ -4,7 +4,7 @@
 		<fab-icon iconName="Accept" [styles]="iconStyles"></fab-icon>
 	</span>
 	<span style="font-size: 14px; color: gray">{{ completedTodos }}/{{ totalTodos }}</span>
-   <span class="ml-3">{{ todoList.name }}</span>
+   <span class="ml-3 text-color">{{ todoList.name }}</span>
 	
 	<span class="ml-2">
 		<calendo-todo-group-badge *ngFor="let todoGroup of todoList.groups" [groupName]="todoGroup"></calendo-todo-group-badge>

@@ -56,6 +56,18 @@ body{
 	color: var(--theme-color-tertiary);
 }
 
+.theme-border-color-primary{
+   border-color: var(--theme-color-primary);
+}
+
+.theme-border-color-secondary{
+   border-color: var(--theme-color-secondary);
+}
+
+.theme-border-color-tertiary{
+   border-color: var(--theme-color-tertiary);
+}
+
 .dropdown-item:hover{
 	background-color: var(--hover-background-color);
 	color: var(--text-color);

@@ -1,24 +1,30 @@
 <div class="ml-3">
 	<div class="theme-background-color-primary d-flex my-3">
 		<button type="button" 
-				class="btn btn-light my-auto" 
-				style="height: 30px; width: 35px; padding: 2px 0px 0px 0px; background-color: white; border-color: white;"
+				class="btn btn-light my-auto text-color theme-background-color-primary theme-border-color-primary" 
+				style="height: 30px; width: 35px; padding: 2px 0px 0px 0px;"
 				(click)="GoBack()">
 			<fab-icon iconName="Back"></fab-icon>
 		</button>
 		<h4 class="text-color my-auto ml-3">{{ todoList.name }}</h4>
-		<button type="button" class="btn btn-light ml-3" style="padding: 3px 6px;" (click)="ShowEditModal()">
+		<button type="button" 
+				class="btn btn-light ml-3 text-color theme-background-color-primary theme-border-color-primary" 
+				style="padding: 3px 6px;" 
+				(click)="ShowEditModal()">
 			<fab-icon iconName="Edit"></fab-icon>
 		</button>
-		<button type="button" class="btn btn-light ml-2" style="padding: 3px 6px;" (click)="ShowDeleteModal()">
+		<button type="button" 
+				class="btn btn-light ml-2 text-color theme-background-color-primary theme-border-color-primary" 
+				style="padding: 3px 6px;" 
+				(click)="ShowDeleteModal()">
 			<fab-icon iconName="Delete"></fab-icon>
 		</button>
 	</div>
 	<div class="theme-background-color-primary mx-0 pt-3 border-top">
 		<!-- Todo List metadata -->
-		<p *ngIf="todoList.time != 0">{{ locale.date }}<span class="ml-2">{{ date }}</span></p>
+		<p class="text-color" *ngIf="todoList.time != 0">{{ locale.date }}<span class="ml-2">{{ date }}</span></p>
 		<p style="margin-bottom: 4px" *ngIf="todoList.groups.length > 0">
-			{{ locale.groups }}
+			<span class="text-color">{{ locale.groups }}</span>
 			<span class="ml-2">
 				<calendo-todo-group-badge *ngFor="let todoGroup of todoList.groups" [groupName]="todoGroup"></calendo-todo-group-badge>
 			</span>
@@ -26,12 +32,15 @@
 	
 		<!-- Todos list -->
 		<div class="d-flex" style="height: 40px">
-			<p class="ms-fontWeight-semibold ms-fontSize-18 mt-2">
+			<p class="ms-fontWeight-semibold ms-fontSize-18 mt-2 text-color">
 				{{ locale.todos }}
 			</p>
 			
 			<div ngbDropdown placement="top-left" style="margin-top: 7px">
-				<button type="button" class="btn btn-light ml-2" style="height: 30px; width: 30px; padding: 2px 0px 0px 0px" ngbDropdownToggle>
+				<button type="button" 
+						class="btn btn-light ml-2 text-color theme-background-color-primary theme-border-color-primary" 
+						style="height: 30px; width: 30px; padding: 2px 0px 0px 0px" 
+						ngbDropdownToggle>
 					<fab-icon iconName="Add"></fab-icon>
 				</button>
 	
