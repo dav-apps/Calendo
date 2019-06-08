@@ -225,7 +225,7 @@ export class TodoListTreeComponent{
 
 	AddInputToTodoList(todo: TodoNode, list: boolean = false){
 		// Check if user is on dav Plus to create nested todo lists
-		if(list && this.dataService.user.Plan == 0){
+      if(list && (!this.dataService.user.IsLoggedIn || this.dataService.user.Plan == 0)){
 			this.upgradeRequiredModal.Show(0, 0);
 			return;
 		}
