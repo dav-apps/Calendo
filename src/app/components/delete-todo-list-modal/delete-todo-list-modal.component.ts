@@ -12,7 +12,7 @@ export class DeleteTodoListModalComponent{
    locale = enUS.deleteTodoListModal;
    todoList: TodoList = new TodoList(null, "");
 	@Output() remove = new EventEmitter();
-	@ViewChild('deleteTodoListModal') todoListModal: ElementRef;
+	@ViewChild('deleteTodoListModal', { static: true }) todoListModal: ElementRef;
 
 	constructor(
 		private modalService: NgbModal,

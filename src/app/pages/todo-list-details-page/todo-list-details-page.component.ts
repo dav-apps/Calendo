@@ -15,9 +15,9 @@ import { DeleteTodoListModalComponent } from 'src/app/components/delete-todo-lis
 })
 export class TodoListDetailsPageComponent{
    locale = enUS.todoListDetailsPage;
-	@ViewChild('todoListTree') todoListTree: TodoListTreeComponent;
-	@ViewChild('todoListModal') todoListModal: TodoListModalComponent;
-	@ViewChild('deleteTodoListModal') deleteTodoListModal: DeleteTodoListModalComponent;
+	@ViewChild('todoListTree', { static: true }) todoListTree: TodoListTreeComponent;
+	@ViewChild('todoListModal', { static: true }) todoListModal: TodoListModalComponent;
+	@ViewChild('deleteTodoListModal', { static: true }) deleteTodoListModal: DeleteTodoListModalComponent;
 	todoList: TodoList = new TodoList(null, "");
 	date: string = "";
 

@@ -16,9 +16,9 @@ export class SmallAppointmentItemComponent{
    @Input() appointment: Appointment = new Appointment("", "", 0, 0, false, environment.appointmentDefaultColor);
    @Input() enableDropdown: boolean = true;
    @Input() compact: boolean = false;
-   @ViewChild(AppointmentModalComponent)
+   @ViewChild(AppointmentModalComponent, { static: true })
    private newAppointmentModalComponent: AppointmentModalComponent;
-   @ViewChild(DeleteAppointmentModalComponent)
+   @ViewChild(DeleteAppointmentModalComponent, { static: true })
    private deleteAppointmentModalComponent: DeleteAppointmentModalComponent;
    defaultColor: string = environment.appointmentDefaultColor;
 

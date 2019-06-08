@@ -19,9 +19,9 @@ export class AppointmentItemComponent{
    faEllipsisH = faEllipsisH;
    @Input() appointment: Appointment = new Appointment("", "", 0, 0, false, environment.appointmentDefaultColor);
    @Input() showCompleted: boolean = false;
-   @ViewChild(AppointmentModalComponent)
+   @ViewChild(AppointmentModalComponent, { static: true })
    private newAppointmentModalComponent: AppointmentModalComponent;
-   @ViewChild(DeleteAppointmentModalComponent)
+   @ViewChild(DeleteAppointmentModalComponent, { static: true })
    private deleteAppointmentModalComponent: DeleteAppointmentModalComponent;
    menuButtonIconProps: IIconProps = {
       iconName: "More",

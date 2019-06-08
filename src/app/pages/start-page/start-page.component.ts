@@ -23,11 +23,11 @@ export class StartPageComponent{
 	locale = enUS.startPage;
 	snackbarLocale = enUS.snackbar;
 	faPlus = faPlus;
-	@ViewChild(NewTodoModalComponent)
+	@ViewChild(NewTodoModalComponent, { static: true })
 	private newTodoModalComponent: NewTodoModalComponent;
-	@ViewChild(AppointmentModalComponent)
+	@ViewChild(AppointmentModalComponent, { static: true })
    private newAppointmentModalComponent: AppointmentModalComponent;
-   @ViewChild(TodoListModalComponent)
+   @ViewChild(TodoListModalComponent, { static: true })
    private todoListModalComponent: TodoListModalComponent;
 
 	largeDateFormat: string = this.locale.formats.smallDate;

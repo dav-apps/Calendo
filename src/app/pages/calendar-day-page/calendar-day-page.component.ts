@@ -22,11 +22,11 @@ export class CalendarDayPageComponent{
 	locale = enUS.calendarDayPage;
 	snackbarLocale = enUS.snackbar;
    faPlus = faPlus;
-   @ViewChild(AppointmentModalComponent)
+   @ViewChild(AppointmentModalComponent, { static: true })
    private newAppointmentModalComponent: AppointmentModalComponent;
-   @ViewChild(NewTodoModalComponent)
+   @ViewChild(NewTodoModalComponent, { static: true })
    private newTodoModalComponent: NewTodoModalComponent;
-   @ViewChild('todoListModal')
+   @ViewChild('todoListModal', { static: true })
    private todoListModal: TodoListModalComponent;
    date: moment.Moment = moment();
    backButtonIconStyles: IIconStyles = {

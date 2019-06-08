@@ -16,7 +16,7 @@ export class NewTodoModalComponent{
    notificationLocale = enUS.notifications.todo;
    faPlus = faPlus;
    @Output() save = new EventEmitter();
-   @ViewChild('createTodoModal') todoModal: ElementRef;
+   @ViewChild('createTodoModal', { static: true }) todoModal: ElementRef;
    newTodoDate: NgbDateStruct;
    newTodoName: string;
    newTodoSetDateCheckboxChecked: boolean = true

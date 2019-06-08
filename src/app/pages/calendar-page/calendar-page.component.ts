@@ -18,8 +18,8 @@ export class CalendarPageComponent{
 	locale = enUS.calendarPage;
 	faAngleLeft = faAngleLeft;
 	faAngleRight = faAngleRight;
-	@ViewChild("calendarContainer", { read: ElementRef }) calendarContainer: ElementRef<any>;
-	@ViewChild("mobileCalendarContainer", {read: ElementRef}) mobileCalendarContainer: ElementRef<any>;
+	@ViewChild("calendarContainer", { read: ElementRef, static: true }) calendarContainer: ElementRef<any>;
+	@ViewChild("mobileCalendarContainer", { read: ElementRef, static: true }) mobileCalendarContainer: ElementRef<any>;
 	weekDayLabels: string[] = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 	dayFormat: string = "D";
 	fullDayFormat: string = "dddd D";

@@ -10,7 +10,7 @@ import { enUS } from '../../../locales/locales';
 export class UpgradeRequiredModalComponent{
 	locale = enUS.upgradeRequiredModal;
 	@Output() learnMoreClick = new EventEmitter();
-	@ViewChild('upgradeRequiredModal') upgradeRequiredModal: ElementRef;
+	@ViewChild('upgradeRequiredModal', { static: true }) upgradeRequiredModal: ElementRef;
 	requiredPlan: number = 0;		// 0 = Plus, 1 = Pro
 	feature: number = 0;				// 0 = Nested todo lists
 

@@ -18,7 +18,7 @@ export class AppointmentModalComponent{
 	locale = enUS.appointmentModal;
 	notificationLocale = enUS.notifications.appointment;
 	@Output() save = new EventEmitter();
-   @ViewChild('appointmentModal') appointmentModal: ElementRef;
+   @ViewChild('appointmentModal', { static: true }) appointmentModal: ElementRef;
    appointmentDate: NgbDateStruct;
    appointmentName: string;
    appointmentAllDayCheckboxChecked: boolean;

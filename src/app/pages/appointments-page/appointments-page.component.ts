@@ -18,7 +18,7 @@ export class AppointmentsPageComponent{
    locale = enUS.appointmentsPage;
    snackbarLocale = enUS.snackbar;
    faEllipsisH = faEllipsisH;
-   @ViewChild(AppointmentModalComponent)
+   @ViewChild(AppointmentModalComponent, { static: true })
    private newAppointmentModalComponent: AppointmentModalComponent;
 
    constructor(

@@ -13,7 +13,7 @@ export class DeleteAppointmentModalComponent{
    locale = enUS.deleteAppointmentModal;
    @Input() appointment: Appointment;
    @Output() remove = new EventEmitter();
-   @ViewChild('deleteAppointmentModal') appointmentModal: ElementRef;
+   @ViewChild('deleteAppointmentModal', { static: true }) appointmentModal: ElementRef;
 
    constructor(private modalService: NgbModal,
                private dataService: DataService){

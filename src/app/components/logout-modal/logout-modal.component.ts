@@ -10,7 +10,7 @@ import { enUS } from '../../../locales/locales';
 export class LogoutModalComponent{
 	locale = enUS.logoutModal;
 	@Output() logout = new EventEmitter();
-	@ViewChild('logoutModal') logoutModal: ElementRef;
+	@ViewChild('logoutModal', { static: true }) logoutModal: ElementRef;
 
    constructor(private modalService: NgbModal,
       			private dataService: DataService){

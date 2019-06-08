@@ -24,8 +24,8 @@ export class TodoListTreeComponent{
 	dataSource: MatTreeNestedDataSource<TodoNode>;
 	treeControl: NestedTreeControl<TodoNode>;
 	dataChange: BehaviorSubject<TodoNode[]> = new BehaviorSubject<TodoNode[]>([]);
-	@ViewChild('deleteTodoListModal') deleteTodoListModal: DeleteTodoListModalComponent;
-   @ViewChild('upgradeRequiredModal') upgradeRequiredModal: UpgradeRequiredModalComponent;
+	@ViewChild('deleteTodoListModal', { static: true }) deleteTodoListModal: DeleteTodoListModalComponent;
+   @ViewChild('upgradeRequiredModal', { static: true }) upgradeRequiredModal: UpgradeRequiredModalComponent;
 	@Input()
 	todoList: TodoList;
 	@Input()

@@ -11,7 +11,7 @@ import { TodoList, GetTodoList } from '../../models/TodoList';
 export class TodoListModalComponent{
    locale = enUS.todoListModal;
 	@Output() save = new EventEmitter<TodoList>();
-	@ViewChild('todoListModal') todoListModal: ElementRef;
+	@ViewChild('todoListModal', { static: true }) todoListModal: ElementRef;
 	setDateCheckboxChecked: boolean = true;
 	todoListDate: NgbDateStruct;
    todoListName: string = "";

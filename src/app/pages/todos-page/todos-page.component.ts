@@ -20,9 +20,9 @@ export class TodosPageComponent{
    locale = enUS.todosPage;
    snackbarLocale = enUS.snackbar;
 	faEllipsisH = faEllipsisH;
-	@ViewChild(NewTodoModalComponent)
+	@ViewChild(NewTodoModalComponent, { static: true })
    private newTodoModalComponent: NewTodoModalComponent;
-   @ViewChild(TodoListModalComponent)
+   @ViewChild(TodoListModalComponent, { static: true })
    private todoListModalComponent: TodoListModalComponent;
 
 	constructor(
