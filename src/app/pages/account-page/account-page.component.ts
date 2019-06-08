@@ -31,7 +31,7 @@ export class AccountPageComponent{
    }
 
    ShowPlansAccountPage(){
-      window.open("https://dav-apps.tech/user#plans", 'blank');
+      window.open("https://dav-apps.tech/login?redirect=user%23plans%0A", 'blank');
    }
 
    ShowLogoutModal(){

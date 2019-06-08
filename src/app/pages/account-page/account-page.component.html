@@ -49,18 +49,18 @@
 		</div>
 	</div>
 
-	<div style="margin-top: 70px" *ngIf="dataService.user.Plan == 0">
+	<div style="margin-top: 70px" *ngIf="dataService.user.Plan == 0" class="text-color">
 		<h4 class="mt-5 text-center">{{ locale.upgradeTitle }}</h4>
 
-		<div class="card text-center shadow mx-auto" style="width: 300px; margin-top: 35px">
+		<div class="card text-center shadow mx-auto theme-background-color-secondary" style="width: 300px; margin-top: 35px">
 			<div class="card-body">
 				<h4 class="card-title">{{ locale.planPlus }}</h4>
 				<h6 class="card-subtitle text-muted">{{ locale.pricePlus }}</h6>
 			</div>
 			<ul class="list-group">
-            <li class="list-group-item border-left-0 border-right-0">{{ locale.plusFeature1 }}</li>
-				<li class="list-group-item border-left-0 border-right-0">{{ locale.plusFeature2 }}</li>
-				<li class="list-group-item border-left-0 border-right-0">
+            <li class="list-group-item border-left-0 border-right-0 theme-background-color-secondary">{{ locale.plusFeature1 }}</li>
+				<li class="list-group-item border-left-0 border-right-0 theme-background-color-secondary">{{ locale.plusFeature2 }}</li>
+				<li class="list-group-item border-left-0 border-right-0 theme-background-color-secondary">
 					<button type="button" class="btn btn-primary" (click)="ShowPlansAccountPage()">{{ locale.upgrade }}</button>
 				</li>
 			</ul>
