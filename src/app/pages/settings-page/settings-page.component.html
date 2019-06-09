@@ -6,8 +6,7 @@
       <div class="form-group mt-4" style="font-size: 18px; width: 200px">
          <label class="text-color">{{ locale.sortTodosBy }}</label>
 
-         <fab-dropdown [options]="sortTodosOptions" 
-                        [selectedKey]="sortTodosSelectedKey" 
+         <fab-dropdown [selectedKey]="sortTodosSelectedKey" 
                         (onChange)="onSortTodosSelectChanged($event)">
             <options>
                <fab-dropdown-option optionKey="date" [text]="locale.sortTodosByDate"></fab-dropdown-option>

@@ -4,7 +4,7 @@ export const environment = {
 	baseUrl: "https://calendo.dav-apps.tech",
 	version: "0.7",
    appId: 5,
-   todoListTableId: -1,
+   todoListTableId: 13,
 	todoTableId: 10,
    appointmentTableId: 11,
    todoListNameKey: "name",
