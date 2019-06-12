@@ -7,22 +7,22 @@
 						(click)="GoBack()">
 				<fab-icon iconName="Back" [styles]="backButtonIconStyles"></fab-icon>
 			</button>
-			<h1 class="text-center mt-2 ml-3 text-color">{{ getCurrentDate() }}</h1>
+			<h2 class="text-left mt-2 ml-3 text-color">{{ getCurrentDate() }}</h2>
 		</div>
 	</div>
 
    <div class="d-flex flex-column text-color">
-      <h2 class="mt-4 mb-3">
+      <h3 class="mt-4 mb-3">
          {{ locale.appointments }}
          <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="ShowNewAppointmentModal()"><fa-icon [icon]="faPlus"></fa-icon></button>
-      </h2>
+      </h3>
 
       <p class="font-weight-light" style="font-size: 18px; font-family: 'Segoe UI'" *ngIf="dataService.selectedDayAppointments.length == 0">{{ locale.noAppointments }}</p>
       <calendo-small-appointment-item class="d-inline-flex" [appointment]="appointment" *ngFor="let appointment of dataService.selectedDayAppointments"></calendo-small-appointment-item>
    </div>
    
    <div class="text-color">
-      <h2 class="mt-4 mb-3" ngbDropdown placement="bottom-left">
+      <h3 class="mt-4 mb-3" ngbDropdown placement="bottom-left">
 			{{ locale.todos }}
 			<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle>
 				<fa-icon [icon]="faPlus"></fa-icon>
@@ -32,7 +32,7 @@
 				<button class="dropdown-item text-color cursor" (click)="ShowNewTodoModal()">{{ locale.newTodo }}</button>
 				<button class="dropdown-item text-color cursor" (click)="ShowTodoListModal()">{{ locale.newTodoList }}</button>
 			</div>
-      </h2>
+      </h3>
 		<p class="font-weight-light" 
 			style="font-size: 18px; font-family: 'Segoe UI'" 
 			*ngIf="dataService.selectedDayTodos.length == 0 && dataService.selectedDayTodoLists.length == 0">{{ locale.noTodos }}</p>
