@@ -43,18 +43,21 @@
 				<button mat-icon-button matTreeNodeToggle class="text-color" style="height: 35px; width: 35px; outline: none;">
 					<fab-icon [iconName]="treeControl.isExpanded(node) ? 'ChevronDownMed' : 'ChevronRightMed'" [styles]="chevronIconStyles"></fab-icon>
 				</button>
-				<span class="cursor my-auto" matTreeNodeToggle *ngIf="!node.editTodoList">
-					<span class="mr-2" *ngIf="node.completedCount == GetNodeChildrenCount(node)">
+
+				<span class="cursor d-flex" style="margin-top: 7px" matTreeNodeToggle *ngIf="!node.editTodoList">
+					<span class="mr-2" style="margin-top: -2px" *ngIf="node.completedCount == GetNodeChildrenCount(node)">
 						<fab-icon iconName="Accept" [styles]="checkIconStyles"></fab-icon>
 					</span>
 					<span style="font-size: 14px; color: gray" matTreeNodeToggle>{{ node.completedCount }}/{{ GetNodeChildrenCount(node) }}</span>
-					<span class="ml-3 text-color">{{ node.name }}</span>
+				</span>
 
-					<span class="ml-2" *ngIf="showRoot">
+				<span class="cursor my-auto text-color ml-3" matTreeNodeToggle *ngIf="!node.editTodoList">
+					<span class="mr-2">{{ node.name }}</span>
+					<span *ngIf="showRoot">
 						<calendo-todo-group-badge *ngFor="let todoGroup of node.groups" [groupName]="todoGroup"></calendo-todo-group-badge>
 					</span>
 				</span>
-
+				
 				<!-- Add dropdown -->
             <div ngbDropdown placement="top-left" style="margin-top: 2px" *ngIf="!node.editTodoList">
                <button type="button" 
@@ -70,7 +73,7 @@
                </div>
             </div>
 				
-				<!-- Options dropdown -->
+				<!-- Options button -->
 				<div ngbDropdown placement="top-left" style="margin-top: 2px" *ngIf="!node.editTodoList">
 					<button type="button"
 							class="btn btn-light ml-2 text-color theme-background-color-primary theme-border-color-primary"
