@@ -92,3 +92,9 @@ body{
 .hidden{
    display: none;
 }
+
+.icon-button:hover{
+	background-color: var(--hover-background-color);
+	color: white;
+	border-color: var(--hover-background-color);
+}
