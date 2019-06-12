@@ -23,9 +23,8 @@
 								style="background-color: white;"></ngb-datepicker>
       </div>
 
-		<div class="mx-auto col-10 offset-1" style="padding-left: 60px">
+		<div class="mx-auto offset-1">
 			<calendo-set-todo-groups [groups]="todoGroups" (groupsChanged)="todoGroups = $event"></calendo-set-todo-groups>
-
 			<calendo-set-name [(name)]="todoListName" (nameChanged)="todoListName = $event" [type]="1"></calendo-set-name>
 		</div>
 	</div>
