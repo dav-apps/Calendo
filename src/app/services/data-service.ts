@@ -427,7 +427,8 @@ export class DataService{
                && i != 0){
                // Remove the day
 					this.startDaysAppointments.splice(i, 1);
-					this.startDaysTodos.splice(i, 1);
+               this.startDaysTodos.splice(i, 1);
+               this.startDaysTodoLists.splice(i, 1);
 					this.startDaysDates.splice(i, 1);
 				}
 			}
