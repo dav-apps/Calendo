@@ -1060,6 +1060,39 @@ export class DataService{
 		}
 
 		this.updatedTodoLists = [];
-	}
+   }
+   
+   async GetRootOfTodo(todo: Todo) : Promise<TodoList>{
+		if(!todo.list) return null;
+
+      let parent = await GetTodoList(todo.list);
+      if(!parent) return null;
+
+      if(parent.list){
+         // Get the parent of the parent
+			return await this.GetRootOfTodoList(parent);
+      }else{
+			return parent;
+		}
+   }
+
+   async GetRootOfTodoList(todoList: TodoList) : Promise<TodoList>{
+		if(!todoList.list) return todoList;
+		
+		let parentUuid = todoList.list;
+		let currentList: TodoList = todoList;
+
+		while(parentUuid){
+			currentList = await GetTodoList(parentUuid);
+			
+      	if(parent){
+				parentUuid = currentList.list;
+			}else{
+				return null;
+			}
+		}
+
+		return currentList;
+   }
 	//#endregion
 }
