@@ -6,7 +6,7 @@ export const environment = {
    production: false,
 	apiKey: "eUzs3PQZYweXvumcWvagRHjdUroGe5Mo7kN1inHm",
 	baseUrl: "http://localhost:3001",
-	version: "0.7",
+	version: "0.7.1",
    appId: 5,
    todoListTableId: 11,
 	todoTableId: 12,
