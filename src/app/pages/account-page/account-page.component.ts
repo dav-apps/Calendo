@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, HostListener } from "@angular/core";
 import { DataService } from '../../services/data-service';
 import { enUS } from '../../../locales/locales';
 import { environment } from '../../../environments/environment';
@@ -15,12 +15,18 @@ export class AccountPageComponent{
    faSync = faSync;
    faLock = faLock;
 	@ViewChild(LogoutModalComponent, { static: false })
-	private logoutModalComponent: LogoutModalComponent;
+   private logoutModalComponent: LogoutModalComponent;
+   width: number = window.innerWidth;
 
    constructor(public dataService: DataService){
       this.locale = this.dataService.GetLocale().accountPage;
       this.dataService.HideWindowsBackButton();
-	}
+   }
+   
+   @HostListener('window:resize')
+   onResize(){
+      this.width = window.innerWidth;
+   }
    
    ShowLoginPage(){
       Dav.ShowLoginPage(environment.apiKey, environment.baseUrl);
