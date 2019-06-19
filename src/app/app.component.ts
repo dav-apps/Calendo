@@ -61,7 +61,6 @@ export class AppComponent {
 				}
 			},
 			UpdateTableObject: async (tableObject: Dav.TableObject, downloaded: boolean = false) => {
-				/*
 				if(tableObject.TableId == environment.appointmentTableId){
 					// Update appointment
 					var appointment = ConvertTableObjectToAppointment(tableObject);
@@ -103,10 +102,8 @@ export class AppComponent {
 						}
 					}
 				}
-				*/
 			},
 			DeleteTableObject: async (tableObject: Dav.TableObject) => {
-				/*
 				if(tableObject.TableId == environment.appointmentTableId){
 					// Remove appointment
 					var appointment = ConvertTableObjectToAppointment(tableObject);
@@ -146,7 +143,6 @@ export class AppComponent {
 						}
 					}
 				}
-				*/
 			},
 			SyncFinished: () => {}
 		});

@@ -33,7 +33,7 @@ export class AccountPageComponent{
    }
 
    ShowSignupPage(){
-      Dav.ShowSignupPage(environment.baseUrl);
+      Dav.ShowSignupPage(environment.apiKey, environment.baseUrl);
    }
 
    ShowPlansAccountPage(){
