@@ -32,7 +32,8 @@ export const environment = {
 	// Settings defaults
 	settingsSortTodosByDateDefault: true,
 	settingsThemeDefault: "system",
-	// Other constants
+   // Other constants
+   themeKey: "theme",
 	lightThemeKey: "light",
 	darkThemeKey: "dark",
 	systemThemeKey: "system"

@@ -337,13 +337,13 @@ export class DataService{
 		}
 	}
 
-	async ApplyTheme(theme: string){
+	async ApplyTheme(theme?: string){
 		if(theme == null){
 			// Get the theme from the settings
 			theme = await localforage.getItem(environment.settingsThemeKey);
 		}
 
-		switch (theme) {
+		switch (theme){
 			case environment.darkThemeKey:
 				// Dark theme
 				this.darkTheme = true;
@@ -363,7 +363,7 @@ export class DataService{
 
 					// Observe the system theme
 					this.windowsUiSettings.oncolorvalueschanged = () => {
-						this.ApplyTheme(null);
+						this.ApplyTheme();
 					}
 
 					break;
@@ -372,13 +372,12 @@ export class DataService{
 				// Light theme
 				this.darkTheme = false;
 				break;
-		}
-
-		if(this.darkTheme){
-			document.body.setAttribute("theme", "dark");
-		}else{
-			document.body.setAttribute("theme", "light");
-		}
+      }
+      
+      document.body.setAttribute(
+			environment.themeKey, 
+			this.darkTheme ? environment.darkThemeKey : environment.lightThemeKey
+		);
 	}
 
 	//#region StartPage
