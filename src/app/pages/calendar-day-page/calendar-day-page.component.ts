@@ -42,9 +42,9 @@ export class CalendarDayPageComponent{
       private location: Location,
 		private snackBar: MatSnackBar
 	){
+      moment.locale(this.dataService.locale);
 		this.locale = this.dataService.GetLocale().calendarDayPage;
 		this.snackbarLocale = this.dataService.GetLocale().snackbar;
-      moment.locale(this.dataService.locale);
       this.dataService.HideWindowsBackButton();
    }
 

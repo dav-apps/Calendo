@@ -27,7 +27,8 @@ export class TodoListDetailsPageComponent{
       private location: Location
 	){
       moment.locale(this.dataService.locale);
-		this.locale = this.dataService.GetLocale().todoListDetailsPage;
+      this.locale = this.dataService.GetLocale().todoListDetailsPage;
+      this.dataService.HideWindowsBackButton();
 	}
 
 	ngOnInit(){
