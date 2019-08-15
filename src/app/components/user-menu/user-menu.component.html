@@ -3,7 +3,7 @@
       <span *ngIf="!dataService.user.IsLoggedIn"><fa-icon [icon]="faUserCircle" style="font-size: 25px; margin-top: 6px;"></fa-icon></span>
       <img *ngIf="dataService.user.IsLoggedIn" [src]="dataService.user.Avatar" class="rounded-circle" height="34" width="34" />
    </button>
-   <div ngbDropdownMenu aria-labelledby="user-menu-dropdown" class="theme-background-color-tertiary ms-depth-4">
+   <div ngbDropdownMenu aria-labelledby="user-menu-dropdown" class="theme-background-color-tertiary ms-depth-4 ms-motion-slideDownIn">
       <p *ngIf="dataService.user.IsLoggedIn" class="font-weight-light my-auto py-1 text-color" style="font-size: 16px; margin-left: 23px;">{{ dataService.user.Username }}</p>
 		<div class="dropdown-divider" *ngIf="dataService.user.IsLoggedIn"></div>
 		<button class="dropdown-item text-color cursor" routerLink="/account" (click)="dataService.isNavbarCollapsed = false">{{ locale.account }}</button>

@@ -13,7 +13,7 @@
       <p *ngIf="compact">{{ getStartTime() }} {{ appointment.name }}</p>
    </div>
 
-   <div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+   <div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4 ms-motion-slideDownIn">
       <button class="dropdown-item text-color cursor" (click)="Edit()">{{ locale.edit }}</button>
       <button class="dropdown-item text-color cursor" (click)="Delete()">{{ locale.delete }}</button>
    </div>

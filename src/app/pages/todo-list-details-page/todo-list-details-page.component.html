@@ -44,7 +44,7 @@
 					<fab-icon iconName="Add"></fab-icon>
 				</button>
 	
-				<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+				<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4 ms-motion-slideUpIn">
 					<button class="dropdown-item text-color cursor" (click)="todoListTree.AddInputToTodoList(todoListTree.rootTodoItem, false)">{{ locale.newTodo }}</button>
 					<button class="dropdown-item text-color cursor" (click)="todoListTree.AddInputToTodoList(todoListTree.rootTodoItem, true)">{{ locale.newTodoList }}</button>
 				</div>

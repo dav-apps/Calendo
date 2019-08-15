@@ -67,7 +67,7 @@
                   <fab-icon iconName="Add"></fab-icon>
                </button>
 
-               <div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+               <div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4 ms-motion-slideUpIn">
                   <button class="dropdown-item text-color cursor" (click)="AddInputToTodoList(node, false)">{{ locale.newTodo }}</button>
                   <button class="dropdown-item text-color cursor" (click)="AddInputToTodoList(node, true)">{{ locale.newTodoList }}</button>
                </div>
@@ -82,7 +82,7 @@
 						<fab-icon iconName="More"></fab-icon>
 					</button>
 
-					<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+					<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4 ms-motion-slideUpIn">
 						<button class="dropdown-item text-color cursor" (click)="EditTodoList(node)">{{ locale.rename }}</button>
 						<button class="dropdown-item text-color cursor" (click)="ShowDeleteTodoListModal(node)">{{ locale.delete }}</button>
 					</div>
