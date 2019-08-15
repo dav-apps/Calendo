@@ -1,5 +1,5 @@
 <div class="container d-flex flex-column">
-   <h1 class="text-center mt-2 text-color">{{ locale.header }}</h1>
+   <h1 class="text-center mt-3 text-color">{{ locale.header }}</h1>
 
 	<div class="mx-auto">
 		<!-- Sort todos by -->
@@ -16,18 +16,22 @@
 		</div>
 		
 		<!-- Theme -->
-		<p class="text-color mt-4" style="font-size: 18px">{{ locale.theme }}</p>
-		<div class="form-check px-0 mb-2">
-			<input type="radio" name="theme-radio-button" id="light-theme-radio-button">
-			<label for="light-theme-radio-button" class="form-check-label text-color ml-3 cursor">{{ locale.lightTheme }}</label>
-		</div>
-		<div class="form-check px-0 mb-2">
-			<input type="radio" name="theme-radio-button" id="dark-theme-radio-button">
-			<label for="dark-theme-radio-button" class="form-check-label text-color ml-3 cursor">{{ locale.darkTheme }}</label>
-		</div>
-		<div class="form-check px-0 mb-2" *ngIf="isWindows">
-			<input type="radio" name="theme-radio-button" id="system-theme-radio-button">
-			<label for="system-theme-radio-button" class="form-check-label text-color ml-3 cursor">{{ locale.systemTheme }}</label>
+		<div style="display: inline-block">
+			<p class="text-color mt-4" style="font-size: 18px">{{ locale.theme }}</p>
+			<mat-radio-group class="d-flex flex-column text-color" 
+									[color]="dataService.darkTheme ? 'accent' : 'primary'" 
+									[value]="selectedTheme" 
+									(change)="onThemeRadioButtonSelected($event)">
+				<mat-radio-button [value]="themeKeys[0]">
+					{{ locale.lightTheme }}
+				</mat-radio-button>
+				<mat-radio-button [value]="themeKeys[1]">
+					{{ locale.darkTheme }}
+				</mat-radio-button>
+				<mat-radio-button [value]="themeKeys[2]" *ngIf="isWindows">
+					{{ locale.systemTheme }}
+				</mat-radio-button>
+			</mat-radio-group>
 		</div>
 	
 		<!-- App information -->

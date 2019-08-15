@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DataService } from '../../services/data-service';
 import { environment } from '../../../environments/environment';
 import { enUS } from "../../../locales/locales";
-declare var $: any;
+import { MatRadioChange } from '@angular/material/radio';
 import { IDropdownOption } from 'office-ui-fabric-react';
 
 const dateKey = "date";
@@ -18,8 +18,10 @@ const groupKey = "group";
 export class SettingsPageComponent{
    locale = enUS.settingsPage;
    sortTodosSelectedKey: string = groupKey;
-	version: string = environment.version;
+   version: string = environment.version;
 	isWindows: boolean = false;
+	themeKeys: string[] = [environment.lightThemeKey, environment.darkThemeKey, environment.systemThemeKey]
+   selectedTheme: string;
 
    constructor(public dataService: DataService){
 		this.locale = this.dataService.GetLocale().settingsPage;
@@ -28,31 +30,12 @@ export class SettingsPageComponent{
    }
 
    async ngOnInit(){
-		this.sortTodosSelectedKey = await this.dataService.GetSortTodosByDate() ? dateKey : groupKey;
-
-      $('input').iCheck({
-         checkboxClass: 'icheckbox_square-blue',
-         radioClass: 'iradio_square-blue'
-      });
-
-      // Set the correct theme radio button to checked
-		let theme = await this.dataService.GetTheme();
-      if(theme == environment.darkThemeKey){
-			// Dark theme
-			$('#dark-theme-radio-button').iCheck('check');
-      }else if(theme == environment.systemThemeKey && window["Windows"]){
-			// System theme
-			$('#system-theme-radio-button').iCheck('check');
-      }else{
-			// Light theme
-			$('#light-theme-radio-button').iCheck('check');
-      }
-
-      $('#light-theme-radio-button').on('ifChecked', (event) => this.changeTheme(environment.lightThemeKey));
-		$('#dark-theme-radio-button').on('ifChecked', (event) => this.changeTheme(environment.darkThemeKey));
-		
-		if(window["Windows"]){
-			$('#system-theme-radio-button').on('ifChecked', (event) => this.changeTheme(environment.systemThemeKey));
+      this.sortTodosSelectedKey = await this.dataService.GetSortTodosByDate() ? dateKey : groupKey;
+      
+      // Set the correct theme radio button
+		this.selectedTheme = await this.dataService.GetTheme();
+		if(!this.isWindows && this.selectedTheme == environment.systemThemeKey){
+			this.selectedTheme = environment.lightThemeKey;
 		}
    }
 
@@ -61,8 +44,9 @@ export class SettingsPageComponent{
 		this.dataService.SetSortTodosByDate(event.index == 0);
    }
 
-   changeTheme(theme: string){
-      this.dataService.SetTheme(theme);
-      this.dataService.ApplyTheme(theme);
-   }
+   onThemeRadioButtonSelected(event: MatRadioChange){
+		this.selectedTheme = event.value;
+		this.dataService.SetTheme(event.value);
+		this.dataService.ApplyTheme(event.value);
+	}
 }

@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { AppComponent } from './app.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
@@ -95,9 +96,10 @@ import { environment } from '../environments/environment';
       FabTextFieldModule,
       FabIconModule,
       BrowserAnimationsModule,
-      MatTreeModule,
       MatButtonModule,
-      MatSnackBarModule
+      MatSnackBarModule,
+      MatTreeModule,
+      MatRadioModule
   	],
   	providers: [
 		DataService
