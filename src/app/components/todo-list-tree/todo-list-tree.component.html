@@ -1,6 +1,7 @@
 <ul style="padding: 0px; margin: 0px">
 	<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
 		<mat-tree-node *matTreeNodeDef="let node" [ngClass]="showRoot ? 'theme-background-color-secondary' : 'theme-background-color-primary'">
+			<!-- Normal todo -->
 			<ng-container *ngIf="!node.newTodo && !node.newTodoList">
 				<div style="margin-bottom: -8px; margin-left: 5px;">
 					<fab-checkbox [checked]="node.completed" (onChange)="ToggleTodoCheckbox(node.uuid)"></fab-checkbox>
@@ -14,8 +15,9 @@
                <fa-icon [icon]="faTimes" class="text-color" style="font-size: 15px; display: block"></fa-icon>
             </button>
 			</ng-container>
+			<!-- New Todo input -->
 			<ng-container *ngIf="node.newTodo">
-				<fab-text-field [(value)]="inputValue" [placeholder]="locale.todoName"></fab-text-field>
+				<fab-text-field [(value)]="inputValue" [placeholder]="locale.todoName" (keydown.enter)="ChangeInputToNode(node, false)"></fab-text-field>
             <button type="button" 
                   class="btn btn-outline-primary btn-sm ml-2" 
                   [disabled]="inputValue.length < 2"
@@ -25,14 +27,15 @@
                   style="padding: 5px 8px 3px 8px" 
                   (click)="RemoveAllInputNodes()"><fab-icon iconName="Cancel"></fab-icon></button>
 			</ng-container>
+			<!-- New Todo list input -->
 			<ng-container *ngIf="node.newTodoList && !node.newTodo">
-            <fab-text-field [(value)]="inputValue" [placeholder]="locale.todoListName"></fab-text-field>
+            <fab-text-field [(value)]="inputValue" [placeholder]="locale.todoListName" (keydown.enter)="ChangeInputToNode(node, true)"></fab-text-field>
             <button type="button" 
                   class="btn btn-outline-primary btn-sm ml-2" 
                   [disabled]="inputValue.length < 2"
                   (click)="ChangeInputToNode(node, true)">{{ locale.add }}</button>
             <button type="button" 
-                  class="btn btn-light btn-sm ml-2 text-color theme-background-color-primary theme-border-color-primary" 
+                  class="btn btn-sm ml-2 text-color theme-background-color-primary theme-border-color-primary icon-button" 
                   style="padding: 5px 8px 3px 8px" 
                   (click)="RemoveAllInputNodes()"><fab-icon iconName="Cancel"></fab-icon></button>
 			</ng-container>

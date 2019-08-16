@@ -266,10 +266,12 @@ export class TodoListTreeComponent{
       this.treeControl.expand(todo);
 
 		// Set focus on the text field
-		$(".ms-TextField-field, .field-65").focus();
+		setTimeout(() => $(".ms-TextField-field, .field-65").focus(), 1);
 	}
 
 	async ChangeInputToNode(node: TodoNode, list: boolean = false){
+		if(this.inputValue.length < 2) return;
+
 		if(list){
 			node.name = this.inputValue;
 			node.list = true;
