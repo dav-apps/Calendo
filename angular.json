@@ -31,15 +31,13 @@
               }
             ],
             "styles": [
-              "node_modules/icheck/skins/square/blue.css",
               "node_modules/bootstrap/scss/bootstrap.scss",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/office-ui-fabric-core/dist/css/fabric.min.css",
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/icheck/icheck.js"
+              "node_modules/jquery/dist/jquery.js"
             ]
           },
           "configurations": {

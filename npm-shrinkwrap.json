@@ -5386,11 +5386,6 @@
         "ms": "^2.0.0"
       }
     },
-    "icheck": {
-      "version": "1.0.2",
-      "resolved": "https://registry.npmjs.org/icheck/-/icheck-1.0.2.tgz",
-      "integrity": "sha1-BtCNo9R65EjBU7Jjm4bprX/fcSg="
-    },
     "iconv-lite": {
       "version": "0.4.24",
       "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz",
