@@ -6,7 +6,9 @@
 				<div style="margin-bottom: -8px; margin-left: 5px;">
 					<fab-checkbox [checked]="node.completed" (onChange)="ToggleTodoCheckbox(node.uuid)"></fab-checkbox>
 				</div>
-				<label class="ml-2 col-form-label text-color cursor ms-fontSize-14" (click)="ToggleTodoCheckbox(node.uuid)">
+				<label class="ml-2 col-form-label text-color cursor ms-fontSize-14" 
+						[ngClass]="node.completed ? 'strikethrough' : ''" 
+						(click)="ToggleTodoCheckbox(node.uuid)">
 					{{ node.name }}
 				</label>
 				
