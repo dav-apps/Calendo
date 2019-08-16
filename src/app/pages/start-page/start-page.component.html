@@ -40,8 +40,8 @@
 		<ng-container *ngFor="let date of dataService.startDaysDates; let i = index;">
 			<div class="row py-4 ml-md-4 border-top" [ngClass]="dataService.darkTheme ? 'border-dark' : ''" *ngIf="i > 0">
 				<div class="col-3 text-color">
-					<h4 class="cursor" (click)="ShowCalendarDay(dataService.startDaysDates[i])">{{ GetLargeDate(date) }}</h4>
-					<p class="font-weight-light cursor" (click)="ShowCalendarDay(dataService.startDaysDates[i])">{{ GetSmallDate(date) }}</p>
+					<h4 class="cursor" [style.font-size.px]="largeDateFontSize" (click)="ShowCalendarDay(dataService.startDaysDates[i])">{{ GetLargeDate(date) }}</h4>
+					<p class="font-weight-light cursor" [style.font-size.px]="smallDateFontSize" (click)="ShowCalendarDay(dataService.startDaysDates[i])">{{ GetSmallDate(date) }}</p>
 				</div>
 				<div class="col-9 d-flex flex-column mt-1">
 					<div class="d-inline-flex" *ngFor="let appointment of dataService.startDaysAppointments[i]">

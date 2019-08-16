@@ -29,6 +29,8 @@ export class StartPageComponent{
 
 	largeDateFormat: string = this.locale.formats.smallDate;
 	smallDateFormat: string = this.locale.formats.largeDate;
+	largeDateFontSize: number = 24;
+	smallDateFontSize: number = 16;
 
 	constructor(public dataService: DataService,
 					private router: Router,
@@ -37,6 +39,9 @@ export class StartPageComponent{
 		this.locale = this.dataService.GetLocale().startPage;
 		this.snackbarLocale = this.dataService.GetLocale().snackbar;
 		moment.locale(this.dataService.locale);
+
+		this.largeDateFormat = this.locale.formats.largeDate;
+		this.smallDateFormat = this.locale.formats.smallDate;
 
 		// Hide the title bar back button on Windows
 		this.dataService.HideWindowsBackButton();
@@ -55,11 +60,15 @@ export class StartPageComponent{
 	}
 
 	GetLargeDate(date: number): string{
-      return moment.unix(date).format(this.largeDateFormat);
+		let momentDate = moment.unix(date);
+		let format = momentDate.diff(moment(), 'days') > 6 ? this.smallDateFormat : this.largeDateFormat;
+		return momentDate.format(format);
 	}
 	
 	GetSmallDate(date: number): string{
-		return moment.unix(date).format(this.smallDateFormat);
+		let momentDate = moment.unix(date);
+		let format = momentDate.diff(moment(), 'days') > 6 ? this.largeDateFormat : this.smallDateFormat;
+		return momentDate.format(format);
 	}
 
 	GetCurrentWeekday(){
@@ -126,12 +135,7 @@ export class StartPageComponent{
 	}
 
 	setSize(){
-		if(window.innerWidth < 600){
-			this.largeDateFormat = this.locale.formats.smallDate;
-			this.smallDateFormat = this.locale.formats.largeDate;
-		}else{
-			this.largeDateFormat = this.locale.formats.largeDate;
-			this.smallDateFormat = this.locale.formats.smallDate;
-		}
+		this.largeDateFontSize = window.innerWidth < 450 ? 21 : 24;
+		this.smallDateFontSize = window.innerWidth < 450 ? 15 : 16;
 	}
 }
