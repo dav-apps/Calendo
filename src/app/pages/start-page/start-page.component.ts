@@ -14,10 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
    selector: "calendo-start-page",
-   templateUrl: "./start-page.component.html",
-   styleUrls: [
-      "./start-page.component.scss"
-   ]
+   templateUrl: "./start-page.component.html"
 })
 export class StartPageComponent{
 	locale = enUS.startPage;
