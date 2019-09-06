@@ -3,7 +3,7 @@
 
 <div *ngIf="enableDropdown" ngbDropdown placement="bottom-left">
    <div class="px-1 rounded cursor" 
-         style="font-size: 15px; color: white" 
+         style="font-size: 15px; color: white; user-select: none" 
          [style.background-color]="appointment.color ? '#' + appointment.color : defaultColor"
          ngbDropdownToggle>
       <p *ngIf="!compact">

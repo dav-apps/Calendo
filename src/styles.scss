@@ -65,6 +65,10 @@ body{
    border-color: var(--theme-color-tertiary);
 }
 
+.dropdown-item{
+   user-select: none;
+}
+
 .dropdown-item:hover{
 	background-color: var(--hover-background-color);
 	color: var(--text-color);

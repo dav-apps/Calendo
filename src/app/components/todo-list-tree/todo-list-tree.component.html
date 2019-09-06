@@ -7,7 +7,8 @@
 					<fab-checkbox [checked]="node.completed" (onChange)="ToggleTodoCheckbox(node.uuid)"></fab-checkbox>
 				</div>
 				<label class="ml-2 col-form-label text-color cursor ms-fontSize-14" 
-						[ngClass]="node.completed ? 'strikethrough' : ''" 
+                  [ngClass]="node.completed ? 'strikethrough' : ''" 
+                  style="user-select: none"
 						(click)="ToggleTodoCheckbox(node.uuid)">
 					{{ node.name }}
 				</label>
@@ -49,14 +50,14 @@
 					<fab-icon [iconName]="treeControl.isExpanded(node) ? 'ChevronDownMed' : 'ChevronRightMed'" [styles]="chevronIconStyles"></fab-icon>
 				</button>
 
-				<span class="cursor d-flex" style="margin-top: 7px" matTreeNodeToggle *ngIf="!node.editTodoList">
+				<span class="cursor d-flex" style="margin-top: 7px; user-select: none" matTreeNodeToggle *ngIf="!node.editTodoList">
 					<span class="mr-2" style="margin-top: -2px" *ngIf="node.completedCount == GetNodeChildrenCount(node)">
 						<fab-icon iconName="Accept" [styles]="checkIconStyles"></fab-icon>
 					</span>
 					<span style="font-size: 14px; color: gray" matTreeNodeToggle>{{ node.completedCount }}/{{ GetNodeChildrenCount(node) }}</span>
 				</span>
 
-				<span class="cursor my-auto text-color ml-3" matTreeNodeToggle *ngIf="!node.editTodoList">
+				<span class="cursor my-auto text-color ml-3" style="user-select: none" matTreeNodeToggle *ngIf="!node.editTodoList">
 					<span class="mr-2">{{ node.name }}</span>
 					<span *ngIf="showRoot">
 						<calendo-todo-group-badge *ngFor="let todoGroup of node.groups" [groupName]="todoGroup"></calendo-todo-group-badge>
