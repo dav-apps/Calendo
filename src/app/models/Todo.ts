@@ -1,35 +1,34 @@
-import { GetTableObject, TableObject, GetAllTableObjects, DeleteNotification } from 'dav-npm';
+import { TableObject, Property, GetTableObject, GetAllTableObjects, DeleteNotification } from 'dav-npm';
 import { environment } from "../../environments/environment";
 
 export class Todo{
-	public uuid: string = null;
-	public name: string = "";
-	public completed: boolean = false;
-	public time: number = 0;
-	public groups: string[] = [];
-	public list: string = null;
-	public notificationUuid: string = null;
+	public uuid: string;
+	public name: string;
+	public completed: boolean;
+	public time: number;
+	public groups: string[];
+	public list: string;
+	public notificationUuid: string;
 
    constructor(
-		uuid: string,
 		name: string,
-		completed?: boolean,
-		time?: number,
-		groups?: string[],
-		list?: string,
-		notificationUuid?: string
+		completed: boolean = false,
+		time: number = 0,
+		groups: string[] = [],
+		list: string = null,
+		notificationUuid: string = null
 	){
-		this.uuid = uuid;
 		this.name = name;
-		this.completed = completed == null ? false : completed;
-		this.time = time ? time : 0;
-		this.groups = groups ? groups : [];
+		this.completed = completed;
+		this.time = time;
+		this.groups = groups;
 		this.list = list;
 		this.notificationUuid = notificationUuid;
 	}
 
-	public static async Create(name: string, completed: boolean = false, time: number, groups: string[] = [], list: string = null, notificationUuid: string = null, uuid: string = null) : Promise<Todo>{
-		let todo = new Todo(uuid, name, completed, time, groups, list, notificationUuid);
+	public static async Create(name: string, completed: boolean = false, time: number = 0, groups: string[] = [], list: string = null, notificationUuid: string = null, uuid: string = null) : Promise<Todo>{
+      let todo = new Todo(name, completed, time, groups, list, notificationUuid);
+      todo.uuid = uuid;
 		await todo.Save();
 		return todo;
    }
@@ -79,7 +78,7 @@ export class Todo{
 			this.uuid = tableObject.Uuid;
 		}
 
-		let properties: {name: string, value: string}[] = [
+		let properties: Property[] = [
 			{ name: environment.todoNameKey, value: this.name},
 			{ name: environment.todoCompletedKey, value: this.completed.toString() },
 			{ name: environment.todoTimeKey, value: this.time.toString() }
@@ -178,13 +177,14 @@ export function ConvertTableObjectToTodo(tableObject: TableObject): Todo{
 	var tableObjectNotificationUuid = tableObject.GetPropertyValue(environment.notificationUuidKey);
 	var notificationUuid = tableObjectNotificationUuid ? tableObjectNotificationUuid : "";
 
-	return new Todo(
-		tableObject.Uuid, 
+	let todo = new Todo(
 		tableObject.GetPropertyValue(environment.todoNameKey),
 		completed,
 		todoTime,
 		groups,
 		list,
 		notificationUuid
-	);
+   );
+   todo.uuid = tableObject.Uuid;
+   return todo;
 }
