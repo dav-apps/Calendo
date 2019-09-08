@@ -7,17 +7,21 @@ export const environment = {
    todoListTableId: 13,
 	todoTableId: 10,
    appointmentTableId: 11,
+   // Keys for TodoList table
    todoListNameKey: "name",
    todoListTimeKey: "time",
    todoListTodosKey: "todos",
    todoListTodoListsKey: "todo_lists",
+   todoListItemsKey: "items",
    todoListGroupsKey: "groups",
    todoListListKey: "list",
+   // Keys for Todo table
 	todoCompletedKey: "completed",
 	todoTimeKey: "time",
 	todoNameKey: "name",
    todoGroupsKey: "groups",
    todoListKey: "list",
+   // Keys for Appointment table
 	appointmentNameKey: "name",
 	appointmentStartKey: "start",
 	appointmentEndKey: "end",
