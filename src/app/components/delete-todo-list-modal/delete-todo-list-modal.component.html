@@ -7,11 +7,6 @@
 	</div>
 	<div class="modal-body theme-background-color-primary text-color">
       <p>{{ locale.message }}</p>
-      <p>
-         <span style="font-size: 17px">{{ todoList.name }}</span>
-         <br><span class="ml-3">{{ todoList.todos.length }} {{ todoList.todos.length == 1 ? locale.todo : locale.todos }}</span>
-         <br><span class="ml-3">{{ todoList.todoLists.length }} {{ todoList.todoLists.length == 1 ? locale.todoList : locale.todoLists }}</span>
-      </p>
 	</div>
 	<div class="modal-footer theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
 		<button type="button" class="btn btn-secondary" (click)="d()">{{ locale.cancel }}</button>

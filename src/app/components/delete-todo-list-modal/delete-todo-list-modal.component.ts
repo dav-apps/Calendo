@@ -10,7 +10,7 @@ import { TodoList } from 'src/app/models/TodoList';
 })
 export class DeleteTodoListModalComponent{
    locale = enUS.deleteTodoListModal;
-   todoList: TodoList = new TodoList(null, "");
+   todoList: TodoList = new TodoList();
 	@Output() remove = new EventEmitter();
 	@ViewChild('deleteTodoListModal', { static: true }) todoListModal: ElementRef;
 
