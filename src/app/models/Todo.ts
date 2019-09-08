@@ -54,7 +54,12 @@ export class Todo{
          this.completed = completed;
          await this.Save();
       }
-	}
+   }
+   
+   async SetList(list: string){
+      this.list = list;
+      await this.Save();
+   }
 	
 	async Delete(){
 		var tableObject = await GetTableObject(this.uuid);

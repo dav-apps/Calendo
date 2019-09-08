@@ -1,5 +1,5 @@
 <ul style="padding: 0px; margin: 0px">
-	<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" dragula="todoList">
+	<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [dragula]="showRoot ? '' : 'todoList'">
 		<mat-tree-node *matTreeNodeDef="let node" [ngClass]="showRoot ? 'theme-background-color-secondary' : 'theme-background-color-primary'" [id]="node.uuid">
 			<!-- Normal todo -->
 			<ng-container *ngIf="!node.newTodo && !node.newTodoList">
@@ -101,7 +101,7 @@
 				</div>
 			</div>
 
-			<div [ngClass]="showRoot ? 'theme-background-color-secondary' : 'theme-background-color-primary'" style="padding-left: 25px;" [style.display]="treeControl.isExpanded(node) ? '' : 'none'" dragula="todoList">
+			<div [ngClass]="showRoot ? 'theme-background-color-secondary' : 'theme-background-color-primary'" style="padding-left: 25px;" [style.display]="treeControl.isExpanded(node) ? '' : 'none'" [dragula]="showRoot ? null : 'todoList'">
 				<ng-container matTreeNodeOutlet></ng-container>
 			</div>
 		</mat-nested-tree-node>

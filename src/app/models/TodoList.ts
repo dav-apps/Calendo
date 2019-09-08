@@ -49,7 +49,12 @@ export class TodoList{
 	async SetItems(items: (Todo | TodoList)[]){
 		this.items = items;
 		await this.Save();
-	}
+   }
+   
+   async SetList(list: string){
+      this.list = list;
+      await this.Save();
+   }
 
 	private async Save(){
 		let tableObject = await GetTableObject(this.uuid);

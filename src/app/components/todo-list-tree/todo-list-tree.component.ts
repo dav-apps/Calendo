@@ -84,52 +84,6 @@ export class TodoListTreeComponent{
 		this.Init();
 	}
 
-	async HandleDrop(value: {name: string, el: Element, target: Element, source: Element, sibling: Element}){
-		if(this.dropEventFired) return;
-		this.dropEventFired = true;
-
-		if(value.source == value.target){
-			// The item was moved within the list; update the parent element
-			let parentUuid: string;
-			let parentElement = value.el.parentElement;
-			if(parentElement.tagName == "DIV"){
-				parentUuid = parentElement.parentElement.id;
-			}else if(parentElement.tagName == "MAT-TREE"){
-				parentUuid = this.rootTodoItem.uuid;
-			}else{
-				parentUuid = parentElement.id;
-			}
-
-			let parentNode = this.FindNodeInTree(parentUuid, this.rootTodoItem);
-			let newOrderItems: TodoNode[] = [];
-
-			let children = value.el.parentElement.children;
-			for(let i = 0; i < children.length; i++){
-				let child = children.item(i);
-				let uuid = child.id;
-				
-				// Find the node in the parent node children and add it to the new order array
-				let item = parentNode.children.find(node => node.uuid == uuid)
-				if(item) newOrderItems.push(item);
-			}
-
-			// Set the parent node children to the new order items
-			parentNode.children = newOrderItems;
-			
-			if(parentNode == this.rootTodoItem){
-				this.todoItems = newOrderItems;
-			}
-
-			// Update the todo list
-			await this.UpdateTodoListOrder(parentNode);
-		}else{
-			// The item was moved into another list; update the order of the two parent elements
-			// TODO
-		}
-
-		this.dropEventFired = false;
-	}
-
 	public Init(){
 		this.AddTodoItems(this.todoList, this.todoItems);
 
@@ -153,15 +107,6 @@ export class TodoListTreeComponent{
 
 	ngOnDestroy(){
 		this.subs.unsubscribe();
-	}
-
-	async UpdateTodoListOrder(node: TodoNode){
-		if(!node.list || !(node.item instanceof TodoList)) return;
-
-		let items: (Todo | TodoList)[] = [];
-		node.children.forEach((child: TodoNode) => items.push(child.item));
-
-		await node.item.SetItems(items);
 	}
 
 	/**
@@ -396,6 +341,92 @@ export class TodoListTreeComponent{
 				this.ReloadTree();
 			}
 		}
+	}
+
+	async HandleDrop(value: {name: string, el: Element, target: Element, source: Element, sibling: Element}){
+		if(this.dropEventFired) return;
+		this.dropEventFired = true;
+
+		if(value.source == value.target){
+			// The item was moved within the list; update the parent element
+			await this.UpdateTodoListByElement(value.el.parentElement);
+		}else{
+			// The item was moved into another list; update the order of the two parent elements
+			// Update the target list
+			await this.UpdateTodoListByElement(value.target);
+
+			// Update the source list
+			await this.UpdateTodoListByElement(value.source);
+
+			// Update the list of the moved item
+			let itemUuid = value.el.id;
+			let itemNode = this.FindNodeInTree(itemUuid, this.rootTodoItem);
+
+			let newListUuid = this.GetListUuidByElement(value.target);
+			await itemNode.item.SetList(newListUuid);
+		}
+
+		this.dropEventFired = false;
+	}
+
+	/**
+	 * Gets the items of the list from the children of the given element and updates it in the database
+	 * @param element The html element which represents the todo list in the DOM
+	 */
+	private async UpdateTodoListByElement(element: Element){
+		// Find the node of the list
+		let parentUuid = this.GetListUuidByElement(element);
+		let parentNode = this.FindNodeInTree(parentUuid, this.rootTodoItem);
+		let newOrderItems: TodoNode[] = [];
+
+		// Get the nodes of the updated todo list
+		let children = element.children;
+
+		for(let i = 0; i < children.length; i++){
+			let child = children.item(i);
+			let uuid = child.id;
+
+			//let item = parentNode.children.find(node => node.uuid == uuid);
+			let item = this.FindNodeInTree(uuid, this.rootTodoItem);
+			if(item) newOrderItems.push(item);
+		}
+
+		// Update the todo list with the new children
+		parentNode.children = newOrderItems;
+
+		// Update the todoItems, if necessary
+		if(parentNode == this.rootTodoItem) this.todoItems = newOrderItems;
+
+		await this.UpdateTodoListOrder(parentNode);
+	}
+
+	/**
+	 * Finds the uuid of the todo list that is represented by the given html element
+	 * @param element The html element which represents the todo list in the DOM
+	 */
+	private GetListUuidByElement(element: Element){
+		let uuid: string = null;
+		if(element.tagName == "DIV"){
+			uuid = element.parentElement.id;
+		}else if(element.tagName == "MAT-TREE"){
+			uuid = this.rootTodoItem.uuid;
+		}else{
+			uuid = element.id;
+		}
+
+		return uuid;
+	}
+
+	async UpdateTodoListOrder(node: TodoNode){
+		if(!node.list || !(node.item instanceof TodoList)) return;
+
+		let items: (Todo | TodoList)[] = [];
+		node.children.forEach((child: TodoNode) => {
+			if(child.item) items.push(child.item);
+		});
+
+		await node.item.SetItems(items);
+		this.update.emit();
 	}
 
 	//#region Event handlers
