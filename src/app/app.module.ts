@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatRadioModule } from '@angular/material/radio';
+import { DragulaModule } from 'ng2-dragula';
 
 import { AppComponent } from './app.component';
 import { StartPageComponent } from './pages/start-page/start-page.component';
@@ -99,7 +100,8 @@ import { environment } from '../environments/environment';
       MatButtonModule,
       MatSnackBarModule,
       MatTreeModule,
-      MatRadioModule
+      MatRadioModule,
+      DragulaModule.forRoot()
   	],
   	providers: [
 		DataService
