@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data-service';
 import { IIconStyles } from 'office-ui-fabric-react';
+import { Todo } from 'src/app/models/Todo';
 import { TodoList } from 'src/app/models/TodoList';
 
 @Component({
@@ -10,7 +11,7 @@ import { TodoList } from 'src/app/models/TodoList';
 })
 export class SmallTodoListItemComponent{
 	@Input()
-	todoList: TodoList = new TodoList(null, "");
+	todoList: TodoList = new TodoList();
 	totalTodos: number = 0;
 	completedTodos: number = 0;
 	todoTreeCopy: TodoElement;
@@ -47,27 +48,27 @@ export class SmallTodoListItemComponent{
 	}
 
 	LoadTreeElement(element: TodoElement, todoList: TodoList){
-		todoList.todos.forEach(todo => {
-			element.children.push({
-				uuid: todo.uuid,
-				list: false,
-				children: [],
-				completed: todo.completed,
-				completedCount: 0
-			});
-		});
+		todoList.items.forEach((item: Todo | TodoList) => {
+			if(item instanceof Todo){
+				element.children.push({
+					uuid: item.uuid,
+					list: false,
+					children: [],
+					completed: item.completed,
+					completedCount: 0
+				});
+			}else{
+				let newElement: TodoElement = {
+					uuid: item.uuid,
+					list: true,
+					children: [],
+					completed: false,
+					completedCount: 0
+				}
 
-		todoList.todoLists.forEach(todoList => {
-			let newElement: TodoElement = {
-				uuid: todoList.uuid,
-				list: true,
-				children: [],
-				completed: false,
-				completedCount: 0
+				this.LoadTreeElement(newElement, item);
+				element.children.push(newElement);
 			}
-
-			this.LoadTreeElement(newElement, todoList);
-			element.children.push(newElement);
 		});
 	}
 

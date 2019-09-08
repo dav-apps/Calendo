@@ -1039,8 +1039,13 @@ export class DataService{
 
 	// Get the todos of todoList and add them to todos
 	GetNestedTodosInTodoList(todoList: TodoList, todos: Todo[]){
-		todoList.todos.forEach(todo => todos.push(todo));
-		todoList.todoLists.forEach(list => this.GetNestedTodosInTodoList(list, todos));
+      todoList.items.forEach((item: (Todo | TodoList)) => {
+         if(item instanceof Todo){
+				todos.push(item);
+			}else{
+				this.GetNestedTodosInTodoList(item, todos);
+			}
+      });
    }
 	
 	// Save the todo list uuid in updatedTodoLists if it is not there yet

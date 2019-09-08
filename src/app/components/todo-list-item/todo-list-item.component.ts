@@ -10,7 +10,7 @@ import { DataService } from '../../services/data-service';
 })
 export class TodoListItemComponent{
    @Input()
-	todoList: TodoList = new TodoList(null, "");
+	todoList: TodoList = new TodoList();
 	@Output()
 	update = new EventEmitter();
    menuButtonIconProps: IIconProps = {
