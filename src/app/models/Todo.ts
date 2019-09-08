@@ -11,7 +11,7 @@ export class Todo{
 	public notificationUuid: string;
 
    constructor(
-		name: string,
+		name: string = "",
 		completed: boolean = false,
 		time: number = 0,
 		groups: string[] = [],
