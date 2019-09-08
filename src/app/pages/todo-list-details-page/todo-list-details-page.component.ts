@@ -18,7 +18,7 @@ export class TodoListDetailsPageComponent{
 	@ViewChild('todoListTree', { static: true }) todoListTree: TodoListTreeComponent;
 	@ViewChild('todoListModal', { static: true }) todoListModal: TodoListModalComponent;
 	@ViewChild('deleteTodoListModal', { static: true }) deleteTodoListModal: DeleteTodoListModalComponent;
-	todoList: TodoList = new TodoList(null, "");
+	todoList: TodoList = new TodoList();
 	date: string = "";
 
 	constructor(
@@ -44,11 +44,10 @@ export class TodoListDetailsPageComponent{
 			this.todoList.time = list.time;
 			this.todoList.groups = list.groups;
          this.todoList.list = list.list;
-         this.todoList.todos = list.todos;
-         this.todoList.todoLists = list.todoLists;
+			this.todoList.items = list.items;
          this.date = moment.unix(this.todoList.time).format(this.locale.formats.date);
          
-         this.todoListTree.ngOnInit();
+         this.todoListTree.Init();
       });
 	}
 	

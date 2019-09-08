@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core
 import { Router } from '@angular/router';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { IIconStyles } from 'office-ui-fabric-react';
 import { Todo, GetTodo } from '../../models/Todo';
 import { TodoList, GetTodoList } from '../../models/TodoList';
@@ -12,6 +12,7 @@ import { DataService } from 'src/app/services/data-service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { DeleteTodoListModalComponent } from '../delete-todo-list-modal/delete-todo-list-modal.component';
 import { UpgradeRequiredModalComponent } from '../upgrade-required-modal/upgrade-required-modal.component';
+import { DragulaService } from 'ng2-dragula';
 declare var $: any;
 
 @Component({
@@ -24,6 +25,7 @@ export class TodoListTreeComponent{
 	dataSource: MatTreeNestedDataSource<TodoNode>;
 	treeControl: NestedTreeControl<TodoNode>;
 	dataChange: BehaviorSubject<TodoNode[]> = new BehaviorSubject<TodoNode[]>([]);
+	subs = new Subscription();    // Holds all subscriptions
 	@ViewChild('deleteTodoListModal', { static: true }) deleteTodoListModal: DeleteTodoListModalComponent;
    @ViewChild('upgradeRequiredModal', { static: true }) upgradeRequiredModal: UpgradeRequiredModalComponent;
 	@Input()
@@ -44,10 +46,12 @@ export class TodoListTreeComponent{
 		newTodo: false,
 		newTodoList: false,
 		editTodoList: false,
-		groups: this.todoList ? this.todoList.groups : []
+		groups: this.todoList ? this.todoList.groups : [],
+		item: this.todoList
 	}
 	todoItems: TodoNode[] = [];
 	inputValue: string = "";
+	dropEventFired: boolean = false;
 	chevronIconStyles: IIconStyles = {
 		root: {
          fontSize: 14,
@@ -63,18 +67,70 @@ export class TodoListTreeComponent{
 
 	constructor(
       public dataService: DataService,
-      public router: Router
+		public router: Router,
+		private dragula: DragulaService
    ){
       this.locale = this.dataService.GetLocale().todoListTree;
 		this.dataSource = new MatTreeNestedDataSource();
 		this.treeControl = new NestedTreeControl<TodoNode>((dataNode: TodoNode) => dataNode.children);
-
-		this.dataChange.subscribe(data => this.dataSource.data = data);
 	}
 
 	hasNestedChild = (i: number, nodeData: TodoNode) => { return nodeData.list && !nodeData.newTodoList };
 
 	ngOnInit(){
+		this.subs.add(this.dataChange.subscribe(data => this.dataSource.data = data));
+		this.subs.add(this.dragula.drop().subscribe(async value => await this.HandleDrop(value)));
+
+		this.Init();
+	}
+
+	async HandleDrop(value: {name: string, el: Element, target: Element, source: Element, sibling: Element}){
+		if(this.dropEventFired) return;
+		this.dropEventFired = true;
+
+		if(value.source == value.target){
+			// The item was moved within the list; update the parent element
+			let parentUuid: string;
+			let parentElement = value.el.parentElement;
+			if(parentElement.tagName == "DIV"){
+				parentUuid = parentElement.parentElement.id;
+			}else if(parentElement.tagName == "MAT-TREE"){
+				parentUuid = this.rootTodoItem.uuid;
+			}else{
+				parentUuid = parentElement.id;
+			}
+
+			let parentNode = this.FindNodeInTree(parentUuid, this.rootTodoItem);
+			let newOrderItems: TodoNode[] = [];
+
+			let children = value.el.parentElement.children;
+			for(let i = 0; i < children.length; i++){
+				let child = children.item(i);
+				let uuid = child.id;
+				
+				// Find the node in the parent node children and add it to the new order array
+				let item = parentNode.children.find(node => node.uuid == uuid)
+				if(item) newOrderItems.push(item);
+			}
+
+			// Set the parent node children to the new order items
+			parentNode.children = newOrderItems;
+			
+			if(parentNode == this.rootTodoItem){
+				this.todoItems = newOrderItems;
+			}
+
+			// Update the todo list
+			await this.UpdateTodoListOrder(parentNode);
+		}else{
+			// The item was moved into another list; update the order of the two parent elements
+			// TODO
+		}
+
+		this.dropEventFired = false;
+	}
+
+	public Init(){
 		this.AddTodoItems(this.todoList, this.todoItems);
 
 		this.rootTodoItem = {
@@ -87,14 +143,35 @@ export class TodoListTreeComponent{
 			newTodo: false,
 			newTodoList: false,
 			editTodoList: false,
-			groups: this.todoList.groups
+			groups: this.todoList.groups,
+			item: this.todoList
 		}
 		
 		this.LoadTodoListCompletedCount(this.rootTodoItem);
 		this.dataChange.next(this.showRoot ? [this.rootTodoItem] : this.todoItems);
 	}
 
+	ngOnDestroy(){
+		this.subs.unsubscribe();
+	}
+
+	async UpdateTodoListOrder(node: TodoNode){
+		if(!node.list || !(node.item instanceof TodoList)) return;
+
+		let items: (Todo | TodoList)[] = [];
+		node.children.forEach((child: TodoNode) => items.push(child.item));
+
+		await node.item.SetItems(items);
+	}
+
+	/**
+	 * Finds the node with the given uuid and returns it
+	 * @param uuid The uuid of the node to search for
+	 * @param rootItem The parent in which the node should be searched for
+	 */
 	FindNodeInTree(uuid: string, rootItem: TodoNode) : TodoNode{
+		if(rootItem.uuid == uuid) return rootItem;
+
 		for(let item of rootItem.children){
 			if(item.uuid == uuid){
 				return item;
@@ -109,6 +186,11 @@ export class TodoListTreeComponent{
 		return null;
 	}
 
+	/**
+	 * Finds the parent of the node with the given uuid and returns it
+	 * @param uuid The uuid of the node of which the parent is searched for
+	 * @param rootItem The parent in which the node should be searched for
+	 */
 	FindParentNodeInTree(uuid: string, rootItem: TodoNode) : TodoNode{
 		for(let item of rootItem.children){
 			if(item.uuid == uuid){
@@ -126,37 +208,39 @@ export class TodoListTreeComponent{
 
 	AddTodoItems(todoList: TodoList, todoItems: TodoNode[]){
 		// Create a todoNode for each todo and todoList in the TodoList
-		todoList.todos.forEach((todo: Todo) => {
-			todoItems.push({
-				uuid: todo.uuid,
-				name: todo.name,
-				list: false,
-				children: [],
-				completed: todo.completed,
-				completedCount: 0,
-				newTodo: false,
-				newTodoList: false,
-				editTodoList: false,
-				groups: []
-			});
-		});
+		todoList.items.forEach((item: Todo | TodoList) => {
+			if(item instanceof Todo){
+				todoItems.push({
+					uuid: item.uuid,
+					name: item.name,
+					list: false,
+					children: [],
+					completed: item.completed,
+					completedCount: 0,
+					newTodo: false,
+					newTodoList: false,
+					editTodoList: false,
+					groups: [],
+					item: item
+				});
+			}else{
+				let newTodoItems: TodoNode[] = [];
+				this.AddTodoItems(item, newTodoItems);
 
-		todoList.todoLists.forEach((todoList: TodoList) => {
-			let newTodoItems: TodoNode[] = [];
-			this.AddTodoItems(todoList, newTodoItems);
-			
-			todoItems.push({
-				uuid: todoList.uuid,
-				name: todoList.name,
-				list: true,
-				children: newTodoItems,
-				completed: false,
-				completedCount: 0,
-				newTodo: false,
-				newTodoList: false,
-				editTodoList: false,
-				groups: []
-			});
+				todoItems.push({
+					uuid: item.uuid,
+					name: item.name,
+					list: true,
+					children: newTodoItems,
+					completed: false,
+					completedCount: 0,
+					newTodo: false,
+					newTodoList: false,
+					editTodoList: false,
+					groups: [],
+					item
+				});
+			}
 		});
 	}
 
@@ -244,21 +328,12 @@ export class TodoListTreeComponent{
 			newTodo: !list,
 			newTodoList: list,
 			editTodoList: false,
-			groups: []
+			groups: [],
+			item: null
 		}
-
-		if(list){
-			// Add the node at the end of the children
-			todo.children.push(newTodoNode);
-		}else{
-			// Add the node at the end of the todos
-			let index = todo.children.findIndex(item => item.list);
-			if(index == -1){
-				todo.children.push(newTodoNode);
-			}else{
-				todo.children.splice(index, 0, newTodoNode);
-			}
-		}
+		
+		// Add the node at the end of the children
+		todo.children.push(newTodoNode);
 
 		// Update the UI
 		this.dataChange.next([]);
@@ -282,13 +357,10 @@ export class TodoListTreeComponent{
 			let parentNode = this.FindParentNodeInTree(node.uuid, this.rootTodoItem);
 
 			if(parentNode){
-				let todoList = await TodoList.Create(node.name, this.todoList.time, [], [], [], parentNode.uuid, node.uuid);
+				let todoList = await TodoList.Create(node.name, this.todoList.time, [], [], parentNode.uuid, node.uuid);
+				node.item = todoList;
 
-				// Update the parent todo list
-				let parentTodoList = await GetTodoList(parentNode.uuid);
-				if(parentTodoList){
-					await parentTodoList.AddTodoList(todoList);
-				}
+				await this.UpdateTodoListOrder(parentNode);
 			}
 		}else{
 			node.name = this.inputValue;
@@ -301,12 +373,9 @@ export class TodoListTreeComponent{
 			
 			if(parentNode){
 				let todo = await Todo.Create(node.name, false, this.todoList.time, [], parentNode.uuid, null, node.uuid);
+				node.item = todo;
 
-				// Update the todo list
-				let parentTodoList = await GetTodoList(parentNode.uuid);
-				if(parentTodoList){
-					await parentTodoList.AddTodo(todo);
-				}
+				await this.UpdateTodoListOrder(parentNode);
 			}
 		}
 
@@ -355,15 +424,13 @@ export class TodoListTreeComponent{
 
 		// Remove the todo from the todo list
 		let parentNode = this.FindParentNodeInTree(uuid, this.rootTodoItem);
-		if(parentNode){
-			let todoList = await GetTodoList(parentNode.uuid);
-			if(todoList){
-				await todoList.RemoveTodo(uuid);
-			}
-		}
 
 		// Remove the todo from the tree
 		this.RemoveNode(uuid);
+
+		if(parentNode){
+			await this.UpdateTodoListOrder(parentNode);
+		}
 	}
 
 	EditTodoList(node: TodoNode){
@@ -393,15 +460,13 @@ export class TodoListTreeComponent{
 	async RemoveTodoList(todoList: TodoList){
 		// Remove the todo list from the parent todo list
 		let parentNode = this.FindParentNodeInTree(todoList.uuid, this.rootTodoItem);
-		if(parentNode){
-			let list = await GetTodoList(parentNode.uuid);
-			if(list){
-				await list.RemoveTodoList(todoList);
-			}
-		}
 
 		// Remove the todo list from the tree
 		this.RemoveNode(todoList.uuid);
+
+		if(parentNode){
+			await this.UpdateTodoListOrder(parentNode);
+		}
    }
    
    LearnMoreClicked(){
@@ -422,4 +487,5 @@ interface TodoNode{
 	newTodoList: boolean;
 	editTodoList: boolean;
 	groups: string[];
+	item: Todo | TodoList;
 }
