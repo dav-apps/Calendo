@@ -53,11 +53,11 @@ export class AppComponent {
 							[environment.todoTableId, environment.todoListTableId, environment.appointmentTableId], 
 							[], 
 							notificationOptions, {
-			UpdateAllOfTable: (tableId: number) => {
+			UpdateAllOfTable: async (tableId: number) => {
 				if(tableId === environment.appointmentTableId){
-					this.dataService.LoadAllAppointments();
-				}else if(tableId === environment.todoTableId || tableId === environment.todoListTableId){
-					this.dataService.LoadAllTodos();
+					await this.dataService.LoadAllAppointments();
+				}else if(tableId === environment.todoListTableId){
+					await this.dataService.LoadAllTodos();
 				}
 			},
 			UpdateTableObject: async (tableObject: Dav.TableObject, downloaded: boolean = false) => {
@@ -129,18 +129,17 @@ export class AppComponent {
 				}else if(tableObject.TableId == environment.todoListTableId){
 					// Remove todo list
 					let todoList = await ConvertTableObjectToTodoList(tableObject);
+					if(!todoList) return;
 
-					if(todoList){
-						this.dataService.RemoveTodoList(todoList);
+					if(todoList.list){
+						// Update the root todo list
+						let root = await this.dataService.GetRootOfTodoList(todoList);
 
-						if(todoList.list){
-							// Update the root todo list
-							let root = await this.dataService.GetRootOfTodoList(todoList);
-
-							if(root){
-								this.dataService.UpdateTodoList(root);
-							}
+						if(root){
+							this.dataService.UpdateTodoList(root);
 						}
+					}else{
+						this.dataService.RemoveTodoList(todoList);
 					}
 				}
 			},

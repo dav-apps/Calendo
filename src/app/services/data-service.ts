@@ -1090,7 +1090,7 @@ export class DataService{
 		while(parentUuid){
 			currentList = await GetTodoList(parentUuid);
 			
-      	if(parent){
+      	if(currentList){
 				parentUuid = currentList.list;
 			}else{
 				return null;
