@@ -4,29 +4,28 @@
 
    <div class="row mt-5">
       <div class="col-6 col-md-4 offset-md-1 text-center text-color">
-			<fa-icon [icon]="faSync" style="font-size: 60px"></fa-icon>
+			<i class="ms-Icon ms-Icon--Sync" style="font-size: 60px;" aria-hidden="true"></i>
          <p class="mt-4" style="font-size: 22px;">{{ locale.text2 }}</p>
       </div>
 
       <div class="col-6 col-md-4 offset-md-2 text-center text-color">
-			<fa-icon [icon]="faLock" style="font-size: 60px"></fa-icon>
+			<i class="ms-Icon ms-Icon--Lock" style="font-size: 60px;" aria-hidden="true"></i>
          <p class="mt-4" style="font-size: 22px;">{{ locale.text3 }}</p>
       </div>
 	</div>
-	
-	<h3 class="text-center mt-5 text-color">{{ locale.text4 }}</h3>
-	<div class="d-flex justify-content-center mt-4">
-		<button type="button" class="btn btn-primary mr-2" (click)="ShowLoginPage()">{{ locale.login }}</button>
-		<button type="button" class="btn btn-primary ml-2" (click)="ShowSignupPage()">{{ locale.signup }}</button>
+
+	<div class="d-flex justify-content-center mt-5">
+		<a href="https://dav-apps.tech" target="blank"><img [src]="dataService.darkTheme ? '/assets/images/dav-logo-white.png' : '/assets/images/dav-logo.png'" class="align-self-center" style="width: 130px" alt="dav Logo" /></a>
 	</div>
 
-	<div class="d-flex justify-content-center">
-		<a class="mt-4 text-color" href="https://dav-apps.tech" target="blank">{{ locale.linkText }}</a>
+	<div class="d-flex justify-content-center" style="margin-top: 40px">
+		<button type="button" class="btn btn-primary mr-2" (click)="ShowLoginPage()">{{ locale.login }}</button>
+		<button type="button" class="btn btn-secondary ml-2" (click)="ShowSignupPage()">{{ locale.signup }}</button>
 	</div>
 </div>
 
 <div class="container mb-4 ms-motion-slideUpIn" *ngIf="dataService.user.IsLoggedIn">
-   <h1 class="text-center mt-2 text-color" style="margin-bottom: 30px">{{ locale.header }}</h1>
+   <h1 class="text-center mt-2 text-color" style="margin-bottom: 40px">{{ locale.header }}</h1>
 	
 	<div class="d-flex justify-content-center">
 		<img class="rounded-circle"
@@ -49,8 +48,8 @@
 		</div>
 	</div>
 
-	<div style="margin-top: 70px" *ngIf="dataService.user.Plan == 0" class="text-color">
-		<h4 class="mt-5 text-center">{{ locale.upgradeTitle }}</h4>
+	<div style="margin-top: 90px" *ngIf="dataService.user.Plan == 0" class="text-color">
+		<h4 class="text-center">{{ locale.upgradeTitle }}</h4>
 
 		<div class="card text-center shadow mx-auto theme-background-color-secondary" style="width: 300px; margin-top: 35px">
 			<div class="card-body">
