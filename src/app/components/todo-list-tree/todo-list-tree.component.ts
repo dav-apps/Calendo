@@ -426,7 +426,8 @@ export class TodoListTreeComponent{
 		});
 
 		await node.item.SetItems(items);
-		this.update.emit();
+		this.LoadTodoListCompletedCount(this.rootTodoItem);
+      this.update.emit();
 	}
 
 	//#region Event handlers
