@@ -10,7 +10,7 @@
          {{ appointment.name }}<br>
          <span *ngIf="!appointment.allday">{{ getTimeSpan() }}</span>
       </p>
-      <p *ngIf="compact">{{ getStartTime() }} {{ appointment.name }}</p>
+      <p *ngIf="compact"><span *ngIf="!appointment.allday">{{ getStartTime() }}</span> {{ appointment.name }}</p>
    </div>
 
    <div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4 ms-motion-slideDownIn">
@@ -20,12 +20,12 @@
 </div>
 
 <div class="px-1 rounded d-inline-flex" 
-      style="font-size: 15px; color: white;" 
+      style="font-size: 15px; color: white; user-select: none" 
       [style.background-color]="appointment.color ? '#' + appointment.color : defaultColor"
       *ngIf="!enableDropdown">
    <span *ngIf="!compact">
       {{ appointment.name }}<br>
       <span *ngIf="!appointment.allday">{{ getTimeSpan() }}</span>
    </span>
-   <span *ngIf="compact">{{ getStartTime() }} {{ appointment.name }}</span>
+   <span *ngIf="compact"><span *ngIf="!appointment.allday">{{ getStartTime() }}</span> {{ appointment.name }}</span>
 </div>
