@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import * as Dav from 'dav-npm';
+import { Init, Log, TableObject, DavEnvironment } from 'dav-npm';
 import { environment } from '../environments/environment';
 import { enUS } from '../locales/locales';
 import { DataService } from './services/data-service';
@@ -48,10 +48,11 @@ export class AppComponent {
 			badge: "/assets/badge-128x128.png"
 		}
 
-		Dav.Initialize(environment.production ? Dav.DavEnvironment.Production : Dav.DavEnvironment.Development, 
+		Init(environment.production ? DavEnvironment.Production : DavEnvironment.Development, 
 							environment.appId, 
 							[environment.todoTableId, environment.todoListTableId, environment.appointmentTableId], 
 							[], 
+							false, 
 							notificationOptions, {
 			UpdateAllOfTable: async (tableId: number) => {
 				if(tableId === environment.appointmentTableId){
@@ -60,7 +61,7 @@ export class AppComponent {
 					await this.dataService.LoadAllTodos();
 				}
 			},
-			UpdateTableObject: async (tableObject: Dav.TableObject, downloaded: boolean = false) => {
+			UpdateTableObject: async (tableObject: TableObject, downloaded: boolean = false) => {
 				if(tableObject.TableId == environment.appointmentTableId){
 					// Update appointment
 					var appointment = ConvertTableObjectToAppointment(tableObject);
@@ -103,7 +104,7 @@ export class AppComponent {
 					}
 				}
 			},
-			DeleteTableObject: async (tableObject: Dav.TableObject) => {
+			DeleteTableObject: async (tableObject: TableObject) => {
 				if(tableObject.TableId == environment.appointmentTableId){
 					// Remove appointment
 					var appointment = ConvertTableObjectToAppointment(tableObject);
@@ -143,10 +144,11 @@ export class AppComponent {
 					}
 				}
 			},
+			UserDownloadFinished: () => {},
 			SyncFinished: () => {}
 		});
 
-		Dav.Log(environment.apiKey, environment.visitKey);
+		Log(environment.apiKey, environment.visitKey);
 	}
 
 	onResize(event: any) {
