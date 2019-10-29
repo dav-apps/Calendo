@@ -5,12 +5,12 @@
    <div class="row mt-5">
       <div class="col-6 col-md-4 offset-md-1 text-center text-color">
 			<i class="ms-Icon ms-Icon--Sync" style="font-size: 60px;" aria-hidden="true"></i>
-         <p class="mt-4" style="font-size: 22px;">{{ locale.text2 }}</p>
+         <p class="mt-4" [style.fontSize.px]="width > 550 ? 21 : 19">{{ locale.text2 }}</p>
       </div>
 
       <div class="col-6 col-md-4 offset-md-2 text-center text-color">
 			<i class="ms-Icon ms-Icon--Lock" style="font-size: 60px;" aria-hidden="true"></i>
-         <p class="mt-4" style="font-size: 22px;">{{ locale.text3 }}</p>
+         <p class="mt-4" [style.fontSize.px]="width > 550 ? 21 : 19">{{ locale.text3 }}</p>
       </div>
 	</div>
 
@@ -25,7 +25,7 @@
 </div>
 
 <div class="container mb-4 ms-motion-slideUpIn" *ngIf="dataService.user.IsLoggedIn">
-   <h1 class="text-center mt-2 text-color" style="margin-bottom: 40px">{{ locale.header }}</h1>
+   <h1 class="text-center mt-3 text-color" style="margin-bottom: 40px">{{ locale.header }}</h1>
 	
 	<div class="d-flex justify-content-center">
 		<img class="rounded-circle"
