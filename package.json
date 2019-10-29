@@ -1,6 +1,6 @@
 {
   "name": "calendo",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Calendo makes it easy to keep track of your todos and appointments. You can set specific dates for your todos, sort them in groups and see your todos and appointments in your calendar.",
   "scripts": {
     "ng": "ng",
