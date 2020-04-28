@@ -10,20 +10,20 @@ const groupKey = "group";
 
 @Component({
    selector: "calendo-settings-page",
-   templateUrl: "./settings-page.component.html",
-   styleUrls: [
-      "./settings-page.component.scss"
-   ]
+   templateUrl: "./settings-page.component.html"
 })
 export class SettingsPageComponent{
-   locale = enUS.settingsPage;
+	locale = enUS.settingsPage;
+	version: string = environment.version;
+	year = (new Date()).getFullYear();
    sortTodosSelectedKey: string = groupKey;
-   version: string = environment.version;
 	isWindows: boolean = false;
 	themeKeys: string[] = [environment.lightThemeKey, environment.darkThemeKey, environment.systemThemeKey]
-   selectedTheme: string;
+	selectedTheme: string;
 
-   constructor(public dataService: DataService){
+	constructor(
+		public dataService: DataService
+	) {
 		this.locale = this.dataService.GetLocale().settingsPage;
       this.isWindows = window["Windows"] != null;
       this.dataService.HideWindowsBackButton();
