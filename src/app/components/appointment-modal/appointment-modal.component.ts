@@ -1,11 +1,17 @@
 import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { Appointment, GetAppointment } from '../../models/Appointment';
-import { enUS } from '../../../locales/locales';
-import { DataService } from '../../services/data-service';
-import { SubscribePushNotifications, CreateNotification, GetNotification, DeleteNotification, UpdateNotification } from 'dav-npm';
-import * as moment from 'moment';
 import { IDropdownOption } from 'office-ui-fabric-react';
+import * as moment from 'moment';
+import {
+	SubscribePushNotifications,
+	CreateNotification,
+	GetNotification,
+	DeleteNotification,
+	UpdateNotification
+} from 'dav-npm';
+import { Appointment, GetAppointment } from 'src/app/models/Appointment';
+import { DataService } from 'src/app/services/data-service';
+import { enUS } from 'src/locales/locales';
 
 @Component({
    selector: "calendo-appointment-modal",
@@ -26,25 +32,29 @@ export class AppointmentModalComponent{
    appointmentEndTime: {hour: number, minute: number};
 	new: boolean = true;
 	appointmentUuid: string;
-	availableColors: string[] = ["D32F2F", "d67724", "FFD600", "388E3C", "43A047", "00B0FF", "1565C0", "283593", "7B1FA2", "757575", "000000"];
+	availableColors: string[] = ["D32F2F", "D67724", "FFD600", "388E3C", "43A047", "00B0FF", "1565C0", "283593", "7B1FA2", "757575", "000000"];
 	selectedColor: number = 6;
 	reminderCheckboxChecked: boolean = true;
-	notificationTime: number = 43200;				// Saves the time of the notification in seconds before the start of the appointment
+	notificationTime: number = 3600;				// Saves the time of the notification in seconds before the start of the appointment
 	showReminderOption: boolean = true;
 	reminderOptions: IDropdownOption[] = [];
 
-	constructor(private modalService: NgbModal,
-					private dataService: DataService){
+	constructor(
+		private modalService: NgbModal,
+		private dataService: DataService
+	) {
 		this.locale = this.dataService.GetLocale().appointmentModal;
 		this.notificationLocale = this.dataService.GetLocale().notifications.appointment;
 	}
 
    Show(appointment?: Appointment, date?: number){
 		// Check if push is supported
-		this.showReminderOption = ('serviceWorker' in navigator) 
-											&& ('PushManager' in window)
-											&& this.dataService.user.IsLoggedIn
-											&& Notification.permission != "denied";
+		this.showReminderOption = (
+			('serviceWorker' in navigator)
+			&& ('PushManager' in window)
+			&& this.dataService.user.IsLoggedIn
+			&& Notification.permission != "denied"
+		)
 		
 		// Init reminderTimes
 		this.reminderOptions = [];
@@ -58,7 +68,7 @@ export class AppointmentModalComponent{
 			{ key: 43200, text: this.locale.reminderTimes.hours12 },
 			{ key: 86400, text: this.locale.reminderTimes.day1 },
 			{ key: 604800, text: this.locale.reminderTimes.week1 }
-		);
+		)
 
       if(appointment){
 			// Update appointment
@@ -103,14 +113,26 @@ export class AppointmentModalComponent{
       this.modalService.open(this.appointmentModal).result.then(async () => {
 			// Save the new appointment
 			// Calculate the unix timestamp of start and end
-			var start = new Date(this.appointmentDate.year, this.appointmentDate.month - 1, 
-										this.appointmentDate.day, this.appointmentStartTime.hour, 
-										this.appointmentStartTime.minute, 0, 0);
+			var start = new Date(
+				this.appointmentDate.year,
+				this.appointmentDate.month - 1,
+				this.appointmentDate.day,
+				this.appointmentStartTime.hour,
+				this.appointmentStartTime.minute,
+				0,
+				0
+			)
 			var startUnix = Math.floor(start.getTime() / 1000);
 
-			var end = new Date(this.appointmentDate.year, this.appointmentDate.month - 1,
-									this.appointmentDate.day, this.appointmentEndTime.hour, 
-									this.appointmentEndTime.minute, 0, 0);
+			var end = new Date(
+				this.appointmentDate.year,
+				this.appointmentDate.month - 1,
+				this.appointmentDate.day,
+				this.appointmentEndTime.hour,
+				this.appointmentEndTime.minute,
+				0,
+				0
+			)
 			var endUnix = Math.floor(end.getTime() / 1000);
 
 			var color = this.availableColors[this.selectedColor];
@@ -163,13 +185,11 @@ export class AppointmentModalComponent{
 
    ResetNewObjects(date?: number){
 		let d = new Date();
-		if(date){
-			d = new Date(date * 1000);
-		}
+		if (date) d = new Date(date * 1000);
 		
       this.appointmentDate = {year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate()};
       this.appointmentName = "";
-      this.appointmentAllDayCheckboxChecked = true;
+      this.appointmentAllDayCheckboxChecked = false;
       this.appointmentStartTime = { hour: 15, minute: 0 };
 		this.appointmentEndTime = { hour: 16, minute: 0 };
 		this.reminderCheckboxChecked = true;
@@ -210,9 +230,11 @@ export class AppointmentModalComponent{
 			let appointmentStartMoment = moment.unix(start);
 			let appointmentEndMoment = moment.unix(end);
 
-			message = appointmentStartMoment.format(this.notificationLocale.formats.specificTime)
-						+ " - "
-						+ appointmentEndMoment.format(this.notificationLocale.formats.specificTime);
+			message = (
+				appointmentStartMoment.format(this.notificationLocale.formats.specificTime)
+				+ " - "
+				+ appointmentEndMoment.format(this.notificationLocale.formats.specificTime)
+			)
 		}
 
 		return {
@@ -234,12 +256,12 @@ export class AppointmentModalComponent{
 			this.appointmentAllDayCheckboxChecked = true
 
 			// Set the notification time to 12 hours
-			this.SetReminderSelection(43200)
+			this.SetReminderSelection(43200);
       }else{
 			this.appointmentAllDayCheckboxChecked = false
 
 			// Set the notification time to 1 hour
-			this.SetReminderSelection(3600)
+			this.SetReminderSelection(3600);
       }
 	}
 

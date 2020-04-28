@@ -27,8 +27,13 @@
 				<div class="row">
 					<div class="col-5 offset-1 mr-1">
 						<label for="appointmentStartTime" class="col-form-label text-color">{{ locale.start }}</label>
-						<ngb-timepicker id="appointment-start-time" [disabled]="appointmentAllDayCheckboxChecked"
-											[(ngModel)]="appointmentStartTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
+						<ngb-timepicker
+							id="appointment-start-time"
+							[disabled]="appointmentAllDayCheckboxChecked"
+							[(ngModel)]="appointmentStartTime"
+							[hourStep]="1"
+							[minuteStep]="15">
+						</ngb-timepicker>
 					</div>
 	
 					<div class="col-5">
@@ -51,10 +56,12 @@
             </div>
             
 				<div class="form-group mt-2" style="width: 250px;">
-					<fab-dropdown [options]="reminderOptions" 
-										[selectedKey]="notificationTime" 
-										[disabled]="!reminderCheckboxChecked"
-										(onChange)="ReminderDropdownChanged($event)"></fab-dropdown>
+					<fab-dropdown
+						[options]="reminderOptions" 
+						[selectedKey]="notificationTime" 
+						[disabled]="!reminderCheckboxChecked"
+						(onChange)="ReminderDropdownChanged($event)">
+					</fab-dropdown>
 				</div>
 			</div>
 
@@ -63,11 +70,13 @@
 				<label class="text-color">{{ locale.color }}</label>
 	
 				<div class="row mx-auto">
-					<div class="rounded-circle m-1 appointment-color cursor" 
-							[style.background-color]="selectedColor == i ? (dataService.darkTheme ? '#15202b' : 'white') : '#' + color" 
-							[style.border]="selectedColor == i ? '5px solid #' + color : ''"
-							(click)="selectedColor = i"
-							*ngFor="let color of availableColors; let i = index;"></div>
+					<div
+						class="rounded-circle m-1 appointment-color cursor" 
+						[style.background-color]="selectedColor == i ? (dataService.darkTheme ? '#15202b' : 'white') : '#' + color" 
+						[style.border]="selectedColor == i ? '5px solid #' + color : ''"
+						(click)="selectedColor = i"
+						*ngFor="let color of availableColors; let i = index;">
+					</div>
 				</div>
 			</div>
 
