@@ -162,11 +162,14 @@ const enDefaults = {
 		planFree: "Free",
 		planPlus: "Plus",
 		planPro: "Pro",
-		pricePlus: "3 € per month",
-		upgradeTitle: "Upgrade your plan to make Calendo even better",
-		plusFeature1: "Create nested todo lists",
-		plusFeature2: "Support the development of new apps and features",
-		upgrade: "Upgrade"
+		upgradeTitle: "Change your plan to make Calendo even better",
+		selectPlan: "Select",
+		upgradePlusCard: {
+			plan: "dav Plus",
+			price: "3 € per month",
+			plusFeature1: "Create nested todo lists",
+			plusFeature2: "Support the development of new apps and features"
+		}
    },
    settingsPage: {
       header: "Settings",
@@ -400,11 +403,14 @@ const deDefaults = {
       planFree: "Free",
 		planPlus: "Plus",
 		planPro: "Pro",
-		pricePlus: "3 € pro Monat",
-		upgradeTitle: "Ändere dein Abo, um Calendo noch besser zu machen",
-		plusFeature1: "Erstelle verschachtelte Todo-Listen",
-		plusFeature2: "Unterstütze die Entwicklung von neuen Apps und Funktionen",
-		upgrade: "Auswählen"
+		upgradeTitle: "Wähle ein Abo, um Calendo noch besser zu machen",
+		selectPlan: "Auswählen",
+		upgradePlusCard: {
+			plan: "dav Plus",
+			price: "3 € pro Monat",
+			plusFeature1: "Erstelle verschachtelte Todo-Listen",
+			plusFeature2: "Unterstütze die Entwicklung von neuen Apps und Funktionen"
+		}
    },
    settingsPage: {
       header: "Einstellungen",

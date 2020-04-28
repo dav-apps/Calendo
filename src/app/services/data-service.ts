@@ -12,7 +12,7 @@ import * as bowser from "bowser";
 @Injectable()
 export class DataService{
 	user: DavUser;
-   locale: string = navigator.language;
+	locale: string = navigator.language;
 
 	//#region StartPage
 	startDaysDates: number[] = [];					// Contains the timestamps of the start of the days
