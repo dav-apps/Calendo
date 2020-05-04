@@ -1,3 +1,5 @@
+$primary: #007bff;
+
 :root {
 	--white: #FFFFFF;
 	--black: #000000;
@@ -26,8 +28,17 @@
 }
 
 body{
-   background-color: var(--theme-color-primary);
-   overflow-x: hidden;
+   background-color: $primary;
+   -webkit-user-select: none;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-touch-callout: none;
+}
+
+#root{
+	background-color: var(--theme-color-primary);
+	min-height: 100vh;
+	height: fit-content;
+	overflow: hidden
 }
 
 .theme-background-color-primary{
