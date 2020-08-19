@@ -1,7 +1,7 @@
 import { TableObject, GetTableObject, GetAllTableObjects, DeleteNotification } from 'dav-npm';
 import { environment } from "../../environments/environment";
 
-export class Appointment{
+export class Appointment {
 	public uuid: string = null;
 	public name: string = "";
 	public start: number = 0;
@@ -10,15 +10,15 @@ export class Appointment{
 	public color: string = "";
 	public notificationUuid: string = null;
 
-   constructor(
-		uuid: string, 
-		name: string, 
-		start?: number, 
-		end?: number, 
+	constructor(
+		uuid: string,
+		name: string,
+		start?: number,
+		end?: number,
 		allday?: boolean,
 		color?: string,
 		notificationUuid?: string
-	){
+	) {
 		this.uuid = uuid;
 		this.name = name ? name : "";
 		this.start = start ? start : 0;
@@ -28,26 +28,26 @@ export class Appointment{
 		this.notificationUuid = notificationUuid;
 	}
 
-	public static async Create(name: string, start: number = 0, end: number = 0, allday: boolean = true, color: string = "", notificationUuid: string = null) : Promise<Appointment>{
+	public static async Create(name: string, start: number = 0, end: number = 0, allday: boolean = true, color: string = "", notificationUuid: string = null): Promise<Appointment> {
 		let appointment = new Appointment(null, name, start, end, allday, color, notificationUuid);
 		await appointment.Save();
 		return appointment;
 	}
 
-	async Update(name: string, start: number, end: number, allday: boolean, color: string, notificationUuid: string){
-      this.name = name;
-      this.start = start;
-      this.end = end;
-      this.allday = allday;
-      this.color = color;
-      this.notificationUuid = notificationUuid;
-      await this.Save();
+	async Update(name: string, start: number, end: number, allday: boolean, color: string, notificationUuid: string) {
+		this.name = name;
+		this.start = start;
+		this.end = end;
+		this.allday = allday;
+		this.color = color;
+		this.notificationUuid = notificationUuid;
+		await this.Save();
 	}
-	
-	async Delete(){
+
+	async Delete() {
 		var tableObject = await GetTableObject(this.uuid);
-		if(tableObject){
-			if(this.notificationUuid){
+		if (tableObject) {
+			if (this.notificationUuid) {
 				// Delete the notification
 				DeleteNotification(this.notificationUuid);
 			}
@@ -56,10 +56,10 @@ export class Appointment{
 		}
 	}
 
-	private async Save(){
+	private async Save() {
 		let tableObject = await GetTableObject(this.uuid);
 
-		if(!tableObject){
+		if (!tableObject) {
 			// Create the table object
 			tableObject = new TableObject();
 			tableObject.TableId = environment.appointmentTableId;
@@ -67,7 +67,7 @@ export class Appointment{
 		}
 
 		// Set the property values
-		let properties: {name: string, value: string}[] = [
+		let properties: { name: string, value: string }[] = [
 			{ name: environment.appointmentNameKey, value: this.name },
 			{ name: environment.appointmentStartKey, value: this.start.toString() },
 			{ name: environment.appointmentEndKey, value: this.end.toString() },
@@ -75,7 +75,7 @@ export class Appointment{
 			{ name: environment.appointmentColorKey, value: this.color }
 		]
 
-		if(this.notificationUuid){
+		if (this.notificationUuid) {
 			properties.push({
 				name: environment.notificationUuidKey,
 				value: this.notificationUuid
@@ -86,13 +86,13 @@ export class Appointment{
 	}
 }
 
-export async function GetAppointment(uuid: string): Promise<Appointment>{
+export async function GetAppointment(uuid: string): Promise<Appointment> {
 	var tableObject = await GetTableObject(uuid);
 
-	if(tableObject){
+	if (tableObject) {
 		var appointment = ConvertTableObjectToAppointment(tableObject);
 
-		if(appointment){
+		if (appointment) {
 			return appointment;
 		}
 	}
@@ -100,14 +100,14 @@ export async function GetAppointment(uuid: string): Promise<Appointment>{
 	return null;
 }
 
-export async function GetAllAppointments(): Promise<Appointment[]>{
+export async function GetAllAppointments(): Promise<Appointment[]> {
 	var tableObjects = await GetAllTableObjects(environment.appointmentTableId, false);
 	var appointments: Appointment[] = [];
 
 	tableObjects.forEach((tableObject: TableObject) => {
 		var appointment = ConvertTableObjectToAppointment(tableObject);
 
-		if(appointment){
+		if (appointment) {
 			appointments.push(appointment);
 		}
 	});
@@ -115,38 +115,43 @@ export async function GetAllAppointments(): Promise<Appointment[]>{
 	return appointments;
 }
 
-export function ConvertTableObjectToAppointment(tableObject: TableObject): Appointment{
-	if(tableObject.TableId != environment.appointmentTableId) return null;
+export function ConvertTableObjectToAppointment(tableObject: TableObject): Appointment {
+	if (tableObject.TableId != environment.appointmentTableId) return null
 
-	var appointmentAllDay: boolean = (tableObject.GetPropertyValue(environment.appointmentAllDayKey) === "true" || 
-									tableObject.GetPropertyValue(environment.appointmentAllDayKey) === "True");
-	
-	var appointmentStart: number = 0;
-	var tableObjectAppointmentStart = tableObject.GetPropertyValue(environment.appointmentStartKey);
-	if(tableObjectAppointmentStart){
-		appointmentStart = Number.parseInt(tableObjectAppointmentStart);
+	let name = tableObject.GetPropertyValue(environment.appointmentNameKey) as string
+
+	let allDay: boolean = false
+	let allDayString = tableObject.GetPropertyValue(environment.appointmentAllDayKey) as string
+	if (allDayString != null) {
+		allDay = allDayString.toLowerCase() == "true"
 	}
 
-	var appointmentEnd: number = 0;
-	var tableObjectAppointmentEnd = tableObject.GetPropertyValue(environment.appointmentEndKey);
-	if(tableObjectAppointmentEnd){
-		appointmentEnd = Number.parseInt(tableObjectAppointmentEnd);
+	let start: number = 0
+	let startString = tableObject.GetPropertyValue(environment.appointmentStartKey) as string
+	if (startString != null) {
+		start = +startString
 	}
 
-	var color: string = environment.appointmentDefaultColor;
-	var tableObjectAppointmentColor = tableObject.GetPropertyValue(environment.appointmentColorKey);
-	if(tableObjectAppointmentColor){
-		color = tableObjectAppointmentColor;
+	let end: number = 0
+	let endString = tableObject.GetPropertyValue(environment.appointmentEndKey) as string
+	if (endString != null) {
+		end = +endString
 	}
 
-	var tableObjectNotificationUuid = tableObject.GetPropertyValue(environment.notificationUuidKey);
-	var notificationUuid = tableObjectNotificationUuid ? tableObjectNotificationUuid : "";
+	let color = tableObject.GetPropertyValue(environment.appointmentColorKey) as string
+	if (color == null) {
+		color = environment.appointmentDefaultColor
+	}
 
-	return new Appointment(tableObject.Uuid, 
-									tableObject.GetPropertyValue(environment.appointmentNameKey),
-									appointmentStart,
-									appointmentEnd,
-									appointmentAllDay,
-									color,
-									notificationUuid);
+	let notificationUuid = tableObject.GetPropertyValue(environment.notificationUuidKey) as string
+
+	return new Appointment(
+		tableObject.Uuid,
+		name,
+		start,
+		end,
+		allDay,
+		color,
+		notificationUuid
+	)
 }
