@@ -84,13 +84,6 @@ const enDefaults = {
       delete: "Delete",
       cancel: "Cancel"
 	},
-	upgradeRequiredModal: {
-      headerPlus: "dav Plus required",
-      headerPro: "dav Pro required",
-      messageNestedTodoLists: "Upgrade to dav Plus to create nested todo lists.",
-      learnMore: "Learn more",
-      close: "Close"
-	},
    logoutModal: {
       header: "Log out",
       message: "Are you sure you want to log out?",
@@ -316,13 +309,6 @@ const deDefaults = {
       deleteWarning: "Bist du dir sicher, dass du diesen Termin löschen willst?",
       delete: "Löschen",
       cancel: "Abbrechen"
-	},
-	upgradeRequiredModal: {
-      headerPlus: "dav Plus benötigt",
-      headerPro: "dav Pro benötigt",
-      messageNestedTodoLists: "Wechsel auf dav Plus, um verschachtelte Todo-Listen zu erstellen.",
-      learnMore: "Mehr erfahren",
-      close: "Schließen"
 	},
 	logoutModal: {
       header: "Abmelden",

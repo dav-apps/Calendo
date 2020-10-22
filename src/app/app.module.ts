@@ -34,7 +34,6 @@ import { AppointmentModalComponent } from './components/appointment-modal/appoin
 import { TodoListModalComponent } from './components/todo-list-modal/todo-list-modal.component';
 import { DeleteTodoListModalComponent } from './components/delete-todo-list-modal/delete-todo-list-modal.component';
 import { DeleteAppointmentModalComponent } from './components/delete-appointment-modal/delete-appointment-modal.component';
-import { UpgradeRequiredModalComponent } from './components/upgrade-required-modal/upgrade-required-modal.component';
 import { LogoutModalComponent } from './components/logout-modal/logout-modal.component';
 import { TodoGroupBadgeComponent } from './components/todo-group-badge/todo-group-badge.component';
 import { SetTodoGroupsComponent } from './components/set-todo-groups/set-todo-groups.component';
@@ -66,7 +65,6 @@ import { environment } from '../environments/environment';
       TodoListModalComponent,
 		DeleteTodoListModalComponent,
       DeleteAppointmentModalComponent,
-      UpgradeRequiredModalComponent,
 		LogoutModalComponent,
       TodoGroupBadgeComponent,
       SetTodoGroupsComponent,

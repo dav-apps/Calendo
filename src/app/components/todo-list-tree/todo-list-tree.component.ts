@@ -11,7 +11,6 @@ import { enUS } from '../../../locales/locales';
 import { DataService } from 'src/app/services/data-service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { DeleteTodoListModalComponent } from '../delete-todo-list-modal/delete-todo-list-modal.component';
-import { UpgradeRequiredModalComponent } from '../upgrade-required-modal/upgrade-required-modal.component';
 import { DragulaService } from 'ng2-dragula';
 declare var $: any;
 
@@ -27,9 +26,8 @@ export class TodoListTreeComponent{
 	dataChange: BehaviorSubject<TodoNode[]> = new BehaviorSubject<TodoNode[]>([]);
 	subs = new Subscription();    // Holds all subscriptions
 	@ViewChild('deleteTodoListModal', { static: true }) deleteTodoListModal: DeleteTodoListModalComponent;
-   @ViewChild('upgradeRequiredModal', { static: true }) upgradeRequiredModal: UpgradeRequiredModalComponent;
 	@Input()
-	todoList: TodoList;
+	todoList: TodoList = new TodoList()
 	@Input()
    showRoot: boolean = false;
    @Input()
@@ -253,12 +251,6 @@ export class TodoListTreeComponent{
    }
 
 	AddInputToTodoList(todo: TodoNode, list: boolean = false){
-		// Check if user is on dav Plus to create nested todo lists
-      if(list && (!this.dataService.user.IsLoggedIn || this.dataService.user.Plan == 0)){
-			this.upgradeRequiredModal.Show(0, 0);
-			return;
-		}
-
 		// Remove all input nodes
 		this.RemoveAllInputNodes();
 
