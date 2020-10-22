@@ -172,10 +172,10 @@ const enDefaults = {
       theme: "Theme",
       lightTheme: "Light",
       darkTheme: "Dark",
-      systemTheme: "Use system setting",
-      privacy: "Privacy Policy",
-      github: "Calendo on GitHub",
-      android: "Calendo for Android"
+		systemTheme: "Use system setting",
+		news: "News and updates",
+		github: "Calendo on GitHub",
+      privacy: "Privacy Policy"
 	},
 	notifications: {
 		appointment: {
@@ -405,10 +405,10 @@ const deDefaults = {
       theme: "Thema",
       lightTheme: "Hell",
       darkTheme: "Dunkel",
-      systemTheme: "Systemeinstellung verwenden",
-      privacy: "Datenschutzerklärung",
-      github: "Calendo auf GitHub",
-      android: "Calendo für Android"
+		systemTheme: "Systemeinstellung verwenden",
+		news: "Neuigkeiten und Updates",
+		github: "Calendo auf GitHub",
+		privacy: "Datenschutzerklärung"
 	},
 	notifications: {
 		appointment: {
