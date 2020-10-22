@@ -50,24 +50,5 @@
 		</div>
 	</div>
 
-	<div class="text-color" style="margin-top: 90px" *ngIf="dataService.user.Plan == 0">
-		<h4 class="text-center font-weight-light">{{ locale.upgradeTitle }}</h4>
-
-		<div class="card text-center shadow mx-auto theme-background-color-secondary" style="width: 300px; margin-top: 35px">
-			<div class="card-body">
-				<h4 class="card-title">{{ locale.upgradePlusCard.plan }}</h4>
-				<h6 class="card-subtitle text-muted">{{ locale.upgradePlusCard.price }}</h6>
-			</div>
-
-			<ul class="list-group">
-            <li class="list-group-item border-left-0 border-right-0 theme-background-color-secondary">{{ locale.upgradePlusCard.plusFeature1 }}</li>
-				<li class="list-group-item border-left-0 border-right-0 theme-background-color-secondary">{{ locale.upgradePlusCard.plusFeature2 }}</li>
-				<li class="list-group-item border-left-0 border-right-0 theme-background-color-secondary">
-					<button type="button" class="btn btn-primary" (click)="ShowPlansAccountPage()">{{ locale.selectPlan }}</button>
-				</li>
-			</ul>
-		</div>
-	</div>
-
 	<calendo-logout-modal (logout)="Logout()"></calendo-logout-modal>
 </div>

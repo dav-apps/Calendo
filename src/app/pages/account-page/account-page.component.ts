@@ -36,10 +36,6 @@ export class AccountPageComponent{
       Dav.ShowSignupPage(environment.apiKey, environment.baseUrl);
    }
 
-   ShowPlansAccountPage(){
-      window.open("https://dav-apps.tech/login?redirect=user%23plans%0A", 'blank');
-   }
-
    ShowLogoutModal(){
 		this.logoutModalComponent.Show();
    }

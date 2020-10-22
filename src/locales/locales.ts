@@ -161,15 +161,7 @@ const enDefaults = {
 		storageUsed: "{0} GB of {1} GB used",
 		planFree: "Free",
 		planPlus: "Plus",
-		planPro: "Pro",
-		upgradeTitle: "Change your plan to make Calendo even better",
-		selectPlan: "Select",
-		upgradePlusCard: {
-			plan: "dav Plus",
-			price: "3 € per month",
-			plusFeature1: "Create nested todo lists",
-			plusFeature2: "Support the development of new apps and features"
-		}
+		planPro: "Pro"
    },
    settingsPage: {
       header: "Settings",
@@ -393,7 +385,7 @@ const deDefaults = {
    },
    accountPage: {
       header: "Dein Account",
-      text1: "Sichere dein Kalender und greife von überall darauf zu",
+      text1: "Sichere deinen Kalender und greife von überall darauf zu",
       text2: "Nutze den gleichen Kalender auf all deinen Geräten",
       text3: "Stelle sicher, dass deine Termine und Todos nicht verloren gehen",
       login: "Anmelden",
@@ -402,15 +394,7 @@ const deDefaults = {
       storageUsed: "{0} GB von {1} GB verwendet",
       planFree: "Free",
 		planPlus: "Plus",
-		planPro: "Pro",
-		upgradeTitle: "Wähle ein Abo, um Calendo noch besser zu machen",
-		selectPlan: "Auswählen",
-		upgradePlusCard: {
-			plan: "dav Plus",
-			price: "3 € pro Monat",
-			plusFeature1: "Erstelle verschachtelte Todo-Listen",
-			plusFeature2: "Unterstütze die Entwicklung von neuen Apps und Funktionen"
-		}
+		planPro: "Pro"
    },
    settingsPage: {
       header: "Einstellungen",
