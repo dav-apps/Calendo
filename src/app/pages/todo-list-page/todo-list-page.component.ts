@@ -10,10 +10,10 @@ import { TodoListModalComponent } from 'src/app/components/todo-list-modal/todo-
 import { DeleteTodoListModalComponent } from 'src/app/components/delete-todo-list-modal/delete-todo-list-modal.component';
 
 @Component({
-	selector: 'calendo-todo-list-details-page',
-	templateUrl: './todo-list-details-page.component.html'
+	selector: 'calendo-todo-list-page',
+	templateUrl: './todo-list-page.component.html'
 })
-export class TodoListDetailsPageComponent{
+export class TodoListPageComponent{
    locale = enUS.todoListDetailsPage;
 	@ViewChild('todoListTree', { static: true }) todoListTree: TodoListTreeComponent;
 	@ViewChild('todoListModal', { static: true }) todoListModal: TodoListModalComponent;

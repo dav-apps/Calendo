@@ -21,7 +21,7 @@ import { AccountPageComponent } from './pages/account-page/account-page.componen
 import { SettingsPageComponent } from './pages/settings-page/settings-page.component';
 import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
 import { CalendarDayPageComponent } from './pages/calendar-day-page/calendar-day-page.component';
-import { TodoListDetailsPageComponent } from './pages/todo-list-details-page/todo-list-details-page.component';
+import { TodoListPageComponent } from './pages/todo-list-page/todo-list-page.component';
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { TodoListItemComponent } from './components/todo-list-item/todo-list-item.component';
 import { SmallTodoListItemComponent } from './components/small-todo-list-item/small-todo-list-item.component';
@@ -53,7 +53,7 @@ import { environment } from '../environments/environment';
 		SettingsPageComponent,
 		CalendarPageComponent,
       CalendarDayPageComponent,
-      TodoListDetailsPageComponent,
+      TodoListPageComponent,
 		UserMenuComponent,
       TodoListItemComponent,
       SmallTodoListItemComponent,
@@ -82,7 +82,7 @@ import { environment } from '../environments/environment';
 			{ path: 'calendar/day/:time', component: CalendarDayPageComponent },
 			{ path: 'todos', component: TodosPageComponent },
          { path: 'appointments', component: AppointmentsPageComponent },
-         { path: 'todolist/:uuid', component: TodoListDetailsPageComponent },
+         { path: 'todolist/:uuid', component: TodoListPageComponent },
 			{ path: 'account', component: AccountPageComponent },
          { path: 'settings', component: SettingsPageComponent }
 		], {
