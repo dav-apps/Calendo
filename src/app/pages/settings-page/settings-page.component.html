@@ -6,9 +6,11 @@
       <div class="form-group mt-4" style="font-size: 18px; width: 200px">
          <label class="text-color">{{ locale.sortTodosBy }}</label>
 
-         <fab-dropdown [selectedKey]="sortTodosSelectedKey" 
-                        (onChange)="onSortTodosSelectChanged($event)">
-            <options>
+			<fab-dropdown
+				[selectedKey]="sortTodosSelectedKey" 
+         	(onChange)="onSortTodosSelectChanged($event)">
+				
+				<options>
                <fab-dropdown-option optionKey="date" [text]="locale.sortTodosByDate"></fab-dropdown-option>
                <fab-dropdown-option optionKey="group" [text]="locale.sortTodosByGroup"></fab-dropdown-option>
             </options>
@@ -30,7 +32,7 @@
 				<mat-radio-button [value]="themeKeys[1]">
 					{{ locale.darkTheme }}
 				</mat-radio-button>
-				<mat-radio-button [value]="themeKeys[2]" *ngIf="isWindows">
+				<mat-radio-button [value]="themeKeys[2]">
 					{{ locale.systemTheme }}
 				</mat-radio-button>
 			</mat-radio-group>

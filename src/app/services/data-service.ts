@@ -367,6 +367,19 @@ export class DataService{
 					}
 
 					break;
+				} else {
+					// Get the browser theme
+					let darkTheme = false;
+					
+					if (window.matchMedia) {
+						let colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+	
+						darkTheme = colorScheme.matches;
+						colorScheme.onchange = () => this.ApplyTheme();
+					}
+	
+					this.darkTheme = darkTheme;
+					break;
 				}
 			default:
 				// Light theme

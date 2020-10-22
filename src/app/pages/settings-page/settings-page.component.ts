@@ -34,9 +34,6 @@ export class SettingsPageComponent{
       
       // Set the correct theme radio button
 		this.selectedTheme = await this.dataService.GetTheme();
-		if(!this.isWindows && this.selectedTheme == environment.systemThemeKey){
-			this.selectedTheme = environment.lightThemeKey;
-		}
    }
 
    onSortTodosSelectChanged(event: {ev: MouseEvent, option: IDropdownOption, index: number}){
