@@ -475,9 +475,15 @@ export class TodoListTreeComponent{
 
 	async ShowDeleteTodoListModal(node: TodoNode){
 		// Get the todo list
-		let todoList = await GetTodoList(node.uuid);
-		if(todoList){
-			this.deleteTodoListModal.Show(todoList);
+		let todoList = await GetTodoList(node.uuid)
+		if(!todoList) return
+
+		if (todoList.items.length == 0) {
+			// Delete the todo list immediately
+			await this.RemoveTodoList(todoList)
+		} else {
+			// Show the confirmation modal
+			this.deleteTodoListModal.Show(todoList)
 		}
 	}
 
