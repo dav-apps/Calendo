@@ -180,6 +180,8 @@ export class AppointmentModalComponent{
 				await appointment.Update(this.appointmentName, startUnix, endUnix, this.appointmentAllDayCheckboxChecked, color, notificationUuid);
 				this.save.emit(appointment);
 			}
+
+			this.modalService.dismissAll()
       }, () => {});
    }
 

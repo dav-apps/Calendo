@@ -16,12 +16,11 @@ export class NewTodoModalComponent{
    notificationLocale = enUS.notifications.todo;
    faPlus = faPlus;
    @Output() save = new EventEmitter();
-   @ViewChild('createTodoModal', { static: true }) todoModal: ElementRef;
+	@ViewChild('createTodoModal', { static: true }) todoModal: ElementRef;
    newTodoDate: NgbDateStruct;
    newTodoName: string;
    newTodoSetDateCheckboxChecked: boolean = true
    newTodoReminderCheckboxChecked: boolean = false
-   newGroupName: string = "";
    todoGroups: string[] = [];
    allGroups: string[] = [];
    todoReminderTime: {hour: number, minute: number};
@@ -37,23 +36,26 @@ export class NewTodoModalComponent{
 		}
 	}
 
-   constructor(private modalService: NgbModal,
-               private dataService: DataService){
+	constructor(
+		private modalService: NgbModal,
+		private dataService: DataService
+	) {
       this.locale = this.dataService.GetLocale().newTodoModal;
       this.notificationLocale = this.dataService.GetLocale().notifications.todo;
    }
 
    Show(date?: number){
       this.ResetNewObjects(date);
-      this.GetAllTodoGroups();
 
       // Check if push is supported
-		this.showReminderOption = ('serviceWorker' in navigator) 
-                                 && ('PushManager' in window)
-                                 && this.dataService.user.IsLoggedIn
-                                 && Notification.permission != "denied";
+		this.showReminderOption = (
+			('serviceWorker' in navigator)
+			&& ('PushManager' in window)
+			&& this.dataService.user.IsLoggedIn
+			&& Notification.permission != "denied"
+		)
 
-      this.modalService.open(this.todoModal).result.then(async () => {
+		this.modalService.open(this.todoModal).result.then(async () => {
          // Save new todo
          var todoTimeUnix: number = 0;
          if(this.newTodoSetDateCheckboxChecked){
@@ -90,45 +92,9 @@ export class NewTodoModalComponent{
       this.newTodoName = "";
       this.newTodoSetDateCheckboxChecked = true;
       this.todoGroups = [];
-      this.newGroupName = "";
       this.allGroups = [];
       this.todoReminderTime = {hour: 10, minute: 0};
       this.newTodoReminderCheckboxChecked = false;
-   }
-
-   AddGroup(name: string){
-      this.newGroupName = "";
-
-      if(this.todoGroups.findIndex(g => g == name) == -1){
-         this.todoGroups.push(name);
-   
-         // Remove the group from allGroups
-         var index = this.allGroups.findIndex(g => g == name);
-   
-         if(index !== -1){
-            this.allGroups.splice(index, 1);
-         }
-      }
-   }
-
-   async GetAllTodoGroups(){
-      this.allGroups = [];
-      var todoGroups = await GetAllTodoGroups();
-      todoGroups.forEach(group => {
-         // Check if the group is already selected
-         if(this.todoGroups.findIndex(g => g == group) == -1){
-            this.allGroups.push(group);
-         }
-      });
-   }
-
-   RemoveGroup(name: string){
-      var index = this.todoGroups.findIndex(g => g == name);
-
-      if(index !== -1){
-         this.todoGroups.splice(index, 1);
-         this.GetAllTodoGroups();
-      }
    }
 
    GenerateNotificationProperties(todoName: string) : {title: string, message: string}{

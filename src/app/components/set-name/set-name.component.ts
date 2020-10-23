@@ -16,6 +16,8 @@ export class SetNameComponent{
 	width: number = 280;
    @Output()
 	nameChanged = new EventEmitter<string>();
+	@Output()
+	submit = new EventEmitter()
 	textFieldPlaceholder: string = this.locale.todoName;
 	nameTextFieldStyle = {
 		root: {
@@ -49,5 +51,9 @@ export class SetNameComponent{
 
    onChange(event: {ev: any, newValue: string}){
 		this.nameChanged.emit(event.newValue)
-   }
+	}
+	
+	Submit() {
+		this.submit.emit()
+	}
 }

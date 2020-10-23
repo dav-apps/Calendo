@@ -17,33 +17,46 @@
 				</div>
 			</div>
 
-			<ngb-datepicker [(ngModel)]="newTodoDate" 
-								(navigate)="date = $event.next" 
-								[disabled]="!newTodoSetDateCheckboxChecked"
-								style="background-color: white;"></ngb-datepicker>
+			<ngb-datepicker
+				[(ngModel)]="newTodoDate" 
+				(navigate)="date = $event.next" 
+				[disabled]="!newTodoSetDateCheckboxChecked"
+				style="background-color: white">
+			</ngb-datepicker>
 		</div>
 		<div class="mx-auto mb-4 text-color" style="padding: 0px 60px" [style.display]="showReminderOption ? 'block' : 'none'">
 			<!-- Reminder checkbox -->
 			<div class="d-inline-flex">
-				<fab-checkbox (onChange)="ToggleReminderCheckbox()" 
-								[checked]="newTodoReminderCheckboxChecked"
-								[disabled]="!newTodoSetDateCheckboxChecked"
-								className="ml-4"></fab-checkbox>
-				<label class="col-form-label ml-2 text-color ms-fontSize-14" 
-						[ngClass]="newTodoSetDateCheckboxChecked ? 'cursor' : ''" 
-						style="margin-top: -8px" 
-						(click)="ToggleReminderCheckbox()">
+				<fab-checkbox
+					(onChange)="ToggleReminderCheckbox()" 
+					[checked]="newTodoReminderCheckboxChecked"
+					[disabled]="!newTodoSetDateCheckboxChecked"
+					className="ml-4">
+				</fab-checkbox>
+
+				<label
+					class="col-form-label ml-2 text-color ms-fontSize-14" 
+					[ngClass]="newTodoSetDateCheckboxChecked ? 'cursor' : ''" 
+					style="margin-top: -8px" 
+					(click)="ToggleReminderCheckbox()">
 					{{ locale.reminder }}
 				</label>
 			</div>
 
-			<ngb-timepicker id="todo-reminder-time" class="mx-auto" style="width: 100px" [disabled]="!newTodoReminderCheckboxChecked"
-								[(ngModel)]="todoReminderTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
+			<ngb-timepicker
+				id="todo-reminder-time"
+				class="mx-auto"
+				style="width: 100px"
+				[disabled]="!newTodoReminderCheckboxChecked"
+				[(ngModel)]="todoReminderTime"
+				[hourStep]="1"
+				[minuteStep]="15">
+			</ngb-timepicker>
 		</div>
 
       <div class="mx-auto offset-1">
-         <calendo-set-todo-groups [groups]="todoGroups" (groupsChanged)="todoGroups = $event"></calendo-set-todo-groups>
-			<calendo-set-name [(name)]="newTodoName" (nameChanged)="newTodoName = $event"></calendo-set-name>
+         <calendo-set-todo-groups (groupsChanged)="todoGroups = $event"></calendo-set-todo-groups>
+			<calendo-set-name [(name)]="newTodoName" (nameChanged)="newTodoName = $event" (submit)="c()"></calendo-set-name>
 		</div>
 	</div>
 	<div class="modal-footer theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">

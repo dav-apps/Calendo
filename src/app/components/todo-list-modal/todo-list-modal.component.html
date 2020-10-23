@@ -17,15 +17,17 @@
 				</div>
 			</div>
 
-			<ngb-datepicker [(ngModel)]="todoListDate" 
-								(navigate)="date = $event.next" 
-								[disabled]="!setDateCheckboxChecked"
-								style="background-color: white;"></ngb-datepicker>
+			<ngb-datepicker
+				[(ngModel)]="todoListDate" 
+				(navigate)="date = $event.next" 
+				[disabled]="!setDateCheckboxChecked"
+				style="background-color: white">
+			</ngb-datepicker>
       </div>
 
 		<div class="mx-auto offset-1">
-			<calendo-set-todo-groups [groups]="todoGroups" (groupsChanged)="todoGroups = $event"></calendo-set-todo-groups>
-			<calendo-set-name [(name)]="todoListName" (nameChanged)="todoListName = $event" [type]="1"></calendo-set-name>
+			<calendo-set-todo-groups (groupsChanged)="todoGroups = $event"></calendo-set-todo-groups>
+			<calendo-set-name [(name)]="todoListName" (nameChanged)="todoListName = $event" (submit)="c()" [type]="1"></calendo-set-name>
 		</div>
 	</div>
 	<div class="modal-footer theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">

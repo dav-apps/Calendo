@@ -1,4 +1,4 @@
 <div class="form-group mt-2" [style.width.px]="width">
    <label class="col-form-label text-color">{{ locale.name }}</label>
-   <fab-text-field [(value)]="name" [placeholder]="textFieldPlaceholder" [styles]="nameTextFieldStyle" (onChange)="onChange($event)"></fab-text-field>
+   <fab-text-field [(value)]="name" [placeholder]="textFieldPlaceholder" [styles]="nameTextFieldStyle" (onChange)="onChange($event)" (keydown.enter)="Submit()"></fab-text-field>
 </div>
