@@ -26,7 +26,7 @@
       </div>
 
 		<div class="mx-auto offset-1">
-			<calendo-set-todo-groups (groupsChanged)="todoGroups = $event"></calendo-set-todo-groups>
+			<calendo-set-todo-groups [initialGroups]="todoGroups" (groupsChanged)="todoGroups = $event"></calendo-set-todo-groups>
 			<calendo-set-name [(name)]="todoListName" (nameChanged)="todoListName = $event; SetSubmitButtonDisabled()" (submit)="submitButtonDisabled ? 0 : c()" [type]="1"></calendo-set-name>
 		</div>
 	</div>
