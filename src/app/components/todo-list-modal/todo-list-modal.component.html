@@ -27,10 +27,10 @@
 
 		<div class="mx-auto offset-1">
 			<calendo-set-todo-groups (groupsChanged)="todoGroups = $event"></calendo-set-todo-groups>
-			<calendo-set-name [(name)]="todoListName" (nameChanged)="todoListName = $event" (submit)="c()" [type]="1"></calendo-set-name>
+			<calendo-set-name [(name)]="todoListName" (nameChanged)="todoListName = $event; SetSubmitButtonDisabled()" (submit)="submitButtonDisabled ? 0 : c()" [type]="1"></calendo-set-name>
 		</div>
 	</div>
 	<div class="modal-footer theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
-		<button type="button" class="btn btn-primary" [disabled]="todoListName.length < 2" (click)="c()">{{ locale.save }}</button>
+		<button type="button" class="btn btn-primary" [disabled]="submitButtonDisabled" (click)="c()">{{ locale.save }}</button>
    </div>
 </ng-template>

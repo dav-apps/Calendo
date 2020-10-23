@@ -18,6 +18,8 @@ export class TodoListModalComponent{
 	todoGroups: string[] = [];
 	new: boolean = true;
 	todoListUuid: string;
+	modalVisible: boolean = false
+	submitButtonDisabled: boolean = true
 
 	constructor(
 		private modalService: NgbModal,
@@ -26,7 +28,10 @@ export class TodoListModalComponent{
       this.locale = this.dataService.GetLocale().todoListModal;
    }
 
-	Show(todoList?: TodoList, date?: number){
+	Show(todoList?: TodoList, date?: number) {
+		if(this.modalVisible) return
+		this.modalVisible = true
+
       if(todoList){
 			// Update todo list
 			this.new = false;
@@ -47,7 +52,7 @@ export class TodoListModalComponent{
 			this.todoListDate.month = date.getMonth() + 1;
 			this.todoListDate.day = date.getDate();
 
-         this.todoListName = todoList.name;
+			this.todoListName = todoList.name
 			
 			this.todoGroups = [];
 			todoList.groups.forEach(group => {
@@ -63,6 +68,8 @@ export class TodoListModalComponent{
       }
 
 		this.modalService.open(this.todoListModal).result.then(async () => {
+			if (this.submitButtonDisabled) return
+
 			// Calculate the unix timestamp
 			let todoListTimeUnix = 0;
 			if(this.setDateCheckboxChecked){
@@ -79,7 +86,14 @@ export class TodoListModalComponent{
 				await todoList.Update(this.todoListName, todoListTimeUnix, this.todoGroups);
 				this.save.emit(todoList);
 			}
-		}, () => {});
+
+			this.modalService.dismissAll()
+			this.modalVisible = false
+		}, () => {
+			this.modalVisible = false
+		})
+		
+		this.SetSubmitButtonDisabled()
 	}
 	
 	Reset(date?: number){
@@ -91,10 +105,16 @@ export class TodoListModalComponent{
 		this.todoListDate = { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate() };
       this.todoListName = "";
       this.setDateCheckboxChecked = true;
-      this.todoGroups = [];
+		this.todoGroups = [];
+		
+		this.SetSubmitButtonDisabled()
 	}
    
    ToggleSetDateCheckbox(){
       this.setDateCheckboxChecked = !this.setDateCheckboxChecked;
-   }
+	}
+	
+	SetSubmitButtonDisabled() {
+		this.submitButtonDisabled = this.todoListName.trim().length < 2
+	}
 }

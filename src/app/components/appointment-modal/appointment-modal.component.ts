@@ -38,6 +38,8 @@ export class AppointmentModalComponent{
 	notificationTime: number = 3600;				// Saves the time of the notification in seconds before the start of the appointment
 	showReminderOption: boolean = true;
 	reminderOptions: IDropdownOption[] = [];
+	modalVisible: boolean = false
+	submitButtonDisabled: boolean = true
 
 	constructor(
 		private modalService: NgbModal,
@@ -47,7 +49,10 @@ export class AppointmentModalComponent{
 		this.notificationLocale = this.dataService.GetLocale().notifications.appointment;
 	}
 
-   Show(appointment?: Appointment, date?: number){
+	Show(appointment?: Appointment, date?: number) {
+		if (this.modalVisible) return
+		this.modalVisible = true
+
 		// Check if push is supported
 		this.showReminderOption = (
 			('serviceWorker' in navigator)
@@ -110,7 +115,9 @@ export class AppointmentModalComponent{
          this.ResetNewObjects(date);
       }
 
-      this.modalService.open(this.appointmentModal).result.then(async () => {
+		this.modalService.open(this.appointmentModal).result.then(async () => {
+			if (this.submitButtonDisabled) return
+
 			// Save the new appointment
 			// Calculate the unix timestamp of start and end
 			var start = new Date(
@@ -182,7 +189,12 @@ export class AppointmentModalComponent{
 			}
 
 			this.modalService.dismissAll()
-      }, () => {});
+			this.modalVisible = false
+		}, () => {
+			this.modalVisible = false
+		})
+		
+		this.SetSubmitButtonDisabled()
    }
 
    ResetNewObjects(date?: number){
@@ -198,27 +210,25 @@ export class AppointmentModalComponent{
 
 		// Select a random color
 		this.selectedColor = Math.floor(Math.random() * this.availableColors.length);
-   }
 
-   SetAppointmentSaveButtonDisabled(): boolean{
-      // Check if the start time is after the end time
-      var timeOkay = this.appointmentAllDayCheckboxChecked;
+		this.SetSubmitButtonDisabled()
+	}
 
-      if(!this.appointmentAllDayCheckboxChecked){
-         if(this.appointmentStartTime.hour > this.appointmentEndTime.hour){
-            timeOkay = false;
-         }else if(this.appointmentStartTime.hour == this.appointmentEndTime.hour){
-            if(this.appointmentStartTime.minute > this.appointmentEndTime.minute){
-               timeOkay = false;
-            }else{
-               timeOkay = true;
-            }
-         }else{
-            timeOkay = true;
-         }
-      }
-      
-		return !(this.appointmentName.length > 1 && timeOkay);
+	SetSubmitButtonDisabled() {
+		this.submitButtonDisabled = !(
+			this.appointmentName.trim().length > 1
+			&& (
+				this.appointmentAllDayCheckboxChecked ?
+				true
+				: (
+					this.appointmentStartTime.hour < this.appointmentEndTime.hour
+					|| (
+						this.appointmentStartTime.hour == this.appointmentEndTime.hour
+						&& this.appointmentStartTime.minute <= this.appointmentEndTime.minute
+					)
+				)
+			)
+		)
 	}
 
 	GenerateNotificationProperties(name: string, start: number, end: number) : {title: string, message: string}{
@@ -264,10 +274,16 @@ export class AppointmentModalComponent{
 
 			// Set the notification time to 1 hour
 			this.SetReminderSelection(3600);
-      }
+		}
+
+		this.SetSubmitButtonDisabled()
 	}
 
 	ToggleReminderCheckbox(){
 		this.reminderCheckboxChecked = !this.reminderCheckboxChecked;
+	}
+
+	TimepickerValueChanged() {
+		this.SetSubmitButtonDisabled()
 	}
 }

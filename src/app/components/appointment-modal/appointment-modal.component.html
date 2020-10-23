@@ -32,14 +32,21 @@
 							[disabled]="appointmentAllDayCheckboxChecked"
 							[(ngModel)]="appointmentStartTime"
 							[hourStep]="1"
-							[minuteStep]="15">
+							[minuteStep]="15"
+							(ngModelChange)="TimepickerValueChanged()">
 						</ngb-timepicker>
 					</div>
 	
 					<div class="col-5">
 						<label for="appointmentEndTime" class="col-form-label text-color">{{ locale.end }}</label>
-						<ngb-timepicker id="appointment-end-time" [disabled]="appointmentAllDayCheckboxChecked"
-											[(ngModel)]="appointmentEndTime" [hourStep]="1" [minuteStep]="15"></ngb-timepicker>
+						<ngb-timepicker
+							id="appointment-end-time"
+							[disabled]="appointmentAllDayCheckboxChecked"
+							[(ngModel)]="appointmentEndTime"
+							[hourStep]="1"
+							[minuteStep]="15"
+							(ngModelChange)="TimepickerValueChanged()">
+						</ngb-timepicker>
 					</div>
 				</div>
 			</div>
@@ -82,11 +89,11 @@
 
 			<!-- Name -->
 			<div class="mx-auto mt-3" style="width: 250px;">
-				<calendo-set-name [(name)]="appointmentName" (nameChanged)="appointmentName = $event" (submit)="c()" [type]="2" [width]="250"></calendo-set-name>
+				<calendo-set-name [(name)]="appointmentName" (nameChanged)="appointmentName = $event; SetSubmitButtonDisabled()" (submit)="submitButtonDisabled ? 0 : c()" [type]="2" [width]="250"></calendo-set-name>
 			</div>
 		</div>
    </div>
    <div class="modal-footer theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
-		<button type="button" class="btn btn-primary" [disabled]="SetAppointmentSaveButtonDisabled()" (click)="c()">{{ locale.save }}</button>
+		<button type="button" class="btn btn-primary" [disabled]="submitButtonDisabled" (click)="c()">{{ locale.save }}</button>
    </div>
 </ng-template>

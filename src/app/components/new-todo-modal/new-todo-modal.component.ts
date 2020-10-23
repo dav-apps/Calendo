@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Todo, GetAllTodoGroups } from '../../models/Todo';
+import { Todo } from '../../models/Todo';
 import { enUS } from '../../../locales/locales';
 import { DataService } from '../../services/data-service';
 import { SubscribePushNotifications, CreateNotification } from 'dav-npm';
@@ -25,6 +25,8 @@ export class NewTodoModalComponent{
    allGroups: string[] = [];
    todoReminderTime: {hour: number, minute: number};
 	showReminderOption: boolean = true;
+	modalVisible: boolean = false
+	submitButtonDisabled: boolean = false
 	groupTextFieldStyle = {
 		root: {
 			width: 250,
@@ -44,7 +46,10 @@ export class NewTodoModalComponent{
       this.notificationLocale = this.dataService.GetLocale().notifications.todo;
    }
 
-   Show(date?: number){
+	Show(date?: number) {
+		if(this.modalVisible) return
+		this.modalVisible = true
+
       this.ResetNewObjects(date);
 
       // Check if push is supported
@@ -56,6 +61,8 @@ export class NewTodoModalComponent{
 		)
 
 		this.modalService.open(this.todoModal).result.then(async () => {
+			if (this.submitButtonDisabled) return
+
          // Save new todo
          var todoTimeUnix: number = 0;
          if(this.newTodoSetDateCheckboxChecked){
@@ -78,8 +85,15 @@ export class NewTodoModalComponent{
 
          let todo = await Todo.Create(this.newTodoName, false, todoTimeUnix, this.todoGroups, null, notificationUuid);
 
-         this.save.emit(todo);
-      }, () => {});
+			this.save.emit(todo);
+
+			this.modalService.dismissAll()
+			this.modalVisible = false
+		}, () => {
+			this.modalVisible = false
+		})
+
+		this.SetSubmitButtonDisabled()
    }
 
    ResetNewObjects(date?: number){
@@ -94,7 +108,9 @@ export class NewTodoModalComponent{
       this.todoGroups = [];
       this.allGroups = [];
       this.todoReminderTime = {hour: 10, minute: 0};
-      this.newTodoReminderCheckboxChecked = false;
+		this.newTodoReminderCheckboxChecked = false;
+		
+		this.SetSubmitButtonDisabled()
    }
 
    GenerateNotificationProperties(todoName: string) : {title: string, message: string}{
@@ -117,5 +133,9 @@ export class NewTodoModalComponent{
 		if(this.newTodoSetDateCheckboxChecked){
 			this.newTodoReminderCheckboxChecked = !this.newTodoReminderCheckboxChecked;
 		}
+	}
+
+	SetSubmitButtonDisabled() {
+		this.submitButtonDisabled = this.newTodoName.trim().length < 2
 	}
 }
