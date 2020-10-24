@@ -46,7 +46,6 @@ export class AppointmentsPageComponent{
    }
 
    ShowOrHideOldAppointments(){
-      this.dataService.showOldAppointments = !this.dataService.showOldAppointments;
       this.dataService.LoadAllAppointments();
    }
 }

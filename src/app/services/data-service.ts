@@ -36,7 +36,8 @@ export class DataService{
 	//#endregion
 
 	//#region AppointmentsPage
-	appointmentDays: { date: string, timestamp: number, appointments: Appointment[] }[] = [];
+	appointmentDays: { date: string, timestamp: number, appointments: Appointment[] }[] = []
+	oldAppointmentDays: { date: string, timestamp: number, appointments: Appointment[] }[] = []
 	//#endregion
 
 	//#region CalendarPage
@@ -61,7 +62,6 @@ export class DataService{
 	//#endregion
 
 	//#region All pages
-	showOldAppointments: boolean = false;
 	sortTodosByDate: boolean = true;
 	isNavbarCollapsed: boolean = false;
 	darkTheme: boolean = false;
@@ -108,6 +108,7 @@ export class DataService{
 		this.isLoadingAllAppointments = true;
 
 		this.appointmentDays = [];
+		this.oldAppointmentDays = []
 		this.allAppointments = [];
 		this.ClearCalendarDaysAppointments();
 		this.selectedDayAppointments = [];
@@ -791,27 +792,27 @@ export class DataService{
 
 	//#region AppointmentsPage
 	AddAppointmentToAppointmentsPage(appointment: Appointment){
-      var date: string = moment.unix(appointment.start).format('dddd, D. MMMM YYYY');
-		var timestampOfDate = moment.unix(appointment.start).startOf('day').unix();
+      var date: string = moment.unix(appointment.start).format('dddd, D. MMMM YYYY')
+		var timestampOfDate = moment.unix(appointment.start).startOf('day').unix()
 
-		// Check if the appointment is old
-		var appointmentStartTimestamp = moment.unix(appointment.start).endOf('day').unix();
+		var appointmentStartTimestamp = moment.unix(appointment.start).endOf('day').unix()
 		if(!appointment.allday){
-			appointmentStartTimestamp = appointment.end;
-		}
-		if(appointmentStartTimestamp < moment.now() / 1000 && !this.showOldAppointments){
-			return;
+			appointmentStartTimestamp = appointment.end
 		}
 
-      // Check if the date already exists in the appointmentDays array
-      var appointmentDay = this.appointmentDays.find(obj => obj["timestamp"] == timestampOfDate);
+		// Check if the appointment was created yesterday or a day before
+		let isOld = appointmentStartTimestamp < moment.unix(moment.now() / 1000).startOf('day').unix()
+		let appointmentDays = isOld ? this.oldAppointmentDays : this.appointmentDays
+
+		// Check if the date already exists in the appointmentDays or oldAppointmentDays array
+      var appointmentDay = appointmentDays.find(obj => obj["timestamp"] == timestampOfDate)
 
       if(appointmentDay){
-         var appointmentArray = appointmentDay["appointments"];
-         appointmentArray.push(appointment);
+         var appointmentArray = appointmentDay["appointments"]
+         appointmentArray.push(appointment)
 
          // Sort the appointments array
-         this.SortAppointmentsArray(appointmentArray);
+         this.SortAppointmentsArray(appointmentArray)
       }else{
          // Create a new appointmentDay
          var newAppointmentDay = {
@@ -820,10 +821,10 @@ export class DataService{
             appointments: [appointment]
          }
 
-         this.appointmentDays.push(newAppointmentDay);
+         appointmentDays.push(newAppointmentDay)
 
          // Sort the appointmentDays array
-         this.appointmentDays.sort((a: object, b: object) => {
+         appointmentDays.sort((a: object, b: object) => {
             const timestampString = "timestamp";
             if(a[timestampString] < b[timestampString]){
                return -1;
@@ -832,7 +833,7 @@ export class DataService{
             }else{
                return 0;
             }
-         });
+         })
       }
 	}
 	
