@@ -11,8 +11,8 @@ import * as bowser from "bowser";
 
 @Injectable()
 export class DataService{
-	user: DavUser;
-	locale: string = navigator.language;
+	user: DavUser
+	locale: string = navigator.language
 
 	//#region StartPage
 	startDaysDates: number[] = [];					// Contains the timestamps of the start of the days
@@ -838,22 +838,45 @@ export class DataService{
 	}
 	
 	RemoveAppointmentFromAppointmentsPage(appointment: Appointment){
-		var i = 0;
+		let i = 0
 
-		this.appointmentDays.forEach(appointmentDay => {
-			let index = appointmentDay["appointments"].findIndex(a => a.uuid == appointment.uuid);
+		// Try to find the appointment in appointmentDays
+		for (let appointmentDay of this.appointmentDays) {
+			let index = appointmentDay["appointments"].findIndex(a => a.uuid == appointment.uuid)
 
 			if(index !== -1){
-				appointmentDay["appointments"].splice(index, 1);
+				appointmentDay["appointments"].splice(index, 1)
+				
+				if(appointmentDay["appointments"].length == 0){
+					// Remove the appointmentDay
+					this.appointmentDays.splice(i, 1);
+				}
+
+				return
 			}
 
-			if(appointmentDay["appointments"].length == 0){
-				// Remove the appointmentDay
-				this.appointmentDays.splice(i, 1);
+			i++
+		}
+
+		i = 0
+
+		// Try to find the appointment in oldAppointmentDays
+		for (let appointmentDay of this.oldAppointmentDays) {
+			let index = appointmentDay["appointments"].findIndex(a => a.uuid == appointment.uuid)
+
+			if(index !== -1){
+				appointmentDay["appointments"].splice(index, 1)
+				
+				if(appointmentDay["appointments"].length == 0){
+					// Remove the appointmentDay
+					this.oldAppointmentDays.splice(i, 1);
+				}
+
+				return
 			}
 
-			i++;
-		});
+			i++
+		}
 	}
 	//#endregion
 
