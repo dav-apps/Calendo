@@ -1,11 +1,13 @@
 <div class="container-fluid ms-motion-slideUpIn">
-   <h1 class="text-center mt-3 text-color font-weight-light" ngbDropdown placement="bottom-right">
+   <h1 class="text-center mt-3 text-color font-weight-light">
       {{ locale.header }}
-      <button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle><fa-icon [icon]="faEllipsisH"></fa-icon></button>
-      <div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4 ms-motion-slideDownIn">
-         <button class="dropdown-item text-color cursor" (click)="ShowOrHideOldAppointments()">{{ dataService.showOldAppointments ? locale.hideOldAppointments : locale.showOldAppointments }}</button>
-         <button class="dropdown-item text-color cursor" (click)="ShowNewAppointmentModal()">{{ locale.newAppointment }}</button>
-      </div>
+		<button
+			type="button"
+			class="btn btn-outline-primary btn-sm mb-1"
+			(click)="ShowNewAppointmentModal()">
+
+			<fa-icon [icon]="faPlus"></fa-icon>
+		</button>
    </h1>
 
 	<p class="font-weight-light text-center mt-3 text-color" 
@@ -31,7 +33,7 @@
 	
 	<!-- List of old appointments -->
 	<h2 class="font-weight-light text-center mt-3 text-color" *ngIf="dataService.oldAppointmentDays.length > 0">
-		Alte Termine
+		{{ locale.oldAppointments }}
 	</h2>
 
 	<div class="row" *ngIf="dataService.oldAppointmentDays.length > 0">

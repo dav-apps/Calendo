@@ -113,10 +113,8 @@ const enDefaults = {
    },
    appointmentsPage: {
       header: "Appointments",
-      showOldAppointments: "Show old appointments",
-      hideOldAppointments: "Hide old appointments",
-      newAppointment: "Add Appointment",
-      noAppointments: "You have no appointments"
+		noAppointments: "You have no upcoming appointments",
+		oldAppointments: "Old appointments"
    },
    calendarPage: {
       todo: "Todo",
@@ -339,10 +337,8 @@ const deDefaults = {
    },
    appointmentsPage: {
       header: "Termine",
-      showOldAppointments: "Alte Termine einblenden",
-      hideOldAppointments: "Alte Termine ausblenden",
-      newAppointment: "Termin hinzufügen",
-      noAppointments: "Du hast keine Termine"
+		noAppointments: "Du hast keine anstehenden Termine",
+		oldAppointments: "Alte Termine"
    },
    calendarPage: {
       todo: "Todo",
