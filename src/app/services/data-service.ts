@@ -36,8 +36,8 @@ export class DataService{
 	//#endregion
 
 	//#region AppointmentsPage
-	appointmentDays: { date: string, timestamp: number, appointments: Appointment[] }[] = []
-	oldAppointmentDays: { date: string, timestamp: number, appointments: Appointment[] }[] = []
+	appointmentDays: AppointmentDay[] = []
+	oldAppointmentDays: AppointmentDay[] = []
 	//#endregion
 
 	//#region CalendarPage
@@ -1137,4 +1137,10 @@ export class DataService{
 		return currentList;
    }
 	//#endregion
+}
+
+export interface AppointmentDay {
+	date: string,
+	timestamp: number,
+	appointments: Appointment[]
 }
