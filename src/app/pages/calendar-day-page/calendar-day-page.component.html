@@ -17,7 +17,10 @@
          <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="ShowNewAppointmentModal()"><fa-icon [icon]="faPlus"></fa-icon></button>
       </h3>
 
-      <p class="font-weight-light" style="font-size: 18px; font-family: 'Segoe UI'" *ngIf="dataService.selectedDayAppointments.length == 0">{{ locale.noAppointments }}</p>
+      <p class="no-items-message font-weight-light" *ngIf="dataService.selectedDayAppointments.length == 0">
+			{{ locale.noAppointments }}
+		</p>
+		
       <calendo-small-appointment-item class="d-inline-flex" [appointment]="appointment" *ngFor="let appointment of dataService.selectedDayAppointments"></calendo-small-appointment-item>
    </div>
    
@@ -32,10 +35,11 @@
 				<button class="dropdown-item text-color cursor" (click)="ShowNewTodoModal()">{{ locale.newTodo }}</button>
 				<button class="dropdown-item text-color cursor" (click)="ShowTodoListModal()">{{ locale.newTodoList }}</button>
 			</div>
-      </h3>
-		<p class="font-weight-light" 
-			style="font-size: 18px; font-family: 'Segoe UI'" 
-			*ngIf="dataService.selectedDayTodos.length == 0 && dataService.selectedDayTodoLists.length == 0">{{ locale.noTodos }}</p>
+		</h3>
+		
+		<p class="font-weight-light no-items-message" *ngIf="dataService.selectedDayTodos.length == 0 && dataService.selectedDayTodoLists.length == 0">
+			{{ locale.noTodos }}
+		</p>
       
 		<calendo-small-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.selectedDayTodos"></calendo-small-todo-item>
 		<calendo-small-todo-list-item [todoList]="todoList" *ngFor="let todoList of dataService.selectedDayTodoLists"></calendo-small-todo-list-item>

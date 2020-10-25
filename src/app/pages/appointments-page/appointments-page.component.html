@@ -10,9 +10,7 @@
 		</button>
    </h1>
 
-	<p class="font-weight-light text-center mt-3 text-color" 
-		style="font-size: 18px; font-family: 'Segoe UI'"
-		*ngIf="dataService.appointmentDays.length == 0">
+	<p class="no-items-message font-weight-light text-center mt-3 text-color" *ngIf="dataService.appointmentDays.length == 0">
 		{{ locale.noAppointments }}
 	</p>
 	
