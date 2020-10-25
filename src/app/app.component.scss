@@ -1,3 +1,18 @@
 .default-font{
 	font-family: 'Roboto', sans-serif;
 }
+
+#bottom-navigation-bar{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 56px;
+}
+
+.bottom-navigation-button{
+	border-radius: 0px;
+	color: white;
+	background-color: var(--primary);
+	height: 56px;
+}

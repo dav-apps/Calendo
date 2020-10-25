@@ -17,24 +17,26 @@ import { TodoList, ConvertTableObjectToTodoList } from './models/TodoList';
 	]
 })
 export class AppComponent {
-	locale = enUS.navbar;
-	isWindowSmall = false;
-	smallWindowMaxSize: number = 768;
-	windowWidth: number = 500;
+	locale = enUS.navbar
+	isWindowSmall = false
+	smallWindowMaxSize: number = 768
+	windowWidth: number = 500
+	currentUrl: string = "/"
 
 	constructor(
 		public dataService: DataService,
 		private router: Router
 	) {
-		this.locale = this.dataService.GetLocale().navbar;
-		initializeIcons();
+		this.locale = this.dataService.GetLocale().navbar
+		initializeIcons()
 
 		this.router.events.forEach(data => {
 			if (data instanceof NavigationStart) {
 				// Update the updated todo lists
-				this.dataService.UpdateUpdatedTodoLists();
+				this.dataService.UpdateUpdatedTodoLists()
+				this.currentUrl = data.url
 			}
-		});
+		})
 	}
 
 	ngOnInit() {
@@ -46,7 +48,7 @@ export class AppComponent {
 
 		let notificationOptions = {
 			icon: "/assets/icons/icon-192x192.png",
-			badge: "/assets/badge-128x128.png"
+			badge: "/assets/icons/badge-128x128.png"
 		}
 
 		Init(
@@ -159,8 +161,8 @@ export class AppComponent {
 	}
 
 	setSize() {
-		this.isWindowSmall = (window.innerWidth < this.smallWindowMaxSize);
-		this.windowWidth = window.innerWidth - 15;
+		this.isWindowSmall = (window.innerWidth < this.smallWindowMaxSize)
+		this.windowWidth = window.innerWidth
 	}
 
 	setTitleBarColor() {

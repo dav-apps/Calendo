@@ -1,12 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary default-font mat-elevation-z10" id="calendo-navbar">
-	<a class="navbar-brand ml-3" routerLink="/" style="font-size: 25px;" (click)="dataService.isNavbarCollapsed = false">Calendo</a>
-	<div>
-		<calendo-user-menu class="mr-3" *ngIf="isWindowSmall"></calendo-user-menu>
-	
-		<button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbar-items" aria-controls="navbar-items" (click)="dataService.isNavbarCollapsed = !dataService.isNavbarCollapsed" [attr.aria-expanded]="!dataService.isNavbarCollapsed" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-		</button>
-	</div>
+	<a class="navbar-brand ml-3" routerLink="/" style="font-size: 25px" (click)="dataService.isNavbarCollapsed = false">Calendo</a>
 
 	<div class="collapse navbar-collapse" id="navbar-items" [ngClass]="isWindowSmall ? '' : 'd-flex justify-content-center'" [ngbCollapse]="!dataService.isNavbarCollapsed" style="font-size: 20px;">
 		<ul class="navbar-nav text-white">
@@ -24,9 +17,48 @@
 			</li>
 		</ul>
 	</div>
-	<calendo-user-menu style="margin-right: -6px" *ngIf="!isWindowSmall"></calendo-user-menu>
+	
+	<calendo-user-menu style="margin-right: -6px"></calendo-user-menu>
 </nav>
 
-<div (window:resize)="onResize($event)" [style.width.px]="windowWidth" class="default-font">
+<div (window:resize)="onResize($event)" [style.width.px]="windowWidth - 15" class="default-font">
 	<router-outlet></router-outlet>
+</div>
+
+<div id="bottom-navigation-bar" class="bg-primary" *ngIf="windowWidth < 768">
+	<button
+		mat-flat-button
+		class="bottom-navigation-button"
+		[style.width.px]="windowWidth / 4"
+		routerLink="/">
+		<img src="/assets/svgs/home-white-outlined.svg" *ngIf="currentUrl != '/'">
+		<img src="/assets/svgs/home-white-filled.svg"  *ngIf="currentUrl == '/'">
+	</button>
+
+	<button
+		mat-flat-button
+		class="bottom-navigation-button"
+		[style.width.px]="windowWidth / 4"
+		routerLink="/calendar">
+		<img src="/assets/svgs/event_note-white-outlined.svg" *ngIf="currentUrl != '/calendar'">
+		<img src="/assets/svgs/event_note-white-filled.svg" *ngIf="currentUrl == '/calendar'">
+	</button>
+
+	<button
+		mat-flat-button
+		class="bottom-navigation-button"
+		[style.width.px]="windowWidth / 4"
+		routerLink="/todos">
+		<img src="/assets/svgs/check_box-white-outlined.svg" *ngIf="currentUrl != '/todos'">
+		<img src="/assets/svgs/check_box-white-filled.svg" *ngIf="currentUrl == '/todos'">
+	</button>
+
+	<button
+		mat-flat-button
+		class="bottom-navigation-button"
+		[style.width.px]="windowWidth / 4"
+		routerLink="/appointments">
+		<img src="/assets/svgs/event-white-outlined.svg" *ngIf="currentUrl != '/appointments'">
+		<img src="/assets/svgs/event-white-filled.svg" *ngIf="currentUrl == '/appointments'">
+	</button>
 </div>
