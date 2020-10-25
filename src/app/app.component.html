@@ -30,31 +30,31 @@
 		mat-flat-button
 		class="bottom-navigation-button flex-fill"
 		routerLink="/">
-		<img src="/assets/svgs/home-white-outlined.svg" *ngIf="currentUrl != '/'">
-		<img src="/assets/svgs/home-white-filled.svg"  *ngIf="currentUrl == '/'">
+		<img src="/assets/svgs/home-white-outlined.svg" [style.display]="currentUrl == '/' ? 'none' : ''">
+		<img src="/assets/svgs/home-white-filled.svg" [style.display]="currentUrl == '/' ? '' : 'none'">
 	</button>
 
 	<button
 		mat-flat-button
 		class="bottom-navigation-button flex-fill"
 		routerLink="/calendar">
-		<img src="/assets/svgs/event_note-white-outlined.svg" *ngIf="currentUrl != '/calendar'">
-		<img src="/assets/svgs/event_note-white-filled.svg" *ngIf="currentUrl == '/calendar'">
+		<img src="/assets/svgs/event_note-white-outlined.svg" [style.display]="currentUrl == '/calendar' ? 'none' : ''">
+		<img src="/assets/svgs/event_note-white-filled.svg" [style.display]="currentUrl == '/calendar' ? '' : 'none'">
 	</button>
 
 	<button
 		mat-flat-button
 		class="bottom-navigation-button flex-fill"
 		routerLink="/todos">
-		<img src="/assets/svgs/check_box-white-outlined.svg" *ngIf="currentUrl != '/todos'">
-		<img src="/assets/svgs/check_box-white-filled.svg" *ngIf="currentUrl == '/todos'">
+		<img src="/assets/svgs/check_box-white-outlined.svg" [style.display]="currentUrl == '/todos' ? 'none' : ''">
+		<img src="/assets/svgs/check_box-white-filled.svg" [style.display]="currentUrl == '/todos' ? '' : 'none'">
 	</button>
 
 	<button
 		mat-flat-button
 		class="bottom-navigation-button flex-fill"
 		routerLink="/appointments">
-		<img src="/assets/svgs/event-white-outlined.svg" *ngIf="currentUrl != '/appointments'">
-		<img src="/assets/svgs/event-white-filled.svg" *ngIf="currentUrl == '/appointments'">
+		<img src="/assets/svgs/event-white-outlined.svg" [style.display]="currentUrl == '/appointments' ? 'none' : ''">
+		<img src="/assets/svgs/event-white-filled.svg" [style.display]="currentUrl == '/appointments' ? '' : 'none'">
 	</button>
 </div>
