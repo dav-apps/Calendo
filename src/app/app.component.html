@@ -25,11 +25,10 @@
 	<router-outlet></router-outlet>
 </div>
 
-<div id="bottom-navigation-bar" class="bg-primary" *ngIf="dataService.smallWindow">
+<div id="bottom-navigation-bar" class="bg-primary d-flex flex-row" *ngIf="dataService.smallWindow">
 	<button
 		mat-flat-button
-		class="bottom-navigation-button"
-		[style.width.px]="windowWidth / 4"
+		class="bottom-navigation-button flex-fill"
 		routerLink="/">
 		<img src="/assets/svgs/home-white-outlined.svg" *ngIf="currentUrl != '/'">
 		<img src="/assets/svgs/home-white-filled.svg"  *ngIf="currentUrl == '/'">
@@ -37,8 +36,7 @@
 
 	<button
 		mat-flat-button
-		class="bottom-navigation-button"
-		[style.width.px]="windowWidth / 4"
+		class="bottom-navigation-button flex-fill"
 		routerLink="/calendar">
 		<img src="/assets/svgs/event_note-white-outlined.svg" *ngIf="currentUrl != '/calendar'">
 		<img src="/assets/svgs/event_note-white-filled.svg" *ngIf="currentUrl == '/calendar'">
@@ -46,8 +44,7 @@
 
 	<button
 		mat-flat-button
-		class="bottom-navigation-button"
-		[style.width.px]="windowWidth / 4"
+		class="bottom-navigation-button flex-fill"
 		routerLink="/todos">
 		<img src="/assets/svgs/check_box-white-outlined.svg" *ngIf="currentUrl != '/todos'">
 		<img src="/assets/svgs/check_box-white-filled.svg" *ngIf="currentUrl == '/todos'">
@@ -55,8 +52,7 @@
 
 	<button
 		mat-flat-button
-		class="bottom-navigation-button"
-		[style.width.px]="windowWidth / 4"
+		class="bottom-navigation-button flex-fill"
 		routerLink="/appointments">
 		<img src="/assets/svgs/event-white-outlined.svg" *ngIf="currentUrl != '/appointments'">
 		<img src="/assets/svgs/event-white-filled.svg" *ngIf="currentUrl == '/appointments'">

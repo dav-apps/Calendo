@@ -40,8 +40,10 @@ export class CalendarPageComponent{
 	scrolled: boolean = false;		// If true, load the todos and appointments in the days after the 2 seconds interval
 	currentWeekDays: string[] = ["1", "2", "3", "4", "5", "6", "7"];
 
-	constructor(public dataService: DataService,
-					private router: Router){
+	constructor(
+		public dataService: DataService,
+		private router: Router
+	) {
 		this.locale = this.dataService.GetLocale().calendarPage;
 		moment.locale(this.dataService.locale);
 		this.dataService.HideWindowsBackButton();
@@ -261,12 +263,13 @@ export class CalendarPageComponent{
 		this.mobileCalendarContainer.nativeElement.hidden = !this.showMobileLayout;
 
 		this.calendarWidth = window.innerWidth;
-		this.calendarHeight = window.innerHeight
-									- $("#calendo-navbar").height()
-									- $("#calendar-top-bar").height()
-									- $("#calendar-label-div").height();
-
-		this.calendarHeight -= this.showMobileLayout ? 82 : 52 ;
+		this.calendarHeight = (
+			window.innerHeight
+			- $("#calendo-navbar").height()
+			- $("#calendar-top-bar").height()
+			- $("#calendar-label-div").height()
+			- (this.showMobileLayout ? 86 : 56)
+		)
 
 		this.calendarDayHeight = this.calendarHeight / this.dataService.desktopCalendarDaysDates.length;
 		this.calendarDayWidth = this.calendarWidth / 7;

@@ -43,7 +43,7 @@
 					<h4 class="cursor" [style.font-size.px]="largeDateFontSize" (click)="ShowCalendarDay(dataService.startDaysDates[i])">{{ GetLargeDate(date) }}</h4>
 					<p class="font-weight-light cursor" [style.font-size.px]="smallDateFontSize" (click)="ShowCalendarDay(dataService.startDaysDates[i])">{{ GetSmallDate(date) }}</p>
 				</div>
-				<div class="col-9 d-flex flex-column mt-1">
+				<div class="offset-1 col-8 offset-lg-0 col-lg-9 d-flex flex-column mt-1">
 					<div class="d-inline-flex" *ngFor="let appointment of dataService.startDaysAppointments[i]">
 						<calendo-small-appointment-item [appointment]="appointment"></calendo-small-appointment-item>
 					</div>

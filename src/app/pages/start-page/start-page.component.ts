@@ -32,10 +32,11 @@ export class StartPageComponent{
 	largeDateFontSize: number = 24;
 	smallDateFontSize: number = 16;
 
-	constructor(public dataService: DataService,
-					private router: Router,
-					private snackBar: MatSnackBar
-	){
+	constructor(
+		public dataService: DataService,
+		private router: Router,
+		private snackBar: MatSnackBar
+	) {
 		this.locale = this.dataService.GetLocale().startPage;
 		this.snackbarLocale = this.dataService.GetLocale().snackbar;
 		moment.locale(this.dataService.locale);

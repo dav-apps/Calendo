@@ -74,9 +74,10 @@ export class TodoListPageComponent{
 		this.todoListModal.Show(this.todoList);
 	}
 
-	ShowDeleteModal() {
+	async ShowDeleteModal() {
 		if (this.todoList.items.length == 0) {
 			// Delete the todo list immediately
+			await this.todoList.Delete()
 			this.Remove()
 		} else {
 			// Show the confirmation modal

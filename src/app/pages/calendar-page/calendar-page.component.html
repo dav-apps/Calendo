@@ -1,6 +1,6 @@
 <div (window:resize)="onResize()">
    <div id="calendar-top-bar">
-		<h3 class="mt-1 ml-3 text-color" style="font-weight: 300">
+		<h3 class="mt-2 ml-3 text-color" style="font-weight: 300">
 			<button id="calendar-show-previous-button" class="btn theme-background-color-secondary text-color icon-button" *ngIf="!showMobileLayout" (click)="ShowPrevious()" type="button" style="height: 36px; width: 36px">
             <i class="ms-Icon ms-Icon--ChevronLeftSmall" style="font-size: 12px; margin-left: -3px" aria-hidden="true"></i>
 			</button>
@@ -9,29 +9,38 @@
 			</button>
 			{{ getCurrentMonth() }} {{ getCurrentYear() }}
 		</h3>
-   </div>
+	</div>
+	
    <div id="calendar-label-div" class="position-absolute ml-1">
       <span class="position-absolute" *ngFor="let day of weekDayLabels; let i = index;" [style.margin-left.px]="calendarDayWidth * i">
 			<span class="font-weight-light text-color">{{ day }}</span><br>
-			<span [style.background-color]="currentDayOfWeek == i ? (dataService.darkTheme ? '#3d4753' : '#e3e4e5') : ''" 
-					[style.padding-left.px]="currentDayOfWeek == i ? 2 : 0"
-					[style.padding-right.px]="currentDayOfWeek == i ? 2 : 0"
-					(click)="goToWeekday(i)"
-					class="text-color cursor"
-					*ngIf="showMobileLayout">{{ currentWeekDays[i] }}</span>
+			<span
+				[style.background-color]="currentDayOfWeek == i ? (dataService.darkTheme ? '#3d4753' : '#e3e4e5') : ''" 
+				[style.padding-left.px]="currentDayOfWeek == i ? 2 : 0"
+				[style.padding-right.px]="currentDayOfWeek == i ? 2 : 0"
+				(click)="goToWeekday(i)"
+				class="text-color cursor"
+				*ngIf="showMobileLayout">
+				{{ currentWeekDays[i] }}
+			</span>
 		</span>
-   </div>
-	<div id="calendarContainer" #calendarContainer 
-			[style.height.px]="calendarHeight" 
-			[style.width.px]="calendarWidth" 
-			style="margin-top: 30px;">
+	</div>
+	
+	<div
+		id="calendarContainer" #calendarContainer 
+		[style.height.px]="calendarHeight" 
+		[style.width.px]="calendarWidth" 
+		style="margin-top: 30px">
+
 		<div class="d-flex" *ngFor="let week of dataService.desktopCalendarDaysDates; let i = index;">
-			<div [ngClass]="dataService.darkTheme ? 'border border-dark' : 'border'" 
-					*ngFor="let date of week; let j = index;" 
-					[style.height.px]="calendarDayHeight" 
-					[style.width.px]="calendarDayWidth" 
-					[style.background-color]="getDayBackgroundColor(i, j)"
-					(click)="dayClicked(date)">
+			<div
+				[ngClass]="dataService.darkTheme ? 'border border-dark' : 'border'" 
+				*ngFor="let date of week; let j = index;" 
+				[style.height.px]="calendarDayHeight" 
+				[style.width.px]="calendarDayWidth" 
+				[style.background-color]="getDayBackgroundColor(i, j)"
+				(click)="dayClicked(date)">
+
 				<span class="text-color">{{ getDayOfDate(date) }}</span>
 
 				<!-- Render todos -->
@@ -39,25 +48,31 @@
 
 				<!-- Render appointments -->
 				<div>
-					<calendo-small-appointment-item [appointment]="appointment"
-																[enableDropdown]="false" 
-																[compact]="true" 
-																*ngFor="let appointment of dataService.desktopCalendarDaysAppointments[i][j]; let k = index;">
+					<calendo-small-appointment-item
+						[appointment]="appointment"
+						[enableDropdown]="false" 
+						[compact]="true" 
+						*ngFor="let appointment of dataService.desktopCalendarDaysAppointments[i][j]; let k = index;">
 					</calendo-small-appointment-item>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div id="mobileCalendarContainer" #mobileCalendarContainer 
-			style="overflow: scroll; margin-top: 60px;" 
-			[style.height.px]="calendarHeight" 
-			[style.width.px]="calendarWidth">
-		<div class="border" 
-				[ngClass]="isTimestampToday(date) ? (dataService.darkTheme ? 'border-dark theme-background-color-primary' : 'light-theme-calendar-day') : (dataService.darkTheme ? 'border-dark theme-background-color-secondary' : 'theme-background-color-primary')"
-				*ngFor="let date of dataService.mobileCalendarDaysDates; let i = index;"
-				[style.height.px]="calendarDayHeight"
-				style="position: relative;"
-				(click)="dayClicked(date)">
+
+	<div
+		id="mobileCalendarContainer" #mobileCalendarContainer 
+		style="overflow: scroll; margin-top: 60px;" 
+		[style.height.px]="calendarHeight" 
+		[style.width.px]="calendarWidth">
+
+		<div
+			class="border" 
+			[ngClass]="isTimestampToday(date) ? (dataService.darkTheme ? 'border-dark theme-background-color-primary' : 'light-theme-calendar-day') : (dataService.darkTheme ? 'border-dark theme-background-color-secondary' : 'theme-background-color-primary')"
+			*ngFor="let date of dataService.mobileCalendarDaysDates; let i = index;"
+			[style.height.px]="calendarDayHeight"
+			style="position: relative;"
+			(click)="dayClicked(date)">
+
 			<span class="text-color">{{ getFullDayOfDate(date) }}</span>
 
 			<!-- Render todos -->
@@ -67,10 +82,11 @@
 
 			<!-- Render appointments -->
 			<div class="d-flex flex-column">
-				<calendo-small-appointment-item *ngFor="let appointment of dataService.mobileCalendarDaysAppointments[i]; let k = index;"
-															[appointment]="appointment" 
-															[enableDropdown]="false" 
-															[compact]="true">
+				<calendo-small-appointment-item
+					*ngFor="let appointment of dataService.mobileCalendarDaysAppointments[i]; let k = index;"
+					[appointment]="appointment" 
+					[enableDropdown]="false" 
+					[compact]="true">
 				</calendo-small-appointment-item>
 			</div>
 		</div>
