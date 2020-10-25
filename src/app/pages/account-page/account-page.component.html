@@ -1,4 +1,4 @@
-<div class="container mb-4 ms-motion-slideUpIn" *ngIf="!dataService.user.IsLoggedIn">
+<div class="container mb-4 ms-motion-slideUpIn" style="padding-bottom: 56px" *ngIf="!dataService.user.IsLoggedIn">
    <h1 class="text-center mt-3 text-color font-weight-light">{{ locale.header }}</h1>
    <h5 class="text-center mt-4 text-color">{{ locale.text1 }}</h5>
 
@@ -24,7 +24,7 @@
 	</div>
 </div>
 
-<div class="container mb-4 ms-motion-slideUpIn" *ngIf="dataService.user.IsLoggedIn">
+<div class="container mb-4 ms-motion-slideUpIn" style="padding-bottom: 56px" *ngIf="dataService.user.IsLoggedIn">
    <h1 class="text-center mt-3 text-color font-weight-light" style="margin-bottom: 40px">{{ locale.header }}</h1>
 	
 	<div class="d-flex justify-content-center">
