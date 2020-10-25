@@ -341,7 +341,7 @@ export class DataService{
 	async ApplyTheme(theme?: string){
 		if(theme == null){
 			// Get the theme from the settings
-			theme = await localforage.getItem(environment.settingsThemeKey);
+			theme = await this.GetTheme()
 		}
 
 		switch (theme){

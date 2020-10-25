@@ -1,10 +1,11 @@
 <div class="container ms-motion-slideUpIn" style="padding-bottom: 56px">
 	<div class="d-flex">
 		<div class="mx-auto d-flex">
-			<button type="button" 
-						class="btn mt-3 text-color theme-background-color-primary theme-border-color-primary icon-button" 
-						style="height: 40px; width: 45px; padding: 2px 0px 0px 0px;"
-						(click)="GoBack()">
+			<button
+				type="button" 
+				class="btn mt-3 text-color icon-button" 
+				style="height: 40px; width: 45px; padding: 2px 0px 0px 0px;"
+				(click)="GoBack()">
 				<fab-icon iconName="Back" [styles]="backButtonIconStyles"></fab-icon>
 			</button>
 			<h2 class="text-left mt-3 ml-3 text-color font-weight-light">{{ getCurrentDate() }}</h2>

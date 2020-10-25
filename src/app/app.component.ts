@@ -43,7 +43,7 @@ export class AppComponent {
 		this.setTitleBarColor();
 
 		// Set the background colors
-		this.dataService.ApplyTheme(null);
+		this.dataService.ApplyTheme()
 
 		let notificationOptions = {
 			icon: "/assets/icons/icon-192x192.png",
