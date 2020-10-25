@@ -1,7 +1,7 @@
 {
   "name": "calendo",
-  "version": "0.8.5",
-  "description": "Calendo makes it easy to keep track of your todos and appointments. You can set specific dates for your todos, sort them in groups and see your todos and appointments in your calendar.",
+  "version": "0.9.0",
+  "description": "Calendo is a simple app for managing your schedule. You can organize your appointments, manage your todos and group todos by topic.",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -33,7 +33,7 @@
     "bootstrap": "^4.3.1",
     "bowser": "^1.9.4",
     "core-js": "^2.5.4",
-    "dav-npm": "git+https://github.com/dav-apps/dav-npm.git#dev",
+    "dav-npm": "git+https://github.com/dav-apps/dav-npm.git#v1.6",
     "jquery": "^3.5.1",
     "localforage": "^1.7.2",
     "moment": "2.24.0",
