@@ -18,7 +18,6 @@ import { TodoList, ConvertTableObjectToTodoList } from './models/TodoList';
 })
 export class AppComponent {
 	locale = enUS.navbar
-	isWindowSmall = false
 	smallWindowMaxSize: number = 768
 	windowWidth: number = 500
 	currentUrl: string = "/"
@@ -161,7 +160,7 @@ export class AppComponent {
 	}
 
 	setSize() {
-		this.isWindowSmall = (window.innerWidth < this.smallWindowMaxSize)
+		this.dataService.smallWindow = (window.innerWidth < this.smallWindowMaxSize)
 		this.windowWidth = window.innerWidth
 	}
 

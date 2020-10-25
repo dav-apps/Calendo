@@ -63,7 +63,7 @@ export class DataService{
 
 	//#region All pages
 	sortTodosByDate: boolean = true;
-	isNavbarCollapsed: boolean = false;
+	smallWindow: boolean = false;
 	darkTheme: boolean = false;
 	windowsUiSettings = null
 	isLoadingAllAppointments: boolean = false;	// If true, LoadAllAppointments is currently running

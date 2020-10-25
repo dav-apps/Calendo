@@ -3,7 +3,7 @@
       <label for="new-group-name" class="col-form-label text-color">{{ locale.addNewGroup }}</label>
    
       <div class="d-flex">
-         <fab-text-field [(value)]="newGroupName" (input)="NameChanged($event)" (keydown.enter)="AddButtonClick()" [placeholder]="locale.groupName" [styles]="groupTextFieldStyle"></fab-text-field>
+         <fab-text-field [(value)]="newGroupName" (input)="NameChanged()" (keydown.enter)="AddButtonClick()" [placeholder]="locale.groupName" [styles]="groupTextFieldStyle"></fab-text-field>
          <button type="button" class="btn btn-outline-primary btn-sm" (click)="AddButtonClick()"><fa-icon [icon]="faPlus"></fa-icon></button>
       </div>
    </div>

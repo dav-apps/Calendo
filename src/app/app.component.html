@@ -1,19 +1,19 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary default-font mat-elevation-z10" id="calendo-navbar">
-	<a class="navbar-brand ml-3" routerLink="/" style="font-size: 25px" (click)="dataService.isNavbarCollapsed = false">Calendo</a>
+	<a class="navbar-brand ml-3" routerLink="/" style="font-size: 25px">Calendo</a>
 
-	<div class="collapse navbar-collapse" id="navbar-items" [ngClass]="isWindowSmall ? '' : 'd-flex justify-content-center'" [ngbCollapse]="!dataService.isNavbarCollapsed" style="font-size: 20px;">
+	<div class="collapse navbar-collapse" id="navbar-items" [ngClass]="dataService.smallWindow ? '' : 'd-flex justify-content-center'" style="font-size: 20px;">
 		<ul class="navbar-nav text-white">
 			<li class="nav-item mx-3 my-auto">
-				<a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="dataService.isNavbarCollapsed = false">{{ locale.start }}</a>
+				<a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">{{ locale.start }}</a>
 			</li>
 			<li class="nav-item mx-3 my-auto">
-				<a routerLink="/calendar" routerLinkActive="active" class="nav-link" (click)="dataService.isNavbarCollapsed = false">{{ locale.calendar }}</a>
+				<a routerLink="/calendar" routerLinkActive="active" class="nav-link">{{ locale.calendar }}</a>
 			</li>
 			<li class="nav-item mx-3 my-auto">
-				<a routerLink="/todos" routerLinkActive="active" class="nav-link" (click)="dataService.isNavbarCollapsed = false">{{ locale.todos }}</a>
+				<a routerLink="/todos" routerLinkActive="active" class="nav-link">{{ locale.todos }}</a>
 			</li>
 			<li class="nav-item mx-3 my-auto">
-				<a routerLink="/appointments" routerLinkActive="active" class="nav-link" (click)="dataService.isNavbarCollapsed = false">{{ locale.appointments }}</a>
+				<a routerLink="/appointments" routerLinkActive="active" class="nav-link">{{ locale.appointments }}</a>
 			</li>
 		</ul>
 	</div>
@@ -25,7 +25,7 @@
 	<router-outlet></router-outlet>
 </div>
 
-<div id="bottom-navigation-bar" class="bg-primary" *ngIf="windowWidth < 768">
+<div id="bottom-navigation-bar" class="bg-primary" *ngIf="dataService.smallWindow">
 	<button
 		mat-flat-button
 		class="bottom-navigation-button"
