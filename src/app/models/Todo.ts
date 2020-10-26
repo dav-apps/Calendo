@@ -1,5 +1,6 @@
-import { TableObject, Property, GetTableObject, GetAllTableObjects, DeleteNotification } from 'dav-npm';
-import { environment } from "../../environments/environment";
+import { TableObject, Property, GetTableObject, GetAllTableObjects, DeleteNotification } from 'dav-npm'
+import { environment } from "../../environments/environment"
+import { GetAllTodoLists } from './TodoList'
 
 export class Todo {
 	public uuid: string;
@@ -135,21 +136,33 @@ export async function GetTodo(uuid: string): Promise<Todo> {
 }
 
 export async function GetAllTodoGroups(): Promise<string[]> {
-	var allTodos = await GetAllTodos();
-	var todoGroups: string[] = [];
+	let todoGroups: string[] = []
+	let allTodos = await GetAllTodos()
+	let allTodoLists = await GetAllTodoLists()
 
 	allTodos.forEach(todo => {
 		todo.groups.forEach(group => {
-			let index = todoGroups.findIndex(g => g == group);
+			let index = todoGroups.findIndex(g => g == group)
 
 			if (index == -1) {
 				// Add the group
-				todoGroups.push(group);
+				todoGroups.push(group)
 			}
-		});
-	});
+		})
+	})
 
-	return todoGroups;
+	allTodoLists.forEach(todoList => {
+		todoList.groups.forEach(group => {
+			let index = todoGroups.findIndex(g => g == group)
+
+			if (index == -1) {
+				// Add the group
+				todoGroups.push(group)
+			}
+		})
+	})
+
+	return todoGroups
 }
 
 export function ConvertTableObjectToTodo(tableObject: TableObject): Todo {
