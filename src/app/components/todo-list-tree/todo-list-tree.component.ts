@@ -461,6 +461,9 @@ export class TodoListTreeComponent{
 		// Change the node to input
 		node.editTodoList = true;
 		this.ReloadTree();
+
+		// Set focus on the text field
+		setTimeout(() => $(".ms-TextField-field, .field-65").focus(), 1)
 	}
 
 	async UpdateTodoList(node: TodoNode){
@@ -497,11 +500,6 @@ export class TodoListTreeComponent{
 		if(parentNode){
 			await this.UpdateTodoListOrder(parentNode);
 		}
-   }
-   
-   LearnMoreClicked(){
-      // Navigate to the Account page
-      this.router.navigate(['account']);
    }
 	//#endregion
 }

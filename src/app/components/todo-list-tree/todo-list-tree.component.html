@@ -66,10 +66,10 @@
 				
 				<!-- Add dropdown -->
             <div ngbDropdown placement="top-left" style="margin-top: 2px" *ngIf="!node.editTodoList">
-               <button type="button" 
-                        class="btn ml-2 text-color theme-background-color-primary theme-border-color-primary icon-button" 
-                        style="height: 30px; width: 30px; padding: 2px 0px 0px 0px;" 
-                        ngbDropdownToggle *ngIf="!readonly">
+               <button type="button"
+                     class="btn ml-2 text-color theme-background-color-primary theme-border-color-primary icon-button"
+                  	style="height: 30px; width: 30px; padding: 2px 0px 0px 0px;"
+                  	ngbDropdownToggle *ngIf="!readonly">
                   <fab-icon iconName="Add"></fab-icon>
                </button>
 
@@ -96,7 +96,7 @@
 
 				<!-- Edit buttons -->
 				<div *ngIf="node.editTodoList" class="d-flex">
-					<fab-text-field [(value)]="node.name" [placeholder]="locale.todoListName"></fab-text-field>
+					<fab-text-field [(value)]="node.name" [placeholder]="locale.todoListName" (keydown.enter)="UpdateTodoList(node)"></fab-text-field>
 					<button type="button" class="btn btn-outline-primary btn-sm ml-2" (click)="UpdateTodoList(node)" [disabled]="node.name.length < 2">{{ locale.save }}</button>
 				</div>
 			</div>
