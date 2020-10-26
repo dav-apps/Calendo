@@ -79,5 +79,9 @@ export class TodosPageComponent{
 	// This is called when a todo list in the Sort By Groups mode was updated; Update all todo lists of the same object
    TodoListUpdated(todoListUuid: string, todoGroup: string){
 		this.dataService.UpdateTodoListsOnSortByGroupTodoPage(todoListUuid, todoGroup);
-   }
+	}
+	
+	ShowCalendarDay(date: number){
+		this.router.navigate(['/calendar/day', date]);
+	}
 }

@@ -22,13 +22,13 @@ export class DataService{
 	//#endregion
 
 	//#region TodosPage
-	todosWithoutDate: { date: string, timestamp: number, todos: Todo[], todoLists: TodoList[] } = {
+	todosWithoutDate: TodoDay = {
 		date: "",
 		timestamp: 0,
 		todos: [],
 		todoLists: []
 	}
-	todoDays: { date: string, timestamp: number, todos: Todo[], todoLists: TodoList[] }[] = [];
+	todoDays: TodoDay[] = [];
 
 	todosWithoutGroup: Todo[] = [];
 	todoListsWithoutGroup: TodoList[] = [];
@@ -1137,6 +1137,13 @@ export class DataService{
 		return currentList;
    }
 	//#endregion
+}
+
+export interface TodoDay{
+	date: string,
+	timestamp: number,
+	todos: Todo[],
+	todoLists: TodoList[]
 }
 
 export interface AppointmentDay {

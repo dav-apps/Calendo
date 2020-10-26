@@ -32,7 +32,12 @@
 		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" 
 				*ngFor="let todoDay of dataService.todoDays" [ngClass]="todoDay.todos.length > 0 || todoDay.todoLists.length > 0 ? '' : 'hidden'">
 			<div class="card-body">
-				<h5 class="card-title text-color" *ngIf="todoDay.todos.length > 0 || todoDay.todoLists.length > 0">{{ todoDay.date }}</h5>
+				<h5
+					class="card-title text-color"
+					*ngIf="todoDay.todos.length > 0 || todoDay.todoLists.length > 0">
+					<span (click)="ShowCalendarDay(todoDay.timestamp)">{{ todoDay.date }}</span>
+				</h5>
+
 				<ul class="list-group list-group-flush">
 					<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of todoDay.todos"></calendo-todo-item>
 					<calendo-todo-list-item [todoList]="todoList" *ngFor="let todoList of todoDay.todoLists"></calendo-todo-list-item>
