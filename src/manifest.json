@@ -1,52 +1,85 @@
 {
-  "name": "Calendo",
-  "short_name": "Calendo",
-  "description": "Calendo makes it easy to keep track of your todos and appointments. You can set specific dates for your todos, sort them in groups and see your todos and appointments in your calendar.",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
-  "display": "standalone",
-  "scope": "/",
-  "start_url": "/",
-  "icons": [
-    {
-      "src": "assets/icons/icon-72x72.png",
-      "sizes": "72x72",
-      "type": "image/png"
-    },
-    {
-      "src": "assets/icons/icon-96x96.png",
-      "sizes": "96x96",
-      "type": "image/png"
-    },
-    {
-      "src": "assets/icons/icon-128x128.png",
-      "sizes": "128x128",
-      "type": "image/png"
-    },
-    {
-      "src": "assets/icons/icon-144x144.png",
-      "sizes": "144x144",
-      "type": "image/png"
-    },
-    {
-      "src": "assets/icons/icon-152x152.png",
-      "sizes": "152x152",
-      "type": "image/png"
-    },
-    {
-      "src": "assets/icons/icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "assets/icons/icon-384x384.png",
-      "sizes": "384x384",
-      "type": "image/png"
-    },
-    {
-      "src": "assets/icons/icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+	"name": "Calendo",
+	"short_name": "Calendo",
+	"description": "Calendo is a simple app for managing your schedule. You can organize your appointments, manage your todos and group todos by topic.",
+	"theme_color": "#1976d2",
+	"background_color": "#1976d2",
+	"display": "standalone",
+	"scope": "/",
+	"start_url": "/",
+	"categories": ["productivity", "utilities", "tools"],
+	"icons": [
+		{
+			"src": "assets/icons/icon-72x72.png",
+			"sizes": "72x72",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icons/icon-96x96.png",
+			"sizes": "96x96",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icons/icon-128x128.png",
+			"sizes": "128x128",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icons/icon-144x144.png",
+			"sizes": "144x144",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icons/icon-152x152.png",
+			"sizes": "152x152",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icons/icon-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icons/icon-384x384.png",
+			"sizes": "384x384",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/icons/icon-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	],
+	"screenshots": [
+		{
+			"src": "assets/screenshots/screenshot1.png",
+			"sizes": "824x1540",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/screenshots/screenshot2.png",
+			"sizes": "824x1540",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/screenshots/screenshot3.png",
+			"sizes": "824x1540",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/screenshots/screenshot4.png",
+			"sizes": "824x1540",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/screenshots/screenshot5.png",
+			"sizes": "824x1540",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/screenshots/screenshot6.png",
+			"sizes": "824x1540",
+			"type": "image/png"
+		}
+	]
 }
