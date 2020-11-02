@@ -107,11 +107,11 @@ export class DataService{
 		if(this.isLoadingAllAppointments) return;
 		this.isLoadingAllAppointments = true;
 
-		this.appointmentDays = [];
+		this.appointmentDays = []
 		this.oldAppointmentDays = []
-		this.allAppointments = [];
-		this.ClearCalendarDaysAppointments();
-		this.selectedDayAppointments = [];
+		this.allAppointments = []
+		this.ClearCalendarDaysAppointments()
+		this.selectedDayAppointments = []
 
 		var appointments = await GetAllAppointments();
 		for(let appointment of appointments){
@@ -827,11 +827,11 @@ export class DataService{
          appointmentDays.sort((a: object, b: object) => {
             const timestampString = "timestamp";
             if(a[timestampString] < b[timestampString]){
-               return -1;
+               return isOld ? 1 : -1
             }else if(a[timestampString] > b[timestampString]){
-               return 1;
+               return isOld ? -1 : 1
             }else{
-               return 0;
+               return 0
             }
          })
       }
