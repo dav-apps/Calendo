@@ -1,17 +1,18 @@
-import { Injectable } from "@angular/core";
-import { Todo, GetAllTodos } from "../models/Todo";
-import { Appointment, GetAllAppointments } from "../models/Appointment";
-import { TodoList, GetAllTodoLists, GetTodoList } from "../models/TodoList";
-import { DavUser } from "dav-npm";
-import * as moment from 'moment';
-import * as localforage from "localforage";
-import { environment } from "../../environments/environment.prod";
-import * as locales from "../../locales/locales";
-import * as bowser from "bowser";
+import { Injectable } from "@angular/core"
+import { Todo, GetAllTodos } from "../models/Todo"
+import { Appointment, GetAllAppointments } from "../models/Appointment"
+import { TodoList, GetAllTodoLists, GetTodoList } from "../models/TodoList"
+import { Dav, User } from "dav-npm"
+import * as moment from 'moment'
+import * as localforage from "localforage"
+import { environment } from "../../environments/environment.prod"
+import * as locales from "../../locales/locales"
+import * as bowser from "bowser"
 
 @Injectable()
 export class DataService{
-	user: DavUser
+	dav: Dav
+	user: User
 	locale: string = navigator.language
 
 	//#region StartPage
@@ -70,17 +71,15 @@ export class DataService{
 	isLoadingAllTodos: boolean = false;
 	updatedTodoLists: string[] = [];
 	//#endregion
-	
-	constructor(){
-		this.GetSortTodosByDate().then(value => {
-			this.sortTodosByDate = value;
-		});
 
-		this.user = new DavUser(async () => {
-			this.InitStartDays();
-			await this.LoadAllAppointments();
-			await this.LoadAllTodos();
-      });
+	async ngOnInit() {
+		this.InitStartDays()
+		await this.LoadAllAppointments()
+		await this.LoadAllTodos()
+
+		this.GetSortTodosByDate().then(value => {
+			this.sortTodosByDate = value
+		})
 	}
 
 	private async InitLocalforage(){
