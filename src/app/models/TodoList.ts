@@ -1,14 +1,14 @@
-import { TableObject, Property, GetTableObject, GetAllTableObjects } from 'dav-npm';
-import { Todo, ConvertTableObjectToTodo } from './Todo';
-import { environment } from '../../environments/environment';
+import { TableObject, Property, GetTableObject, GetAllTableObjects } from 'dav-npm'
+import { Todo, ConvertTableObjectToTodo } from './Todo'
+import { environment } from '../../environments/environment'
 
 export class TodoList {
-	public uuid: string;
-	public name: string;
-	public time: number;
-	public items: (Todo | TodoList)[];
-	public groups: string[];
-	public list: string;
+	public uuid: string
+	public name: string
+	public time: number
+	public items: (Todo | TodoList)[]
+	public groups: string[]
+	public list: string
 
 	constructor(
 		name: string = "",
@@ -17,122 +17,122 @@ export class TodoList {
 		groups: string[] = [],
 		list: string = null
 	) {
-		this.name = name;
-		this.time = time;
-		this.items = items;
-		this.groups = groups;
-		this.list = list;
+		this.name = name
+		this.time = time
+		this.items = items
+		this.groups = groups
+		this.list = list
 	}
 
 	public static async Create(name: string, time: number = 0, items: (Todo | TodoList)[] = [], groups: string[] = [], list: string = null, uuid: string = null): Promise<TodoList> {
-		let todoList = new TodoList(name, time, items, groups, list);
-		todoList.uuid = uuid;
-		await todoList.Save();
-		return todoList;
+		let todoList = new TodoList(name, time, items, groups, list)
+		todoList.uuid = uuid
+		await todoList.Save()
+		return todoList
 	}
 
 	async Update(name?: string, time?: number, groups?: string[], list?: string) {
-		if (name != null) this.name = name;
-		if (time != null) this.time = time;
-		if (groups) this.groups = groups;
-		if (list != null) this.list = list;
-		await this.Save();
+		if (name != null) this.name = name
+		if (time != null) this.time = time
+		if (groups) this.groups = groups
+		if (list != null) this.list = list
+		await this.Save()
 	}
 
 	async SetName(name: string) {
-		if (this.name == name) return;
+		if (this.name == name) return
 
-		this.name = name;
-		await this.Save();
+		this.name = name
+		await this.Save()
 	}
 
 	async SetItems(items: (Todo | TodoList)[]) {
-		this.items = items;
-		await this.Save();
+		this.items = items
+		await this.Save()
 	}
 
 	async SetList(list: string) {
-		this.list = list;
-		await this.Save();
+		this.list = list
+		await this.Save()
 	}
 
 	private async Save() {
-		let tableObject = await GetTableObject(this.uuid);
+		let tableObject = await GetTableObject(this.uuid)
 
 		if (!tableObject) {
 			// Create the table object
-			tableObject = new TableObject(this.uuid);
-			tableObject.TableId = environment.todoListTableId;
-			this.uuid = tableObject.Uuid;
+			tableObject = new TableObject(this.uuid)
+			tableObject.TableId = environment.todoListTableId
+			this.uuid = tableObject.Uuid
 		}
 
 		let properties: Property[] = [
 			{ name: environment.todoListNameKey, value: this.name },
 			{ name: environment.todoListTimeKey, value: this.time.toString() }
-		];
+		]
 
 		// Create the items string
-		let itemUuids: string[] = [];
-		this.items.forEach((item: (Todo | TodoList)) => itemUuids.push(item.uuid));
+		let itemUuids: string[] = []
+		this.items.forEach((item: (Todo | TodoList)) => itemUuids.push(item.uuid))
 		properties.push({
 			name: environment.todoListItemsKey,
 			value: itemUuids.join(",")
-		});
+		})
 
 		// Remove the todos and todoLists properties
-		await tableObject.RemoveProperty(environment.todoListTodosKey);
-		await tableObject.RemoveProperty(environment.todoListTodoListsKey);
+		await tableObject.RemoveProperty(environment.todoListTodosKey)
+		await tableObject.RemoveProperty(environment.todoListTodoListsKey)
 
 		// Groups
 		properties.push({
 			name: environment.todoListGroupsKey,
 			value: this.groups.join(',')
-		});
+		})
 
 		// List
 		if (this.list) {
 			properties.push({
 				name: environment.todoListListKey,
 				value: this.list
-			});
+			})
 		}
 
 		// Set the properties
-		await tableObject.SetPropertyValues(properties);
+		await tableObject.SetPropertyValues(properties)
 	}
 
 	public async Delete() {
 		// Delete each item
 		for (let i = 0; i < this.items.length; i++) {
-			await this.items[i].Delete();
+			await this.items[i].Delete()
 		}
 
 		// Self-destruction!
-		let tableObject = await GetTableObject(this.uuid);
+		let tableObject = await GetTableObject(this.uuid)
 		if (tableObject) {
-			await tableObject.Delete();
+			await tableObject.Delete()
 		}
 	}
 }
 
 export async function GetAllTodoLists(): Promise<TodoList[]> {
-	let tableObjects = await GetAllTableObjects(environment.todoListTableId, false);
-	let todoLists: TodoList[] = [];
+	let tableObjects = await GetAllTableObjects(environment.todoListTableId, false)
+	let todoLists: TodoList[] = []
 
 	for (let tableObject of tableObjects) {
-		let todoList = await ConvertTableObjectToTodoList(tableObject);
+		let todoList = await ConvertTableObjectToTodoList(tableObject)
 
 		if (todoList) {
-			todoLists.push(todoList);
+			todoLists.push(todoList)
 		}
 	}
 
-	return todoLists;
+	return todoLists
 }
 
 export async function GetTodoList(uuid: string): Promise<TodoList> {
-	let tableObject = await GetTableObject(uuid);
-	return await ConvertTableObjectToTodoList(tableObject);
+	let tableObject = await GetTableObject(uuid)
+	return await ConvertTableObjectToTodoList(tableObject)
 }
 
 export async function ConvertTableObjectToTodoList(tableObject: TableObject): Promise<TodoList> {

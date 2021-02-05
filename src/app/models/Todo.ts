@@ -1,15 +1,15 @@
-import { TableObject, Property, GetTableObject, GetAllTableObjects, DeleteNotification } from 'dav-npm'
-import { environment } from "../../environments/environment"
+import { TableObject, Property, GetTableObject, GetAllTableObjects, GetNotification } from 'dav-npm'
+import { environment } from '../../environments/environment'
 import { GetAllTodoLists } from './TodoList'
 
 export class Todo {
-	public uuid: string;
-	public name: string;
-	public completed: boolean;
-	public time: number;
-	public groups: string[];
-	public list: string;
-	public notificationUuid: string;
+	public uuid: string
+	public name: string
+	public completed: boolean
+	public time: number
+	public groups: string[]
+	public list: string
+	public notificationUuid: string
 
 	constructor(
 		name: string = "",
@@ -19,69 +19,73 @@ export class Todo {
 		list: string = null,
 		notificationUuid: string = null
 	) {
-		this.name = name;
-		this.completed = completed;
-		this.time = time;
-		this.groups = groups;
-		this.list = list;
-		this.notificationUuid = notificationUuid;
+		this.name = name
+		this.completed = completed
+		this.time = time
+		this.groups = groups
+		this.list = list
+		this.notificationUuid = notificationUuid
 	}
 
 	public static async Create(name: string, completed: boolean = false, time: number = 0, groups: string[] = [], list: string = null, notificationUuid: string = null, uuid: string = null): Promise<Todo> {
-		let todo = new Todo(name, completed, time, groups, list, notificationUuid);
-		todo.uuid = uuid;
-		await todo.Save();
-		return todo;
+		let todo = new Todo(name, completed, time, groups, list, notificationUuid)
+		todo.uuid = uuid
+		await todo.Save()
+		return todo
 	}
 
 	async AddGoup(name: string) {
 		if (this.groups.findIndex(n => n === name) === -1) {
-			this.groups.push(name);
-			await this.Save();
+			this.groups.push(name)
+			await this.Save()
 		}
 	}
 
 	async RemoveGroup(name: string) {
-		var index = this.groups.findIndex(n => n === name);
+		var index = this.groups.findIndex(n => n === name)
 
 		if (index !== -1) {
-			this.groups.splice(index, 1);
-			await this.Save();
+			this.groups.splice(index, 1)
+			await this.Save()
 		}
 	}
 
 	async SetCompleted(completed: boolean) {
 		if (this.completed != completed) {
-			this.completed = completed;
-			await this.Save();
+			this.completed = completed
+			await this.Save()
 		}
 	}
 
 	async SetList(list: string) {
-		this.list = list;
-		await this.Save();
+		this.list = list
+		await this.Save()
 	}
 
 	async Delete() {
-		var tableObject = await GetTableObject(this.uuid);
-		if (tableObject) {
-			if (this.notificationUuid) {
-				// Delete the notification
-				await DeleteNotification(this.notificationUuid);
-			}
+		let tableObject = await GetTableObject(this.uuid)
+		if (tableObject == null) return
 
-			await tableObject.Delete();
+		if (this.notificationUuid) {
+			// Delete the notification
+			let notification = await GetNotification(this.notificationUuid)
+
+			if (notification != null) {
+				await notification.Delete()
+			}
 		}
+
+		await tableObject.Delete()
 	}
 
 	private async Save() {
-		let tableObject = await GetTableObject(this.uuid);
+		let tableObject = await GetTableObject(this.uuid)
 
 		if (!tableObject) {
 			// Create the table object
-			tableObject = new TableObject(this.uuid);
-			tableObject.TableId = environment.todoTableId;
-			this.uuid = tableObject.Uuid;
+			tableObject = new TableObject(this.uuid)
+			tableObject.TableId = environment.todoTableId
+			this.uuid = tableObject.Uuid
 		}
 
 		let properties: Property[] = [
@@ -94,45 +98,45 @@ export class Todo {
 			properties.push({
 				name: environment.todoGroupsKey,
 				value: this.groups.join(',')
-			});
+			})
 		}
 
 		if (this.list) {
 			properties.push({
 				name: environment.todoListKey,
 				value: this.list
-			});
+			})
 		}
 
 		if (this.notificationUuid) {
 			properties.push({
 				name: environment.notificationUuidKey,
 				value: this.notificationUuid
-			});
+			})
 		}
 
-		await tableObject.SetPropertyValues(properties);
+		await tableObject.SetPropertyValues(properties)
 	}
 }
 
 export async function GetAllTodos(): Promise<Todo[]> {
-	var tableObjects = await GetAllTableObjects(environment.todoTableId, false);
-	var todos: Todo[] = [];
+	var tableObjects = await GetAllTableObjects(environment.todoTableId, false)
+	var todos: Todo[] = []
 
 	for (let tableObject of tableObjects) {
-		var todo = ConvertTableObjectToTodo(tableObject);
+		var todo = ConvertTableObjectToTodo(tableObject)
 
 		if (todo) {
-			todos.push(todo);
+			todos.push(todo)
 		}
 	}
 
-	return todos;
+	return todos
 }
 
 export async function GetTodo(uuid: string): Promise<Todo> {
-	let tableObject = await GetTableObject(uuid);
-	return ConvertTableObjectToTodo(tableObject);
+	let tableObject = await GetTableObject(uuid)
+	return ConvertTableObjectToTodo(tableObject)
 }
 
 export async function GetAllTodoGroups(): Promise<string[]> {
@@ -202,7 +206,7 @@ export function ConvertTableObjectToTodo(tableObject: TableObject): Todo {
 		groups,
 		list,
 		notificationUuid
-	);
+	)
 	todo.uuid = tableObject.Uuid;
 	return todo;
 }

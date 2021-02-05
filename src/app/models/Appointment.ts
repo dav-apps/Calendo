@@ -1,14 +1,14 @@
-import { TableObject, GetTableObject, GetAllTableObjects, DeleteNotification } from 'dav-npm';
-import { environment } from "../../environments/environment";
+import { TableObject, GetTableObject, GetAllTableObjects, GetNotification } from 'dav-npm'
+import { environment } from "../../environments/environment"
 
 export class Appointment {
-	public uuid: string = null;
-	public name: string = "";
-	public start: number = 0;
-	public end: number = 0;
-	public allday: boolean = true;
-	public color: string = "";
-	public notificationUuid: string = null;
+	public uuid: string = null
+	public name: string = ""
+	public start: number = 0
+	public end: number = 0
+	public allday: boolean = true
+	public color: string = ""
+	public notificationUuid: string = null
 
 	constructor(
 		uuid: string,
@@ -19,51 +19,55 @@ export class Appointment {
 		color?: string,
 		notificationUuid?: string
 	) {
-		this.uuid = uuid;
-		this.name = name ? name : "";
-		this.start = start ? start : 0;
-		this.end = end ? end : 0;
-		this.allday = allday == null ? true : allday;
-		this.color = color ? color : "";
-		this.notificationUuid = notificationUuid;
+		this.uuid = uuid
+		this.name = name ? name : ""
+		this.start = start ? start : 0
+		this.end = end ? end : 0
+		this.allday = allday == null ? true : allday
+		this.color = color ? color : ""
+		this.notificationUuid = notificationUuid
 	}
 
 	public static async Create(name: string, start: number = 0, end: number = 0, allday: boolean = true, color: string = "", notificationUuid: string = null): Promise<Appointment> {
-		let appointment = new Appointment(null, name, start, end, allday, color, notificationUuid);
-		await appointment.Save();
-		return appointment;
+		let appointment = new Appointment(null, name, start, end, allday, color, notificationUuid)
+		await appointment.Save()
+		return appointment
 	}
 
 	async Update(name: string, start: number, end: number, allday: boolean, color: string, notificationUuid: string) {
-		this.name = name;
-		this.start = start;
-		this.end = end;
-		this.allday = allday;
-		this.color = color;
-		this.notificationUuid = notificationUuid;
-		await this.Save();
+		this.name = name
+		this.start = start
+		this.end = end
+		this.allday = allday
+		this.color = color
+		this.notificationUuid = notificationUuid
+		await this.Save()
 	}
 
 	async Delete() {
-		var tableObject = await GetTableObject(this.uuid);
-		if (tableObject) {
-			if (this.notificationUuid) {
-				// Delete the notification
-				DeleteNotification(this.notificationUuid);
-			}
+		let tableObject = await GetTableObject(this.uuid)
+		if (tableObject == null) return
 
-			tableObject.Delete();
+		if (this.notificationUuid) {
+			// Delete the notification
+			let notification = await GetNotification(this.notificationUuid)
+
+			if (notification != null) {
+				await notification.Delete()
+			}
 		}
+
+		await tableObject.Delete()
 	}
 
 	private async Save() {
-		let tableObject = await GetTableObject(this.uuid);
+		let tableObject = await GetTableObject(this.uuid)
 
 		if (!tableObject) {
 			// Create the table object
-			tableObject = new TableObject();
-			tableObject.TableId = environment.appointmentTableId;
-			this.uuid = tableObject.Uuid;
+			tableObject = new TableObject()
+			tableObject.TableId = environment.appointmentTableId
+			this.uuid = tableObject.Uuid
 		}
 
 		// Set the property values
@@ -79,40 +83,40 @@ export class Appointment {
 			properties.push({
 				name: environment.notificationUuidKey,
 				value: this.notificationUuid
-			});
+			})
 		}
 
-		await tableObject.SetPropertyValues(properties);
+		await tableObject.SetPropertyValues(properties)
 	}
 }
 
 export async function GetAppointment(uuid: string): Promise<Appointment> {
-	var tableObject = await GetTableObject(uuid);
+	var tableObject = await GetTableObject(uuid)
 
 	if (tableObject) {
-		var appointment = ConvertTableObjectToAppointment(tableObject);
+		var appointment = ConvertTableObjectToAppointment(tableObject)
 
 		if (appointment) {
-			return appointment;
+			return appointment
 		}
 	}
 
-	return null;
+	return null
 }
 
 export async function GetAllAppointments(): Promise<Appointment[]> {
-	var tableObjects = await GetAllTableObjects(environment.appointmentTableId, false);
-	var appointments: Appointment[] = [];
+	var tableObjects = await GetAllTableObjects(environment.appointmentTableId, false)
+	var appointments: Appointment[] = []
 
 	tableObjects.forEach((tableObject: TableObject) => {
-		var appointment = ConvertTableObjectToAppointment(tableObject);
+		var appointment = ConvertTableObjectToAppointment(tableObject)
 
 		if (appointment) {
-			appointments.push(appointment);
+			appointments.push(appointment)
 		}
-	});
+	})
 
-	return appointments;
+	return appointments
 }
 
 export function ConvertTableObjectToAppointment(tableObject: TableObject): Appointment {
