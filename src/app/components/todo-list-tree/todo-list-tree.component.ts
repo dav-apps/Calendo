@@ -1,18 +1,18 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatTreeNestedDataSource } from '@angular/material/tree';
-import { NestedTreeControl } from '@angular/cdk/tree';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { IIconStyles } from 'office-ui-fabric-react';
-import { Todo, GetTodo } from '../../models/Todo';
-import { TodoList, GetTodoList } from '../../models/TodoList';
-import { generateUUID } from 'dav-npm';
-import { enUS } from '../../../locales/locales';
-import { DataService } from 'src/app/services/data-service';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { DeleteTodoListModalComponent } from '../delete-todo-list-modal/delete-todo-list-modal.component';
-import { DragulaService } from 'ng2-dragula';
-declare var $: any;
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core'
+import { Router } from '@angular/router'
+import { MatTreeNestedDataSource } from '@angular/material/tree'
+import { NestedTreeControl } from '@angular/cdk/tree'
+import { BehaviorSubject, Subscription } from 'rxjs'
+import { IIconStyles } from 'office-ui-fabric-react'
+import { Todo, GetTodo } from '../../models/Todo'
+import { TodoList, GetTodoList } from '../../models/TodoList'
+import { generateUuid } from 'dav-npm'
+import { enUS } from '../../../locales/locales'
+import { DataService } from 'src/app/services/data-service'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { DeleteTodoListModalComponent } from '../delete-todo-list-modal/delete-todo-list-modal.component'
+import { DragulaService } from 'ng2-dragula'
+declare var $: any
 
 @Component({
 	selector: "calendo-todo-list-tree",
@@ -256,7 +256,7 @@ export class TodoListTreeComponent{
 
 		// Insert the input node
 		let newTodoNode: TodoNode = {
-			uuid: generateUUID(),
+			uuid: generateUuid(),
 			name: "",
 			list,
 			children: [],

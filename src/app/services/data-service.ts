@@ -1066,11 +1066,8 @@ export class DataService{
 	//#endregion
 
 	//#region Helper methods
-	async GetNotificationPermission() : Promise<boolean>{
-		let permissionResult = await Notification.requestPermission((result) => {
-			return result == "granted";
-		});
-		return permissionResult == "granted";
+	GetNotificationPermission(): NotificationPermission {
+		return Notification.permission
 	}
 
 	// Get the todos of todoList and add them to todos
