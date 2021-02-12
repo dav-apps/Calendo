@@ -52,6 +52,6 @@ export class AccountPageComponent {
 	}
 
 	getUsedStoragePercentage(): number {
-		return (this.dataService.user.UsedStorage / this.dataService.user.TotalStorage) * 100
+		return (this.dataService.dav.user.UsedStorage / this.dataService.dav.user.TotalStorage) * 100
 	}
 }

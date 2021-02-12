@@ -1,4 +1,4 @@
-<div class="container mb-4 ms-motion-slideUpIn" style="padding-bottom: 56px" *ngIf="!dataService.user.IsLoggedIn">
+<div class="container mb-4 ms-motion-slideUpIn" style="padding-bottom: 56px" *ngIf="!dataService.dav.isLoggedIn">
    <h1 class="text-center mt-3 text-color font-weight-light">{{ locale.header }}</h1>
    <h5 class="text-center mt-4 text-color">{{ locale.text1 }}</h5>
 
@@ -24,27 +24,27 @@
 	</div>
 </div>
 
-<div class="container mb-4 ms-motion-slideUpIn" style="padding-bottom: 56px" *ngIf="dataService.user.IsLoggedIn">
+<div class="container mb-4 ms-motion-slideUpIn" style="padding-bottom: 56px" *ngIf="dataService.dav.isLoggedIn">
    <h1 class="text-center mt-3 text-color font-weight-light" style="margin-bottom: 40px">{{ locale.header }}</h1>
 	
 	<div class="d-flex justify-content-center">
 		<img
 			class="rounded-circle shadow"
-			[src]="dataService.user.Avatar" 
+			[src]="dataService.dav.user.ProfileImage" 
 			[height]="width > 420 ? 150 : 130"
 			[width]="width > 420 ? 150 : 130" />
 
 		<div style="width: 200px;" [style.marginLeft.px]="width > 400 ? 40 : 20">
-			<h4 class="text-color mb-0"><a class="text-color" href="https://dav-apps.tech/login?redirect=user" target="blank">{{ dataService.user.Username }}</a></h4>
+			<h4 class="text-color mb-0"><a class="text-color" href="https://dav-apps.tech/login?redirect=user" target="blank">{{ dataService.dav.user.FirstName }}</a></h4>
 			<p class="text-muted mb-1">
-				{{ dataService.user.Plan == 0 ? locale.planFree : (dataService.user.Plan == 1 ? locale.planPlus : locale.planPro ) }}
+				{{ dataService.dav.user.Plan == 0 ? locale.planFree : (dataService.dav.user.Plan == 1 ? locale.planPlus : locale.planPro ) }}
 			</p>
 
 			<div class="progress mt-3" style="width: 200px; height: 5%">
 				<div class="progress-bar" role="progressbar" [style.width.%]="getUsedStoragePercentage()" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
 			
-			<p class="mt-2 text-color" style="margin-bottom: 2px">{{ locale.storageUsed.replace("{0}", bytesToGigabytes(dataService.user.UsedStorage, 1)).replace("{1}", bytesToGigabytes(dataService.user.TotalStorage, 0)) }}</p>
+			<p class="mt-2 text-color" style="margin-bottom: 2px">{{ locale.storageUsed.replace("{0}", bytesToGigabytes(dataService.dav.user.UsedStorage, 1)).replace("{1}", bytesToGigabytes(dataService.dav.user.TotalStorage, 0)) }}</p>
 
 			<button type="button" class="btn btn-outline-danger btn-sm mt-2" (click)="ShowLogoutModal()">{{ locale.logout }}</button>
 		</div>

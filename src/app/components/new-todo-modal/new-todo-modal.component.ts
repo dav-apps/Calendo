@@ -56,7 +56,7 @@ export class NewTodoModalComponent {
 		this.showReminderOption = (
 			('serviceWorker' in navigator)
 			&& ('PushManager' in window)
-			&& this.dataService.user != null
+			&& this.dataService.dav.isLoggedIn
 			&& this.dataService.GetNotificationPermission() != "denied"
 		)
 

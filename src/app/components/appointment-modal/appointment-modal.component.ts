@@ -55,7 +55,7 @@ export class AppointmentModalComponent {
 		this.showReminderOption = (
 			('serviceWorker' in navigator)
 			&& ('PushManager' in window)
-			&& this.dataService.user != null
+			&& this.dataService.dav.isLoggedIn
 			&& this.dataService.GetNotificationPermission() != "denied"
 		)
 
@@ -145,7 +145,7 @@ export class AppointmentModalComponent {
 				// Create the new appointment
 				let notificationUuid = null
 
-				if (this.reminderCheckboxChecked && this.dataService.user != null) {
+				if (this.reminderCheckboxChecked && this.dataService.dav.isLoggedIn) {
 					// Ask the user for notification permission
 					if (await SetupWebPushSubscription()) {
 						// Create the notification
