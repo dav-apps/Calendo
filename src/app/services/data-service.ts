@@ -2,17 +2,15 @@ import { Injectable } from "@angular/core"
 import { Todo, GetAllTodos } from "../models/Todo"
 import { Appointment, GetAllAppointments } from "../models/Appointment"
 import { TodoList, GetAllTodoLists, GetTodoList } from "../models/TodoList"
-import { Dav, User } from "dav-npm"
+import { Dav } from "dav-npm"
 import * as moment from 'moment'
 import * as localforage from "localforage"
 import { environment } from "../../environments/environment.prod"
 import * as locales from "../../locales/locales"
-import * as bowser from "bowser"
 
 @Injectable()
 export class DataService{
-	dav: Dav
-	user: User
+	dav = Dav
 	locale: string = navigator.language
 
 	//#region StartPage
@@ -72,21 +70,14 @@ export class DataService{
 	updatedTodoLists: string[] = [];
 	//#endregion
 
-	async ngOnInit() {
+	constructor(){
 		this.InitStartDays()
-		await this.LoadAllAppointments()
-		await this.LoadAllTodos()
+		this.LoadAllAppointments()
+		this.LoadAllTodos()
 
 		this.GetSortTodosByDate().then(value => {
 			this.sortTodosByDate = value
 		})
-	}
-
-	private async InitLocalforage(){
-		if(bowser.firefox){
-			// Use localstorage as driver
-			await localforage.setDriver(localforage.LOCALSTORAGE);
-		}
 	}
 
 	InitStartDays(){
@@ -1043,23 +1034,19 @@ export class DataService{
 
 	//#region SettingsPage
 	async SetSortTodosByDate(value: boolean){
-		await this.InitLocalforage();
 		await localforage.setItem(environment.settingsSortTodosByDateKey, value);
 	}
 
 	async GetSortTodosByDate(): Promise<boolean>{
-		await this.InitLocalforage();
       let value = await localforage.getItem(environment.settingsSortTodosByDateKey) as boolean;
 		return value != null ? value : environment.settingsSortTodosByDateDefault;
 	}
 
 	async SetTheme(value: string){
-		await this.InitLocalforage();
 		await localforage.setItem(environment.settingsThemeKey, value);
 	}
 
 	async GetTheme(){
-		await this.InitLocalforage();
 		var value = await localforage.getItem(environment.settingsThemeKey) as string;
 		return value ? value : environment.settingsThemeDefault;
 	}

@@ -46,7 +46,7 @@ export class AppComponent {
 		this.dataService.ApplyTheme()
 
 		// Initialize dav
-		this.dataService.dav = new Dav({
+		new Dav({
 			environment: environment.production ? Environment.Production : Environment.Development,
 			appId: environment.appId,
 			tableIds: [environment.todoTableId, environment.todoListTableId, environment.appointmentTableId],
@@ -55,14 +55,11 @@ export class AppComponent {
 				badge: "/assets/icons/badge-128x128.png"
 			},
 			callbacks: {
-				UpdateAllOfTable: this.UpdateAllOfTable,
-				UpdateTableObject: this.UpdateTableObject,
-				DeleteTableObject: this.DeleteTableObject
+				UpdateAllOfTable: (tableId: number) => this.UpdateAllOfTable(tableId),
+				UpdateTableObject: (tableObject: TableObject, downloaded: boolean) => this.UpdateTableObject(tableObject, downloaded),
+				DeleteTableObject: (tableObject: TableObject) => this.DeleteTableObject(tableObject)
 			}
 		})
-
-		// Get the user
-		this.dataService.user = await GetUser()
 	}
 
 	async UpdateAllOfTable(tableId: number) {

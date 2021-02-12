@@ -8,9 +8,9 @@ export const environment = {
 	baseUrl: "http://localhost:3002",
 	version: "0.9.1",
    appId: 5,
-   todoListTableId: 11,
-	todoTableId: 12,
-   appointmentTableId: 13,
+   todoListTableId: 8,
+	todoTableId: 9,
+   appointmentTableId: 10,
    // Keys for TodoList table
    todoListNameKey: "name",
    todoListTimeKey: "time",
