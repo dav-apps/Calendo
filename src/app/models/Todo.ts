@@ -83,8 +83,10 @@ export class Todo {
 
 		if (!tableObject) {
 			// Create the table object
-			tableObject = new TableObject(this.uuid)
-			tableObject.TableId = environment.todoTableId
+			tableObject = new TableObject({
+				Uuid: this.uuid,
+				TableId: environment.todoTableId
+			})
 			this.uuid = tableObject.Uuid
 		}
 

@@ -40,9 +40,8 @@ export class AccountPageComponent {
 		this.logoutModalComponent.Show()
 	}
 
-	async Logout() {
-		await Dav.Logout()
-		window.location.href = "/account"
+	Logout() {
+		Dav.Logout().then(() => window.location.href = "/account")
 	}
 
 	bytesToGigabytes(bytes: number, rounding: number): string {
