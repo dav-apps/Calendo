@@ -3,29 +3,29 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-   production: false,
+	production: false,
 	apiKey: "eUzs3PQZYweXvumcWvagRHjdUroGe5Mo7kN1inHm",
 	baseUrl: "http://localhost:3002",
 	version: "0.9.1",
-   appId: 5,
-   todoListTableId: 8,
-	todoTableId: 9,
-   appointmentTableId: 10,
-   // Keys for TodoList table
-   todoListNameKey: "name",
-   todoListTimeKey: "time",
-   todoListTodosKey: "todos",
-   todoListTodoListsKey: "todo_lists",
-   todoListItemsKey: "items",
-   todoListGroupsKey: "groups",
-   todoListListKey: "list",
-   // Keys for Todo table
+	appId: 3,
+	todoListTableId: 7,
+	todoTableId: 8,
+	appointmentTableId: 9,
+	// Keys for TodoList table
+	todoListNameKey: "name",
+	todoListTimeKey: "time",
+	todoListTodosKey: "todos",
+	todoListTodoListsKey: "todo_lists",
+	todoListItemsKey: "items",
+	todoListGroupsKey: "groups",
+	todoListListKey: "list",
+	// Keys for Todo table
 	todoCompletedKey: "completed",
 	todoTimeKey: "time",
 	todoNameKey: "name",
-   todoGroupsKey: "groups",
-   todoListKey: "list",
-   // Keys for Appointment table
+	todoGroupsKey: "groups",
+	todoListKey: "list",
+	// Keys for Appointment table
 	appointmentNameKey: "name",
 	appointmentStartKey: "start",
 	appointmentEndKey: "end",
@@ -40,12 +40,12 @@ export const environment = {
 	// Settings defaults
 	settingsSortTodosByDateDefault: true,
 	settingsThemeDefault: "system",
-   // Other constants
-   themeKey: "theme",
+	// Other constants
+	themeKey: "theme",
 	lightThemeKey: "light",
 	darkThemeKey: "dark",
 	systemThemeKey: "system"
-};
+}
 
 /*
  * In development mode, to ignore zone related error stack frames such as
