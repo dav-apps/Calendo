@@ -1,5 +1,5 @@
-import { TableObject, GetTableObject, GetAllTableObjects, GetNotification } from 'dav-npm'
-import { environment } from "../../environments/environment"
+import { TableObject, GetTableObject, GetAllTableObjects, GetNotification } from 'dav-js'
+import { environment } from '../../environments/environment'
 
 export class Appointment {
 	public uuid: string = null

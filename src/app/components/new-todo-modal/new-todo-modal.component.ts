@@ -3,7 +3,7 @@ import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { Todo } from '../../models/Todo'
 import { enUS } from '../../../locales/locales'
 import { DataService } from '../../services/data-service'
-import { Notification, SetupWebPushSubscription } from 'dav-npm'
+import { Notification, SetupWebPushSubscription } from 'dav-js'
 import * as moment from 'moment'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 

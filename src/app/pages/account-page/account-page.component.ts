@@ -2,7 +2,7 @@ import { Component, ViewChild, HostListener } from "@angular/core"
 import { DataService } from '../../services/data-service'
 import { enUS } from '../../../locales/locales'
 import { environment } from '../../../environments/environment'
-import { Dav } from 'dav-npm'
+import { Dav } from 'dav-js'
 import { LogoutModalComponent } from '../../components/logout-modal/logout-modal.component'
 import { faSync, faLock } from '@fortawesome/free-solid-svg-icons'
 

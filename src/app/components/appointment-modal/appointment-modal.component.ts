@@ -6,7 +6,7 @@ import {
 	Notification,
 	GetNotification,
 	SetupWebPushSubscription
-} from 'dav-npm'
+} from 'dav-js'
 import { Appointment, GetAppointment } from 'src/app/models/Appointment'
 import { DataService } from 'src/app/services/data-service'
 import { enUS } from 'src/locales/locales'

@@ -1,4 +1,4 @@
-import { TableObject, Property, GetTableObject, GetAllTableObjects } from 'dav-npm'
+import { TableObject, Property, GetTableObject, GetAllTableObjects } from 'dav-js'
 import { Todo, ConvertTableObjectToTodo } from './Todo'
 import { environment } from '../../environments/environment'
 

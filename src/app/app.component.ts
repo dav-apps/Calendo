@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { Router, NavigationStart } from '@angular/router'
-import { Dav, Environment, TableObject, GetUser } from 'dav-npm'
+import { Dav, Environment, TableObject } from 'dav-js'
 import { environment } from '../environments/environment'
 import { enUS } from '../locales/locales'
 import { DataService } from './services/data-service'

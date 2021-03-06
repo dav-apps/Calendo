@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core"
 import { Todo, GetAllTodos } from "../models/Todo"
 import { Appointment, GetAllAppointments } from "../models/Appointment"
 import { TodoList, GetAllTodoLists, GetTodoList } from "../models/TodoList"
-import { Dav } from "dav-npm"
+import { Dav } from 'dav-js'
 import * as moment from 'moment'
 import * as localforage from "localforage"
 import { environment } from "../../environments/environment.prod"

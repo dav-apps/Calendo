@@ -1,4 +1,4 @@
-import { TableObject, Property, GetTableObject, GetAllTableObjects, GetNotification } from 'dav-npm'
+import { TableObject, Property, GetTableObject, GetAllTableObjects, GetNotification } from 'dav-js'
 import { environment } from '../../environments/environment'
 import { GetAllTodoLists } from './TodoList'
 
