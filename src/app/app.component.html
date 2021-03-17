@@ -21,7 +21,7 @@
 	<calendo-user-menu style="margin-right: -6px"></calendo-user-menu>
 </nav>
 
-<div (window:resize)="onResize($event)" [style.width.px]="windowWidth - 15" class="default-font">
+<div (window:resize)="onResize()" [style.width.px]="windowWidth - 15" class="default-font">
 	<router-outlet></router-outlet>
 </div>
 
