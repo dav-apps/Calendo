@@ -22,7 +22,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/web.config",
-              "src/manifest.json",
+              "src/manifest.webmanifest",
               "src/.well-known/assetlinks.json",
               {
                 "glob": "**/*",
@@ -92,7 +92,7 @@
             "assets": [
               "src/favicon.png",
               "src/assets",
-              "src/manifest.json"
+              "src/manifest.webmanifest"
             ]
           }
         },
