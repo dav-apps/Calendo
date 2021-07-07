@@ -1118,7 +1118,24 @@ export class DataService{
 		}
 
 		return currentList;
-   }
+	}
+
+	/**
+	 * If the user is on mobile, moves all snackbars above the bottom toolbar
+	 */
+	AdaptSnackbarPosition() {
+		if (this.smallWindow) {
+			setTimeout(() => {
+				let snackbarContainerList = document.getElementsByTagName("snack-bar-container")
+
+				for (let i = 0; i < snackbarContainerList.length; i++) {
+					let snackbarContainer = snackbarContainerList.item(i)
+					let snackbarOverlay = snackbarContainer.parentElement
+					snackbarOverlay.style.marginBottom = "56px"
+				}
+			}, 1)
+		}
+	}
 	//#endregion
 }
 

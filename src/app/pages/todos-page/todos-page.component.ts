@@ -49,13 +49,15 @@ export class TodosPageComponent{
       
       // Show snackbar
       if(todo.time == 0){
-			this.snackBar.open(this.snackbarLocale.todoCreated, null, {duration: 3000});
+			this.snackBar.open(this.snackbarLocale.todoCreated, null, {duration: 3000})
 		}else{
 			this.snackBar.open(this.snackbarLocale.todoCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
 				// Show the day of the todo
-				this.router.navigate(["calendar/day", todo.time]);
-			});
+				this.router.navigate(["calendar/day", todo.time])
+			})
 		}
+
+		this.dataService.AdaptSnackbarPosition()
 	}
 
 	DeleteTodo(todo: Todo){
@@ -67,13 +69,15 @@ export class TodosPageComponent{
    }
 
    CreateTodoList(todoList: TodoList){
-		this.dataService.AddTodoList(todoList);
-		
+		this.dataService.AddTodoList(todoList)
+
 		// Show snackbar
 		this.snackBar.open(this.snackbarLocale.todoListCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
 			// Show the todo list
-			this.router.navigate(["todolist", todoList.uuid]);
-		});
+			this.router.navigate(["todolist", todoList.uuid])
+		})
+
+		this.dataService.AdaptSnackbarPosition()
    }
 
 	// This is called when a todo list in the Sort By Groups mode was updated; Update all todo lists of the same object

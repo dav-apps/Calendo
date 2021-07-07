@@ -43,8 +43,10 @@ export class AppointmentsPageComponent{
 			// Show the day of the appointment
 			this.router.navigate(["calendar/day", appointment.start])
 		})
+
+		this.dataService.AdaptSnackbarPosition()
 	}
-	
+
 	ShowCalendarDay(date: number){
 		this.router.navigate(['/calendar/day', date]);
 	}

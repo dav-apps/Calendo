@@ -76,8 +76,10 @@ export class CalendarDayPageComponent{
 			// Another day
 			this.snackBar.open(this.snackbarLocale.appointmentCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
 				// Show the day of the appointment
-				this.router.navigate(["calendar/day", appointment.start]);
-			});
+				this.router.navigate(["calendar/day", appointment.start])
+			})
+
+			this.dataService.AdaptSnackbarPosition()
 		}
    }
 
@@ -91,14 +93,16 @@ export class CalendarDayPageComponent{
 		// Show snackbar if the todo was created for another day
 		if(todo.time == 0){
 			// Show snackbar without action
-			this.snackBar.open(this.snackbarLocale.todoCreated, null, {duration: 3000});
+			this.snackBar.open(this.snackbarLocale.todoCreated, null, {duration: 3000})
 		}else if(this.date.unix() != todo.time){
 			// Another day
 			this.snackBar.open(this.snackbarLocale.todoCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
 				// Show the day of the todo
-				this.router.navigate(["calendar/day", todo.time]);
-			});
+				this.router.navigate(["calendar/day", todo.time])
+			})
 		}
+
+		this.dataService.AdaptSnackbarPosition()
    }
 
    DeleteTodo(todo: Todo){
@@ -115,8 +119,10 @@ export class CalendarDayPageComponent{
 		// Show snackbar
 		this.snackBar.open(this.snackbarLocale.todoListCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
 			// Show the todo list
-			this.router.navigate(["todolist", todoList.uuid]);
-		});
+			this.router.navigate(["todolist", todoList.uuid])
+		})
+
+		this.dataService.AdaptSnackbarPosition()
    }
 
    GoBack(){

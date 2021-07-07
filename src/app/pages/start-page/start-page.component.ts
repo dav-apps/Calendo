@@ -98,37 +98,43 @@ export class StartPageComponent{
 	}
 
 	CreateTodo(todo: Todo){
-		this.dataService.AddTodo(todo);
+		this.dataService.AddTodo(todo)
 
 		// Show snackbar
 		if(todo.time == 0){
-			this.snackBar.open(this.snackbarLocale.todoCreated, null, {duration: 3000});
+			this.snackBar.open(this.snackbarLocale.todoCreated, null, {duration: 3000})
 		}else{
 			this.snackBar.open(this.snackbarLocale.todoCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
 				// Show the day of the todo
-				this.router.navigate(["calendar/day", todo.time]);
-			});
+				this.router.navigate(["calendar/day", todo.time])
+			})
 		}
+
+		this.dataService.AdaptSnackbarPosition()
 	}
 
 	CreateAppointment(appointment: Appointment){
-		this.dataService.AddAppointment(appointment);
+		this.dataService.AddAppointment(appointment)
 
 		// Show snackbar
 		this.snackBar.open(this.snackbarLocale.appointmentCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
 			// Show the day of the appointment
-			this.router.navigate(["calendar/day", appointment.start]);
-		});
+			this.router.navigate(["calendar/day", appointment.start])
+		})
+
+		this.dataService.AdaptSnackbarPosition()
    }
-   
+
    CreateTodoList(todoList: TodoList){
-		this.dataService.AddTodoList(todoList);
-		
+		this.dataService.AddTodoList(todoList)
+
 		// Show snackbar
 		this.snackBar.open(this.snackbarLocale.todoListCreated, this.snackbarLocale.show, {duration: 3000}).onAction().subscribe(() => {
 			// Show the todo list
-			this.router.navigate(["todolist", todoList.uuid]);
-		});
+			this.router.navigate(["todolist", todoList.uuid])
+		})
+
+		this.dataService.AdaptSnackbarPosition()
    }
 
 	onResize(){
