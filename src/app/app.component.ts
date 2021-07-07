@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, HostListener } from '@angular/core'
 import { Router, NavigationStart } from '@angular/router'
 import { Dav, Environment, TableObject } from 'dav-js'
 import { environment } from '../environments/environment'
@@ -9,6 +9,8 @@ import { ConvertTableObjectToTodo } from './models/Todo'
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons'
 import { TodoList, ConvertTableObjectToTodoList } from './models/TodoList'
 
+const smallWindowMaxSize = 768
+
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
@@ -18,7 +20,6 @@ import { TodoList, ConvertTableObjectToTodoList } from './models/TodoList'
 })
 export class AppComponent {
 	locale = enUS.navbar
-	smallWindowMaxSize: number = 768
 	windowWidth: number = 500
 	currentUrl: string = "/"
 
@@ -62,6 +63,13 @@ export class AppComponent {
 		})
 	}
 
+	@HostListener('window:resize')
+	setSize() {
+		this.dataService.smallWindow = (window.innerWidth < smallWindowMaxSize)
+		this.windowWidth = window.innerWidth
+	}
+
+	//#region dav-js callback functions
 	async UpdateAllOfTable(tableId: number) {
 		if (tableId === environment.appointmentTableId) {
 			await this.dataService.LoadAllAppointments()
@@ -154,15 +162,7 @@ export class AppComponent {
 			}
 		}
 	}
-
-	onResize() {
-		this.setSize()
-	}
-
-	setSize() {
-		this.dataService.smallWindow = (window.innerWidth < this.smallWindowMaxSize)
-		this.windowWidth = window.innerWidth
-	}
+	//#endregion
 
 	setTitleBarColor() {
 		if (window["Windows"] && window["Windows"].UI.ViewManagement) {
