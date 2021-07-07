@@ -166,7 +166,8 @@ const enDefaults = {
 		systemTheme: "Use system setting",
 		news: "News and updates",
 		github: "Calendo on GitHub",
-      privacy: "Privacy Policy"
+		privacy: "Privacy Policy",
+		installUpdate: "Install update"
 	},
 	notifications: {
 		appointment: {
@@ -390,7 +391,8 @@ const deDefaults = {
 		systemTheme: "Systemeinstellung verwenden",
 		news: "Neuigkeiten und Updates",
 		github: "Calendo auf GitHub",
-		privacy: "Datenschutzerklärung"
+		privacy: "Datenschutzerklärung",
+		installUpdate: "Update installieren"
 	},
 	notifications: {
 		appointment: {

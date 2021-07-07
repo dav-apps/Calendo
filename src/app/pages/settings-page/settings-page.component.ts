@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SwUpdate } from '@angular/service-worker'
 import { DataService } from '../../services/data-service';
 import { environment } from '../../../environments/environment';
 import { enUS } from "../../../locales/locales";
@@ -19,10 +20,12 @@ export class SettingsPageComponent{
    sortTodosSelectedKey: string = groupKey;
 	isWindows: boolean = false;
 	themeKeys: string[] = [environment.lightThemeKey, environment.darkThemeKey, environment.systemThemeKey]
-	selectedTheme: string;
+	selectedTheme: string
+	updateAvailable: boolean = false
 
 	constructor(
-		public dataService: DataService
+		public dataService: DataService,
+		private swUpdate: SwUpdate
 	) {
 		this.locale = this.dataService.GetLocale().settingsPage;
       this.isWindows = window["Windows"] != null;
@@ -30,10 +33,19 @@ export class SettingsPageComponent{
    }
 
    async ngOnInit(){
-      this.sortTodosSelectedKey = await this.dataService.GetSortTodosByDate() ? dateKey : groupKey;
-      
+      this.sortTodosSelectedKey = await this.dataService.GetSortTodosByDate() ? dateKey : groupKey
+
       // Set the correct theme radio button
-		this.selectedTheme = await this.dataService.GetTheme();
+		this.selectedTheme = await this.dataService.GetTheme()
+
+		// Check for updates
+		this.swUpdate.available.subscribe(() => {
+			this.updateAvailable = true
+		})
+
+		if (this.swUpdate.isEnabled) {
+			this.swUpdate.checkForUpdate()
+		}
    }
 
    onSortTodosSelectChanged(event: {ev: MouseEvent, option: IDropdownOption, index: number}){
@@ -45,5 +57,9 @@ export class SettingsPageComponent{
 		this.selectedTheme = event.value;
 		this.dataService.SetTheme(event.value);
 		this.dataService.ApplyTheme(event.value);
+	}
+
+	InstallUpdate() {
+		window.location.reload()
 	}
 }

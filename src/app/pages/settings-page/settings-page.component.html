@@ -16,7 +16,7 @@
             </options>
          </fab-dropdown>
 		</div>
-		
+
 		<!-- Theme -->
 		<div style="display: inline-block">
 			<p class="text-color mt-4" style="font-size: 18px">{{ locale.theme }}</p>
@@ -37,7 +37,7 @@
 				</mat-radio-button>
 			</mat-radio-group>
 		</div>
-	
+
 		<!-- App information -->
 		<div class="mt-5 text-color">
 			<p>
@@ -49,6 +49,12 @@
 				Version {{ version }}<br>
 				Copyright &copy; {{ year }} by dav
 			</p>
+
+			<fab-primary-button
+				(onClick)="InstallUpdate()"
+				*ngIf="updateAvailable">
+				{{ locale.installUpdate }}
+			</fab-primary-button>
 		</div>
 	</div>
 </div>
