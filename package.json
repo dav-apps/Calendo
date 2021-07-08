@@ -1,6 +1,6 @@
 {
   "name": "calendo",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "Calendo is a simple app for managing your schedule. You can organize your appointments, manage your todos and group todos by topic.",
   "scripts": {
     "ng": "ng",
@@ -33,7 +33,7 @@
     "bootstrap": "^4.3.1",
     "bowser": "^1.9.4",
     "core-js": "^2.5.4",
-    "dav-js": "git+https://github.com/dav-apps/dav-js.git#v2.0.6",
+    "dav-js": "git+https://github.com/dav-apps/dav-js.git#v2.0.8",
     "jquery": "^3.5.1",
     "localforage": "^1.7.2",
     "moment": "2.24.0",
