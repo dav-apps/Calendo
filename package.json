@@ -36,7 +36,7 @@
 		"dav-js": "git+https://github.com/dav-apps/dav-js.git#v2.0.8",
 		"jquery": "^3.5.1",
 		"localforage": "^1.7.2",
-		"moment": "2.24.0",
+		"moment": "2.29.4",
 		"ng2-dragula": "^2.1.1",
 		"office-ui-fabric-core": "^10.1.0",
 		"office-ui-fabric-react": "6.151.0",
