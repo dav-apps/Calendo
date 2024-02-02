@@ -85,7 +85,8 @@ import { environment } from "../environments/environment"
 				{ path: "settings", component: SettingsPageComponent }
 			],
 			{
-				useHash: false
+				useHash: false,
+				relativeLinkResolution: "legacy"
 			}
 		),
 		NgbModule,
