@@ -4,7 +4,8 @@
   "description": "Calendo is a simple app for managing your schedule. You can organize your appointments, manage your todos and group todos by topic.",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 3002",
+    "dev": "ng serve --port 3002",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
@@ -33,7 +34,7 @@
     "bootstrap": "^4.3.1",
     "bowser": "^1.9.4",
     "core-js": "^2.5.4",
-    "dav-js": "git+https://github.com/dav-apps/dav-js.git#v2.0.8",
+    "dav-js": "git+https://github.com/dav-apps/dav-js.git#v2.6.7",
     "jquery": "^3.5.1",
     "localforage": "^1.7.2",
     "moment": "2.24.0",
@@ -72,9 +73,5 @@
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
     "typescript": "~3.8.3"
-  },
-  "engines": {
-    "node": "14.x",
-    "npm": "8.x"
   }
 }
