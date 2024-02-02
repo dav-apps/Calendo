@@ -1,58 +1,106 @@
 <div class="ml-3 ms-motion-slideUpIn" style="padding-bottom: 56px">
 	<div class="d-flex my-3">
-		<button type="button"
-				class="btn my-auto text-color icon-button" 
-				style="height: 30px; width: 35px; padding: 2px 0px 0px 0px;"
-				(click)="GoBack()">
+		<button
+			type="button"
+			class="btn my-auto text-color icon-button"
+			style="height: 30px; width: 35px; padding: 2px 0px 0px 0px"
+			(click)="GoBack()"
+		>
 			<fab-icon iconName="Back"></fab-icon>
 		</button>
-		<h4 class="text-color my-auto ml-3 font-weight-light">{{ todoList.name }}</h4>
-		<button type="button" 
-				class="btn ml-3 text-color icon-button" 
-				style="padding: 3px 6px;" 
-				(click)="ShowEditModal()">
+		<h4 class="text-color my-auto ml-3 font-weight-light">
+			{{ todoList.name }}
+		</h4>
+		<button
+			type="button"
+			class="btn ml-3 text-color icon-button"
+			style="padding: 3px 6px"
+			(click)="ShowEditModal()"
+		>
 			<fab-icon iconName="Edit"></fab-icon>
 		</button>
-		<button type="button" 
-				class="btn ml-2 text-color icon-button" 
-				style="padding: 3px 6px;" 
-				(click)="ShowDeleteModal()">
+		<button
+			type="button"
+			class="btn ml-2 text-color icon-button"
+			style="padding: 3px 6px"
+			(click)="ShowDeleteModal()"
+		>
 			<fab-icon iconName="Delete"></fab-icon>
 		</button>
 	</div>
 	<div class="mx-0 pt-3 border-top">
 		<!-- Todo List metadata -->
-		<p class="text-color" *ngIf="todoList.time != 0">{{ locale.date }}<span class="ml-2">{{ date }}</span></p>
+		<p class="text-color" *ngIf="todoList.time != 0">
+			{{ locale.date }}<span class="ml-2">{{ date }}</span>
+		</p>
 		<p style="margin-bottom: 4px" *ngIf="todoList.groups.length > 0">
 			<span class="text-color">{{ locale.groups }}</span>
 			<span class="ml-2">
-				<calendo-todo-group-badge *ngFor="let todoGroup of todoList.groups" [groupName]="todoGroup"></calendo-todo-group-badge>
+				<calendo-todo-group-badge
+					*ngFor="let todoGroup of todoList.groups"
+					[groupName]="todoGroup"
+				></calendo-todo-group-badge>
 			</span>
 		</p>
-	
+
 		<!-- Todos list -->
 		<div class="d-flex" style="height: 40px">
 			<p class="ms-fontSize-18 mt-2 text-color">
 				{{ locale.todos }}
 			</p>
-			
+
 			<div ngbDropdown placement="top-left" style="margin-top: 7px">
-				<button type="button" 
-						class="btn ml-2 text-color theme-border-color-primary icon-button" 
-						style="height: 30px; width: 30px; padding: 2px 0px 0px 0px" 
-						ngbDropdownToggle>
+				<button
+					type="button"
+					class="btn ml-2 text-color theme-border-color-primary icon-button"
+					style="height: 30px; width: 30px; padding: 2px 0px 0px 0px"
+					ngbDropdownToggle
+				>
 					<fab-icon iconName="Add"></fab-icon>
 				</button>
-	
-				<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4 ms-motion-slideUpIn">
-					<button class="dropdown-item text-color cursor" (click)="todoListTree.AddInputToTodoList(todoListTree.rootTodoItem, false)">{{ locale.newTodo }}</button>
-					<button class="dropdown-item text-color cursor" (click)="todoListTree.AddInputToTodoList(todoListTree.rootTodoItem, true)">{{ locale.newTodoList }}</button>
+
+				<div
+					ngbDropdownMenu
+					class="theme-background-color-tertiary ms-depth-4 ms-motion-slideUpIn"
+				>
+					<button
+						class="dropdown-item text-color cursor"
+						(click)="
+							todoListTree.AddInputToTodoList(
+								todoListTree.rootTodoItem,
+								false
+							)
+						"
+					>
+						{{ locale.newTodo }}
+					</button>
+					<button
+						class="dropdown-item text-color cursor"
+						(click)="
+							todoListTree.AddInputToTodoList(
+								todoListTree.rootTodoItem,
+								true
+							)
+						"
+					>
+						{{ locale.newTodoList }}
+					</button>
 				</div>
 			</div>
 		</div>
-		<calendo-todo-list-tree #todoListTree [todoList]="todoList" (update)="Update()"></calendo-todo-list-tree>
+		<calendo-todo-list-tree
+			#todoListTree
+			[todoList]="todoList"
+			(update)="Update()"
+		></calendo-todo-list-tree>
 	</div>
 </div>
 
-<calendo-todo-list-modal #todoListModal (save)="Update($event)"></calendo-todo-list-modal>
-<calendo-delete-todo-list-modal #deleteTodoListModal (remove)="Remove()"></calendo-delete-todo-list-modal>
+<calendo-todo-list-modal
+	#todoListModal
+	(save)="Update($event)"
+></calendo-todo-list-modal>
+<calendo-delete-todo-list-modal
+	#deleteTodoListModal
+	(remove)="Remove()"
+></calendo-delete-todo-list-modal>

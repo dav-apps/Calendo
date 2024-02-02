@@ -1,12 +1,39 @@
-<li class="list-group-item d-flex align-items-center theme-background-color-secondary" style="padding: 10px 0px 10px 10px;">
-   <div style="margin-bottom: -8px">
-		<fab-checkbox (onChange)="ToggleCheckbox()" [checked]="todo.completed"></fab-checkbox>
+<li
+	class="list-group-item d-flex align-items-center theme-background-color-secondary"
+	style="padding: 10px 0px 10px 10px"
+>
+	<div style="margin-bottom: -8px">
+		<fab-checkbox
+			(onChange)="ToggleCheckbox()"
+			[checked]="todo.completed"
+		></fab-checkbox>
 	</div>
-   <label class="ml-3 mr-3 col-form-label text-color cursor ms-fontSize-14" [ngClass]="todo.completed ? 'strikethrough' : ''" style="user-select: none" (click)="ToggleCheckbox()">
-      {{ todo.name }}<span *ngIf="showBadge" class="ml-2"><calendo-todo-group-badge *ngFor="let todoGroup of todo.groups" [groupName]="todoGroup"></calendo-todo-group-badge></span>
-   </label>
-   
-   <button type="button" class="close ml-auto" aria-label="Delete" (click)="Delete()" *ngIf="todo.completed">
-      <fa-icon [icon]="faTimes" class="text-color" style="font-size: 16px; display: block"></fa-icon>
-   </button>
+	<label
+		class="ml-3 mr-3 col-form-label text-color cursor ms-fontSize-14"
+		[ngClass]="todo.completed ? 'strikethrough' : ''"
+		style="user-select: none"
+		(click)="ToggleCheckbox()"
+	>
+		{{ todo.name }}
+		<span *ngIf="showBadge" class="ml-2">
+			<calendo-todo-group-badge
+				*ngFor="let todoGroup of todo.groups"
+				[groupName]="todoGroup"
+			></calendo-todo-group-badge>
+		</span>
+	</label>
+
+	<button
+		type="button"
+		class="close ml-auto"
+		aria-label="Delete"
+		(click)="Delete()"
+		*ngIf="todo.completed"
+	>
+		<fa-icon
+			[icon]="faTimes"
+			class="text-color"
+			style="font-size: 16px; display: block"
+		></fa-icon>
+	</button>
 </li>

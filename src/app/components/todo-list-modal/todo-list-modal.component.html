@@ -1,36 +1,71 @@
 <ng-template #todoListModal let-c="close" let-d="dismiss">
-	<div class="modal-header theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
-		<h4 class="modal-title text-color">{{ new ? locale.newTodoList : locale.editTodoList }}</h4>
-		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+	<div
+		class="modal-header theme-background-color-primary"
+		[ngClass]="dataService.darkTheme ? 'border-dark' : ''"
+	>
+		<h4 class="modal-title text-color">
+			{{ new ? locale.newTodoList : locale.editTodoList }}
+		</h4>
+		<button
+			type="button"
+			class="close"
+			aria-label="Close"
+			(click)="d('Cross click')"
+		>
 			<span aria-hidden="true" class="text-color">&times;</span>
 		</button>
 	</div>
 	<div class="modal-body row theme-background-color-primary mx-0">
 		<div class="mx-auto mb-4 px-4 text-color">
-         <!-- Set Date checkbox -->
-         <div class="mb-1">
+			<!-- Set Date checkbox -->
+			<div class="mb-1">
 				<div class="d-inline-flex">
-					<fab-checkbox (onChange)="ToggleSetDateCheckbox()" [checked]="setDateCheckboxChecked"></fab-checkbox>
-					<label class="col-form-label ml-2 text-color cursor ms-fontSize-14" style="margin-top: -8px" (click)="ToggleSetDateCheckbox()">
+					<fab-checkbox
+						(onChange)="ToggleSetDateCheckbox()"
+						[checked]="setDateCheckboxChecked"
+					></fab-checkbox>
+					<label
+						class="col-form-label ml-2 text-color cursor ms-fontSize-14"
+						style="margin-top: -8px"
+						(click)="ToggleSetDateCheckbox()"
+					>
 						{{ locale.setDate }}
 					</label>
 				</div>
 			</div>
 
 			<ngb-datepicker
-				[(ngModel)]="todoListDate" 
-				(navigate)="date = $event.next" 
+				[(ngModel)]="todoListDate"
+				(navigate)="date = $event.next"
 				[disabled]="!setDateCheckboxChecked"
-				style="background-color: white">
-			</ngb-datepicker>
-      </div>
+				style="background-color: white"
+			></ngb-datepicker>
+		</div>
 
 		<div class="mx-auto offset-1">
-			<calendo-set-todo-groups [initialGroups]="todoGroups" (groupsChanged)="todoGroups = $event"></calendo-set-todo-groups>
-			<calendo-set-name [(name)]="todoListName" (nameChanged)="todoListName = $event; SetSubmitButtonDisabled()" (submit)="submitButtonDisabled ? 0 : c()" [type]="1"></calendo-set-name>
+			<calendo-set-todo-groups
+				[initialGroups]="todoGroups"
+				(groupsChanged)="todoGroups = $event"
+			></calendo-set-todo-groups>
+			<calendo-set-name
+				[(name)]="todoListName"
+				(nameChanged)="todoListName = $event; SetSubmitButtonDisabled()"
+				(submit)="submitButtonDisabled ? 0 : c()"
+				[type]="1"
+			></calendo-set-name>
 		</div>
 	</div>
-	<div class="modal-footer theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
-		<button type="button" class="btn btn-primary" [disabled]="submitButtonDisabled" (click)="c()">{{ locale.save }}</button>
-   </div>
+	<div
+		class="modal-footer theme-background-color-primary"
+		[ngClass]="dataService.darkTheme ? 'border-dark' : ''"
+	>
+		<button
+			type="button"
+			class="btn btn-primary"
+			[disabled]="submitButtonDisabled"
+			(click)="c()"
+		>
+			{{ locale.save }}
+		</button>
+	</div>
 </ng-template>

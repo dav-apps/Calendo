@@ -1,32 +1,27 @@
-import { Component, HostListener } from '@angular/core'
-import { Router, NavigationStart } from '@angular/router'
-import { Dav, Environment, TableObject } from 'dav-js'
-import { environment } from '../environments/environment'
-import { enUS } from '../locales/locales'
-import { DataService } from './services/data-service'
-import { ConvertTableObjectToAppointment } from './models/Appointment'
-import { ConvertTableObjectToTodo } from './models/Todo'
-import { initializeIcons } from 'office-ui-fabric-react/lib/Icons'
-import { TodoList, ConvertTableObjectToTodoList } from './models/TodoList'
+import { Component, HostListener } from "@angular/core"
+import { Router, NavigationStart } from "@angular/router"
+import { Dav, Environment, TableObject } from "dav-js"
+import { environment } from "../environments/environment"
+import { enUS } from "../locales/locales"
+import { DataService } from "./services/data-service"
+import { ConvertTableObjectToAppointment } from "./models/Appointment"
+import { ConvertTableObjectToTodo } from "./models/Todo"
+import { initializeIcons } from "office-ui-fabric-react/lib/Icons"
+import { TodoList, ConvertTableObjectToTodoList } from "./models/TodoList"
 
 const smallWindowMaxSize = 768
 
 @Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: [
-		'./app.component.scss'
-	]
+	selector: "app-root",
+	templateUrl: "./app.component.html",
+	styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
 	locale = enUS.navbar
 	windowWidth: number = 500
 	currentUrl: string = "/"
 
-	constructor(
-		public dataService: DataService,
-		private router: Router
-	) {
+	constructor(public dataService: DataService, private router: Router) {
 		this.locale = this.dataService.GetLocale().navbar
 		initializeIcons()
 
@@ -48,24 +43,35 @@ export class AppComponent {
 
 		// Initialize dav
 		new Dav({
-			environment: environment.production ? Environment.Production : Environment.Development,
+			environment: environment.production
+				? Environment.Production
+				: Environment.Development,
 			appId: environment.appId,
-			tableIds: [environment.todoTableId, environment.todoListTableId, environment.appointmentTableId],
+			tableIds: [
+				environment.todoTableId,
+				environment.todoListTableId,
+				environment.appointmentTableId
+			],
 			notificationOptions: {
 				icon: "/assets/icons/icon-192x192.png",
 				badge: "/assets/icons/badge-128x128.png"
 			},
 			callbacks: {
-				UpdateAllOfTable: (tableId: number) => this.UpdateAllOfTable(tableId),
-				UpdateTableObject: (tableObject: TableObject, downloaded: boolean) => this.UpdateTableObject(tableObject, downloaded),
-				DeleteTableObject: (tableObject: TableObject) => this.DeleteTableObject(tableObject)
+				UpdateAllOfTable: (tableId: number) =>
+					this.UpdateAllOfTable(tableId),
+				UpdateTableObject: (
+					tableObject: TableObject,
+					downloaded: boolean
+				) => this.UpdateTableObject(tableObject, downloaded),
+				DeleteTableObject: (tableObject: TableObject) =>
+					this.DeleteTableObject(tableObject)
 			}
 		})
 	}
 
-	@HostListener('window:resize')
+	@HostListener("window:resize")
 	setSize() {
-		this.dataService.smallWindow = (window.innerWidth < smallWindowMaxSize)
+		this.dataService.smallWindow = window.innerWidth < smallWindowMaxSize
 		this.windowWidth = window.innerWidth
 	}
 
@@ -78,7 +84,10 @@ export class AppComponent {
 		}
 	}
 
-	async UpdateTableObject(tableObject: TableObject, downloaded: boolean = false) {
+	async UpdateTableObject(
+		tableObject: TableObject,
+		downloaded: boolean = false
+	) {
 		if (tableObject.TableId == environment.appointmentTableId) {
 			// Update appointment
 			var appointment = ConvertTableObjectToAppointment(tableObject)
@@ -174,7 +183,10 @@ export class AppComponent {
 				a: 255
 			}
 
-			let titleBar = window["Windows"].UI.ViewManagement.ApplicationView.getForCurrentView().titleBar
+			let titleBar =
+				window[
+					"Windows"
+				].UI.ViewManagement.ApplicationView.getForCurrentView().titleBar
 			titleBar.foregroundColor = themeColor
 			titleBar.backgroundColor = themeColor
 			titleBar.buttonBackgroundColor = themeColor

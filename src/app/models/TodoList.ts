@@ -1,6 +1,11 @@
-import { TableObject, Property, GetTableObject, GetAllTableObjects } from 'dav-js'
-import { Todo, ConvertTableObjectToTodo } from './Todo'
-import { environment } from '../../environments/environment'
+import {
+	TableObject,
+	Property,
+	GetTableObject,
+	GetAllTableObjects
+} from "dav-js"
+import { Todo, ConvertTableObjectToTodo } from "./Todo"
+import { environment } from "../../environments/environment"
 
 export class TodoList {
 	public uuid: string
@@ -24,14 +29,26 @@ export class TodoList {
 		this.list = list
 	}
 
-	public static async Create(name: string, time: number = 0, items: (Todo | TodoList)[] = [], groups: string[] = [], list: string = null, uuid: string = null): Promise<TodoList> {
+	public static async Create(
+		name: string,
+		time: number = 0,
+		items: (Todo | TodoList)[] = [],
+		groups: string[] = [],
+		list: string = null,
+		uuid: string = null
+	): Promise<TodoList> {
 		let todoList = new TodoList(name, time, items, groups, list)
 		todoList.uuid = uuid
 		await todoList.Save()
 		return todoList
 	}
 
-	async Update(name?: string, time?: number, groups?: string[], list?: string) {
+	async Update(
+		name?: string,
+		time?: number,
+		groups?: string[],
+		list?: string
+	) {
 		if (name != null) this.name = name
 		if (time != null) this.time = time
 		if (groups) this.groups = groups
@@ -75,7 +92,7 @@ export class TodoList {
 
 		// Create the items string
 		let itemUuids: string[] = []
-		this.items.forEach((item: (Todo | TodoList)) => itemUuids.push(item.uuid))
+		this.items.forEach((item: Todo | TodoList) => itemUuids.push(item.uuid))
 		properties.push({
 			name: environment.todoListItemsKey,
 			value: itemUuids.join(",")
@@ -88,7 +105,7 @@ export class TodoList {
 		// Groups
 		properties.push({
 			name: environment.todoListGroupsKey,
-			value: this.groups.join(',')
+			value: this.groups.join(",")
 		})
 
 		// List
@@ -118,7 +135,10 @@ export class TodoList {
 }
 
 export async function GetAllTodoLists(): Promise<TodoList[]> {
-	let tableObjects = await GetAllTableObjects(environment.todoListTableId, false)
+	let tableObjects = await GetAllTableObjects(
+		environment.todoListTableId,
+		false
+	)
 	let todoLists: TodoList[] = []
 
 	for (let tableObject of tableObjects) {
@@ -137,21 +157,30 @@ export async function GetTodoList(uuid: string): Promise<TodoList> {
 	return await ConvertTableObjectToTodoList(tableObject)
 }
 
-export async function ConvertTableObjectToTodoList(tableObject: TableObject): Promise<TodoList> {
-	if (!tableObject || tableObject.TableId != environment.todoListTableId) return null
+export async function ConvertTableObjectToTodoList(
+	tableObject: TableObject
+): Promise<TodoList> {
+	if (!tableObject || tableObject.TableId != environment.todoListTableId)
+		return null
 
-	let name = tableObject.GetPropertyValue(environment.todoListNameKey) as string
+	let name = tableObject.GetPropertyValue(
+		environment.todoListNameKey
+	) as string
 
 	let time: number = 0
-	let timeString = tableObject.GetPropertyValue(environment.todoListTimeKey) as string
+	let timeString = tableObject.GetPropertyValue(
+		environment.todoListTimeKey
+	) as string
 	if (timeString != null) {
 		time = +timeString
 	}
 
 	let todos: Todo[] = []
-	let todosString = tableObject.GetPropertyValue(environment.todoListTodosKey) as string
+	let todosString = tableObject.GetPropertyValue(
+		environment.todoListTodosKey
+	) as string
 	if (todosString != null) {
-		for (let uuid of todosString.split(',')) {
+		for (let uuid of todosString.split(",")) {
 			// Get the todo from the local storage
 			let todoTableObject = await GetTableObject(uuid)
 			if (!todoTableObject) continue
@@ -164,9 +193,11 @@ export async function ConvertTableObjectToTodoList(tableObject: TableObject): Pr
 	}
 
 	let todoLists: TodoList[] = []
-	let todoListsString = tableObject.GetPropertyValue(environment.todoListTodoListsKey) as string
+	let todoListsString = tableObject.GetPropertyValue(
+		environment.todoListTodoListsKey
+	) as string
 	if (todoListsString != null) {
-		for (let uuid of todoListsString.split(',')) {
+		for (let uuid of todoListsString.split(",")) {
 			// Get the todo list from the local storage
 			let todoListTableObject = await GetTableObject(uuid)
 			if (!todoListTableObject) continue
@@ -179,9 +210,11 @@ export async function ConvertTableObjectToTodoList(tableObject: TableObject): Pr
 	}
 
 	let items: (Todo | TodoList)[] = []
-	let itemsString = tableObject.GetPropertyValue(environment.todoListItemsKey) as string
+	let itemsString = tableObject.GetPropertyValue(
+		environment.todoListItemsKey
+	) as string
 	if (itemsString != null) {
-		for (let uuid of itemsString.split(',')) {
+		for (let uuid of itemsString.split(",")) {
 			// Get the todo or todo list from local storage
 			let itemTableObject = await GetTableObject(uuid)
 			if (!itemTableObject) continue
@@ -197,18 +230,22 @@ export async function ConvertTableObjectToTodoList(tableObject: TableObject): Pr
 	}
 
 	// Move all todos and todo lists into the items array
-	for (let todo of todos) items.push(todo);
-	for (let todoList of todoLists) items.push(todoList);
+	for (let todo of todos) items.push(todo)
+	for (let todoList of todoLists) items.push(todoList)
 
 	let groups: string[] = []
-	let groupsString = tableObject.GetPropertyValue(environment.todoListGroupsKey) as string
+	let groupsString = tableObject.GetPropertyValue(
+		environment.todoListGroupsKey
+	) as string
 	if (groupsString) {
-		for (let group of groupsString.split(',')) {
+		for (let group of groupsString.split(",")) {
 			groups.push(group)
 		}
 	}
 
-	let list = tableObject.GetPropertyValue(environment.todoListListKey) as string
+	let list = tableObject.GetPropertyValue(
+		environment.todoListListKey
+	) as string
 
 	let todoList = new TodoList(name, time, items, groups, list)
 	todoList.uuid = tableObject.Uuid

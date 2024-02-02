@@ -1,31 +1,44 @@
-<div class="container d-flex flex-column ms-motion-slideUpIn" style="padding-bottom: 56px">
-	<h1 class="text-center mt-3 text-color font-weight-light">{{ locale.header }}</h1>
+<div
+	class="container d-flex flex-column ms-motion-slideUpIn"
+	style="padding-bottom: 56px"
+>
+	<h1 class="text-center mt-3 text-color font-weight-light">
+		{{ locale.header }}
+	</h1>
 
 	<div class="mx-auto">
 		<!-- Sort todos by -->
-      <div class="form-group mt-4" style="font-size: 18px; width: 200px">
-         <label class="text-color">{{ locale.sortTodosBy }}</label>
+		<div class="form-group mt-4" style="font-size: 18px; width: 200px">
+			<label class="text-color">{{ locale.sortTodosBy }}</label>
 
 			<fab-dropdown
-				[selectedKey]="sortTodosSelectedKey" 
-         	(onChange)="onSortTodosSelectChanged($event)">
-				
+				[selectedKey]="sortTodosSelectedKey"
+				(onChange)="onSortTodosSelectChanged($event)"
+			>
 				<options>
-               <fab-dropdown-option optionKey="date" [text]="locale.sortTodosByDate"></fab-dropdown-option>
-               <fab-dropdown-option optionKey="group" [text]="locale.sortTodosByGroup"></fab-dropdown-option>
-            </options>
-         </fab-dropdown>
+					<fab-dropdown-option
+						optionKey="date"
+						[text]="locale.sortTodosByDate"
+					></fab-dropdown-option>
+					<fab-dropdown-option
+						optionKey="group"
+						[text]="locale.sortTodosByGroup"
+					></fab-dropdown-option>
+				</options>
+			</fab-dropdown>
 		</div>
 
 		<!-- Theme -->
 		<div style="display: inline-block">
-			<p class="text-color mt-4" style="font-size: 18px">{{ locale.theme }}</p>
+			<p class="text-color mt-4" style="font-size: 18px">
+				{{ locale.theme }}
+			</p>
 			<mat-radio-group
-				class="d-flex flex-column text-color" 
-				[color]="dataService.darkTheme ? 'accent' : 'primary'" 
-				[value]="selectedTheme" 
-				(change)="onThemeRadioButtonSelected($event)">
-
+				class="d-flex flex-column text-color"
+				[color]="dataService.darkTheme ? 'accent' : 'primary'"
+				[value]="selectedTheme"
+				(change)="onThemeRadioButtonSelected($event)"
+			>
 				<mat-radio-button [value]="themeKeys[0]">
 					{{ locale.lightTheme }}
 				</mat-radio-button>
@@ -41,18 +54,34 @@
 		<!-- App information -->
 		<div class="mt-5 text-color">
 			<p>
-				<a href="https://blog.dav-apps.tech/tag/calendo" target="blank" class="text-secondary">{{ locale.news }}</a><br>
-				<a href="https://github.com/dav-apps/Calendo" target="blank" class="text-secondary">{{ locale.github }}</a><br>
-				<a href="https://dav-apps.tech/privacy" target="blank" class="text-secondary">{{ locale.privacy }}</a><br>
+				<a
+					href="https://blog.dav-apps.tech/tag/calendo"
+					target="blank"
+					class="text-secondary"
+					>{{ locale.news }}</a
+				><br />
+				<a
+					href="https://github.com/dav-apps/Calendo"
+					target="blank"
+					class="text-secondary"
+					>{{ locale.github }}</a
+				><br />
+				<a
+					href="https://dav-apps.tech/privacy"
+					target="blank"
+					class="text-secondary"
+					>{{ locale.privacy }}</a
+				><br />
 			</p>
 			<p>
-				Version {{ version }}<br>
+				Version {{ version }}<br />
 				Copyright &copy; {{ year }} by dav
 			</p>
 
 			<fab-primary-button
 				(onClick)="InstallUpdate()"
-				*ngIf="updateAvailable">
+				*ngIf="updateAvailable"
+			>
 				{{ locale.installUpdate }}
 			</fab-primary-button>
 		</div>

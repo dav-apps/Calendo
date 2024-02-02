@@ -1,24 +1,61 @@
-<li class="list-group-item theme-background-color-secondary d-flex" style="padding: 10px 0px 10px 10px;">
-   <label class="col-form-label d-flex">
-		<fa-icon [icon]="faCheck" style="margin-left: -30px; margin-top: -2px; position: absolute; color: green" *ngIf="IsCompleted() && !appointment.allday"></fa-icon>
-		<div *ngIf="!appointment.allday" class="appointment-item-{{ appointment.uuid }} mr-2 text-color ms-fontSize-14" style=" margin-top: -8px">
-			<span class="font-italic position-absolute">{{ ConvertUnixTimestampToTime(appointment.start) }}</span><br>
-			<span class="font-italic position-absolute">{{ ConvertUnixTimestampToTime(appointment.end) }}</span>
+<li
+	class="list-group-item theme-background-color-secondary d-flex"
+	style="padding: 10px 0px 10px 10px"
+>
+	<label class="col-form-label d-flex">
+		<fa-icon
+			[icon]="faCheck"
+			style="
+				margin-left: -30px;
+				margin-top: -2px;
+				position: absolute;
+				color: green;
+			"
+			*ngIf="IsCompleted() && !appointment.allday"
+		></fa-icon>
+		<div
+			*ngIf="!appointment.allday"
+			class="appointment-item-{{
+				appointment.uuid
+			}} mr-2 text-color ms-fontSize-14"
+			style="margin-top: -8px"
+		>
+			<span class="font-italic position-absolute">{{
+				ConvertUnixTimestampToTime(appointment.start)
+			}}</span
+			><br />
+			<span class="font-italic position-absolute">{{
+				ConvertUnixTimestampToTime(appointment.end)
+			}}</span>
 		</div>
-		<span class="text-color my-auto" [ngClass]="appointment.allday ? '' : 'ml-5'">{{ appointment.name }}</span>
+		<span
+			class="text-color my-auto"
+			[ngClass]="appointment.allday ? '' : 'ml-5'"
+			>{{ appointment.name }}</span
+		>
 	</label>
-	
+
 	<div ngbDropdown placement="bottom-right" class="my-auto ml-auto">
 		<div ngbDropdownToggle>
 			<fab-icon-button [iconProps]="menuButtonIconProps"></fab-icon-button>
 		</div>
 
-		<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4 ms-motion-slideDownIn">
-			<button class="dropdown-item text-color cursor" (click)="Edit()">{{ locale.edit }}</button>
-			<button class="dropdown-item text-color cursor" (click)="Delete()">{{ locale.delete }}</button>
+		<div
+			ngbDropdownMenu
+			class="theme-background-color-tertiary ms-depth-4 ms-motion-slideDownIn"
+		>
+			<button class="dropdown-item text-color cursor" (click)="Edit()">
+				{{ locale.edit }}
+			</button>
+			<button class="dropdown-item text-color cursor" (click)="Delete()">
+				{{ locale.delete }}
+			</button>
 		</div>
 	</div>
 </li>
 
-<calendo-delete-appointment-modal [appointment]="appointment" (remove)="Remove()"></calendo-delete-appointment-modal>
+<calendo-delete-appointment-modal
+	[appointment]="appointment"
+	(remove)="Remove()"
+></calendo-delete-appointment-modal>
 <calendo-appointment-modal (save)="Update($event)"></calendo-appointment-modal>

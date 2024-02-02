@@ -1,9 +1,9 @@
-import { Component } from '@angular/core'
-import { enUS } from '../../../locales/locales'
-import { ActivatedRoute } from '@angular/router'
-import { Dav } from 'dav-js'
-import { DataService } from '../../services/data-service'
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { Component } from "@angular/core"
+import { enUS } from "../../../locales/locales"
+import { ActivatedRoute } from "@angular/router"
+import { Dav } from "dav-js"
+import { DataService } from "../../services/data-service"
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons"
 
 @Component({
 	selector: "calendo-user-menu",

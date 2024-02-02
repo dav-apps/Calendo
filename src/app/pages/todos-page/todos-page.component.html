@@ -1,71 +1,174 @@
 <div class="container-fluid ms-motion-slideUpIn" style="padding-bottom: 56px">
-	<h1 class="text-center mt-3 text-color font-weight-light" ngbDropdown placement="bottom-right">
+	<h1
+		class="text-center mt-3 text-color font-weight-light"
+		ngbDropdown
+		placement="bottom-right"
+	>
 		{{ locale.header }}
-		<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle><fa-icon [icon]="faEllipsisH"></fa-icon></button>
-		<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4 ms-motion-slideDownIn">
-			<button class="dropdown-item text-color cursor" (click)="SortByGroupOrDate()">{{ dataService.sortTodosByDate ? locale.sortByGroup : locale.sortByDate }}</button>
-         <button class="dropdown-item text-color cursor" (click)="ShowNewTodoModal()">{{ locale.newTodo }}</button>
-         <button class="dropdown-item text-color cursor" (click)="ShowNewTodoListModal()">{{ locale.newTodoList }}</button>
+		<button
+			type="button"
+			class="btn btn-outline-primary btn-sm mb-1"
+			ngbDropdownToggle
+		>
+			<fa-icon [icon]="faEllipsisH"></fa-icon>
+		</button>
+		<div
+			ngbDropdownMenu
+			class="theme-background-color-tertiary ms-depth-4 ms-motion-slideDownIn"
+		>
+			<button
+				class="dropdown-item text-color cursor"
+				(click)="SortByGroupOrDate()"
+			>
+				{{
+					dataService.sortTodosByDate
+						? locale.sortByGroup
+						: locale.sortByDate
+				}}
+			</button>
+			<button
+				class="dropdown-item text-color cursor"
+				(click)="ShowNewTodoModal()"
+			>
+				{{ locale.newTodo }}
+			</button>
+			<button
+				class="dropdown-item text-color cursor"
+				(click)="ShowNewTodoListModal()"
+			>
+				{{ locale.newTodoList }}
+			</button>
 		</div>
 	</h1>
 
-	<p class="no-items-message font-weight-light text-center mt-3 text-color"
-		*ngIf="dataService.todosWithoutDate.todos.length == 0 
-					&& dataService.todosWithoutDate.todoLists.length == 0
-					&& dataService.todoDays.length == 0
-					&& dataService.todosWithoutGroup.length == 0 
-					&& dataService.todoListsWithoutGroup.length == 0
-					&& dataService.todoGroups.length == 0">
+	<p
+		class="no-items-message font-weight-light text-center mt-3 text-color"
+		*ngIf="
+			dataService.todosWithoutDate.todos.length == 0 &&
+			dataService.todosWithoutDate.todoLists.length == 0 &&
+			dataService.todoDays.length == 0 &&
+			dataService.todosWithoutGroup.length == 0 &&
+			dataService.todoListsWithoutGroup.length == 0 &&
+			dataService.todoGroups.length == 0
+		"
+	>
 		{{ locale.noTodos }}
 	</p>
 
 	<div class="row">
 		<!-- Sort by date -->
-      <div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" 
-            *ngIf="dataService.todosWithoutDate.todos.length > 0 || dataService.todosWithoutDate.todoLists.length > 0">
+		<div
+			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4"
+			*ngIf="
+				dataService.todosWithoutDate.todos.length > 0 ||
+				dataService.todosWithoutDate.todoLists.length > 0
+			"
+		>
 			<ul class="list-group list-group-flush">
-            <calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.todosWithoutDate.todos"></calendo-todo-item>
-            <calendo-todo-list-item [todoList]="todoList" *ngFor="let todoList of dataService.todosWithoutDate.todoLists"></calendo-todo-list-item>
+				<calendo-todo-item
+					[todo]="todo"
+					(delete)="DeleteTodo(todo)"
+					*ngFor="let todo of dataService.todosWithoutDate.todos"
+				></calendo-todo-item>
+				<calendo-todo-list-item
+					[todoList]="todoList"
+					*ngFor="let todoList of dataService.todosWithoutDate.todoLists"
+				></calendo-todo-list-item>
 			</ul>
 		</div>
 
-		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" 
-				*ngFor="let todoDay of dataService.todoDays" [ngClass]="todoDay.todos.length > 0 || todoDay.todoLists.length > 0 ? '' : 'hidden'">
+		<div
+			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4"
+			*ngFor="let todoDay of dataService.todoDays"
+			[ngClass]="
+				todoDay.todos.length > 0 || todoDay.todoLists.length > 0
+					? ''
+					: 'hidden'
+			"
+		>
 			<div class="card-body">
 				<h5
 					class="card-title text-color"
-					*ngIf="todoDay.todos.length > 0 || todoDay.todoLists.length > 0">
-					<span (click)="ShowCalendarDay(todoDay.timestamp)">{{ todoDay.date }}</span>
+					*ngIf="todoDay.todos.length > 0 || todoDay.todoLists.length > 0"
+				>
+					<span (click)="ShowCalendarDay(todoDay.timestamp)">
+						{{ todoDay.date }}
+					</span>
 				</h5>
 
 				<ul class="list-group list-group-flush">
-					<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of todoDay.todos"></calendo-todo-item>
-					<calendo-todo-list-item [todoList]="todoList" *ngFor="let todoList of todoDay.todoLists"></calendo-todo-list-item>
+					<calendo-todo-item
+						[todo]="todo"
+						(delete)="DeleteTodo(todo)"
+						*ngFor="let todo of todoDay.todos"
+					></calendo-todo-item>
+					<calendo-todo-list-item
+						[todoList]="todoList"
+						*ngFor="let todoList of todoDay.todoLists"
+					></calendo-todo-list-item>
 				</ul>
 			</div>
 		</div>
 
 		<!-- Sort by group -->
-		<div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" 
-				*ngIf="dataService.todosWithoutGroup.length > 0 || dataService.todoListsWithoutGroup.length > 0">
+		<div
+			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4"
+			*ngIf="
+				dataService.todosWithoutGroup.length > 0 ||
+				dataService.todoListsWithoutGroup.length > 0
+			"
+		>
 			<ul class="list-group list-group-flush">
-				<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" [showBadge]="false" *ngFor="let todo of dataService.todosWithoutGroup"></calendo-todo-item>
-				<calendo-todo-list-item [todoList]="todoList" *ngFor="let todoList of dataService.todoListsWithoutGroup"></calendo-todo-list-item>
+				<calendo-todo-item
+					[todo]="todo"
+					(delete)="DeleteTodo(todo)"
+					[showBadge]="false"
+					*ngFor="let todo of dataService.todosWithoutGroup"
+				></calendo-todo-item>
+				<calendo-todo-list-item
+					[todoList]="todoList"
+					*ngFor="let todoList of dataService.todoListsWithoutGroup"
+				></calendo-todo-list-item>
 			</ul>
 		</div>
 
-      <div class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4" 
-            *ngFor="let todoGroup of dataService.todoGroups" [ngClass]="todoGroup.todos.length > 0 || todoGroup.todoLists.length > 0 ? '' : 'hidden'">
+		<div
+			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4"
+			*ngFor="let todoGroup of dataService.todoGroups"
+			[ngClass]="
+				todoGroup.todos.length > 0 || todoGroup.todoLists.length > 0
+					? ''
+					: 'hidden'
+			"
+		>
 			<div class="card-body">
-				<h5 class="card-title text-color" *ngIf="todoGroup.todos.length > 0 || todoGroup.todoLists.length > 0">{{ todoGroup.name }}</h5>
+				<h5
+					class="card-title text-color"
+					*ngIf="
+						todoGroup.todos.length > 0 || todoGroup.todoLists.length > 0
+					"
+				>
+					{{ todoGroup.name }}
+				</h5>
 				<ul class="list-group list-group-flush">
-					<calendo-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" [showBadge]="false" *ngFor="let todo of todoGroup.todos"></calendo-todo-item>
-					<calendo-todo-list-item [todoList]="todoList" (update)="TodoListUpdated(todoList.uuid, todoGroup.name)" *ngFor="let todoList of todoGroup.todoLists"></calendo-todo-list-item>
+					<calendo-todo-item
+						[todo]="todo"
+						(delete)="DeleteTodo(todo)"
+						[showBadge]="false"
+						*ngFor="let todo of todoGroup.todos"
+					></calendo-todo-item>
+					<calendo-todo-list-item
+						[todoList]="todoList"
+						(update)="TodoListUpdated(todoList.uuid, todoGroup.name)"
+						*ngFor="let todoList of todoGroup.todoLists"
+					></calendo-todo-list-item>
 				</ul>
 			</div>
 		</div>
 	</div>
 
-   <calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
-   <calendo-todo-list-modal (save)="CreateTodoList($event)"></calendo-todo-list-modal>
+	<calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
+	<calendo-todo-list-modal
+		(save)="CreateTodoList($event)"
+	></calendo-todo-list-modal>
 </div>

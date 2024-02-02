@@ -2,51 +2,105 @@
 	<div class="d-flex">
 		<div class="mx-auto d-flex">
 			<button
-				type="button" 
-				class="btn mt-3 text-color icon-button" 
-				style="height: 40px; width: 45px; padding: 2px 0px 0px 0px;"
-				(click)="GoBack()">
-				<fab-icon iconName="Back" [styles]="backButtonIconStyles"></fab-icon>
+				type="button"
+				class="btn mt-3 text-color icon-button"
+				style="height: 40px; width: 45px; padding: 2px 0px 0px 0px"
+				(click)="GoBack()"
+			>
+				<fab-icon
+					iconName="Back"
+					[styles]="backButtonIconStyles"
+				></fab-icon>
 			</button>
-			<h2 class="text-left mt-3 ml-3 text-color font-weight-light">{{ getCurrentDate() }}</h2>
+			<h2 class="text-left mt-3 ml-3 text-color font-weight-light">
+				{{ getCurrentDate() }}
+			</h2>
 		</div>
 	</div>
 
-   <div class="d-flex flex-column text-color">
-      <h3 class="mt-4 mb-3">
-         {{ locale.appointments }}
-         <button type="button" class="btn btn-outline-primary btn-sm mb-1" (click)="ShowNewAppointmentModal()"><fa-icon [icon]="faPlus"></fa-icon></button>
-      </h3>
-
-      <p class="no-items-message font-weight-light" *ngIf="dataService.selectedDayAppointments.length == 0">
-			{{ locale.noAppointments }}
-		</p>
-		
-      <calendo-small-appointment-item class="d-inline-flex" [appointment]="appointment" *ngFor="let appointment of dataService.selectedDayAppointments"></calendo-small-appointment-item>
-   </div>
-   
-   <div class="text-color">
-      <h3 class="mt-4 mb-3" ngbDropdown placement="bottom-left">
-			{{ locale.todos }}
-			<button type="button" class="btn btn-outline-primary btn-sm mb-1" ngbDropdownToggle>
+	<div class="d-flex flex-column text-color">
+		<h3 class="mt-4 mb-3">
+			{{ locale.appointments }}
+			<button
+				type="button"
+				class="btn btn-outline-primary btn-sm mb-1"
+				(click)="ShowNewAppointmentModal()"
+			>
 				<fa-icon [icon]="faPlus"></fa-icon>
 			</button>
-			
-			<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4 ms-motion-slideDownIn">
-				<button class="dropdown-item text-color cursor" (click)="ShowNewTodoModal()">{{ locale.newTodo }}</button>
-				<button class="dropdown-item text-color cursor" (click)="ShowTodoListModal()">{{ locale.newTodoList }}</button>
+		</h3>
+
+		<p
+			class="no-items-message font-weight-light"
+			*ngIf="dataService.selectedDayAppointments.length == 0"
+		>
+			{{ locale.noAppointments }}
+		</p>
+
+		<calendo-small-appointment-item
+			class="d-inline-flex"
+			[appointment]="appointment"
+			*ngFor="let appointment of dataService.selectedDayAppointments"
+		></calendo-small-appointment-item>
+	</div>
+
+	<div class="text-color">
+		<h3 class="mt-4 mb-3" ngbDropdown placement="bottom-left">
+			{{ locale.todos }}
+			<button
+				type="button"
+				class="btn btn-outline-primary btn-sm mb-1"
+				ngbDropdownToggle
+			>
+				<fa-icon [icon]="faPlus"></fa-icon>
+			</button>
+
+			<div
+				ngbDropdownMenu
+				class="theme-background-color-tertiary ms-depth-4 ms-motion-slideDownIn"
+			>
+				<button
+					class="dropdown-item text-color cursor"
+					(click)="ShowNewTodoModal()"
+				>
+					{{ locale.newTodo }}
+				</button>
+				<button
+					class="dropdown-item text-color cursor"
+					(click)="ShowTodoListModal()"
+				>
+					{{ locale.newTodoList }}
+				</button>
 			</div>
 		</h3>
-		
-		<p class="font-weight-light no-items-message" *ngIf="dataService.selectedDayTodos.length == 0 && dataService.selectedDayTodoLists.length == 0">
+
+		<p
+			class="font-weight-light no-items-message"
+			*ngIf="
+				dataService.selectedDayTodos.length == 0 &&
+				dataService.selectedDayTodoLists.length == 0
+			"
+		>
 			{{ locale.noTodos }}
 		</p>
-      
-		<calendo-small-todo-item [todo]="todo" (delete)="DeleteTodo(todo)" *ngFor="let todo of dataService.selectedDayTodos"></calendo-small-todo-item>
-		<calendo-small-todo-list-item [todoList]="todoList" *ngFor="let todoList of dataService.selectedDayTodoLists"></calendo-small-todo-list-item>
-   </div>
 
-   <calendo-appointment-modal (save)="CreateAppointment($event)"></calendo-appointment-modal>
-   <calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
-   <calendo-todo-list-modal #todoListModal (save)="CreateTodoList($event)"></calendo-todo-list-modal>
+		<calendo-small-todo-item
+			[todo]="todo"
+			(delete)="DeleteTodo(todo)"
+			*ngFor="let todo of dataService.selectedDayTodos"
+		></calendo-small-todo-item>
+		<calendo-small-todo-list-item
+			[todoList]="todoList"
+			*ngFor="let todoList of dataService.selectedDayTodoLists"
+		></calendo-small-todo-list-item>
+	</div>
+
+	<calendo-appointment-modal
+		(save)="CreateAppointment($event)"
+	></calendo-appointment-modal>
+	<calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
+	<calendo-todo-list-modal
+		#todoListModal
+		(save)="CreateTodoList($event)"
+	></calendo-todo-list-modal>
 </div>

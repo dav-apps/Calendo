@@ -1,6 +1,12 @@
-import { TableObject, Property, GetTableObject, GetAllTableObjects, GetNotification } from 'dav-js'
-import { environment } from '../../environments/environment'
-import { GetAllTodoLists } from './TodoList'
+import {
+	TableObject,
+	Property,
+	GetTableObject,
+	GetAllTableObjects,
+	GetNotification
+} from "dav-js"
+import { environment } from "../../environments/environment"
+import { GetAllTodoLists } from "./TodoList"
 
 export class Todo {
 	public uuid: string
@@ -27,7 +33,15 @@ export class Todo {
 		this.notificationUuid = notificationUuid
 	}
 
-	public static async Create(name: string, completed: boolean = false, time: number = 0, groups: string[] = [], list: string = null, notificationUuid: string = null, uuid: string = null): Promise<Todo> {
+	public static async Create(
+		name: string,
+		completed: boolean = false,
+		time: number = 0,
+		groups: string[] = [],
+		list: string = null,
+		notificationUuid: string = null,
+		uuid: string = null
+	): Promise<Todo> {
 		let todo = new Todo(name, completed, time, groups, list, notificationUuid)
 		todo.uuid = uuid
 		await todo.Save()
@@ -92,14 +106,17 @@ export class Todo {
 
 		let properties: Property[] = [
 			{ name: environment.todoNameKey, value: this.name },
-			{ name: environment.todoCompletedKey, value: this.completed.toString() },
+			{
+				name: environment.todoCompletedKey,
+				value: this.completed.toString()
+			},
 			{ name: environment.todoTimeKey, value: this.time.toString() }
 		]
 
 		if (this.groups.length > 0) {
 			properties.push({
 				name: environment.todoGroupsKey,
-				value: this.groups.join(',')
+				value: this.groups.join(",")
 			})
 		}
 
@@ -172,43 +189,45 @@ export async function GetAllTodoGroups(): Promise<string[]> {
 }
 
 export function ConvertTableObjectToTodo(tableObject: TableObject): Todo {
-	if (!tableObject || tableObject.TableId != environment.todoTableId) return null
+	if (!tableObject || tableObject.TableId != environment.todoTableId)
+		return null
 
 	let name = tableObject.GetPropertyValue(environment.todoNameKey) as string
 
 	let completed: boolean = false
-	let completedString = tableObject.GetPropertyValue(environment.todoCompletedKey) as string
+	let completedString = tableObject.GetPropertyValue(
+		environment.todoCompletedKey
+	) as string
 	if (completedString != null) {
 		completed = completedString.toLowerCase() == "true"
 	}
 
 	let time: number = 0
-	let timeString = tableObject.GetPropertyValue(environment.todoTimeKey) as string
+	let timeString = tableObject.GetPropertyValue(
+		environment.todoTimeKey
+	) as string
 	if (timeString != null) {
 		time = +timeString
 	}
 
 	// Groups
 	let groups: string[] = []
-	let groupsString = tableObject.GetPropertyValue(environment.todoGroupsKey) as string
+	let groupsString = tableObject.GetPropertyValue(
+		environment.todoGroupsKey
+	) as string
 	if (groupsString != null) {
-		groupsString.split(',').forEach(group => {
-			groups.push(group);
+		groupsString.split(",").forEach(group => {
+			groups.push(group)
 		})
 	}
 
 	let list = tableObject.GetPropertyValue(environment.todoListKey) as string
 
-	let notificationUuid = tableObject.GetPropertyValue(environment.notificationUuidKey) as string
+	let notificationUuid = tableObject.GetPropertyValue(
+		environment.notificationUuidKey
+	) as string
 
-	let todo = new Todo(
-		name,
-		completed,
-		time,
-		groups,
-		list,
-		notificationUuid
-	)
-	todo.uuid = tableObject.Uuid;
-	return todo;
+	let todo = new Todo(name, completed, time, groups, list, notificationUuid)
+	todo.uuid = tableObject.Uuid
+	return todo
 }

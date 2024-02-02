@@ -1,10 +1,10 @@
 import { Component, ViewChild, HostListener } from "@angular/core"
-import { DataService } from '../../services/data-service'
-import { enUS } from '../../../locales/locales'
-import { environment } from '../../../environments/environment'
-import { Dav } from 'dav-js'
-import { LogoutModalComponent } from '../../components/logout-modal/logout-modal.component'
-import { faSync, faLock } from '@fortawesome/free-solid-svg-icons'
+import { DataService } from "../../services/data-service"
+import { enUS } from "../../../locales/locales"
+import { environment } from "../../../environments/environment"
+import { Dav } from "dav-js"
+import { LogoutModalComponent } from "../../components/logout-modal/logout-modal.component"
+import { faSync, faLock } from "@fortawesome/free-solid-svg-icons"
 
 @Component({
 	selector: "calendo-account-page",
@@ -23,7 +23,7 @@ export class AccountPageComponent {
 		this.dataService.HideWindowsBackButton()
 	}
 
-	@HostListener('window:resize')
+	@HostListener("window:resize")
 	onResize() {
 		this.width = window.innerWidth
 	}
@@ -41,7 +41,7 @@ export class AccountPageComponent {
 	}
 
 	Logout() {
-		Dav.Logout().then(() => window.location.href = "/account")
+		Dav.Logout().then(() => (window.location.href = "/account"))
 	}
 
 	bytesToGigabytes(bytes: number, rounding: number): string {
@@ -51,6 +51,10 @@ export class AccountPageComponent {
 	}
 
 	getUsedStoragePercentage(): number {
-		return (this.dataService.dav.user.UsedStorage / this.dataService.dav.user.TotalStorage) * 100
+		return (
+			(this.dataService.dav.user.UsedStorage /
+				this.dataService.dav.user.TotalStorage) *
+			100
+		)
 	}
 }

@@ -1,7 +1,15 @@
 <ng-template #createTodoModal let-c="close" let-d="dismiss">
-	<div class="modal-header theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
+	<div
+		class="modal-header theme-background-color-primary"
+		[ngClass]="dataService.darkTheme ? 'border-dark' : ''"
+	>
 		<h4 class="modal-title text-color">{{ locale.header }}</h4>
-		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+		<button
+			type="button"
+			class="close"
+			aria-label="Close"
+			(click)="d('Cross click')"
+		>
 			<span aria-hidden="true" class="text-color">&times;</span>
 		</button>
 	</div>
@@ -10,35 +18,47 @@
 			<!-- Set Date checkbox -->
 			<div class="mb-1">
 				<div class="d-inline-flex">
-					<fab-checkbox (onChange)="ToggleSetDateCheckbox()" [checked]="newTodoSetDateCheckboxChecked"></fab-checkbox>
-					<label class="col-form-label ml-2 text-color cursor ms-fontSize-14" style="margin-top: -8px" (click)="ToggleSetDateCheckbox()">
+					<fab-checkbox
+						(onChange)="ToggleSetDateCheckbox()"
+						[checked]="newTodoSetDateCheckboxChecked"
+					></fab-checkbox>
+					<label
+						class="col-form-label ml-2 text-color cursor ms-fontSize-14"
+						style="margin-top: -8px"
+						(click)="ToggleSetDateCheckbox()"
+					>
 						{{ locale.setDate }}
 					</label>
 				</div>
 			</div>
 
 			<ngb-datepicker
-				[(ngModel)]="newTodoDate" 
-				(navigate)="date = $event.next" 
+				[(ngModel)]="newTodoDate"
+				(navigate)="date = $event.next"
 				[disabled]="!newTodoSetDateCheckboxChecked"
-				style="background-color: white">
-			</ngb-datepicker>
+				style="background-color: white"
+			></ngb-datepicker>
 		</div>
-		<div class="mx-auto mb-4 text-color" style="padding: 0px 60px" [style.display]="showReminderOption ? 'block' : 'none'">
+		<div
+			class="mx-auto mb-4 text-color"
+			style="padding: 0px 60px"
+			[style.display]="showReminderOption ? 'block' : 'none'"
+		>
 			<!-- Reminder checkbox -->
 			<div class="d-inline-flex">
 				<fab-checkbox
-					(onChange)="ToggleReminderCheckbox()" 
+					(onChange)="ToggleReminderCheckbox()"
 					[checked]="newTodoReminderCheckboxChecked"
 					[disabled]="!newTodoSetDateCheckboxChecked"
-					className="ml-4">
-				</fab-checkbox>
+					className="ml-4"
+				></fab-checkbox>
 
 				<label
-					class="col-form-label ml-2 text-color ms-fontSize-14" 
-					[ngClass]="newTodoSetDateCheckboxChecked ? 'cursor' : ''" 
-					style="margin-top: -8px" 
-					(click)="ToggleReminderCheckbox()">
+					class="col-form-label ml-2 text-color ms-fontSize-14"
+					[ngClass]="newTodoSetDateCheckboxChecked ? 'cursor' : ''"
+					style="margin-top: -8px"
+					(click)="ToggleReminderCheckbox()"
+				>
 					{{ locale.reminder }}
 				</label>
 			</div>
@@ -50,16 +70,32 @@
 				[disabled]="!newTodoReminderCheckboxChecked"
 				[(ngModel)]="todoReminderTime"
 				[hourStep]="1"
-				[minuteStep]="15">
-			</ngb-timepicker>
+				[minuteStep]="15"
+			></ngb-timepicker>
 		</div>
 
-      <div class="mx-auto offset-1">
-         <calendo-set-todo-groups (groupsChanged)="todoGroups = $event"></calendo-set-todo-groups>
-			<calendo-set-name [(name)]="newTodoName" (nameChanged)="newTodoName = $event; SetSubmitButtonDisabled()" (submit)="submitButtonDisabled? 0 : c()"></calendo-set-name>
+		<div class="mx-auto offset-1">
+			<calendo-set-todo-groups
+				(groupsChanged)="todoGroups = $event"
+			></calendo-set-todo-groups>
+			<calendo-set-name
+				[(name)]="newTodoName"
+				(nameChanged)="newTodoName = $event; SetSubmitButtonDisabled()"
+				(submit)="submitButtonDisabled ? 0 : c()"
+			></calendo-set-name>
 		</div>
 	</div>
-	<div class="modal-footer theme-background-color-primary" [ngClass]="dataService.darkTheme ? 'border-dark' : ''">
-		<button type="button" class="btn btn-primary" [disabled]="submitButtonDisabled" (click)="c()">{{ locale.save }}</button>
+	<div
+		class="modal-footer theme-background-color-primary"
+		[ngClass]="dataService.darkTheme ? 'border-dark' : ''"
+	>
+		<button
+			type="button"
+			class="btn btn-primary"
+			[disabled]="submitButtonDisabled"
+			(click)="c()"
+		>
+			{{ locale.save }}
+		</button>
 	</div>
 </ng-template>

@@ -1,56 +1,80 @@
 <div class="container-fluid ms-motion-slideUpIn" style="padding-bottom: 56px">
-   <h1 class="text-center mt-3 text-color font-weight-light">
-      {{ locale.header }}
+	<h1 class="text-center mt-3 text-color font-weight-light">
+		{{ locale.header }}
 		<button
 			type="button"
 			class="btn btn-outline-primary btn-sm mb-1"
-			(click)="ShowNewAppointmentModal()">
-
+			(click)="ShowNewAppointmentModal()"
+		>
 			<fa-icon [icon]="faPlus"></fa-icon>
 		</button>
-   </h1>
+	</h1>
 
-	<p class="no-items-message font-weight-light text-center mt-3 text-color" *ngIf="dataService.appointmentDays.length == 0">
+	<p
+		class="no-items-message font-weight-light text-center mt-3 text-color"
+		*ngIf="dataService.appointmentDays.length == 0"
+	>
 		{{ locale.noAppointments }}
 	</p>
-	
+
 	<!-- List of future appointments -->
-   <div class="row">
+	<div class="row">
 		<div
 			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4"
-			*ngFor="let appointmentDay of dataService.appointmentDays">
-
-         <div class="card-body">
-            <h5 class="card-title mb-3 text-color">
-					<span (click)="ShowCalendarDay(appointmentDay.timestamp)">{{ appointmentDay.date }}</span>
+			*ngFor="let appointmentDay of dataService.appointmentDays"
+		>
+			<div class="card-body">
+				<h5 class="card-title mb-3 text-color">
+					<span (click)="ShowCalendarDay(appointmentDay.timestamp)">{{
+						appointmentDay.date
+					}}</span>
 				</h5>
-            <ul class="list-group list-group-flush d-flex flex-column" *ngFor="let appointment of appointmentDay.appointments">
-               <calendo-small-appointment-item class="d-inline-flex" [appointment]="appointment"></calendo-small-appointment-item>
-            </ul>
-         </div>
-      </div>
+				<ul
+					class="list-group list-group-flush d-flex flex-column"
+					*ngFor="let appointment of appointmentDay.appointments"
+				>
+					<calendo-small-appointment-item
+						class="d-inline-flex"
+						[appointment]="appointment"
+					></calendo-small-appointment-item>
+				</ul>
+			</div>
+		</div>
 	</div>
-	
+
 	<!-- List of old appointments -->
-	<h2 class="font-weight-light text-center mt-3 text-color" *ngIf="dataService.oldAppointmentDays.length > 0">
+	<h2
+		class="font-weight-light text-center mt-3 text-color"
+		*ngIf="dataService.oldAppointmentDays.length > 0"
+	>
 		{{ locale.oldAppointments }}
 	</h2>
 
 	<div class="row" *ngIf="dataService.oldAppointmentDays.length > 0">
 		<div
 			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4"
-			*ngFor="let appointmentDay of dataService.oldAppointmentDays">
-		
+			*ngFor="let appointmentDay of dataService.oldAppointmentDays"
+		>
 			<div class="card-body">
 				<h5 class="card-title mb-3 text-color">
-					<span (click)="ShowCalendarDay(appointmentDay.timestamp)">{{ appointmentDay.date }}</span>
+					<span (click)="ShowCalendarDay(appointmentDay.timestamp)">{{
+						appointmentDay.date
+					}}</span>
 				</h5>
-            <ul class="list-group list-group-flush d-flex flex-column" *ngFor="let appointment of appointmentDay.appointments">
-               <calendo-small-appointment-item class="d-inline-flex" [appointment]="appointment"></calendo-small-appointment-item>
-            </ul>
+				<ul
+					class="list-group list-group-flush d-flex flex-column"
+					*ngFor="let appointment of appointmentDay.appointments"
+				>
+					<calendo-small-appointment-item
+						class="d-inline-flex"
+						[appointment]="appointment"
+					></calendo-small-appointment-item>
+				</ul>
 			</div>
 		</div>
 	</div>
-   
-   <calendo-appointment-modal (save)="CreateAppointment($event)"></calendo-appointment-modal>
+
+	<calendo-appointment-modal
+		(save)="CreateAppointment($event)"
+	></calendo-appointment-modal>
 </div>
