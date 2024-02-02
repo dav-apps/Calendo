@@ -1,21 +1,456 @@
-$primary: #007bff;
-
+// Theme colors
 :root {
-	--primary: $primary;
-	--white: #FFFFFF;
+	--black-rgb: 0, 0, 0; /* #000000 */
+	--white-rgb: 255, 255, 255; /* #ffffff */
+
+	/* primary */
+	--dav-color-palette-primary10-rgb: 0, 25, 68; /* #001944 */
+	--dav-color-palette-primary20-rgb: 0, 45, 110; /* #002d6e */
+	--dav-color-palette-primary25-rgb: 0, 55, 131; /* #003783 */
+	--dav-color-palette-primary30-rgb: 0, 66, 154; /* #00429a */
+	--dav-color-palette-primary35-rgb: 25, 78, 167; /* #194ea7 */
+	--dav-color-palette-primary40-rgb: 43, 91, 180; /* #2b5bb4 */
+	--dav-color-palette-primary50-rgb: 72, 116, 207; /* #4874cf */
+	--dav-color-palette-primary60-rgb: 100, 142, 235; /* #648eeb */
+	--dav-color-palette-primary70-rgb: 132, 170, 255; /* #84aaff */
+	--dav-color-palette-primary80-rgb: 176, 198, 255; /* #b0c6ff */
+	--dav-color-palette-primary85-rgb: 196, 212, 255; /* #c4d4ff */
+	--dav-color-palette-primary90-rgb: 217, 226, 255; /* #d9e2ff */
+	--dav-color-palette-primary95-rgb: 237, 240, 255; /* #edf0ff */
+	--dav-color-palette-primary98-rgb: 250, 248, 255; /* #faf8ff */
+	--dav-color-palette-primary99-rgb: 254, 251, 255; /* #fefbff */
+
+	/* secondary */
+	--dav-color-palette-secondary10-rgb: 65, 0, 3; /* #410003 */
+	--dav-color-palette-secondary20-rgb: 104, 0, 8; /* #680008 */
+	--dav-color-palette-secondary25-rgb: 125, 0, 12; /* #7d000c */
+	--dav-color-palette-secondary30-rgb: 147, 0, 16; /* #930010 */
+	--dav-color-palette-secondary35-rgb: 168, 6, 21; /* #a80615 */
+	--dav-color-palette-secondary40-rgb: 186, 26, 32; /* #ba1a20 */
+	--dav-color-palette-secondary50-rgb: 222, 55, 53; /* #de3735 */
+	--dav-color-palette-secondary60-rgb: 255, 84, 78; /* #ff544e */
+	--dav-color-palette-secondary70-rgb: 255, 137, 128; /* #ff8980 */
+	--dav-color-palette-secondary80-rgb: 255, 179, 172; /* #ffb3ac */
+	--dav-color-palette-secondary85-rgb: 255, 199, 194; /* #ffc7c2 */
+	--dav-color-palette-secondary90-rgb: 255, 218, 214; /* #ffdad6 */
+	--dav-color-palette-secondary95-rgb: 255, 237, 235; /* #ffedeb */
+	--dav-color-palette-secondary98-rgb: 255, 248, 247; /* #fff8f7 */
+	--dav-color-palette-secondary99-rgb: 255, 251, 255; /* #fffbff */
+
+	/* tertiary */
+	--dav-color-palette-tertiary10-rgb: 0, 31, 41; /* #001f29 */
+	--dav-color-palette-tertiary20-rgb: 0, 53, 69; /* #003545 */
+	--dav-color-palette-tertiary25-rgb: 0, 65, 84; /* #004154 */
+	--dav-color-palette-tertiary30-rgb: 0, 77, 99; /* #004d63 */
+	--dav-color-palette-tertiary35-rgb: 0, 90, 115; /* #005a73 */
+	--dav-color-palette-tertiary40-rgb: 0, 103, 131; /* #006783 */
+	--dav-color-palette-tertiary50-rgb: 47, 128, 157; /* #2f809d */
+	--dav-color-palette-tertiary60-rgb: 78, 154, 184; /* #4e9ab8 */
+	--dav-color-palette-tertiary70-rgb: 106, 181, 212; /* #6ab5d4 */
+	--dav-color-palette-tertiary80-rgb: 134, 208, 240; /* #86d0f0 */
+	--dav-color-palette-tertiary85-rgb: 148, 222, 255; /* #94deff */
+	--dav-color-palette-tertiary90-rgb: 188, 233, 255; /* #bce9ff */
+	--dav-color-palette-tertiary95-rgb: 223, 244, 255; /* #dff4ff */
+	--dav-color-palette-tertiary98-rgb: 243, 250, 255; /* #f3faff */
+	--dav-color-palette-tertiary99-rgb: 250, 252, 255; /* #fafcff */
+
+	/* neutral */
+	--dav-color-palette-neutral4-rgb: 13, 14, 17; /* #0d0e11 */
+	--dav-color-palette-neutral6-rgb: 18, 19, 22; /* #121316 */
+	--dav-color-palette-neutral10-rgb: 27, 27, 31; /* #1b1b1f */
+	--dav-color-palette-neutral12-rgb: 31, 31, 35; /* #1f1f23 */
+	--dav-color-palette-neutral15-rgb: 37, 38, 41; /* #252629 */
+	--dav-color-palette-neutral17-rgb: 41, 42, 45; /* #292a2d */
+	--dav-color-palette-neutral20-rgb: 48, 48, 52; /* #303034 */
+	--dav-color-palette-neutral22-rgb: 52, 52, 56; /* #343438 */
+	--dav-color-palette-neutral24-rgb: 56, 57, 60; /* #38393c */
+	--dav-color-palette-neutral25-rgb: 59, 59, 63; /* #3b3b3f */
+	--dav-color-palette-neutral30-rgb: 70, 70, 74; /* #46464a */
+	--dav-color-palette-neutral35-rgb: 82, 82, 86; /* #525256 */
+	--dav-color-palette-neutral40-rgb: 94, 94, 98; /* #5e5e62 */
+	--dav-color-palette-neutral50-rgb: 119, 119, 122; /* #77777a */
+	--dav-color-palette-neutral60-rgb: 145, 144, 148; /* #919094 */
+	--dav-color-palette-neutral70-rgb: 172, 171, 175; /* #acabaf */
+	--dav-color-palette-neutral80-rgb: 199, 198, 202; /* #c7c6ca */
+	--dav-color-palette-neutral85-rgb: 213, 212, 216; /* #d5d4d8 */
+	--dav-color-palette-neutral87-rgb: 219, 217, 221; /* #dbd9dd */
+	--dav-color-palette-neutral90-rgb: 227, 226, 230; /* #e3e2e6 */
+	--dav-color-palette-neutral92-rgb: 233, 231, 236; /* #e9e7ec */
+	--dav-color-palette-neutral94-rgb: 239, 237, 241; /* #efedf1 */
+	--dav-color-palette-neutral95-rgb: 242, 240, 244; /* #f2f0f4 */
+	--dav-color-palette-neutral96-rgb: 245, 243, 247; /* #f5f3f7 */
+	--dav-color-palette-neutral98-rgb: 251, 248, 253; /* #fbf8fd */
+	--dav-color-palette-neutral99-rgb: 254, 251, 255; /* #fefbff */
+
+	/* neutral-variant */
+	--dav-color-palette-neutral-variant10-rgb: 25, 27, 35; /* #191b23 */
+	--dav-color-palette-neutral-variant20-rgb: 46, 48, 56; /* #2e3038 */
+	--dav-color-palette-neutral-variant25-rgb: 57, 59, 67; /* #393b43 */
+	--dav-color-palette-neutral-variant30-rgb: 68, 70, 79; /* #44464f */
+	--dav-color-palette-neutral-variant35-rgb: 80, 82, 90; /* #50525a */
+	--dav-color-palette-neutral-variant40-rgb: 92, 94, 103; /* #5c5e67 */
+	--dav-color-palette-neutral-variant50-rgb: 117, 119, 128; /* #757780 */
+	--dav-color-palette-neutral-variant60-rgb: 143, 144, 153; /* #8f9099 */
+	--dav-color-palette-neutral-variant70-rgb: 169, 171, 180; /* #a9abb4 */
+	--dav-color-palette-neutral-variant80-rgb: 197, 198, 208; /* #c5c6d0 */
+	--dav-color-palette-neutral-variant85-rgb: 211, 212, 222; /* #d3d4de */
+	--dav-color-palette-neutral-variant90-rgb: 225, 226, 236; /* #e1e2ec */
+	--dav-color-palette-neutral-variant95-rgb: 239, 240, 250; /* #eff0fa */
+	--dav-color-palette-neutral-variant98-rgb: 250, 248, 255; /* #faf8ff */
+	--dav-color-palette-neutral-variant99-rgb: 254, 251, 255; /* #fefbff */
+
+	/* error */
+	--dav-color-palette-error10-rgb: 65, 0, 2; /* #410002 */
+	--dav-color-palette-error20-rgb: 105, 0, 5; /* #690005 */
+	--dav-color-palette-error25-rgb: 126, 0, 7; /* #7e0007 */
+	--dav-color-palette-error30-rgb: 147, 0, 10; /* #93000a */
+	--dav-color-palette-error35-rgb: 168, 7, 16; /* #a80710 */
+	--dav-color-palette-error40-rgb: 186, 26, 26; /* #ba1a1a */
+	--dav-color-palette-error50-rgb: 222, 55, 48; /* #de3730 */
+	--dav-color-palette-error60-rgb: 255, 84, 73; /* #ff5449 */
+	--dav-color-palette-error70-rgb: 255, 137, 125; /* #ff897d */
+	--dav-color-palette-error80-rgb: 255, 180, 171; /* #ffb4ab */
+	--dav-color-palette-error85-rgb: 255, 199, 192; /* #ffc7c0 */
+	--dav-color-palette-error90-rgb: 255, 218, 214; /* #ffdad6 */
+	--dav-color-palette-error95-rgb: 255, 237, 234; /* #ffedea */
+	--dav-color-palette-error98-rgb: 255, 248, 247; /* #fff8f7 */
+	--dav-color-palette-error99-rgb: 255, 251, 255; /* #fffbff */
+
+	/* Other vars */
+	--windows-title-bar-height: 0px;
+}
+
+body {
+	/* RGB color variables */
+	/* light */
+	--base-rgb: var(--white-rgb);
+	--dav-color-primary-rgb: var(--dav-color-palette-primary40-rgb);
+	--dav-color-primary-container-rgb: var(--dav-color-palette-primary90-rgb);
+	--dav-color-on-primary-rgb: var(--white-rgb);
+	--dav-color-on-primary-container-rgb: var(--dav-color-palette-primary10-rgb);
+	--dav-color-inverse-primary-rgb: var(--dav-color-palette-primary80-rgb);
+	--dav-color-secondary-rgb: var(--dav-color-palette-secondary40-rgb);
+	--dav-color-secondary-container-rgb: var(
+		--dav-color-palette-secondary90-rgb
+	);
+	--dav-color-on-secondary-rgb: var(--white-rgb);
+	--dav-color-on-secondary-container-rgb: var(
+		--dav-color-palette-secondary10-rgb
+	);
+	--dav-color-tertiary-rgb: var(--dav-color-palette-tertiary40-rgb);
+	--dav-color-tertiary-container-rgb: var(--dav-color-palette-tertiary90-rgb);
+	--dav-color-on-tertiary-rgb: var(--white-rgb);
+	--dav-color-on-tertiary-container-rgb: var(
+		--dav-color-palette-tertiary10-rgb
+	);
+	--dav-color-surface-rgb: var(--dav-color-palette-neutral98-rgb);
+	--dav-color-surface-dim-rgb: var(--dav-color-palette-neutral87-rgb);
+	--dav-color-surface-bright-rgb: var(--dav-color-palette-neutral98-rgb);
+	--dav-color-surface-container-lowest-rgb: var(--white-rgb);
+	--dav-color-surface-container-low-rgb: var(
+		--dav-color-palette-neutral96-rgb
+	);
+	--dav-color-surface-container-rgb: var(--dav-color-palette-neutral94-rgb);
+	--dav-color-surface-container-high-rgb: var(
+		--dav-color-palette-neutral92-rgb
+	);
+	--dav-color-surface-container-highest-rgb: var(
+		--dav-color-palette-neutral90-rgb
+	);
+	--dav-color-surface-variant-rgb: var(
+		--dav-color-palette-neutral-variant90-rgb
+	);
+	--dav-color-on-surface-rgb: var(--dav-color-palette-neutral10-rgb);
+	--dav-color-on-surface-variant-rgb: var(
+		--dav-color-palette-neutral-variant30-rgb
+	);
+	--dav-color-inverse-surface-rgb: var(--dav-color-palette-neutral20-rgb);
+	--dav-color-inverse-on-surface-rgb: var(--dav-color-palette-neutral95-rgb);
+	--dav-color-background-rgb: var(--dav-color-palette-primary98-rgb);
+	--dav-color-on-background-rgb: var(--dav-color-palette-neutral10-rgb);
+	--dav-color-error-rgb: var(--dav-color-palette-error40-rgb);
+	--dav-color-error-container-rgb: var(--dav-color-palette-error90-rgb);
+	--dav-color-on-error-rgb: var(--white-rgb);
+	--dav-color-on-error-container-rgb: var(--dav-color-palette-error10-rgb);
+	--dav-color-outline-rgb: var(--dav-color-palette-neutral-variant50-rgb);
+	--dav-color-outline-variant-rgb: var(
+		--dav-color-palette-neutral-variant80-rgb
+	);
+	--dav-color-shadow-rgb: var(--black-rgb);
+	--dav-color-surface-tint-rgb: var(--dav-color-palette-primary40-rgb);
+	--dav-color-scrim-rgb: var(--black-rgb);
+
+	/* light states */
+	--dav-color-primary-hover-rgb: var(--dav-color-palette-primary35-rgb);
+	--dav-color-primary-focus-rgb: var(--dav-color-palette-primary30-rgb);
+	--dav-color-primary-container-hover-rgb: var(
+		--dav-color-palette-primary85-rgb
+	);
+	--dav-color-primary-container-focus-rgb: var(
+		--dav-color-palette-primary80-rgb
+	);
+	--dav-color-secondary-hover-rgb: var(--dav-color-palette-secondary35-rgb);
+	--dav-color-secondary-focus-rgb: var(--dav-color-palette-secondary30-rgb);
+	--dav-color-secondary-container-hover-rgb: var(
+		--dav-color-palette-secondary85-rgb
+	);
+	--dav-color-secondary-container-focus-rgb: var(
+		--dav-color-palette-secondary80-rgb
+	);
+	--dav-color-tertiary-hover-rgb: var(--dav-color-palette-tertiary35-rgb);
+	--dav-color-tertiary-focus-rgb: var(--dav-color-palette-tertiary30-rgb);
+	--dav-color-tertiary-container-hover-rgb: var(
+		--dav-color-palette-tertiary85-rgb
+	);
+	--dav-color-tertiary-container-focus-rgb: var(
+		--dav-color-palette-tertiary80-rgb
+	);
+	--dav-color-error-hover-rgb: var(--dav-color-palette-error35-rgb);
+	--dav-color-error-focus-rgb: var(--dav-color-palette-error30-rgb);
+	--dav-color-error-container-hover-rgb: var(--dav-color-palette-error85-rgb);
+	--dav-color-error-container-focus-rgb: var(--dav-color-palette-error80-rgb);
+	--dav-color-surface-hover-rgb: var(--dav-color-palette-neutral95-rgb);
+	--dav-color-surface-focus-rgb: var(--dav-color-palette-neutral90-rgb);
+	--dav-color-surface-variant-hover-rgb: var(
+		--dav-color-palette-neutral-variant85-rgb
+	);
+	--dav-color-surface-variant-focus-rgb: var(
+		--dav-color-palette-neutral-variant80-rgb
+	);
+
+	/* Non-RGB color variables */
+	/* default */
+	--base: rgb(var(--white-rgb));
+	--dav-color-primary: rgb(var(--dav-color-primary-rgb));
+	--dav-color-primary-container: rgb(var(--dav-color-primary-container-rgb));
+	--dav-color-on-primary: rgb(var(--dav-color-on-primary-rgb));
+	--dav-color-on-primary-container: rgb(
+		var(--dav-color-on-primary-container-rgb)
+	);
+	--dav-color-inverse-primary: rgb(var(--dav-color-inverse-primary-rgb));
+	--dav-color-secondary: rgb(var(--dav-color-secondary-rgb));
+	--dav-color-secondary-container: rgb(
+		var(--dav-color-secondary-container-rgb)
+	);
+	--dav-color-on-secondary: rgb(var(--dav-color-on-secondary-rgb));
+	--dav-color-on-secondary-container: rgb(
+		var(--dav-color-on-secondary-container-rgb)
+	);
+	--dav-color-tertiary: rgb(var(--dav-color-tertiary-rgb));
+	--dav-color-tertiary-container: rgb(var(--dav-color-tertiary-container-rgb));
+	--dav-color-on-tertiary: rgb(var(--dav-color-on-tertiary-rgb));
+	--dav-color-on-tertiary-container: rgb(
+		var(--dav-color-on-tertiary-container-rgb)
+	);
+	--dav-color-surface: rgb(var(--dav-color-surface-rgb));
+	--dav-color-surface-dim: rgb(var(--dav-color-surface-dim-rgb));
+	--dav-color-surface-bright: rgb(var(--dav-color-surface-bright-rgb));
+	--dav-color-surface-container-lowest: rgb(
+		var(--dav-color-surface-container-lowest-rgb)
+	);
+	--dav-color-surface-container-low: rgb(
+		var(--dav-color-surface-container-low-rgb)
+	);
+	--dav-color-surface-container: rgb(var(--dav-color-surface-container-rgb));
+	--dav-color-surface-container-high: rgb(
+		var(--dav-color-surface-container-high-rgb)
+	);
+	--dav-color-surface-container-highest: rgb(
+		var(--dav-color-surface-container-highest-rgb)
+	);
+	--dav-color-surface-variant: rgb(var(--dav-color-surface-variant-rgb));
+	--dav-color-on-surface: rgb(var(--dav-color-on-surface-rgb));
+	--dav-color-on-surface-variant: rgb(var(--dav-color-on-surface-variant-rgb));
+	--dav-color-inverse-surface: rgb(var(--dav-color-inverse-surface-rgb));
+	--dav-color-inverse-on-surface: rgb(var(--dav-color-inverse-on-surface-rgb));
+	--dav-color-background: rgb(var(--dav-color-background-rgb));
+	--dav-color-on-background: rgb(var(--dav-color-on-background-rgb));
+	--dav-color-error: rgb(var(--dav-color-error-rgb));
+	--dav-color-error-container: rgb(var(--dav-color-error-container-rgb));
+	--dav-color-on-error: rgb(var(--dav-color-on-error-rgb));
+	--dav-color-on-error-container: rgb(var(--dav-color-on-error-container-rgb));
+	--dav-color-outline: rgb(var(--dav-color-outline-rgb));
+	--dav-color-outline-variant: rgb(var(--dav-color-outline-variant-rgb));
+	--dav-color-shadow: rgb(var(--dav-color-shadow-rgb));
+	--dav-color-surface-tint: rgb(var(--dav-color-surface-tint-rgb));
+	--dav-color-scrim: rgb(var(--dav-color-scrim-rgb));
+
+	/* default states */
+	--dav-color-primary-hover: rgb(var(--dav-color-primary-hover-rgb));
+	--dav-color-primary-focus: rgb(var(--dav-color-primary-focus-rgb));
+	--dav-color-primary-container-hover: rgb(
+		var(--dav-color-primary-container-hover-rgb)
+	);
+	--dav-color-primary-container-focus: rgb(
+		var(--dav-color-primary-container-focus-rgb)
+	);
+	--dav-color-secondary-hover: rgb(var(--dav-color-secondary-hover-rgb));
+	--dav-color-secondary-focus: rgb(var(--dav-color-secondary-focus-rgb));
+	--dav-color-secondary-container-hover: rgb(
+		var(--dav-color-secondary-container-hover-rgb)
+	);
+	--dav-color-secondary-container-focus: rgb(
+		var(--dav-color-secondary-container-focus-rgb)
+	);
+	--dav-color-tertiary-hover: rgb(var(--dav-color-tertiary-hover-rgb));
+	--dav-color-tertiary-focus: rgb(var(--dav-color-tertiary-focus-rgb));
+	--dav-color-tertiary-container-hover: rgb(
+		var(--dav-color-tertiary-container-hover-rgb)
+	);
+	--dav-color-tertiary-container-focus: rgb(
+		var(--dav-color-tertiary-container-focus-rgb)
+	);
+	--dav-color-error-hover: rgb(var(--dav-color-error-hover-rgb));
+	--dav-color-error-focus: rgb(var(--dav-color-error-focus-rgb));
+	--dav-color-error-container-hover: rgb(
+		var(--dav-color-error-container-hover-rgb)
+	);
+	--dav-color-error-container-focus: rgb(
+		var(--dav-color-error-container-focus-rgb)
+	);
+	--dav-color-surface-hover: rgb(var(--dav-color-surface-hover-rgb));
+	--dav-color-surface-focus: rgb(var(--dav-color-surface-focus-rgb));
+	--dav-color-surface-variant-hover: rgb(
+		var(--dav-color-surface-variant-hover-rgb)
+	);
+	--dav-color-surface-variant-focus: rgb(
+		var(--dav-color-surface-variant-focus-rgb)
+	);
+}
+
+body[theme="dark"] {
+	/* dark */
+	--base-rgb: var(--black-rgb);
+	--dav-color-primary-rgb: var(--dav-color-palette-primary80-rgb);
+	--dav-color-primary-container-rgb: var(--dav-color-palette-primary30-rgb);
+	--dav-color-on-primary-rgb: var(--dav-color-palette-primary20-rgb);
+	--dav-color-on-primary-container-rgb: var(--dav-color-palette-primary90-rgb);
+	--dav-color-inverse-primary-rgb: var(--dav-color-palette-primary40-rgb);
+	--dav-color-secondary-rgb: var(--dav-color-palette-secondary80-rgb);
+	--dav-color-secondary-container-rgb: var(
+		--dav-color-palette-secondary30-rgb
+	);
+	--dav-color-on-secondary-rgb: var(--dav-color-palette-secondary20-rgb);
+	--dav-color-on-secondary-container-rgb: var(
+		--dav-color-palette-secondary90-rgb
+	);
+	--dav-color-tertiary-rgb: var(--dav-color-palette-tertiary80-rgb);
+	--dav-color-tertiary-container-rgb: var(--dav-color-palette-tertiary30-rgb);
+	--dav-color-on-tertiary-rgb: var(--dav-color-palette-tertiary20-rgb);
+	--dav-color-on-tertiary-container-rgb: var(
+		--dav-color-palette-tertiary90-rgb
+	);
+	--dav-color-surface-rgb: var(--dav-color-palette-neutral6-rgb);
+	--dav-color-surface-dim-rgb: var(--dav-color-palette-neutral6-rgb);
+	--dav-color-surface-bright-rgb: var(--dav-color-palette-neutral24-rgb);
+	--dav-color-surface-container-lowest-rgb: var(
+		--dav-color-palette-neutral4-rgb
+	);
+	--dav-color-surface-container-low-rgb: var(
+		--dav-color-palette-neutral10-rgb
+	);
+	--dav-color-surface-container-rgb: var(--dav-color-palette-neutral12-rgb);
+	--dav-color-surface-container-high-rgb: var(
+		--dav-color-palette-neutral17-rgb
+	);
+	--dav-color-surface-container-highest-rgb: var(
+		--dav-color-palette-neutral22-rgb
+	);
+	--dav-color-surface-variant-rgb: var(
+		--dav-color-palette-neutral-variant30-rgb
+	);
+	--dav-color-on-surface-rgb: var(--dav-color-palette-neutral90-rgb);
+	--dav-color-on-surface-variant-rgb: var(
+		--dav-color-palette-neutral-variant80-rgb
+	);
+	--dav-color-inverse-surface-rgb: var(--dav-color-palette-neutral90-rgb);
+	--dav-color-inverse-on-surface-rgb: var(--dav-color-palette-neutral20-rgb);
+	--dav-color-background-rgb: var(--dav-color-palette-neutral6-rgb);
+	--dav-color-on-background-rgb: var(--dav-color-palette-neutral90-rgb);
+	--dav-color-error-rgb: var(--dav-color-palette-error80-rgb);
+	--dav-color-error-container-rgb: var(--dav-color-palette-error30-rgb);
+	--dav-color-on-error-rgb: var(--dav-color-palette-error20-rgb);
+	--dav-color-on-error-container-rgb: var(--dav-color-palette-error90-rgb);
+	--dav-color-outline-rgb: var(--dav-color-palette-neutral-variant60-rgb);
+	--dav-color-outline-variant-rgb: var(
+		--dav-color-palette-neutral-variant30-rgb
+	);
+	--dav-color-shadow-rgb: var(--black-rgb);
+	--dav-color-surface-tint-rgb: var(--dav-color-palette-primary80-rgb);
+	--dav-color-scrim-rgb: var(--black-rgb);
+
+	/* dark states */
+	--dav-color-primary-hover-rgb: var(--dav-color-palette-primary85-rgb);
+	--dav-color-primary-focus-rgb: var(--dav-color-palette-primary90-rgb);
+	--dav-color-primary-container-hover-rgb: var(
+		--dav-color-palette-primary35-rgb
+	);
+	--dav-color-primary-container-focus-rgb: var(
+		--dav-color-palette-primary40-rgb
+	);
+	--dav-color-secondary-hover-rgb: var(--dav-color-palette-secondary85-rgb);
+	--dav-color-secondary-focus-rgb: var(--dav-color-palette-secondary90-rgb);
+	--dav-color-secondary-container-hover-rgb: var(
+		--dav-color-palette-secondary35-rgb
+	);
+	--dav-color-secondary-container-focus-rgb: var(
+		--dav-color-palette-secondary40-rgb
+	);
+	--dav-color-tertiary-hover-rgb: var(--dav-color-palette-tertiary85-rgb);
+	--dav-color-tertiary-focus-rgb: var(--dav-color-palette-tertiary90-rgb);
+	--dav-color-tertiary-container-hover-rgb: var(
+		--dav-color-palette-tertiary35-rgb
+	);
+	--dav-color-tertiary-container-focus-rgb: var(
+		--dav-color-palette-tertiary40-rgb
+	);
+	--dav-color-error-hover-rgb: var(--dav-color-palette-error85-rgb);
+	--dav-color-error-focus-rgb: var(--dav-color-palette-error90-rgb);
+	--dav-color-error-container-hover-rgb: var(--dav-color-palette-error35-rgb);
+	--dav-color-error-container-focus-rgb: var(--dav-color-palette-error40-rgb);
+	--dav-color-surface-hover-rgb: var(--dav-color-palette-neutral10-rgb);
+	--dav-color-surface-focus-rgb: var(--dav-color-palette-neutral15-rgb);
+	--dav-color-surface-variant-hover-rgb: var(
+		--dav-color-palette-neutral-variant35-rgb
+	);
+	--dav-color-surface-variant-focus-rgb: var(
+		--dav-color-palette-neutral-variant40-rgb
+	);
+}
+
+body {
+	height: 100vh;
+	margin: 0;
+	font-family: Roboto, Arial, sans-serif;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-touch-callout: none;
+	background-color: var(--dav-color-surface);
+	overflow: hidden;
+}
+
+// OLD
+:root {
+	--primary: #007bff;
+	--white: #ffffff;
 	--black: #000000;
-	--light-theme-color-primary: #FFFFFF;
-	--light-theme-color-secondary: #FFFFFF;
-	--light-theme-color-tertiary: #FFFFFF;
+	--light-theme-color-primary: #ffffff;
+	--light-theme-color-secondary: #ffffff;
+	--light-theme-color-tertiary: #ffffff;
 	--light-theme-hover-background-color: #f8f9fa;
 	--dark-theme-color-primary: #15202b;
 	--dark-theme-color-secondary: #1c2938;
 	--dark-theme-color-tertiary: #3d4753;
 	--dark-theme-hover-background-color: #232e3c;
 
-	--theme-color-primary: var(--light-theme-color-primary);				// Main background color
-	--theme-color-secondary: var(--light-theme-color-secondary);		// Background color for specific elements
-	--theme-color-tertiary: var(--light-theme-color-tertiary);			// Background color for dropdown menus
+	--theme-color-primary: var(
+		--light-theme-color-primary
+	); // Main background color
+	--theme-color-secondary: var(
+		--light-theme-color-secondary
+	); // Background color for specific elements
+	--theme-color-tertiary: var(
+		--light-theme-color-tertiary
+	); // Background color for dropdown menus
 	--hover-background-color: var(--light-theme-hover-background-color);
 	--text-color: var(--black);
 }
@@ -28,113 +463,166 @@ $primary: #007bff;
 	--text-color: var(--white);
 }
 
-body{
-   background-color: $primary;
-	-webkit-tap-highlight-color: transparent;
-	-webkit-touch-callout: none;
-}
-
-#root{
+#root {
 	background-color: var(--theme-color-primary);
 	min-height: 100vh;
 	height: fit-content;
-	overflow: hidden
+	overflow: hidden;
 }
 
-.theme-background-color-primary{
+.theme-background-color-primary {
 	background-color: var(--theme-color-primary);
 }
 
-.theme-background-color-secondary{
+.theme-background-color-secondary {
 	background-color: var(--theme-color-secondary);
 }
 
-.theme-background-color-tertiary{
+.theme-background-color-tertiary {
 	background-color: var(--theme-color-tertiary);
 }
 
-.theme-color-primary{
+.theme-color-primary {
 	color: var(--theme-color-primary);
 }
 
-.theme-color-secondary{
+.theme-color-secondary {
 	color: var(--theme-color-secondary);
 }
 
-.theme-color-tertiary{
+.theme-color-tertiary {
 	color: var(--theme-color-tertiary);
 }
 
-.theme-border-color-primary{
-   border-color: var(--theme-color-primary);
+.theme-border-color-primary {
+	border-color: var(--theme-color-primary);
 }
 
-.theme-border-color-secondary{
-   border-color: var(--theme-color-secondary);
+.theme-border-color-secondary {
+	border-color: var(--theme-color-secondary);
 }
 
-.theme-border-color-tertiary{
-   border-color: var(--theme-color-tertiary);
+.theme-border-color-tertiary {
+	border-color: var(--theme-color-tertiary);
 }
 
-.dropdown-item{
-   user-select: none;
+.dropdown-item {
+	user-select: none;
 }
 
-.dropdown-item:hover{
+.dropdown-item:hover {
 	background-color: var(--hover-background-color);
 	color: var(--text-color);
 }
 
-.dropdown-toggle::after{
-	display:none;
+.dropdown-toggle::after {
+	display: none;
 }
 
-.dropup .dropdown-toggle::after{
-	display:none;
+.dropup .dropdown-toggle::after {
+	display: none;
 }
 
-.text-color{
+.text-color {
 	color: var(--text-color);
 }
 
-.cursor:hover{
-   cursor: pointer;
+.hidden {
+	display: none;
 }
 
-.hidden{
-   display: none;
-}
-
-.icon-button:hover{
+.icon-button:hover {
 	background-color: var(--hover-background-color);
 	color: var(--text-color);
 	border-color: var(--hover-background-color);
 }
+// OLD END
 
 .strikethrough {
-   position: relative;
+	position: relative;
 }
 
 .strikethrough:before {
-   position: absolute;
-   content: "";
-   left: 0;
-   top: 50%;
-   right: 0;
-   border-top: 1px solid;
-   border-color: inherit;
- 
-	-webkit-transform:rotate(-5deg);
-   -moz-transform:rotate(-5deg);
-   -ms-transform:rotate(-5deg);
-   -o-transform:rotate(-5deg);
-   transform:rotate(-5deg);
+	position: absolute;
+	content: "";
+	left: 0;
+	top: 50%;
+	right: 0;
+	border-top: 1px solid;
+	border-color: inherit;
+
+	-webkit-transform: rotate(-5deg);
+	-moz-transform: rotate(-5deg);
+	-ms-transform: rotate(-5deg);
+	-o-transform: rotate(-5deg);
+	transform: rotate(-5deg);
 }
 
-.no-items-message{
+.no-items-message {
 	font-size: 18px;
-	font-family: 'Segoe UI', Roboto, sans-serif;
+	font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+// Custom Acrylic styles
+$saturation: 80%;
+$blurring: 10px;
+$alpha: 0.4;
+
+.acrylic {
+	position: relative;
+	z-index: 1;
+	color: #1d1d1d;
+}
+
+.acrylic::before {
+	background: rgba(255, 255, 255, $alpha);
+	background-image: url("data:image/png;base64,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"),
+		linear-gradient(
+			to bottom,
+			rgba(255, 255, 255, $alpha) 0%,
+			rgba(255, 255, 255, $alpha) 100%
+		);
+	bottom: 0;
+	content: " ";
+	display: block;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	transform: translate(0);
+	width: 100%;
+	z-index: -1;
+}
+
+@supports (-webkit-backdrop-filter: blur($blurring) saturate($saturation)) or
+	(backdrop-filter: blur($blurring) saturate($saturation)) {
+	.acrylic::before {
+		background-color: rgba(255, 255, 255, $alpha);
+		-webkit-backdrop-filter: blur($blurring) saturate($saturation);
+		backdrop-filter: blur($blurring) saturate($saturation);
+	}
+}
+
+[theme="dark"] {
+	.acrylic::before {
+		background: rgba(0, 0, 0, $alpha);
+		background-image: url("data:image/png;base64,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"),
+			linear-gradient(
+				to bottom,
+				rgba(0, 0, 0, $alpha) 0%,
+				rgba(0, 0, 0, $alpha) 100%
+			);
+	}
+
+	@supports (-webkit-backdrop-filter: blur($blurring) saturate($saturation)) or
+		(backdrop-filter: blur($blurring) saturate($saturation)) {
+		.acrylic::before {
+			background-color: rgba(0, 0, 0, $alpha);
+			-webkit-backdrop-filter: blur($blurring) saturate($saturation);
+			backdrop-filter: blur($blurring) saturate($saturation);
+		}
+	}
 }
 
 // Dragular css
