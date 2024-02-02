@@ -1,6 +1,7 @@
 import { Component, HostListener } from "@angular/core"
 import { Router, NavigationStart } from "@angular/router"
 import { Dav, Environment, TableObject } from "dav-js"
+import * as DavUIComponents from "dav-ui-components"
 import { environment } from "../environments/environment"
 import { enUS } from "../locales/locales"
 import { DataService } from "./services/data-service"
@@ -22,6 +23,7 @@ export class AppComponent {
 
 	constructor(public dataService: DataService, private router: Router) {
 		this.locale = this.dataService.GetLocale().navbar
+		DavUIComponents.setLocale(this.dataService.locale)
 
 		this.router.events.forEach(data => {
 			if (data instanceof NavigationStart) {

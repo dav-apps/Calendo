@@ -3,6 +3,7 @@ import { Todo, GetAllTodos } from "../models/Todo"
 import { Appointment, GetAllAppointments } from "../models/Appointment"
 import { TodoList, GetAllTodoLists, GetTodoList } from "../models/TodoList"
 import { Dav } from "dav-js"
+import * as DavUIComponents from "dav-ui-components"
 import * as moment from "moment"
 import * as localforage from "localforage"
 import { environment } from "../../environments/environment.prod"
@@ -393,6 +394,12 @@ export class DataService {
 		document.body.setAttribute(
 			environment.themeKey,
 			this.darkTheme ? environment.darkThemeKey : environment.lightThemeKey
+		)
+
+		DavUIComponents.setTheme(
+			this.darkTheme
+				? DavUIComponents.Theme.dark
+				: DavUIComponents.Theme.light
 		)
 	}
 
