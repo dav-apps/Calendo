@@ -84,10 +84,7 @@ import { environment } from "../environments/environment"
 				{ path: "account", component: AccountPageComponent },
 				{ path: "settings", component: SettingsPageComponent }
 			],
-			{
-				useHash: false,
-				relativeLinkResolution: "legacy"
-			}
+			{}
 		),
 		NgbModule,
 		FontAwesomeModule,
