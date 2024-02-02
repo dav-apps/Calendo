@@ -10,7 +10,7 @@ import { TodoList } from "../../models/TodoList"
 import { enUS } from "../../../locales/locales"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { TodoListModalComponent } from "src/app/components/todo-list-modal/todo-list-modal.component"
-import { MatSnackBar } from "@angular/material/snack-bar"
+import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar"
 import { Location } from "@angular/common"
 
 @Component({

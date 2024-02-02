@@ -3,7 +3,7 @@ import { SwUpdate } from "@angular/service-worker"
 import { DataService } from "../../services/data-service"
 import { environment } from "../../../environments/environment"
 import { enUS } from "../../../locales/locales"
-import { MatRadioChange } from "@angular/material/radio"
+import { MatLegacyRadioChange as MatRadioChange } from "@angular/material/legacy-radio"
 
 const dateKey = "date"
 const groupKey = "group"
