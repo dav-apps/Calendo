@@ -1,15 +1,59 @@
+<div class="navbar acrylic">
+	<a class="navbar-header" routerLink="/">
+		<img src="/assets/icons/icon-72x72.png" width="60" height="60" />
+		<span>Calendo</span>
+	</a>
+
+	<div class="navbar-tab-bar-container" *ngIf="!dataService.isMobile">
+		<dav-tab-bar>
+			<dav-tab-bar-item
+				[active]="startTabActive"
+				(click)="navigateToStartPage()"
+			>
+				{{ locale.start }}
+			</dav-tab-bar-item>
+
+			<dav-tab-bar-item
+				[active]="calendarTabActive"
+				(click)="navigateToCalendarPage()"
+			>
+				{{ locale.calendar }}
+			</dav-tab-bar-item>
+
+			<dav-tab-bar-item
+				[active]="todosTabActive"
+				(click)="navigateToTodosPage()"
+			>
+				{{ locale.todos }}
+			</dav-tab-bar-item>
+
+			<dav-tab-bar-item
+				[active]="appointmentsTabActive"
+				(click)="navigateToAppointmentsPage()"
+			>
+				{{ locale.appointments }}
+			</dav-tab-bar-item>
+		</dav-tab-bar>
+	</div>
+
+	<div class="navbar-spacer"></div>
+
+	<div class="navbar-icon-buttons-container"></div>
+</div>
+
+<!--
 <nav
 	class="navbar navbar-expand-md navbar-dark bg-primary default-font mat-elevation-z10"
 	id="calendo-navbar"
 >
-	<a class="navbar-brand ml-3" routerLink="/" style="font-size: 25px"
-		>Calendo</a
-	>
+	<a class="navbar-brand ml-3" routerLink="/" style="font-size: 25px">
+		Calendo
+	</a>
 
 	<div
 		class="collapse navbar-collapse"
 		id="navbar-items"
-		[ngClass]="dataService.smallWindow ? '' : 'd-flex justify-content-center'"
+		[ngClass]="dataService.isMobile ? '' : 'd-flex justify-content-center'"
 		style="font-size: 20px"
 	>
 		<ul class="navbar-nav text-white">
@@ -48,15 +92,16 @@
 
 	<calendo-user-menu style="margin-right: -6px"></calendo-user-menu>
 </nav>
+-->
 
-<div [style.width.px]="windowWidth - 15" class="default-font">
+<div class="content-container">
 	<router-outlet></router-outlet>
 </div>
 
 <div
 	id="bottom-navigation-bar"
 	class="bg-primary d-flex flex-row"
-	*ngIf="dataService.smallWindow"
+	*ngIf="dataService.isMobile"
 >
 	<button
 		mat-flat-button

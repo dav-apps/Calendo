@@ -63,7 +63,7 @@ export class DataService {
 
 	//#region All pages
 	sortTodosByDate: boolean = true
-	smallWindow: boolean = false
+	isMobile: boolean = false
 	darkTheme: boolean = false
 	windowsUiSettings = null
 	isLoadingAllAppointments: boolean = false // If true, LoadAllAppointments is currently running
@@ -1255,7 +1255,7 @@ export class DataService {
 	 * If the user is on mobile, moves all snackbars above the bottom toolbar
 	 */
 	AdaptSnackbarPosition() {
-		if (this.smallWindow) {
+		if (this.isMobile) {
 			setTimeout(() => {
 				let snackbarContainerList = document.getElementsByTagName(
 					"snack-bar-container"

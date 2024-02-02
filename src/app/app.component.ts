@@ -9,7 +9,7 @@ import { ConvertTableObjectToAppointment } from "./models/Appointment"
 import { ConvertTableObjectToTodo } from "./models/Todo"
 import { TodoList, ConvertTableObjectToTodoList } from "./models/TodoList"
 
-const smallWindowMaxSize = 768
+const mobileMaxSize = 768
 
 @Component({
 	selector: "app-root",
@@ -20,6 +20,10 @@ export class AppComponent {
 	locale = enUS.navbar
 	windowWidth: number = 500
 	currentUrl: string = "/"
+	startTabActive: boolean = false
+	calendarTabActive: boolean = false
+	todosTabActive: boolean = false
+	appointmentsTabActive: boolean = false
 
 	constructor(public dataService: DataService, private router: Router) {
 		this.locale = this.dataService.GetLocale().navbar
@@ -30,6 +34,11 @@ export class AppComponent {
 				// Update the updated todo lists
 				this.dataService.UpdateUpdatedTodoLists()
 				this.currentUrl = data.url
+
+				this.startTabActive = this.currentUrl == "/"
+				this.calendarTabActive = this.currentUrl.startsWith("/calendar")
+				this.todosTabActive = this.currentUrl == "/todos"
+				this.appointmentsTabActive = this.currentUrl == "/appointments"
 			}
 		})
 	}
@@ -71,8 +80,24 @@ export class AppComponent {
 
 	@HostListener("window:resize")
 	setSize() {
-		this.dataService.smallWindow = window.innerWidth < smallWindowMaxSize
+		this.dataService.isMobile = window.innerWidth < mobileMaxSize
 		this.windowWidth = window.innerWidth
+	}
+
+	navigateToStartPage() {
+		this.router.navigate(["/"])
+	}
+
+	navigateToCalendarPage() {
+		this.router.navigate(["/calendar"])
+	}
+
+	navigateToTodosPage() {
+		this.router.navigate(["/todos"])
+	}
+
+	navigateToAppointmentsPage() {
+		this.router.navigate(["/appointments"])
 	}
 
 	//#region dav-js callback functions
