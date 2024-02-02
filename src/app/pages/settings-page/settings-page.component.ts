@@ -4,7 +4,6 @@ import { DataService } from "../../services/data-service"
 import { environment } from "../../../environments/environment"
 import { enUS } from "../../../locales/locales"
 import { MatRadioChange } from "@angular/material/radio"
-import { IDropdownOption } from "office-ui-fabric-react"
 
 const dateKey = "date"
 const groupKey = "group"
@@ -27,10 +26,7 @@ export class SettingsPageComponent {
 	selectedTheme: string
 	updateAvailable: boolean = false
 
-	constructor(
-		public dataService: DataService,
-		private swUpdate: SwUpdate
-	) {
+	constructor(public dataService: DataService, private swUpdate: SwUpdate) {
 		this.locale = this.dataService.GetLocale().settingsPage
 		this.isWindows = window["Windows"] != null
 		this.dataService.HideWindowsBackButton()
@@ -56,7 +52,7 @@ export class SettingsPageComponent {
 
 	onSortTodosSelectChanged(event: {
 		ev: MouseEvent
-		option: IDropdownOption
+		option: any
 		index: number
 	}) {
 		this.sortTodosSelectedKey = event.index == 0 ? dateKey : groupKey

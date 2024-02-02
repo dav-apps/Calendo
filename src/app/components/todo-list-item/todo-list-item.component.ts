@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core"
 import { Router } from "@angular/router"
 import { TodoList } from "src/app/models/TodoList"
-import { IIconProps } from "office-ui-fabric-react"
 import { DataService } from "../../services/data-service"
 
 @Component({
@@ -13,7 +12,7 @@ export class TodoListItemComponent {
 	todoList: TodoList = new TodoList()
 	@Output()
 	update = new EventEmitter()
-	menuButtonIconProps: IIconProps = {
+	menuButtonIconProps = {
 		iconName: "More",
 		style: {
 			fontSize: 16,
@@ -21,10 +20,7 @@ export class TodoListItemComponent {
 		}
 	}
 
-	constructor(
-		public dataService: DataService,
-		private router: Router
-	) {}
+	constructor(public dataService: DataService, private router: Router) {}
 
 	ShowDetails() {
 		this.router.navigate(["todolist", this.todoList.uuid])

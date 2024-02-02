@@ -15,7 +15,7 @@
 				[selectedKey]="sortTodosSelectedKey"
 				(onChange)="onSortTodosSelectChanged($event)"
 			>
-				<options>
+				<fab-options>
 					<fab-dropdown-option
 						optionKey="date"
 						[text]="locale.sortTodosByDate"
@@ -24,7 +24,7 @@
 						optionKey="group"
 						[text]="locale.sortTodosByGroup"
 					></fab-dropdown-option>
-				</options>
+				</fab-options>
 			</fab-dropdown>
 		</div>
 

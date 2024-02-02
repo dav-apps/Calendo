@@ -6,7 +6,6 @@ import { enUS } from "../locales/locales"
 import { DataService } from "./services/data-service"
 import { ConvertTableObjectToAppointment } from "./models/Appointment"
 import { ConvertTableObjectToTodo } from "./models/Todo"
-import { initializeIcons } from "office-ui-fabric-react/lib/Icons"
 import { TodoList, ConvertTableObjectToTodoList } from "./models/TodoList"
 
 const smallWindowMaxSize = 768
@@ -23,7 +22,6 @@ export class AppComponent {
 
 	constructor(public dataService: DataService, private router: Router) {
 		this.locale = this.dataService.GetLocale().navbar
-		initializeIcons()
 
 		this.router.events.forEach(data => {
 			if (data instanceof NavigationStart) {

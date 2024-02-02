@@ -6,7 +6,6 @@ import {
 	EventEmitter
 } from "@angular/core"
 import { NgbModal, NgbDateStruct } from "@ng-bootstrap/ng-bootstrap"
-import { IDropdownOption } from "office-ui-fabric-react"
 import * as moment from "moment"
 import { Notification, GetNotification, SetupWebPushSubscription } from "dav-js"
 import { Appointment, GetAppointment } from "src/app/models/Appointment"
@@ -47,7 +46,7 @@ export class AppointmentModalComponent {
 	reminderCheckboxChecked: boolean = true
 	notificationTime: number = 3600 // Saves the time of the notification in seconds before the start of the appointment
 	showReminderOption: boolean = true
-	reminderOptions: IDropdownOption[] = []
+	reminderOptions: any[] = []
 	modalVisible: boolean = false
 	submitButtonDisabled: boolean = true
 
@@ -315,8 +314,7 @@ export class AppointmentModalComponent {
 			(this.appointmentAllDayCheckboxChecked
 				? true
 				: this.appointmentStartTime.hour < this.appointmentEndTime.hour ||
-					(this.appointmentStartTime.hour ==
-						this.appointmentEndTime.hour &&
+				  (this.appointmentStartTime.hour == this.appointmentEndTime.hour &&
 						this.appointmentStartTime.minute <=
 							this.appointmentEndTime.minute))
 		)
@@ -356,7 +354,7 @@ export class AppointmentModalComponent {
 	ReminderDropdownChanged(event: {
 		ev: MouseEvent
 		index: number
-		option: IDropdownOption
+		option: any
 	}) {
 		this.SetReminderSelection(event.option.key as number)
 	}

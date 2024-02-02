@@ -1,17 +1,10 @@
-import { AngularReactBrowserModule } from "@angular-react/core"
+import { BrowserModule } from "@angular/platform-browser"
 import { FormsModule } from "@angular/forms"
-import { NgModule } from "@angular/core"
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core"
 import { RouterModule } from "@angular/router"
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap"
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome"
 import { ServiceWorkerModule } from "@angular/service-worker"
-import {
-	FabCheckboxModule,
-	FabButtonModule,
-	FabDropdownModule,
-	FabTextFieldModule,
-	FabIconModule
-} from "@angular-react/fabric"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { MatButtonModule } from "@angular/material/button"
 import { MatSnackBarModule } from "@angular/material/snack-bar"
@@ -78,7 +71,7 @@ import { environment } from "../environments/environment"
 		TodoListTreeComponent
 	],
 	imports: [
-		AngularReactBrowserModule,
+		BrowserModule,
 		FormsModule,
 		RouterModule.forRoot(
 			[
@@ -100,11 +93,6 @@ import { environment } from "../environments/environment"
 		ServiceWorkerModule.register("/sw.js", {
 			enabled: environment.production
 		}),
-		FabCheckboxModule,
-		FabButtonModule,
-		FabDropdownModule,
-		FabTextFieldModule,
-		FabIconModule,
 		BrowserAnimationsModule,
 		MatButtonModule,
 		MatSnackBarModule,
@@ -113,6 +101,7 @@ import { environment } from "../environments/environment"
 		DragulaModule.forRoot()
 	],
 	providers: [DataService],
-	bootstrap: [AppComponent]
+	bootstrap: [AppComponent],
+	schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

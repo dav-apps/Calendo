@@ -9,7 +9,6 @@ import { Router } from "@angular/router"
 import { MatTreeNestedDataSource } from "@angular/material/tree"
 import { NestedTreeControl } from "@angular/cdk/tree"
 import { BehaviorSubject, Subscription } from "rxjs"
-import { IIconStyles } from "office-ui-fabric-react"
 import { Todo, GetTodo } from "../../models/Todo"
 import { TodoList, GetTodoList } from "../../models/TodoList"
 import { generateUuid } from "dav-js"
@@ -57,13 +56,13 @@ export class TodoListTreeComponent {
 	todoItems: TodoNode[] = []
 	inputValue: string = ""
 	dropEventFired: boolean = false
-	chevronIconStyles: IIconStyles = {
+	chevronIconStyles = {
 		root: {
 			fontSize: 14,
 			marginBottom: 20
 		}
 	}
-	checkIconStyles: IIconStyles = {
+	checkIconStyles = {
 		root: {
 			fontSize: 15,
 			color: "#1da520"

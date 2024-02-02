@@ -11,7 +11,6 @@ import { enUS } from "../../../locales/locales"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { TodoListModalComponent } from "src/app/components/todo-list-modal/todo-list-modal.component"
 import { MatSnackBar } from "@angular/material/snack-bar"
-import { IIconStyles } from "office-ui-fabric-react"
 import { Location } from "@angular/common"
 
 @Component({
@@ -29,7 +28,7 @@ export class CalendarDayPageComponent {
 	@ViewChild("todoListModal", { static: true })
 	private todoListModal: TodoListModalComponent
 	date: moment.Moment = moment()
-	backButtonIconStyles: IIconStyles = {
+	backButtonIconStyles = {
 		root: {
 			fontSize: 19
 		}

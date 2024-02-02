@@ -1,7 +1,6 @@
 import { Component, Input } from "@angular/core"
 import { Router } from "@angular/router"
 import { DataService } from "src/app/services/data-service"
-import { IIconStyles } from "office-ui-fabric-react"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 
@@ -15,17 +14,14 @@ export class SmallTodoListItemComponent {
 	totalTodos: number = 0
 	completedTodos: number = 0
 	todoTreeCopy: TodoElement
-	iconStyles: IIconStyles = {
+	iconStyles = {
 		root: {
 			fontSize: 15,
 			color: "#1da520"
 		}
 	}
 
-	constructor(
-		public dataService: DataService,
-		private router: Router
-	) {}
+	constructor(public dataService: DataService, private router: Router) {}
 
 	ngOnInit() {
 		this.LoadTree()
