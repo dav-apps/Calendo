@@ -10,7 +10,7 @@ import { TodoListModalComponent } from "../../components/todo-list-modal/todo-li
 import { enUS } from "../../../locales/locales"
 import { Appointment } from "src/app/models/Appointment"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar"
+import { MatSnackBar } from "@angular/material/snack-bar"
 
 @Component({
 	selector: "calendo-start-page",

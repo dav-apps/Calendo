@@ -7,7 +7,7 @@ import { TodoListModalComponent } from "../../components/todo-list-modal/todo-li
 import { enUS } from "../../../locales/locales"
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons"
 import { TodoList } from "src/app/models/TodoList"
-import { MatLegacySnackBar as MatSnackBar } from "@angular/material/legacy-snack-bar"
+import { MatSnackBar } from "@angular/material/snack-bar"
 
 @Component({
 	selector: "calendo-todos-page",
