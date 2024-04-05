@@ -73,19 +73,16 @@ import { environment } from "../environments/environment"
 	imports: [
 		BrowserModule,
 		FormsModule,
-		RouterModule.forRoot(
-			[
-				{ path: "", component: StartPageComponent },
-				{ path: "calendar", component: CalendarPageComponent },
-				{ path: "calendar/day/:time", component: CalendarDayPageComponent },
-				{ path: "todos", component: TodosPageComponent },
-				{ path: "appointments", component: AppointmentsPageComponent },
-				{ path: "todolist/:uuid", component: TodoListPageComponent },
-				{ path: "account", component: AccountPageComponent },
-				{ path: "settings", component: SettingsPageComponent }
-			],
-			{}
-		),
+		RouterModule.forRoot([
+			{ path: "", component: StartPageComponent },
+			{ path: "calendar", component: CalendarPageComponent },
+			{ path: "calendar/day/:time", component: CalendarDayPageComponent },
+			{ path: "todos", component: TodosPageComponent },
+			{ path: "appointments", component: AppointmentsPageComponent },
+			{ path: "todolist/:uuid", component: TodoListPageComponent },
+			{ path: "account", component: AccountPageComponent },
+			{ path: "settings", component: SettingsPageComponent }
+		]),
 		NgbModule,
 		FontAwesomeModule,
 		ServiceWorkerModule.register("/sw.js", {

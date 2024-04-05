@@ -37,7 +37,7 @@
     "jquery": "^3.5.1",
     "localforage": "^1.7.2",
     "moment": "2.24.0",
-    "ng2-dragula": "^2.1.1",
+    "ng2-dragula": "^5.0.1",
     "platform": "^1.3.5",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.0",
