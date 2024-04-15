@@ -41,6 +41,7 @@ import { environment } from "../environments/environment"
 
 // Services
 import { DataService } from "./services/data-service"
+import { LocalizationService } from "./services/localization-service"
 import { SettingsService } from "./services/settings-service"
 
 @NgModule({
@@ -96,7 +97,7 @@ import { SettingsService } from "./services/settings-service"
 		MatTreeModule,
 		DragulaModule.forRoot()
 	],
-	providers: [DataService, SettingsService],
+	providers: [DataService, LocalizationService, SettingsService],
 	bootstrap: [AppComponent],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
