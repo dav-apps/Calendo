@@ -1,0 +1,21 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	padding: 12px;
+}
+
+dav-header {
+	margin-bottom: 32px;
+}
+
+.settings-container {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.setting {
+	width: 80%;
+	max-width: 600px;
+	margin: 0 auto;
+}

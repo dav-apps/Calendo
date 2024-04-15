@@ -1,9 +1,15 @@
 import { Component } from "@angular/core"
 import { SwUpdate } from "@angular/service-worker"
-import { DataService } from "../../services/data-service"
-import { environment } from "../../../environments/environment"
-import { enUS } from "../../../locales/locales"
-import { MatRadioChange } from "@angular/material/radio"
+import { DropdownOption, DropdownOptionType } from "dav-ui-components"
+import { DataService } from "src/app/services/data-service"
+import {
+	version,
+	systemThemeKey,
+	lightThemeKey,
+	darkThemeKey
+} from "src/app/constants"
+import { enUS } from "src/locales/locales"
+import { SettingsService } from "src/app/services/settings-service"
 
 const dateKey = "date"
 const groupKey = "group"
@@ -14,21 +20,35 @@ const groupKey = "group"
 })
 export class SettingsPageComponent {
 	locale = enUS.settingsPage
-	version: string = environment.version
+	version = version
 	year = new Date().getFullYear()
 	sortTodosSelectedKey: string = groupKey
-	isWindows: boolean = false
-	themeKeys: string[] = [
-		environment.lightThemeKey,
-		environment.darkThemeKey,
-		environment.systemThemeKey
-	]
 	selectedTheme: string
 	updateAvailable: boolean = false
+	themeDropdownOptions: DropdownOption[] = [
+		{
+			key: systemThemeKey,
+			value: this.locale.systemTheme,
+			type: DropdownOptionType.option
+		},
+		{
+			key: lightThemeKey,
+			value: this.locale.lightTheme,
+			type: DropdownOptionType.option
+		},
+		{
+			key: darkThemeKey,
+			value: this.locale.darkTheme,
+			type: DropdownOptionType.option
+		}
+	]
 
-	constructor(public dataService: DataService, private swUpdate: SwUpdate) {
+	constructor(
+		public dataService: DataService,
+		private settingsService: SettingsService,
+		private swUpdate: SwUpdate
+	) {
 		this.locale = this.dataService.GetLocale().settingsPage
-		this.isWindows = window["Windows"] != null
 		this.dataService.HideWindowsBackButton()
 	}
 
@@ -41,13 +61,23 @@ export class SettingsPageComponent {
 		this.selectedTheme = await this.dataService.GetTheme()
 
 		// Check for updates
+		/*
 		this.swUpdate.available.subscribe(() => {
 			this.updateAvailable = true
 		})
+		*/
 
 		if (this.swUpdate.isEnabled) {
 			this.swUpdate.checkForUpdate()
 		}
+	}
+
+	async themeDropdownChange(event: Event) {
+		let selectedKey = (event as CustomEvent).detail.key
+
+		this.selectedTheme = selectedKey
+		await this.settingsService.setTheme(selectedKey)
+		await this.dataService.loadTheme()
 	}
 
 	onSortTodosSelectChanged(event: {
@@ -59,13 +89,7 @@ export class SettingsPageComponent {
 		this.dataService.SetSortTodosByDate(event.index == 0)
 	}
 
-	onThemeRadioButtonSelected(event: MatRadioChange) {
-		this.selectedTheme = event.value
-		this.dataService.SetTheme(event.value)
-		this.dataService.ApplyTheme(event.value)
-	}
-
-	InstallUpdate() {
+	activateUpdate() {
 		window.location.reload()
 	}
 }

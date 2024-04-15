@@ -157,7 +157,7 @@ const enDefaults = {
 		planPro: "Pro"
 	},
 	settingsPage: {
-		header: "Settings",
+		title: "Settings",
 		sortTodosBy: "Sort todos by",
 		sortTodosByDate: "date",
 		sortTodosByGroup: "group",
@@ -384,7 +384,7 @@ const deDefaults = {
 		planPro: "Pro"
 	},
 	settingsPage: {
-		header: "Einstellungen",
+		title: "Einstellungen",
 		sortTodosBy: "Sortiere Todos nach",
 		sortTodosByDate: "Datum",
 		sortTodosByGroup: "Gruppe",

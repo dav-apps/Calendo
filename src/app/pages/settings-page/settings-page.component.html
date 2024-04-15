@@ -1,10 +1,27 @@
-<div
-	class="container d-flex flex-column ms-motion-slideUpIn"
-	style="padding-bottom: 56px"
->
-	<h1 class="text-center mt-3 text-color font-weight-light">
-		{{ locale.header }}
-	</h1>
+<div class="container slide-up-in">
+	<dav-header size="large">
+		{{ locale.title }}
+	</dav-header>
+
+	<div class="settings-container">
+		<div class="setting">
+			<!-- Sort todos by -->
+			<dav-setting [header]="locale.sortTodosBy">
+
+			</dav-setting>
+		</div>
+
+		<div class="setting">
+			<!-- Theme -->
+			<dav-setting [header]="locale.theme">
+				<dav-dropdown
+					[options]="themeDropdownOptions"
+					[selectedKey]="selectedTheme"
+					(change)="themeDropdownChange($event)"
+				></dav-dropdown>
+			</dav-setting>
+		</div>
+	</div>
 
 	<div class="mx-auto">
 		<!-- Sort todos by -->
@@ -26,29 +43,6 @@
 					></fab-dropdown-option>
 				</fab-options>
 			</fab-dropdown>
-		</div>
-
-		<!-- Theme -->
-		<div style="display: inline-block">
-			<p class="text-color mt-4" style="font-size: 18px">
-				{{ locale.theme }}
-			</p>
-			<mat-radio-group
-				class="d-flex flex-column text-color"
-				[color]="dataService.darkTheme ? 'accent' : 'primary'"
-				[value]="selectedTheme"
-				(change)="onThemeRadioButtonSelected($event)"
-			>
-				<mat-radio-button [value]="themeKeys[0]">
-					{{ locale.lightTheme }}
-				</mat-radio-button>
-				<mat-radio-button [value]="themeKeys[1]">
-					{{ locale.darkTheme }}
-				</mat-radio-button>
-				<mat-radio-button [value]="themeKeys[2]">
-					{{ locale.systemTheme }}
-				</mat-radio-button>
-			</mat-radio-group>
 		</div>
 
 		<!-- App information -->
@@ -79,7 +73,7 @@
 			</p>
 
 			<fab-primary-button
-				(onClick)="InstallUpdate()"
+				(onClick)="activateUpdate()"
 				*ngIf="updateAvailable"
 			>
 				{{ locale.installUpdate }}

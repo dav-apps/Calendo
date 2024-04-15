@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { MatButtonModule } from "@angular/material/button"
 import { MatSnackBarModule } from "@angular/material/snack-bar"
 import { MatTreeModule } from "@angular/material/tree"
-import { MatRadioModule } from "@angular/material/radio"
 import { DragulaModule } from "ng2-dragula"
 
 import { AppComponent } from "./app.component"
@@ -38,8 +37,11 @@ import { TodoGroupBadgeComponent } from "./components/todo-group-badge/todo-grou
 import { SetTodoGroupsComponent } from "./components/set-todo-groups/set-todo-groups.component"
 import { SetNameComponent } from "./components/set-name/set-name.component"
 import { TodoListTreeComponent } from "./components/todo-list-tree/todo-list-tree.component"
-import { DataService } from "./services/data-service"
 import { environment } from "../environments/environment"
+
+// Services
+import { DataService } from "./services/data-service"
+import { SettingsService } from "./services/settings-service"
 
 @NgModule({
 	declarations: [
@@ -92,10 +94,9 @@ import { environment } from "../environments/environment"
 		MatButtonModule,
 		MatSnackBarModule,
 		MatTreeModule,
-		MatRadioModule,
 		DragulaModule.forRoot()
 	],
-	providers: [DataService],
+	providers: [DataService, SettingsService],
 	bootstrap: [AppComponent],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
