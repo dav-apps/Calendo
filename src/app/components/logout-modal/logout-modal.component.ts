@@ -6,24 +6,23 @@ import {
 	EventEmitter
 } from "@angular/core"
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap"
-import { DataService } from "../../services/data-service"
-import { enUS } from "../../../locales/locales"
+import { DataService } from "src/app/services/data-service"
+import { LocalizationService } from "src/app/services/localization-service"
 
 @Component({
 	selector: "calendo-logout-modal",
 	templateUrl: "./logout-modal.component.html"
 })
 export class LogoutModalComponent {
-	locale = enUS.logoutModal
+	locale = this.localizationService.locale.logoutModal
 	@Output() logout = new EventEmitter()
 	@ViewChild("logoutModal", { static: true }) logoutModal: ElementRef
 
 	constructor(
-		private modalService: NgbModal,
-		private dataService: DataService
-	) {
-		this.locale = this.dataService.GetLocale().logoutModal
-	}
+		private dataService: DataService,
+		private localizationService: LocalizationService,
+		private modalService: NgbModal
+	) {}
 
 	Show() {
 		this.modalService.open(this.logoutModal).result.then(

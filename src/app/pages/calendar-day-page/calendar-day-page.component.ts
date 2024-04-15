@@ -1,13 +1,13 @@
 import { Component, ViewChild } from "@angular/core"
 import { Router, ActivatedRoute } from "@angular/router"
 import * as moment from "moment"
-import { DataService } from "../../services/data-service"
-import { AppointmentModalComponent } from "../../components/appointment-modal/appointment-modal.component"
-import { NewTodoModalComponent } from "../../components/new-todo-modal/new-todo-modal.component"
-import { Appointment } from "../../models/Appointment"
-import { Todo } from "../../models/Todo"
-import { TodoList } from "../../models/TodoList"
-import { enUS } from "../../../locales/locales"
+import { DataService } from "src/app/services/data-service"
+import { LocalizationService } from "src/app/services/localization-service"
+import { AppointmentModalComponent } from "src/app/components/appointment-modal/appointment-modal.component"
+import { NewTodoModalComponent } from "src/app/components/new-todo-modal/new-todo-modal.component"
+import { Appointment } from "src/app/models/Appointment"
+import { Todo } from "src/app/models/Todo"
+import { TodoList } from "src/app/models/TodoList"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { TodoListModalComponent } from "src/app/components/todo-list-modal/todo-list-modal.component"
 import { MatSnackBar } from "@angular/material/snack-bar"
@@ -18,8 +18,8 @@ import { Location } from "@angular/common"
 	templateUrl: "./calendar-day-page.component.html"
 })
 export class CalendarDayPageComponent {
-	locale = enUS.calendarDayPage
-	snackbarLocale = enUS.snackbar
+	locale = this.localizationService.locale.calendarDayPage
+	snackbarLocale = this.localizationService.locale.snackbar
 	faPlus = faPlus
 	@ViewChild(AppointmentModalComponent, { static: true })
 	private newAppointmentModalComponent: AppointmentModalComponent
@@ -36,14 +36,13 @@ export class CalendarDayPageComponent {
 
 	constructor(
 		public dataService: DataService,
+		private localizationService: LocalizationService,
 		private router: Router,
 		private route: ActivatedRoute,
 		private location: Location,
 		private snackBar: MatSnackBar
 	) {
 		moment.locale(this.dataService.locale)
-		this.locale = this.dataService.GetLocale().calendarDayPage
-		this.snackbarLocale = this.dataService.GetLocale().snackbar
 		this.dataService.HideWindowsBackButton()
 	}
 

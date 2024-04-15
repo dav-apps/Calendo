@@ -1,11 +1,11 @@
 import { Component, ViewChild } from "@angular/core"
 import { Router } from "@angular/router"
-import { Todo } from "../../models/Todo"
-import { DataService } from "../../services/data-service"
-import { NewTodoModalComponent } from "../../components/new-todo-modal/new-todo-modal.component"
-import { TodoListModalComponent } from "../../components/todo-list-modal/todo-list-modal.component"
-import { enUS } from "../../../locales/locales"
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons"
+import { Todo } from "../../models/Todo"
+import { DataService } from "src/app/services/data-service"
+import { LocalizationService } from "src/app/services/localization-service"
+import { NewTodoModalComponent } from "src/app/components/new-todo-modal/new-todo-modal.component"
+import { TodoListModalComponent } from "src/app/components/todo-list-modal/todo-list-modal.component"
 import { TodoList } from "src/app/models/TodoList"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
@@ -15,8 +15,8 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 	styleUrls: ["./todos-page.component.scss"]
 })
 export class TodosPageComponent {
-	locale = enUS.todosPage
-	snackbarLocale = enUS.snackbar
+	locale = this.localizationService.locale.todosPage
+	snackbarLocale = this.localizationService.locale.snackbar
 	faEllipsisH = faEllipsisH
 	@ViewChild(NewTodoModalComponent, { static: true })
 	private newTodoModalComponent: NewTodoModalComponent
@@ -25,11 +25,10 @@ export class TodosPageComponent {
 
 	constructor(
 		public dataService: DataService,
+		private localizationService: LocalizationService,
 		public router: Router,
 		public snackBar: MatSnackBar
 	) {
-		this.locale = this.dataService.GetLocale().todosPage
-		this.snackbarLocale = this.dataService.GetLocale().snackbar
 		this.dataService.HideWindowsBackButton()
 	}
 

@@ -1,25 +1,27 @@
 import { Component, ViewChild, HostListener } from "@angular/core"
-import { DataService } from "../../services/data-service"
-import { enUS } from "../../../locales/locales"
-import { environment } from "../../../environments/environment"
-import { Dav } from "dav-js"
-import { LogoutModalComponent } from "../../components/logout-modal/logout-modal.component"
 import { faSync, faLock } from "@fortawesome/free-solid-svg-icons"
+import { Dav } from "dav-js"
+import { DataService } from "src/app/services/data-service"
+import { LocalizationService } from "src/app/services/localization-service"
+import { environment } from "src/environments/environment"
+import { LogoutModalComponent } from "src/app/components/logout-modal/logout-modal.component"
 
 @Component({
 	selector: "calendo-account-page",
 	templateUrl: "./account-page.component.html"
 })
 export class AccountPageComponent {
-	locale = enUS.accountPage
+	locale = this.localizationService.locale.accountPage
 	faSync = faSync
 	faLock = faLock
 	@ViewChild(LogoutModalComponent)
 	private logoutModalComponent: LogoutModalComponent
 	width: number = window.innerWidth
 
-	constructor(public dataService: DataService) {
-		this.locale = this.dataService.GetLocale().accountPage
+	constructor(
+		public dataService: DataService,
+		private localizationService: LocalizationService
+	) {
 		this.dataService.HideWindowsBackButton()
 	}
 

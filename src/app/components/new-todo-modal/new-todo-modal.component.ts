@@ -6,20 +6,20 @@ import {
 	EventEmitter
 } from "@angular/core"
 import { NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap"
-import { Todo } from "../../models/Todo"
-import { enUS } from "../../../locales/locales"
-import { DataService } from "../../services/data-service"
-import { Notification, SetupWebPushSubscription } from "dav-js"
 import * as moment from "moment"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import { Notification, SetupWebPushSubscription } from "dav-js"
+import { Todo } from "src/app/models/Todo"
+import { DataService } from "src/app/services/data-service"
+import { LocalizationService } from "src/app/services/localization-service"
 
 @Component({
 	selector: "calendo-new-todo-modal",
 	templateUrl: "./new-todo-modal.component.html"
 })
 export class NewTodoModalComponent {
-	locale = enUS.newTodoModal
-	notificationLocale = enUS.notifications.todo
+	locale = this.localizationService.locale.newTodoModal
+	notificationLocale = this.localizationService.locale.notifications.todo
 	faPlus = faPlus
 	@Output() save = new EventEmitter()
 	@ViewChild("createTodoModal", { static: true }) todoModal: ElementRef
@@ -45,12 +45,10 @@ export class NewTodoModalComponent {
 	}
 
 	constructor(
-		private modalService: NgbModal,
-		private dataService: DataService
-	) {
-		this.locale = this.dataService.GetLocale().newTodoModal
-		this.notificationLocale = this.dataService.GetLocale().notifications.todo
-	}
+		private dataService: DataService,
+		private localizationService: LocalizationService,
+		private modalService: NgbModal
+	) {}
 
 	Show(date?: number) {
 		if (this.modalVisible) return

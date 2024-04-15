@@ -1,16 +1,15 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core"
-import { DataService } from "src/app/services/data-service"
-import { GetAllTodoGroups } from "../../models/Todo"
-import { enUS } from "../../../locales/locales"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import { GetAllTodoGroups } from "src/app/models/Todo"
+import { LocalizationService } from "src/app/services/localization-service"
 
 @Component({
 	selector: "calendo-set-todo-groups",
 	templateUrl: "./set-todo-groups.component.html"
 })
 export class SetTodoGroupsComponent {
+	locale = this.localizationService.locale.setTodoGroups
 	faPlus = faPlus
-	locale = enUS.setTodoGroups
 	existingGroups: string[] = []
 	todoGroups: string[] = []
 	@Input() initialGroups: string[] = []
@@ -22,8 +21,7 @@ export class SetTodoGroupsComponent {
 		}
 	}
 
-	constructor(private dataService: DataService) {
-		this.locale = this.dataService.GetLocale().setTodoGroups
+	constructor(private localizationService: LocalizationService) {
 		this.GetAllTodoGroups()
 	}
 

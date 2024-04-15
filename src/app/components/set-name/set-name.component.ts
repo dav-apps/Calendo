@@ -1,13 +1,13 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core"
-import { DataService } from "../../services/data-service"
-import { enUS } from "../../../locales/locales"
+import { DataService } from "src/app/services/data-service"
+import { LocalizationService } from "src/app/services/localization-service"
 
 @Component({
 	selector: "calendo-set-name",
 	templateUrl: "./set-name.component.html"
 })
 export class SetNameComponent {
-	locale = enUS.setName
+	locale = this.localizationService.locale.setName
 	@Input()
 	type: number = 0 // Todo: 0, TodoList: 1, Appointment: 2
 	@Input()
@@ -25,9 +25,10 @@ export class SetNameComponent {
 		}
 	}
 
-	constructor(public dataService: DataService) {
-		this.locale = this.dataService.GetLocale().setName
-	}
+	constructor(
+		public dataService: DataService,
+		private localizationService: LocalizationService
+	) {}
 
 	ngOnInit() {
 		// Update the width of the text field

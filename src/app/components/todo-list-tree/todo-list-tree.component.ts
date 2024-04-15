@@ -12,11 +12,11 @@ import { BehaviorSubject, Subscription } from "rxjs"
 import { Todo, GetTodo } from "../../models/Todo"
 import { TodoList, GetTodoList } from "../../models/TodoList"
 import { generateUuid } from "dav-js"
-import { enUS } from "../../../locales/locales"
 import { DataService } from "src/app/services/data-service"
 import { faTimes } from "@fortawesome/free-solid-svg-icons"
 import { DeleteTodoListModalComponent } from "../delete-todo-list-modal/delete-todo-list-modal.component"
 import { DragulaService } from "ng2-dragula"
+import { LocalizationService } from "src/app/services/localization-service"
 declare var $: any
 
 @Component({
@@ -24,7 +24,7 @@ declare var $: any
 	templateUrl: "./todo-list-tree.component.html"
 })
 export class TodoListTreeComponent {
-	locale = enUS.todoListTree
+	locale = this.localizationService.locale.todoListTree
 	faTimes = faTimes
 	dataSource: MatTreeNestedDataSource<TodoNode>
 	treeControl: NestedTreeControl<TodoNode>
@@ -71,10 +71,10 @@ export class TodoListTreeComponent {
 
 	constructor(
 		public dataService: DataService,
+		private localizationService: LocalizationService,
 		public router: Router,
 		private dragula: DragulaService
 	) {
-		this.locale = this.dataService.GetLocale().todoListTree
 		this.dataSource = new MatTreeNestedDataSource()
 		this.treeControl = new NestedTreeControl<TodoNode>(
 			(dataNode: TodoNode) => dataNode.children

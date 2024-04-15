@@ -10,7 +10,7 @@ import * as moment from "moment"
 import { Notification, GetNotification, SetupWebPushSubscription } from "dav-js"
 import { Appointment, GetAppointment } from "src/app/models/Appointment"
 import { DataService } from "src/app/services/data-service"
-import { enUS } from "src/locales/locales"
+import { LocalizationService } from "src/app/services/localization-service"
 
 @Component({
 	selector: "calendo-appointment-modal",
@@ -18,8 +18,9 @@ import { enUS } from "src/locales/locales"
 	styleUrls: ["./appointment-modal.component.scss"]
 })
 export class AppointmentModalComponent {
-	locale = enUS.appointmentModal
-	notificationLocale = enUS.notifications.appointment
+	locale = this.localizationService.locale.appointmentModal
+	notificationLocale =
+		this.localizationService.locale.notifications.appointment
 	@Output() save = new EventEmitter()
 	@ViewChild("appointmentModal", { static: true }) appointmentModal: ElementRef
 	appointmentDate: NgbDateStruct
@@ -51,13 +52,10 @@ export class AppointmentModalComponent {
 	submitButtonDisabled: boolean = true
 
 	constructor(
-		private modalService: NgbModal,
-		private dataService: DataService
-	) {
-		this.locale = this.dataService.GetLocale().appointmentModal
-		this.notificationLocale =
-			this.dataService.GetLocale().notifications.appointment
-	}
+		private dataService: DataService,
+		private localizationService: LocalizationService,
+		private modalService: NgbModal
+	) {}
 
 	Show(appointment?: Appointment, date?: number) {
 		if (this.modalVisible) return

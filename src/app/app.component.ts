@@ -5,6 +5,7 @@ import * as DavUIComponents from "dav-ui-components"
 import { environment } from "../environments/environment"
 import { enUS } from "../locales/locales"
 import { DataService } from "./services/data-service"
+import { LocalizationService } from "./services/localization-service"
 import { ConvertTableObjectToAppointment } from "./models/Appointment"
 import { ConvertTableObjectToTodo } from "./models/Todo"
 import { TodoList, ConvertTableObjectToTodoList } from "./models/TodoList"
@@ -25,8 +26,12 @@ export class AppComponent {
 	todosTabActive: boolean = false
 	appointmentsTabActive: boolean = false
 
-	constructor(public dataService: DataService, private router: Router) {
-		this.locale = this.dataService.GetLocale().navbar
+	constructor(
+		public dataService: DataService,
+		private localizationService: LocalizationService,
+		private router: Router
+	) {
+		this.locale = this.localizationService.locale.navbar
 		DavUIComponents.setLocale(this.dataService.locale)
 
 		this.router.events.forEach(data => {

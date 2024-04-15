@@ -6,12 +6,12 @@ import { Dav } from "dav-js"
 import * as DavUIComponents from "dav-ui-components"
 import * as moment from "moment"
 import * as localforage from "localforage"
+import { LocalizationService } from "./localization-service"
+import { SettingsService } from "./settings-service"
 import { environment } from "../../environments/environment.prod"
-import * as locales from "../../locales/locales"
 import { convertStringToTheme } from "src/app/utils"
 import { Theme } from "src/app/types"
 import { themeKey, lightThemeKey, darkThemeKey } from "src/app/constants"
-import { SettingsService } from "./settings-service"
 
 @Injectable()
 export class DataService {
@@ -75,7 +75,10 @@ export class DataService {
 	updatedTodoLists: string[] = []
 	//#endregion
 
-	constructor(private settingsService: SettingsService) {
+	constructor(
+		private localizationService: LocalizationService,
+		private settingsService: SettingsService
+	) {
 		this.InitStartDays()
 		this.LoadAllAppointments()
 		this.LoadAllTodos()
@@ -307,29 +310,6 @@ export class DataService {
 				}
 			}
 		)
-	}
-
-	GetLocale() {
-		let l = this.locale.toLowerCase()
-
-		if (l.includes("en")) {
-			// en
-			if (l == "en-gb") return locales.enGB
-			else if (l == "en-nz") return locales.enNZ
-			else if (l == "en-il") return locales.enIL
-			else if (l == "en-ie") return locales.enIE
-			else if (l == "en-ca") return locales.enCA
-			else if (l == "en-au") return locales.enAU
-			else return locales.enUS
-		}
-		if (l.includes("de")) {
-			// de
-			if (l == "de-at") return locales.deAT
-			else if (l == "de-ch") return locales.deCH
-			else return locales.deDE
-		}
-
-		return locales.enUS
 	}
 
 	HideWindowsBackButton() {
@@ -581,7 +561,7 @@ export class DataService {
 			if (todo.time != 0) {
 				var date: string = moment
 					.unix(todo.time)
-					.format(this.GetLocale().todosPage.formats.date)
+					.format(this.localizationService.locale.todosPage.formats.date)
 				var timestampOfDate = moment.unix(todo.time).startOf("day").unix()
 
 				// Check if the date already exists in the todoDays array
@@ -702,7 +682,7 @@ export class DataService {
 			if (todoList.time != 0) {
 				let date: string = moment
 					.unix(todoList.time)
-					.format(this.GetLocale().todosPage.formats.date)
+					.format(this.localizationService.locale.todosPage.formats.date)
 				let timestampOfDate = moment
 					.unix(todoList.time)
 					.startOf("day")

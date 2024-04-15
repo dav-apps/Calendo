@@ -2,8 +2,8 @@ import { Component, ViewChild, ElementRef } from "@angular/core"
 import { Router } from "@angular/router"
 import * as moment from "moment"
 declare var $: any
-import { DataService } from "../../services/data-service"
-import { enUS } from "../../../locales/locales"
+import { DataService } from "src/app/services/data-service"
+import { LocalizationService } from "src/app/services/localization-service"
 import * as platform from "platform"
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
 
@@ -13,7 +13,7 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
 	styleUrls: ["./calendar-page.component.scss"]
 })
 export class CalendarPageComponent {
-	locale = enUS.calendarPage
+	locale = this.localizationService.locale.calendarPage
 	faAngleLeft = faAngleLeft
 	faAngleRight = faAngleRight
 	@ViewChild("calendarContainer", { read: ElementRef, static: true })
@@ -44,9 +44,9 @@ export class CalendarPageComponent {
 
 	constructor(
 		public dataService: DataService,
+		private localizationService: LocalizationService,
 		private router: Router
 	) {
-		this.locale = this.dataService.GetLocale().calendarPage
 		moment.locale(this.dataService.locale)
 		this.dataService.HideWindowsBackButton()
 

@@ -1,9 +1,9 @@
 import { Component, ViewChild } from "@angular/core"
 import { Router } from "@angular/router"
-import { DataService } from "../../services/data-service"
-import { AppointmentModalComponent } from "../../components/appointment-modal/appointment-modal.component"
-import { Appointment } from "../../models/Appointment"
-import { enUS } from "../../../locales/locales"
+import { DataService } from "src/app/services/data-service"
+import { LocalizationService } from "src/app/services/localization-service"
+import { AppointmentModalComponent } from "src/app/components/appointment-modal/appointment-modal.component"
+import { Appointment } from "src/app/models/Appointment"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
@@ -13,19 +13,18 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 	styleUrls: ["./appointments-page.component.scss"]
 })
 export class AppointmentsPageComponent {
-	locale = enUS.appointmentsPage
-	snackbarLocale = enUS.snackbar
+	locale = this.localizationService.locale.appointmentsPage
+	snackbarLocale = this.localizationService.locale.snackbar
 	faPlus = faPlus
 	@ViewChild(AppointmentModalComponent, { static: true })
 	private newAppointmentModalComponent: AppointmentModalComponent
 
 	constructor(
 		public dataService: DataService,
+		private localizationService: LocalizationService,
 		public router: Router,
 		public snackBar: MatSnackBar
 	) {
-		this.locale = this.dataService.GetLocale().appointmentsPage
-		this.snackbarLocale = this.dataService.GetLocale().snackbar
 		this.dataService.HideWindowsBackButton()
 	}
 

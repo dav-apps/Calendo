@@ -6,8 +6,8 @@ import {
 	EventEmitter
 } from "@angular/core"
 import { NgbModal, NgbDateStruct } from "@ng-bootstrap/ng-bootstrap"
-import { DataService } from "../../services/data-service"
-import { enUS } from "../../../locales/locales"
+import { DataService } from "src/app/services/data-service"
+import { LocalizationService } from "src/app/services/localization-service"
 import { TodoList, GetTodoList } from "../../models/TodoList"
 
 @Component({
@@ -15,7 +15,7 @@ import { TodoList, GetTodoList } from "../../models/TodoList"
 	templateUrl: "./todo-list-modal.component.html"
 })
 export class TodoListModalComponent {
-	locale = enUS.todoListModal
+	locale = this.localizationService.locale.todoListModal
 	@Output() save = new EventEmitter<TodoList>()
 	@ViewChild("todoListModal", { static: true }) todoListModal: ElementRef
 	setDateCheckboxChecked: boolean = true
@@ -28,11 +28,10 @@ export class TodoListModalComponent {
 	submitButtonDisabled: boolean = true
 
 	constructor(
-		private modalService: NgbModal,
-		private dataService: DataService
-	) {
-		this.locale = this.dataService.GetLocale().todoListModal
-	}
+		private dataService: DataService,
+		private localizationService: LocalizationService,
+		private modalService: NgbModal
+	) {}
 
 	Show(todoList?: TodoList, date?: number) {
 		if (this.modalVisible) return

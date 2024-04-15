@@ -1,10 +1,10 @@
 import { Component, ViewChild } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { Location } from "@angular/common"
-import { TodoList, GetTodoList } from "src/app/models/TodoList"
-import { enUS } from "../../../locales/locales"
-import { DataService } from "../../services/data-service"
 import * as moment from "moment"
+import { TodoList, GetTodoList } from "src/app/models/TodoList"
+import { DataService } from "src/app/services/data-service"
+import { LocalizationService } from "src/app/services/localization-service"
 import { TodoListTreeComponent } from "../../components/todo-list-tree/todo-list-tree.component"
 import { TodoListModalComponent } from "src/app/components/todo-list-modal/todo-list-modal.component"
 import { DeleteTodoListModalComponent } from "src/app/components/delete-todo-list-modal/delete-todo-list-modal.component"
@@ -14,7 +14,7 @@ import { DeleteTodoListModalComponent } from "src/app/components/delete-todo-lis
 	templateUrl: "./todo-list-page.component.html"
 })
 export class TodoListPageComponent {
-	locale = enUS.todoListDetailsPage
+	locale = this.localizationService.locale.todoListDetailsPage
 	@ViewChild("todoListTree", { static: true })
 	todoListTree: TodoListTreeComponent
 	@ViewChild("todoListModal", { static: true })
@@ -26,11 +26,11 @@ export class TodoListPageComponent {
 
 	constructor(
 		private dataService: DataService,
+		private localizationService: LocalizationService,
 		private route: ActivatedRoute,
 		private location: Location
 	) {
 		moment.locale(this.dataService.locale)
-		this.locale = this.dataService.GetLocale().todoListDetailsPage
 		this.dataService.HideWindowsBackButton()
 	}
 

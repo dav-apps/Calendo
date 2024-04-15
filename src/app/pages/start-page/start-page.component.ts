@@ -1,13 +1,13 @@
 import { Component, ViewChild } from "@angular/core"
 import { Router } from "@angular/router"
 import * as moment from "moment"
-import { Todo } from "../../models/Todo"
-import { TodoList } from "../../models/TodoList"
-import { DataService } from "../../services/data-service"
-import { NewTodoModalComponent } from "../../components/new-todo-modal/new-todo-modal.component"
-import { AppointmentModalComponent } from "../../components/appointment-modal/appointment-modal.component"
-import { TodoListModalComponent } from "../../components/todo-list-modal/todo-list-modal.component"
-import { enUS } from "../../../locales/locales"
+import { Todo } from "src/app/models/Todo"
+import { TodoList } from "src/app/models/TodoList"
+import { DataService } from "src/app/services/data-service"
+import { LocalizationService } from "src/app/services/localization-service"
+import { NewTodoModalComponent } from "src/app/components/new-todo-modal/new-todo-modal.component"
+import { AppointmentModalComponent } from "src/app/components/appointment-modal/appointment-modal.component"
+import { TodoListModalComponent } from "src/app/components/todo-list-modal/todo-list-modal.component"
 import { Appointment } from "src/app/models/Appointment"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { MatSnackBar } from "@angular/material/snack-bar"
@@ -17,8 +17,8 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 	templateUrl: "./start-page.component.html"
 })
 export class StartPageComponent {
-	locale = enUS.startPage
-	snackbarLocale = enUS.snackbar
+	locale = this.localizationService.locale.startPage
+	snackbarLocale = this.localizationService.locale.snackbar
 	faPlus = faPlus
 	@ViewChild(NewTodoModalComponent, { static: true })
 	private newTodoModalComponent: NewTodoModalComponent
@@ -34,11 +34,10 @@ export class StartPageComponent {
 
 	constructor(
 		public dataService: DataService,
+		private localizationService: LocalizationService,
 		private router: Router,
 		private snackBar: MatSnackBar
 	) {
-		this.locale = this.dataService.GetLocale().startPage
-		this.snackbarLocale = this.dataService.GetLocale().snackbar
 		moment.locale(this.dataService.locale)
 
 		this.largeDateFormat = this.locale.formats.largeDate
