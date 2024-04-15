@@ -8,6 +8,10 @@ import * as moment from "moment"
 import * as localforage from "localforage"
 import { environment } from "../../environments/environment.prod"
 import * as locales from "../../locales/locales"
+import { convertStringToTheme } from "src/app/utils"
+import { Theme } from "src/app/types"
+import { themeKey, lightThemeKey, darkThemeKey } from "src/app/constants"
+import { SettingsService } from "./settings-service"
 
 @Injectable()
 export class DataService {
@@ -71,7 +75,7 @@ export class DataService {
 	updatedTodoLists: string[] = []
 	//#endregion
 
-	constructor() {
+	constructor(private settingsService: SettingsService) {
 		this.InitStartDays()
 		this.LoadAllAppointments()
 		this.LoadAllTodos()
@@ -337,63 +341,39 @@ export class DataService {
 		}
 	}
 
-	async ApplyTheme(theme?: string) {
+	async loadTheme(theme?: Theme) {
 		if (theme == null) {
 			// Get the theme from the settings
-			theme = await this.GetTheme()
+			theme = convertStringToTheme(await this.settingsService.getTheme())
 		}
 
 		switch (theme) {
-			case environment.darkThemeKey:
-				// Dark theme
+			case Theme.Dark:
 				this.darkTheme = true
 				break
-			case environment.systemThemeKey:
-				// Get the Windows theme
-				if (window["Windows"]) {
-					if (this.windowsUiSettings == null) {
-						this.windowsUiSettings = new window[
-							"Windows"
-						].UI.ViewManagement.UISettings()
-					}
+			case Theme.System:
+				// Get the browser theme
+				let darkTheme = false
 
-					var color = this.windowsUiSettings.getColorValue(
-						window["Windows"].UI.ViewManagement.UIColorType.background
+				if (window.matchMedia) {
+					let colorScheme = window.matchMedia(
+						"(prefers-color-scheme: dark)"
 					)
 
-					this.darkTheme = color.r == 0
-
-					// Observe the system theme
-					this.windowsUiSettings.oncolorvalueschanged = () => {
-						this.ApplyTheme()
-					}
-
-					break
-				} else {
-					// Get the browser theme
-					let darkTheme = false
-
-					if (window.matchMedia) {
-						let colorScheme = window.matchMedia(
-							"(prefers-color-scheme: dark)"
-						)
-
-						darkTheme = colorScheme.matches
-						colorScheme.onchange = () => this.ApplyTheme()
-					}
-
-					this.darkTheme = darkTheme
-					break
+					darkTheme = colorScheme.matches
+					colorScheme.onchange = () => this.loadTheme()
 				}
+
+				this.darkTheme = darkTheme
+				break
 			default:
-				// Light theme
 				this.darkTheme = false
 				break
 		}
 
 		document.body.setAttribute(
-			environment.themeKey,
-			this.darkTheme ? environment.darkThemeKey : environment.lightThemeKey
+			themeKey,
+			this.darkTheme ? darkThemeKey : lightThemeKey
 		)
 
 		DavUIComponents.setTheme(

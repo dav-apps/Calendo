@@ -48,7 +48,7 @@ export class AppComponent {
 		this.setTitleBarColor()
 
 		// Set the background colors
-		this.dataService.ApplyTheme()
+		this.dataService.loadTheme()
 
 		// Initialize dav
 		new Dav({
