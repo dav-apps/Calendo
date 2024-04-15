@@ -1150,17 +1150,6 @@ export class DataService {
 		)) as boolean
 		return value != null ? value : environment.settingsSortTodosByDateDefault
 	}
-
-	async SetTheme(value: string) {
-		await localforage.setItem(environment.settingsThemeKey, value)
-	}
-
-	async GetTheme() {
-		var value = (await localforage.getItem(
-			environment.settingsThemeKey
-		)) as string
-		return value ? value : environment.settingsThemeDefault
-	}
 	//#endregion
 
 	//#region Helper methods

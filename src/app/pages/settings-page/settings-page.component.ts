@@ -15,8 +15,8 @@ const dateKey = "date"
 const groupKey = "group"
 
 @Component({
-	selector: "calendo-settings-page",
-	templateUrl: "./settings-page.component.html"
+	templateUrl: "./settings-page.component.html",
+	styleUrl: "./settings-page.component.scss"
 })
 export class SettingsPageComponent {
 	locale = enUS.settingsPage
@@ -49,7 +49,6 @@ export class SettingsPageComponent {
 		private swUpdate: SwUpdate
 	) {
 		this.locale = this.dataService.GetLocale().settingsPage
-		this.dataService.HideWindowsBackButton()
 	}
 
 	async ngOnInit() {
@@ -57,8 +56,7 @@ export class SettingsPageComponent {
 			? dateKey
 			: groupKey
 
-		// Set the correct theme radio button
-		this.selectedTheme = await this.dataService.GetTheme()
+		this.selectedTheme = await this.settingsService.getTheme()
 
 		// Check for updates
 		/*
