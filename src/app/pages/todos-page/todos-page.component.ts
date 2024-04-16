@@ -28,9 +28,7 @@ export class TodosPageComponent {
 		private localizationService: LocalizationService,
 		public router: Router,
 		public snackBar: MatSnackBar
-	) {
-		this.dataService.HideWindowsBackButton()
-	}
+	) {}
 
 	SortByGroupOrDate() {
 		this.dataService.sortTodosByDate = !this.dataService.sortTodosByDate

@@ -31,7 +31,6 @@ export class TodoListPageComponent {
 		private location: Location
 	) {
 		moment.locale(this.dataService.locale)
-		this.dataService.HideWindowsBackButton()
 	}
 
 	ngOnInit() {

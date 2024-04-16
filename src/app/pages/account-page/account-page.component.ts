@@ -21,9 +21,7 @@ export class AccountPageComponent {
 	constructor(
 		public dataService: DataService,
 		private localizationService: LocalizationService
-	) {
-		this.dataService.HideWindowsBackButton()
-	}
+	) {}
 
 	@HostListener("window:resize")
 	onResize() {

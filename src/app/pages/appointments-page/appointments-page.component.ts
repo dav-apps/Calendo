@@ -24,9 +24,7 @@ export class AppointmentsPageComponent {
 		private localizationService: LocalizationService,
 		public router: Router,
 		public snackBar: MatSnackBar
-	) {
-		this.dataService.HideWindowsBackButton()
-	}
+	) {}
 
 	ShowNewAppointmentModal() {
 		this.newAppointmentModalComponent.Show()

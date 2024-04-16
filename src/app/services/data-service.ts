@@ -312,15 +312,6 @@ export class DataService {
 		)
 	}
 
-	HideWindowsBackButton() {
-		if (window["Windows"]) {
-			window[
-				"Windows"
-			].UI.Core.SystemNavigationManager.getForCurrentView().appViewBackButtonVisibility =
-				window["Windows"].UI.Core.AppViewBackButtonVisibility.collapsed
-		}
-	}
-
 	async loadTheme(theme?: Theme) {
 		if (theme == null) {
 			// Get the theme from the settings

@@ -48,7 +48,6 @@ export class CalendarPageComponent {
 		private router: Router
 	) {
 		moment.locale(this.dataService.locale)
-		this.dataService.HideWindowsBackButton()
 
 		// Set the weekday labels in the current language
 		let weekdays = moment.weekdaysMin()

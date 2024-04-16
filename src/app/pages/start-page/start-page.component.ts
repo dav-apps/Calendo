@@ -42,9 +42,6 @@ export class StartPageComponent {
 
 		this.largeDateFormat = this.locale.formats.largeDate
 		this.smallDateFormat = this.locale.formats.smallDate
-
-		// Hide the title bar back button on Windows
-		this.dataService.HideWindowsBackButton()
 	}
 
 	ngOnInit() {

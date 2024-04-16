@@ -43,7 +43,6 @@ export class CalendarDayPageComponent {
 		private snackBar: MatSnackBar
 	) {
 		moment.locale(this.dataService.locale)
-		this.dataService.HideWindowsBackButton()
 	}
 
 	ngOnInit() {
