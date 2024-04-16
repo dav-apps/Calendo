@@ -6,7 +6,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons"
 @Component({
 	selector: "calendo-small-todo-item",
 	templateUrl: "./small-todo-item.component.html",
-	styleUrls: ["./small-todo-item.component.scss"]
+	styleUrl: "./small-todo-item.component.scss"
 })
 export class SmallTodoItemComponent {
 	faTimes = faTimes

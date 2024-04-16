@@ -13,7 +13,6 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
 @Component({
-	selector: "calendo-start-page",
 	templateUrl: "./start-page.component.html"
 })
 export class StartPageComponent {

@@ -15,7 +15,7 @@ import { LocalizationService } from "src/app/services/localization-service"
 @Component({
 	selector: "calendo-appointment-modal",
 	templateUrl: "./appointment-modal.component.html",
-	styleUrls: ["./appointment-modal.component.scss"]
+	styleUrl: "./appointment-modal.component.scss"
 })
 export class AppointmentModalComponent {
 	locale = this.localizationService.locale.appointmentModal

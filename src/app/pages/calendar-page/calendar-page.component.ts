@@ -8,9 +8,8 @@ import * as platform from "platform"
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
 
 @Component({
-	selector: "calendo-calendar-page",
 	templateUrl: "./calendar-page.component.html",
-	styleUrls: ["./calendar-page.component.scss"]
+	styleUrl: "./calendar-page.component.scss"
 })
 export class CalendarPageComponent {
 	locale = this.localizationService.locale.calendarPage

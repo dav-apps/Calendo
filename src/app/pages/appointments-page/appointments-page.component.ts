@@ -8,9 +8,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
 @Component({
-	selector: "calendo-appointments-page",
 	templateUrl: "./appointments-page.component.html",
-	styleUrls: ["./appointments-page.component.scss"]
+	styleUrl: "./appointments-page.component.scss"
 })
 export class AppointmentsPageComponent {
 	locale = this.localizationService.locale.appointmentsPage

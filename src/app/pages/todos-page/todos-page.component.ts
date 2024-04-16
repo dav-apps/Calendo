@@ -10,9 +10,8 @@ import { TodoList } from "src/app/models/TodoList"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
 @Component({
-	selector: "calendo-todos-page",
 	templateUrl: "./todos-page.component.html",
-	styleUrls: ["./todos-page.component.scss"]
+	styleUrl: "./todos-page.component.scss"
 })
 export class TodosPageComponent {
 	locale = this.localizationService.locale.todosPage

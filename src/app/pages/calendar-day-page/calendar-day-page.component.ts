@@ -14,7 +14,6 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 import { Location } from "@angular/common"
 
 @Component({
-	selector: "calendo-calendar-day-page",
 	templateUrl: "./calendar-day-page.component.html"
 })
 export class CalendarDayPageComponent {

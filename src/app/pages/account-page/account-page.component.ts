@@ -7,7 +7,6 @@ import { environment } from "src/environments/environment"
 import { LogoutModalComponent } from "src/app/components/logout-modal/logout-modal.component"
 
 @Component({
-	selector: "calendo-account-page",
 	templateUrl: "./account-page.component.html"
 })
 export class AccountPageComponent {
