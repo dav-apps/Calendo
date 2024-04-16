@@ -11,9 +11,6 @@ import {
 	darkThemeKey
 } from "src/app/constants"
 
-const dateKey = "date"
-const groupKey = "group"
-
 @Component({
 	templateUrl: "./settings-page.component.html",
 	styleUrl: "./settings-page.component.scss"
@@ -22,7 +19,6 @@ export class SettingsPageComponent {
 	locale = this.localizationService.locale.settingsPage
 	version = version
 	year = new Date().getFullYear()
-	sortTodosSelectedKey: string = groupKey
 	selectedTheme: string
 	updateAvailable: boolean = false
 	themeDropdownOptions: DropdownOption[] = [
@@ -51,10 +47,6 @@ export class SettingsPageComponent {
 	) {}
 
 	async ngOnInit() {
-		this.sortTodosSelectedKey = (await this.dataService.GetSortTodosByDate())
-			? dateKey
-			: groupKey
-
 		this.selectedTheme = await this.settingsService.getTheme()
 
 		// Check for updates
@@ -75,15 +67,6 @@ export class SettingsPageComponent {
 		this.selectedTheme = selectedKey
 		await this.settingsService.setTheme(selectedKey)
 		await this.dataService.loadTheme()
-	}
-
-	onSortTodosSelectChanged(event: {
-		ev: MouseEvent
-		option: any
-		index: number
-	}) {
-		this.sortTodosSelectedKey = event.index == 0 ? dateKey : groupKey
-		this.dataService.SetSortTodosByDate(event.index == 0)
 	}
 
 	activateUpdate() {

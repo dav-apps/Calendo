@@ -33,12 +33,6 @@ export const environment = {
 	appointmentDefaultColor: "1565C0",
 	notificationUuidKey: "notification_uuid",
 	visitKey: "visit",
-	// Settings keys
-	settingsSortTodosByDateKey: "settings-sortTodosByDate",
-	settingsThemeKey: "settings-theme",
-	// Settings defaults
-	settingsSortTodosByDateDefault: true,
-	settingsThemeDefault: "system",
 	// Other constants
 	themeKey: "theme",
 	lightThemeKey: "light",

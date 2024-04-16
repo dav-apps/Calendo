@@ -158,10 +158,6 @@ const enDefaults = {
 	},
 	settingsPage: {
 		title: "Settings",
-		sortTodosBy: "Sort todos by",
-		sortTodosByDate: "date",
-		sortTodosByGroup: "group",
-		showOldAppointments: "Show old appointments",
 		theme: "App theme",
 		lightTheme: "Light",
 		darkTheme: "Dark",
@@ -385,10 +381,6 @@ const deDefaults = {
 	},
 	settingsPage: {
 		title: "Einstellungen",
-		sortTodosBy: "Sortiere Todos nach",
-		sortTodosByDate: "Datum",
-		sortTodosByGroup: "Gruppe",
-		showOldAppointments: "Alte Termine anzeigen",
 		theme: "App-Design",
 		lightTheme: "Hell",
 		darkTheme: "Dunkel",

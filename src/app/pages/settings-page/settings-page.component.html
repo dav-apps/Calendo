@@ -5,13 +5,6 @@
 
 	<div class="settings-container">
 		<div class="setting">
-			<!-- Sort todos by -->
-			<dav-setting [header]="locale.sortTodosBy">
-
-			</dav-setting>
-		</div>
-
-		<div class="setting">
 			<!-- Theme -->
 			<dav-setting [header]="locale.theme">
 				<dav-dropdown
@@ -23,28 +16,7 @@
 		</div>
 	</div>
 
-	<div class="mx-auto">
-		<!-- Sort todos by -->
-		<div class="form-group mt-4" style="font-size: 18px; width: 200px">
-			<label class="text-color">{{ locale.sortTodosBy }}</label>
-
-			<fab-dropdown
-				[selectedKey]="sortTodosSelectedKey"
-				(onChange)="onSortTodosSelectChanged($event)"
-			>
-				<fab-options>
-					<fab-dropdown-option
-						optionKey="date"
-						[text]="locale.sortTodosByDate"
-					></fab-dropdown-option>
-					<fab-dropdown-option
-						optionKey="group"
-						[text]="locale.sortTodosByGroup"
-					></fab-dropdown-option>
-				</fab-options>
-			</fab-dropdown>
-		</div>
-
+	<div>
 		<!-- App information -->
 		<div class="mt-5 text-color">
 			<p>

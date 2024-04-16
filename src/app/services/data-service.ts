@@ -5,10 +5,8 @@ import { TodoList, GetAllTodoLists, GetTodoList } from "../models/TodoList"
 import { Dav } from "dav-js"
 import * as DavUIComponents from "dav-ui-components"
 import * as moment from "moment"
-import * as localforage from "localforage"
 import { LocalizationService } from "./localization-service"
 import { SettingsService } from "./settings-service"
-import { environment } from "../../environments/environment.prod"
 import { convertStringToTheme } from "src/app/utils"
 import { Theme } from "src/app/types"
 import { themeKey, lightThemeKey, darkThemeKey } from "src/app/constants"
@@ -82,10 +80,6 @@ export class DataService {
 		this.InitStartDays()
 		this.LoadAllAppointments()
 		this.LoadAllTodos()
-
-		this.GetSortTodosByDate().then(value => {
-			this.sortTodosByDate = value
-		})
 	}
 
 	InitStartDays() {
@@ -1107,19 +1101,6 @@ export class DataService {
 		}
 
 		this.UpdateCalendarDays()
-	}
-	//#endregion
-
-	//#region SettingsPage
-	async SetSortTodosByDate(value: boolean) {
-		await localforage.setItem(environment.settingsSortTodosByDateKey, value)
-	}
-
-	async GetSortTodosByDate(): Promise<boolean> {
-		let value = (await localforage.getItem(
-			environment.settingsSortTodosByDateKey
-		)) as boolean
-		return value != null ? value : environment.settingsSortTodosByDateDefault
 	}
 	//#endregion
 
