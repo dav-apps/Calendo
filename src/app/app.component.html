@@ -8,28 +8,28 @@
 		<dav-tab-bar>
 			<dav-tab-bar-item
 				[active]="startTabActive"
-				(click)="navigateToStartPage()"
+				(click)="navigateToPage('/')"
 			>
 				{{ locale.start }}
 			</dav-tab-bar-item>
 
 			<dav-tab-bar-item
 				[active]="calendarTabActive"
-				(click)="navigateToCalendarPage()"
+				(click)="navigateToPage('calendar')"
 			>
 				{{ locale.calendar }}
 			</dav-tab-bar-item>
 
 			<dav-tab-bar-item
 				[active]="todosTabActive"
-				(click)="navigateToTodosPage()"
+				(click)="navigateToPage('todos')"
 			>
 				{{ locale.todos }}
 			</dav-tab-bar-item>
 
 			<dav-tab-bar-item
 				[active]="appointmentsTabActive"
-				(click)="navigateToAppointmentsPage()"
+				(click)="navigateToPage('appointments')"
 			>
 				{{ locale.appointments }}
 			</dav-tab-bar-item>
@@ -38,7 +38,36 @@
 
 	<div class="navbar-spacer"></div>
 
-	<div class="navbar-icon-buttons-container"></div>
+	<div class="navbar-icon-buttons-container">
+		<dav-icon-button
+			[selected]="userButtonSelected"
+			(click)="navigateToPage('account')"
+		>
+			@if (!userButtonSelected && !dataService.dav.isLoggedIn) {
+			<fa-icon [icon]="faCircleUserRegular"></fa-icon>
+			} @else if (userButtonSelected && !dataService.dav.isLoggedIn) {
+			<fa-icon [icon]="faCircleUserSolid"></fa-icon>
+			} @else if (dataService.dav.isLoggedIn) {
+			<img
+				[src]="dataService.dav.user.ProfileImage"
+				class="profile-image"
+				width="28"
+				height="28"
+			/>
+			}
+		</dav-icon-button>
+
+		<dav-icon-button
+			[selected]="settingsButtonSelected"
+			(click)="navigateToPage('settings')"
+		>
+			@if (settingsButtonSelected) {
+			<fa-icon [icon]="faGearSolid"></fa-icon>
+			} @else {
+			<fa-icon [icon]="faGearRegular"></fa-icon>
+			}
+		</dav-icon-button>
+	</div>
 </div>
 
 <!--

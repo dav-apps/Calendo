@@ -1,5 +1,13 @@
 import { Component, HostListener } from "@angular/core"
 import { Router, NavigationStart } from "@angular/router"
+import {
+	faCircleUser as faCircleUserSolid,
+	faGear as faGearSolid
+} from "@fortawesome/free-solid-svg-icons"
+import {
+	faCircleUser as faCircleUserRegular,
+	faGear as faGearRegular
+} from "@fortawesome/pro-regular-svg-icons"
 import { Dav, Environment, TableObject } from "dav-js"
 import * as DavUIComponents from "dav-ui-components"
 import { environment } from "../environments/environment"
@@ -19,12 +27,18 @@ const mobileMaxSize = 768
 })
 export class AppComponent {
 	locale = enUS.navbar
+	faCircleUserSolid = faCircleUserSolid
+	faCircleUserRegular = faCircleUserRegular
+	faGearSolid = faGearSolid
+	faGearRegular = faGearRegular
 	windowWidth: number = 500
 	currentUrl: string = "/"
 	startTabActive: boolean = false
 	calendarTabActive: boolean = false
 	todosTabActive: boolean = false
 	appointmentsTabActive: boolean = false
+	userButtonSelected: boolean = false
+	settingsButtonSelected: boolean = false
 
 	constructor(
 		public dataService: DataService,
@@ -44,6 +58,8 @@ export class AppComponent {
 				this.calendarTabActive = this.currentUrl.startsWith("/calendar")
 				this.todosTabActive = this.currentUrl == "/todos"
 				this.appointmentsTabActive = this.currentUrl == "/appointments"
+				this.userButtonSelected = this.currentUrl == "/account"
+				this.settingsButtonSelected = this.currentUrl == "/settings"
 			}
 		})
 	}
@@ -89,20 +105,8 @@ export class AppComponent {
 		this.windowWidth = window.innerWidth
 	}
 
-	navigateToStartPage() {
-		this.router.navigate(["/"])
-	}
-
-	navigateToCalendarPage() {
-		this.router.navigate(["/calendar"])
-	}
-
-	navigateToTodosPage() {
-		this.router.navigate(["/todos"])
-	}
-
-	navigateToAppointmentsPage() {
-		this.router.navigate(["/appointments"])
+	navigateToPage(path: string) {
+		this.router.navigate([path])
 	}
 
 	//#region dav-js callback functions
