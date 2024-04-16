@@ -7,9 +7,9 @@ import { environment } from "src/environments/environment"
 import { LogoutModalComponent } from "src/app/components/logout-modal/logout-modal.component"
 
 @Component({
-	templateUrl: "./account-page.component.html"
+	templateUrl: "./user-page.component.html"
 })
-export class AccountPageComponent {
+export class UserPageComponent {
 	locale = this.localizationService.locale.accountPage
 	faSync = faSync
 	faLock = faLock

@@ -41,7 +41,7 @@
 	<div class="navbar-icon-buttons-container">
 		<dav-icon-button
 			[selected]="userButtonSelected"
-			(click)="navigateToPage('account')"
+			(click)="navigateToPage('user')"
 		>
 			@if (!userButtonSelected && !dataService.dav.isLoggedIn) {
 			<fa-icon [icon]="faCircleUserRegular"></fa-icon>

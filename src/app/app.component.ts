@@ -58,7 +58,7 @@ export class AppComponent {
 				this.calendarTabActive = this.currentUrl.startsWith("/calendar")
 				this.todosTabActive = this.currentUrl == "/todos"
 				this.appointmentsTabActive = this.currentUrl == "/appointments"
-				this.userButtonSelected = this.currentUrl == "/account"
+				this.userButtonSelected = this.currentUrl == "/user"
 				this.settingsButtonSelected = this.currentUrl == "/settings"
 			}
 		})

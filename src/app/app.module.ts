@@ -11,15 +11,18 @@ import { MatSnackBarModule } from "@angular/material/snack-bar"
 import { MatTreeModule } from "@angular/material/tree"
 import { DragulaModule } from "ng2-dragula"
 
-import { AppComponent } from "./app.component"
+// Pages
 import { StartPageComponent } from "./pages/start-page/start-page.component"
 import { TodosPageComponent } from "./pages/todos-page/todos-page.component"
 import { AppointmentsPageComponent } from "./pages/appointments-page/appointments-page.component"
-import { AccountPageComponent } from "./pages/account-page/account-page.component"
+import { UserPageComponent } from "./pages/user-page/user-page.component"
 import { SettingsPageComponent } from "./pages/settings-page/settings-page.component"
 import { CalendarPageComponent } from "./pages/calendar-page/calendar-page.component"
 import { CalendarDayPageComponent } from "./pages/calendar-day-page/calendar-day-page.component"
 import { TodoListPageComponent } from "./pages/todo-list-page/todo-list-page.component"
+
+// Components
+import { AppComponent } from "./app.component"
 import { UserMenuComponent } from "./components/user-menu/user-menu.component"
 import { TodoListItemComponent } from "./components/todo-list-item/todo-list-item.component"
 import { SmallTodoListItemComponent } from "./components/small-todo-list-item/small-todo-list-item.component"
@@ -37,7 +40,7 @@ import { TodoGroupBadgeComponent } from "./components/todo-group-badge/todo-grou
 import { SetTodoGroupsComponent } from "./components/set-todo-groups/set-todo-groups.component"
 import { SetNameComponent } from "./components/set-name/set-name.component"
 import { TodoListTreeComponent } from "./components/todo-list-tree/todo-list-tree.component"
-import { environment } from "../environments/environment"
+import { environment } from "src/environments/environment"
 
 // Services
 import { DataService } from "./services/data-service"
@@ -46,15 +49,17 @@ import { SettingsService } from "./services/settings-service"
 
 @NgModule({
 	declarations: [
-		AppComponent,
+		// Pages
 		StartPageComponent,
 		TodosPageComponent,
 		AppointmentsPageComponent,
-		AccountPageComponent,
+		UserPageComponent,
 		SettingsPageComponent,
 		CalendarPageComponent,
 		CalendarDayPageComponent,
 		TodoListPageComponent,
+		// Components
+		AppComponent,
 		UserMenuComponent,
 		TodoListItemComponent,
 		SmallTodoListItemComponent,
@@ -83,7 +88,7 @@ import { SettingsService } from "./services/settings-service"
 			{ path: "todos", component: TodosPageComponent },
 			{ path: "appointments", component: AppointmentsPageComponent },
 			{ path: "todolist/:uuid", component: TodoListPageComponent },
-			{ path: "account", component: AccountPageComponent },
+			{ path: "user", component: UserPageComponent },
 			{ path: "settings", component: SettingsPageComponent }
 		]),
 		NgbModule,
