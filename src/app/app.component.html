@@ -127,6 +127,62 @@
 	<router-outlet></router-outlet>
 </div>
 
+<div class="bottom-navbar acrylic">
+	<dav-navigation-bar>
+		<dav-navigation-bar-item
+			[active]="startTabActive"
+			(click)="navigateToPage('/')"
+		>
+			@if (startTabActive) {
+			<fa-icon slot="icon" [icon]="faHouseSolid"></fa-icon>
+			} @else {
+			<fa-icon slot="icon" [icon]="faHouseRegular"></fa-icon>
+			}
+
+			<p slot="label">{{ locale.start }}</p>
+		</dav-navigation-bar-item>
+
+		<dav-navigation-bar-item
+			[active]="calendarTabActive"
+			(click)="navigateToPage('calendar')"
+		>
+			@if (calendarTabActive) {
+			<fa-icon slot="icon" [icon]="faCalendarSolid"></fa-icon>
+			} @else {
+			<fa-icon slot="icon" [icon]="faCalendarRegular"></fa-icon>
+			}
+
+			<p slot="label">{{ locale.calendar }}</p>
+		</dav-navigation-bar-item>
+
+		<dav-navigation-bar-item
+			[active]="todosTabActive"
+			(click)="navigateToPage('todos')"
+		>
+			@if (todosTabActive) {
+			<fa-icon slot="icon" [icon]="faSquareCheckSolid"></fa-icon>
+			} @else {
+			<fa-icon slot="icon" [icon]="faSquareCheckRegular"></fa-icon>
+			}
+
+			<p slot="label">{{ locale.todos }}</p>
+		</dav-navigation-bar-item>
+
+		<dav-navigation-bar-item
+			[active]="appointmentsTabActive"
+			(click)="navigateToPage('appointments')"
+		>
+			@if (appointmentsTabActive) {
+			<fa-icon slot="icon" [icon]="faCalendarsSolid"></fa-icon>
+			} @else {
+			<fa-icon slot="icon" [icon]="faCalendarsRegular"></fa-icon>
+			}
+
+			<p slot="label">{{ locale.appointments }}</p>
+		</dav-navigation-bar-item>
+	</dav-navigation-bar>
+</div>
+
 <div
 	id="bottom-navigation-bar"
 	class="bg-primary d-flex flex-row"

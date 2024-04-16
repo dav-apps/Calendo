@@ -30,6 +30,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/pro-light-svg-icons": "^6.5.2",
     "@fortawesome/pro-regular-svg-icons": "^6.5.2",
+    "@fortawesome/pro-solid-svg-icons": "^6.5.2",
     "@ng-bootstrap/ng-bootstrap": "^16.0.0",
     "bootstrap": "^5.3.3",
     "bowser": "^1.9.4",

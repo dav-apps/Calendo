@@ -2,11 +2,19 @@ import { Component, HostListener } from "@angular/core"
 import { Router, NavigationStart } from "@angular/router"
 import {
 	faCircleUser as faCircleUserSolid,
-	faGear as faGearSolid
+	faGear as faGearSolid,
+	faHouse as faHouseSolid,
+	faCalendar as faCalendarSolid,
+	faSquareCheck as faSquareCheckSolid
 } from "@fortawesome/free-solid-svg-icons"
+import { faCalendars as faCalendarsSolid } from "@fortawesome/pro-solid-svg-icons"
 import {
 	faCircleUser as faCircleUserRegular,
-	faGear as faGearRegular
+	faGear as faGearRegular,
+	faHouse as faHouseRegular,
+	faCalendar as faCalendarRegular,
+	faSquareCheck as faSquareCheckRegular,
+	faCalendars as faCalendarsRegular
 } from "@fortawesome/pro-regular-svg-icons"
 import { Dav, Environment, TableObject } from "dav-js"
 import * as DavUIComponents from "dav-ui-components"
@@ -31,6 +39,14 @@ export class AppComponent {
 	faCircleUserRegular = faCircleUserRegular
 	faGearSolid = faGearSolid
 	faGearRegular = faGearRegular
+	faHouseSolid = faHouseSolid
+	faHouseRegular = faHouseRegular
+	faCalendarSolid = faCalendarSolid
+	faCalendarRegular = faCalendarRegular
+	faSquareCheckSolid = faSquareCheckSolid
+	faSquareCheckRegular = faSquareCheckRegular
+	faCalendarsSolid = faCalendarsSolid
+	faCalendarsRegular = faCalendarsRegular
 	windowWidth: number = 500
 	currentUrl: string = "/"
 	startTabActive: boolean = false
