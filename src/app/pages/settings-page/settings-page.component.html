@@ -16,40 +16,55 @@
 		</div>
 	</div>
 
-	<div>
+	<div class="app-info-container">
 		<!-- App information -->
-		<div class="mt-5 text-color">
-			<p>
-				<a
-					href="https://blog.dav-apps.tech/tag/calendo"
-					target="blank"
-					class="text-secondary"
-					>{{ locale.news }}</a
-				><br />
-				<a
-					href="https://github.com/dav-apps/Calendo"
-					target="blank"
-					class="text-secondary"
-					>{{ locale.github }}</a
-				><br />
-				<a
-					href="https://dav-apps.tech/privacy"
-					target="blank"
-					class="text-secondary"
-					>{{ locale.privacy }}</a
-				><br />
-			</p>
-			<p>
+		<div>
+			<div class="link-container">
+				<dav-link-button url="https://blog.dav-apps.tech/tag/calendo/">
+					{{ locale.news }}
+				</dav-link-button>
+
+				<dav-link-button url="https://github.com/dav-apps/Calendo">
+					{{ locale.github }}
+				</dav-link-button>
+
+				<dav-link-button url="https://dav-apps.tech/privacy">
+					{{ locale.privacy }}
+				</dav-link-button>
+			</div>
+
+			<p class="version-text">
 				Version {{ version }}<br />
 				Copyright &copy; {{ year }} by dav
 			</p>
 
-			<fab-primary-button
-				(onClick)="activateUpdate()"
-				*ngIf="updateAvailable"
+			<div class="search-update-container" *ngIf="searchForUpdates">
+				<dav-progress-ring size="16"></dav-progress-ring>
+				<p>{{ updateMessage }}</p>
+			</div>
+
+			<div
+				class="no-update-container"
+				[ngClass]="hideNoUpdateAvailable ? 'slide-down-out' : ''"
+				*ngIf="noUpdateAvailable"
 			>
-				{{ locale.installUpdate }}
-			</fab-primary-button>
+				<fa-icon [icon]="faCheck"></fa-icon>
+				<p>{{ locale.noUpdateAvailable }}</p>
+			</div>
+
+			<div class="update-error-container" *ngIf="updateError">
+				<p>{{ locale.updateError }}</p>
+			</div>
+
+			<dav-button
+				class="activate-update-button"
+				size="small"
+				outline
+				(click)="activateUpdate()"
+				*ngIf="dataService.updateInstalled"
+			>
+				{{ locale.activateUpdate }}
+			</dav-button>
 		</div>
 	</div>
 </div>

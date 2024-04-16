@@ -15,6 +15,7 @@ import { themeKey, lightThemeKey, darkThemeKey } from "src/app/constants"
 export class DataService {
 	dav = Dav
 	locale: string = navigator.language
+	updateInstalled: boolean = false
 
 	//#region StartPage
 	startDaysDates: number[] = [] // Contains the timestamps of the start of the days

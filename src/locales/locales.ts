@@ -165,7 +165,11 @@ const enDefaults = {
 		news: "News and updates",
 		github: "Calendo on GitHub",
 		privacy: "Privacy Policy",
-		installUpdate: "Install update"
+		updateSearch: "Searching for updates...",
+		installingUpdate: "Installing the update...",
+		updateError: "Error while installing the update",
+		noUpdateAvailable: "The app is up-to-date",
+		activateUpdate: "Activate update"
 	},
 	notifications: {
 		appointment: {
@@ -388,7 +392,11 @@ const deDefaults = {
 		news: "Neuigkeiten und Updates",
 		github: "Calendo auf GitHub",
 		privacy: "Datenschutzerklärung",
-		installUpdate: "Update installieren"
+		updateSearch: "Suche nach Updates...",
+		installingUpdate: "Update wird installiert...",
+		updateError: "Fehler beim Installieren des Updates",
+		noUpdateAvailable: "Die App ist aktuell",
+		activateUpdate: "Update aktivieren"
 	},
 	notifications: {
 		appointment: {

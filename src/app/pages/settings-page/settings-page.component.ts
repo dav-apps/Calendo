@@ -1,5 +1,6 @@
 import { Component } from "@angular/core"
-import { SwUpdate } from "@angular/service-worker"
+import { SwUpdate, VersionEvent } from "@angular/service-worker"
+import { faCheck } from "@fortawesome/pro-light-svg-icons"
 import { DropdownOption, DropdownOptionType } from "dav-ui-components"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
@@ -17,10 +18,15 @@ import {
 })
 export class SettingsPageComponent {
 	locale = this.localizationService.locale.settingsPage
+	faCheck = faCheck
 	version = version
 	year = new Date().getFullYear()
+	updateMessage: string = ""
+	searchForUpdates: boolean = false
+	updateError: boolean = false
+	noUpdateAvailable: boolean = false
+	hideNoUpdateAvailable: boolean = false
 	selectedTheme: string
-	updateAvailable: boolean = false
 	themeDropdownOptions: DropdownOption[] = [
 		{
 			key: systemThemeKey,
@@ -49,15 +55,33 @@ export class SettingsPageComponent {
 	async ngOnInit() {
 		this.selectedTheme = await this.settingsService.getTheme()
 
-		// Check for updates
-		/*
-		this.swUpdate.available.subscribe(() => {
-			this.updateAvailable = true
-		})
-		*/
+		if (this.swUpdate.isEnabled && !this.dataService.updateInstalled) {
+			// Check for updates
+			this.updateMessage = this.locale.updateSearch
+			this.searchForUpdates = true
 
-		if (this.swUpdate.isEnabled) {
-			this.swUpdate.checkForUpdate()
+			this.swUpdate.versionUpdates.subscribe((event: VersionEvent) => {
+				if (event.type == "VERSION_DETECTED") {
+					this.updateMessage = this.locale.installingUpdate
+				} else if (event.type == "VERSION_READY") {
+					this.searchForUpdates = false
+					this.dataService.updateInstalled = true
+				} else if (event.type == "NO_NEW_VERSION_DETECTED") {
+					this.searchForUpdates = false
+				} else {
+					this.searchForUpdates = false
+					this.updateError = true
+				}
+			})
+
+			if (!(await this.swUpdate.checkForUpdate())) {
+				this.searchForUpdates = false
+				this.noUpdateAvailable = true
+
+				setTimeout(() => {
+					this.hideNoUpdateAvailable = true
+				}, 3000)
+			}
 		}
 	}
 

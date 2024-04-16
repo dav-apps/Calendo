@@ -19,3 +19,54 @@ dav-header {
 	max-width: 600px;
 	margin: 0 auto;
 }
+
+.app-info-container {
+	margin: 48px auto 0;
+}
+
+.link-container {
+	display: flex;
+	flex-direction: column;
+	margin-left: -6px;
+}
+
+.version-text {
+	margin-top: 8px;
+	margin-bottom: 14px;
+	color: var(--dav-color-on-surface);
+	line-height: 20px;
+}
+
+.search-update-container {
+	display: flex;
+}
+
+.search-update-container > p {
+	color: var(--dav-color-on-surface);
+	margin: 0 0 0 14px;
+}
+
+.no-update-container {
+	display: flex;
+	align-items: center;
+	margin-bottom: 0;
+}
+
+.no-update-container > p {
+	color: var(--dav-color-on-surface);
+	margin: 0 0 0 14px;
+}
+
+.update-error-container > p {
+	margin-bottom: 0;
+	line-height: 20px;
+	color: var(--dav-color-on-surface);
+}
+
+.activate-update-button {
+	margin-top: 14px;
+}
+
+fa-icon {
+	color: var(--dav-color-on-surface);
+}
