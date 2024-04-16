@@ -6,16 +6,15 @@
 	height: 76px;
 	z-index: 5;
 	background-color: transparent;
-	padding-top: calc(
-		env(safe-area-inset-top) + var(--windows-title-bar-height)
-	);
+	padding-top: env(safe-area-inset-top);
+	padding-bottom: 0;
 }
 
 .navbar-header {
 	display: inline-flex;
 	color: var(--dav-color-on-surface);
 	background-color: transparent;
-	font-size: 26px;
+	font-size: 28px;
 	padding: 8px 16px;
 	border: none;
 	cursor: pointer;
@@ -25,11 +24,11 @@
 .navbar-header > span {
 	display: flex;
 	align-self: center;
-	margin-left: 10px;
+	margin-left: 14px;
 }
 
 .navbar-tab-bar-container {
-	display: flex;
+	display: none;
 	align-items: center;
 }
 
@@ -45,29 +44,43 @@
 }
 
 .content-container {
-	padding-top: calc(
-		(env(safe-area-inset-top) + var(--windows-title-bar-height)) + 76px
-	);
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow-x: hidden;
+	padding-top: calc(env(safe-area-inset-top) + 76px);
 	padding-bottom: calc(80px + env(safe-area-inset-bottom));
 }
 
-/*
-.default-font {
-	font-family: "Roboto", sans-serif;
+.profile-image {
+	border-radius: 50%;
 }
 
-#bottom-navigation-bar {
+.bottom-navbar {
 	position: fixed;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	height: 56px;
+	z-index: 5;
+	padding-bottom: env(safe-area-inset-bottom);
 }
 
-.bottom-navigation-button {
-	border-radius: 0px;
-	color: white;
-	background-color: var(--primary);
-	height: 56px;
+dav-navigation-bar {
+	background-color: transparent;
 }
-*/
+
+@media screen and (min-width: 640px) {
+	.navbar-tab-bar-container {
+		display: flex;
+	}
+
+	.content-container {
+		padding-bottom: 0;
+	}
+
+	.bottom-navbar {
+		display: none;
+	}
+}
