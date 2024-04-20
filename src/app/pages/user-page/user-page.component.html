@@ -1,91 +1,62 @@
-<div
-	class="container mb-4 ms-motion-slideUpIn"
-	style="padding-bottom: 56px"
-	*ngIf="!dataService.dav.isLoggedIn"
->
-	<h1 class="text-center mt-3 font-weight-light">
-		{{ locale.header }}
-	</h1>
-	<h5 class="text-center mt-4">{{ locale.text1 }}</h5>
+@if (!dataService.dav.isLoggedIn) {
+<div class="container slide-up-in">
+	<dav-header size="large">
+		{{ locale.title }}
+	</dav-header>
 
-	<div class="row mt-5">
-		<div class="col-6 col-md-4 offset-md-1 text-center">
-			<i
-				class="ms-Icon ms-Icon--Sync"
-				style="font-size: 60px"
-				aria-hidden="true"
-			></i>
-			<p class="mt-4" [style.fontSize.px]="width > 550 ? 21 : 19">
-				{{ locale.text2 }}
-			</p>
+	<h2 class="headline">
+		{{ locale.headline }}
+	</h2>
+
+	<div class="benefits-container">
+		<div class="benefit benefit-1">
+			<fa-icon [icon]="faRotateLight"></fa-icon>
+			<p>{{ locale.benefit1 }}</p>
 		</div>
 
-		<div class="col-6 col-md-4 offset-md-2 text-center">
-			<i
-				class="ms-Icon ms-Icon--Lock"
-				style="font-size: 60px"
-				aria-hidden="true"
-			></i>
-			<p class="mt-4" [style.fontSize.px]="width > 550 ? 21 : 19">
-				{{ locale.text3 }}
-			</p>
+		<div class="benefit benefit2">
+			<fa-icon [icon]="faLockLight"></fa-icon>
+			<p>{{ locale.benefit2 }}</p>
 		</div>
 	</div>
 
-	<div class="d-flex justify-content-center mt-5">
-		<a href="https://dav-apps.tech" target="blank">
+	<div class="dav-logo-container">
+		<a [href]="websiteUrl" target="_blank">
 			<img
+				class="dav-logo"
 				[src]="
 					dataService.darkTheme
 						? '/assets/images/dav-logo-white.png'
 						: '/assets/images/dav-logo.png'
 				"
-				class="align-self-center"
-				style="width: 140px"
 				alt="dav Logo"
 			/>
 		</a>
 	</div>
 
-	<div class="d-flex justify-content-center" style="margin-top: 45px">
-		<button
-			type="button"
-			class="btn btn-primary mr-2"
-			(click)="ShowLoginPage()"
-		>
+	<div class="dav-buttons-container">
+		<dav-button tonal (click)="navigateToLoginPage()">
 			{{ locale.login }}
-		</button>
-		<button
-			type="button"
-			class="btn btn-secondary ml-2"
-			(click)="ShowSignupPage()"
-		>
+		</dav-button>
+
+		<dav-button color="secondary" tonal (click)="navigateToSignupPage()">
 			{{ locale.signup }}
-		</button>
+		</dav-button>
 	</div>
 </div>
-
-<div
-	class="container mb-4 ms-motion-slideUpIn"
-	style="padding-bottom: 56px"
-	*ngIf="dataService.dav.isLoggedIn"
->
-	<h1
-		class="text-center mt-3 font-weight-light"
-		style="margin-bottom: 40px"
-	>
-		{{ locale.header }}
+} @else {
+<div class="container mb-4 ms-motion-slideUpIn" style="padding-bottom: 56px">
+	<h1 class="text-center mt-3 font-weight-light" style="margin-bottom: 40px">
+		{{ locale.title }}
 	</h1>
 
 	<div class="d-flex justify-content-center">
 		<img
 			class="rounded-circle shadow"
 			[src]="dataService.dav.user.ProfileImage"
-			[height]="width > 420 ? 150 : 130"
-			[width]="width > 420 ? 150 : 130"
 		/>
 
-		<div style="width: 200px" [style.marginLeft.px]="width > 400 ? 40 : 20">
+		<div style="width: 200px">
 			<h4 class="mb-0">
 				<a
 					href="https://dav-apps.tech/login?redirect=user"
@@ -98,8 +69,8 @@
 					dataService.dav.user.Plan == 0
 						? locale.planFree
 						: dataService.dav.user.Plan == 1
-							? locale.planPlus
-							: locale.planPro
+						? locale.planPlus
+						: locale.planPro
 				}}
 			</p>
 
@@ -140,3 +111,4 @@
 
 	<calendo-logout-modal (logout)="Logout()"></calendo-logout-modal>
 </div>
+}

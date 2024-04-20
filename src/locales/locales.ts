@@ -144,10 +144,10 @@ const enDefaults = {
 		}
 	},
 	userPage: {
-		header: "Your Account",
-		text1: "Save your calendar and access it from anywhere",
-		text2: "Access the same calendar on all your devices",
-		text3: "Make sure your todos and appointments don't get lost",
+		title: "Your Account",
+		headline: "Save your calendar and access it from anywhere",
+		benefit1: "Access the same calendar on all your devices",
+		benefit2: "Make sure your todos and appointments don't get lost",
 		login: "Log in",
 		logout: "Log out",
 		signup: "Sign up",
@@ -371,10 +371,11 @@ const deDefaults = {
 		}
 	},
 	userPage: {
-		header: "Dein Account",
-		text1: "Sichere deinen Kalender und greife von überall darauf zu",
-		text2: "Nutze den gleichen Kalender auf all deinen Geräten",
-		text3: "Stelle sicher, dass deine Termine und Todos nicht verloren gehen",
+		title: "Dein Account",
+		headline: "Sichere deinen Kalender und greife von überall darauf zu",
+		benefit1: "Nutze den gleichen Kalender auf all deinen Geräten",
+		benefit2:
+			"Stelle sicher, dass deine Termine und Todos nicht verloren gehen",
 		login: "Anmelden",
 		logout: "Abmelden",
 		signup: "Registrieren",

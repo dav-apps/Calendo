@@ -1,0 +1,60 @@
+.container {
+	padding: 16px;
+}
+
+.headline {
+	text-align: center;
+	margin-top: 2rem;
+	color: var(--dav-color-on-surface);
+	font-size: 20px;
+	font-weight: 400;
+}
+
+.dav-logo-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 3rem;
+}
+
+.dav-logo {
+	width: 140px;
+}
+
+.dav-buttons-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 45px;
+	gap: 1rem;
+}
+
+.benefits-container {
+	display: grid;
+	grid-template-columns: auto;
+	grid-template-rows: auto;
+	gap: 24px;
+	justify-items: center;
+	max-width: 1024px;
+	margin: 4rem auto 0;
+}
+
+.benefit {
+	text-align: center;
+	color: var(--dav-color-on-surface);
+	max-width: 240px;
+
+	p {
+		font-size: 22px;
+		line-height: 28px;
+		margin-top: 2rem;
+	}
+
+	fa-icon {
+		font-size: 60px;
+	}
+}
+
+@media screen and (min-width: 540px) {
+	.benefits-container {
+		grid-template-columns: auto auto;
+	}
+}

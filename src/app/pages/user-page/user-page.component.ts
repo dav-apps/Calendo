@@ -1,5 +1,8 @@
-import { Component, ViewChild, HostListener } from "@angular/core"
-import { faSync, faLock } from "@fortawesome/free-solid-svg-icons"
+import { Component, ViewChild } from "@angular/core"
+import {
+	faRotate as faRotateLight,
+	faLock as faLockLight
+} from "@fortawesome/pro-light-svg-icons"
 import { Dav } from "dav-js"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
@@ -7,32 +10,28 @@ import { environment } from "src/environments/environment"
 import { LogoutModalComponent } from "src/app/components/logout-modal/logout-modal.component"
 
 @Component({
-	templateUrl: "./user-page.component.html"
+	templateUrl: "./user-page.component.html",
+	styleUrl: "./user-page.component.scss"
 })
 export class UserPageComponent {
 	locale = this.localizationService.locale.userPage
-	faSync = faSync
-	faLock = faLock
+	faRotateLight = faRotateLight
+	faLockLight = faLockLight
 	@ViewChild(LogoutModalComponent)
 	private logoutModalComponent: LogoutModalComponent
-	width: number = window.innerWidth
+	websiteUrl = environment.websiteUrl
 
 	constructor(
 		public dataService: DataService,
 		private localizationService: LocalizationService
 	) {}
 
-	@HostListener("window:resize")
-	onResize() {
-		this.width = window.innerWidth
+	navigateToLoginPage() {
+		Dav.ShowLoginPage(environment.apiKey, window.location.origin)
 	}
 
-	ShowLoginPage() {
-		Dav.ShowLoginPage(environment.apiKey, environment.baseUrl)
-	}
-
-	ShowSignupPage() {
-		Dav.ShowSignupPage(environment.apiKey, environment.baseUrl)
+	navigateToSignupPage() {
+		Dav.ShowSignupPage(environment.apiKey, window.location.origin)
 	}
 
 	ShowLogoutModal() {

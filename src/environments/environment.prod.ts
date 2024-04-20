@@ -1,7 +1,7 @@
 export const environment = {
 	production: true,
 	apiKey: "gHgHKRbIjdguCM4cv5481hdiF5hZGWZ4x12Ur-7v",
-	baseUrl: "https://calendo.dav-apps.tech",
+	websiteUrl: "https://dav-apps.tech",
 	appId: 5,
 	todoListTableId: 13,
 	todoTableId: 10,
