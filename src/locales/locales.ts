@@ -143,7 +143,7 @@ const enDefaults = {
 			date: "L"
 		}
 	},
-	accountPage: {
+	userPage: {
 		header: "Your Account",
 		text1: "Save your calendar and access it from anywhere",
 		text2: "Access the same calendar on all your devices",
@@ -370,7 +370,7 @@ const deDefaults = {
 			date: "L"
 		}
 	},
-	accountPage: {
+	userPage: {
 		header: "Dein Account",
 		text1: "Sichere deinen Kalender und greife von überall darauf zu",
 		text2: "Nutze den gleichen Kalender auf all deinen Geräten",

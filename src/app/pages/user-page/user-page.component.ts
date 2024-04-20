@@ -10,7 +10,7 @@ import { LogoutModalComponent } from "src/app/components/logout-modal/logout-mod
 	templateUrl: "./user-page.component.html"
 })
 export class UserPageComponent {
-	locale = this.localizationService.locale.accountPage
+	locale = this.localizationService.locale.userPage
 	faSync = faSync
 	faLock = faLock
 	@ViewChild(LogoutModalComponent)
