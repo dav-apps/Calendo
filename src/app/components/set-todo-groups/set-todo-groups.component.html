@@ -1,8 +1,8 @@
 <div style="width: 282px">
 	<div class="form-group">
-		<label for="new-group-name" class="col-form-label text-color">{{
-			locale.addNewGroup
-		}}</label>
+		<label for="new-group-name" class="col-form-label">
+			{{ locale.addNewGroup }}
+		</label>
 
 		<div class="d-flex">
 			<fab-text-field
@@ -35,9 +35,9 @@
 		>
 			{{ locale.addExistingGroup }}
 		</button>
-		<div ngbDropdownMenu class="theme-background-color-tertiary ms-depth-4">
+		<div ngbDropdownMenu class="ms-depth-4">
 			<button
-				class="dropdown-item text-color cursor"
+				class="cursor"
 				(click)="AddGroup(groupName)"
 				*ngFor="let groupName of existingGroups"
 			>

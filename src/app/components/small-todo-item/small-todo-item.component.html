@@ -1,5 +1,5 @@
 <div
-	class="border rounded d-inline-flex align-items-center pl-2 pr-2 mb-2 mr-2 theme-background-color-secondary"
+	class="border rounded d-inline-flex align-items-center pl-2 pr-2 mb-2 mr-2"
 	[ngClass]="dataService.darkTheme ? 'border-dark' : ''"
 	style="min-height: 35px"
 >
@@ -10,7 +10,7 @@
 		></fab-checkbox>
 	</div>
 	<label
-		class="col-form-label mx-3 text-color cursor ms-fontSize-14"
+		class="col-form-label mx-3 cursor ms-fontSize-14"
 		[ngClass]="todo.completed ? 'strikethrough' : ''"
 		(click)="ToggleCheckbox()"
 	>
@@ -32,7 +32,6 @@
 	>
 		<fa-icon
 			[icon]="faTimes"
-			class="text-color"
 			style="font-size: 15px; display: block"
 		></fa-icon>
 	</button>

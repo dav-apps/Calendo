@@ -1,5 +1,5 @@
 <div
-	class="border rounded d-inline-flex align-items-center pl-2 pr-2 mb-2 mr-2 theme-background-color-secondary cursor"
+	class="border rounded d-inline-flex align-items-center pl-2 pr-2 mb-2 mr-2 cursor"
 	[ngClass]="dataService.darkTheme ? 'border-dark' : ''"
 	style="min-height: 35px; user-select: none"
 	(click)="ShowDetails()"
@@ -11,12 +11,12 @@
 	>
 		<fab-icon iconName="Accept" [styles]="iconStyles"></fab-icon>
 	</span>
-	<span class="cursor" style="font-size: 14px; color: gray"
-		>{{ completedTodos }}/{{ totalTodos }}</span
-	>
+	<span class="cursor" style="font-size: 14px; color: gray">
+		{{ completedTodos }}/{{ totalTodos }}
+	</span>
 
 	<label class="col-form-label ms-fontSize-14 ml-3 cursor">
-		<span class="text-color mr-2">{{ todoList.name }}</span>
+		<span class="mr-2">{{ todoList.name }}</span>
 		<calendo-todo-group-badge
 			*ngFor="let todoGroup of todoList.groups"
 			[groupName]="todoGroup"

@@ -1,6 +1,6 @@
 <div class="container-fluid ms-motion-slideUpIn" style="padding-bottom: 56px">
 	<h1
-		class="text-center mt-3 text-color font-weight-light"
+		class="text-center mt-3 font-weight-light"
 		ngbDropdown
 		placement="bottom-right"
 	>
@@ -14,10 +14,10 @@
 		</button>
 		<div
 			ngbDropdownMenu
-			class="theme-background-color-tertiary ms-depth-4 ms-motion-slideDownIn"
+			class="ms-depth-4 ms-motion-slideDownIn"
 		>
 			<button
-				class="dropdown-item text-color cursor"
+				class="cursor"
 				(click)="SortByGroupOrDate()"
 			>
 				{{
@@ -27,13 +27,13 @@
 				}}
 			</button>
 			<button
-				class="dropdown-item text-color cursor"
+				class="cursor"
 				(click)="ShowNewTodoModal()"
 			>
 				{{ locale.newTodo }}
 			</button>
 			<button
-				class="dropdown-item text-color cursor"
+				class="cursor"
 				(click)="ShowNewTodoListModal()"
 			>
 				{{ locale.newTodoList }}
@@ -42,7 +42,7 @@
 	</h1>
 
 	<p
-		class="no-items-message font-weight-light text-center mt-3 text-color"
+		class="no-items-message font-weight-light text-center mt-3"
 		*ngIf="
 			dataService.todosWithoutDate.todos.length == 0 &&
 			dataService.todosWithoutDate.todoLists.length == 0 &&
@@ -58,7 +58,7 @@
 	<div class="row">
 		<!-- Sort by date -->
 		<div
-			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4"
+			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 ms-depth-4"
 			*ngIf="
 				dataService.todosWithoutDate.todos.length > 0 ||
 				dataService.todosWithoutDate.todoLists.length > 0
@@ -78,7 +78,7 @@
 		</div>
 
 		<div
-			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4"
+			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 ms-depth-4"
 			*ngFor="let todoDay of dataService.todoDays"
 			[ngClass]="
 				todoDay.todos.length > 0 || todoDay.todoLists.length > 0
@@ -88,7 +88,7 @@
 		>
 			<div class="card-body">
 				<h5
-					class="card-title text-color"
+					class="card-title"
 					*ngIf="todoDay.todos.length > 0 || todoDay.todoLists.length > 0"
 				>
 					<span (click)="ShowCalendarDay(todoDay.timestamp)">
@@ -112,7 +112,7 @@
 
 		<!-- Sort by group -->
 		<div
-			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4"
+			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 ms-depth-4"
 			*ngIf="
 				dataService.todosWithoutGroup.length > 0 ||
 				dataService.todoListsWithoutGroup.length > 0
@@ -133,7 +133,7 @@
 		</div>
 
 		<div
-			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 theme-background-color-secondary ms-depth-4"
+			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 ms-depth-4"
 			*ngFor="let todoGroup of dataService.todoGroups"
 			[ngClass]="
 				todoGroup.todos.length > 0 || todoGroup.todoLists.length > 0
@@ -143,7 +143,7 @@
 		>
 			<div class="card-body">
 				<h5
-					class="card-title text-color"
+					class="card-title"
 					*ngIf="
 						todoGroup.todos.length > 0 || todoGroup.todoLists.length > 0
 					"

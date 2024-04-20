@@ -1,5 +1,5 @@
 <li
-	class="list-group-item d-flex align-items-center theme-background-color-secondary"
+	class="list-group-item d-flex align-items-center"
 	style="padding: 10px 0px 10px 10px"
 >
 	<div style="margin-bottom: -8px">
@@ -9,7 +9,7 @@
 		></fab-checkbox>
 	</div>
 	<label
-		class="ml-3 mr-3 col-form-label text-color cursor ms-fontSize-14"
+		class="ml-3 mr-3 col-form-label cursor ms-fontSize-14"
 		[ngClass]="todo.completed ? 'strikethrough' : ''"
 		style="user-select: none"
 		(click)="ToggleCheckbox()"
@@ -32,7 +32,6 @@
 	>
 		<fa-icon
 			[icon]="faTimes"
-			class="text-color"
 			style="font-size: 16px; display: block"
 		></fa-icon>
 	</button>

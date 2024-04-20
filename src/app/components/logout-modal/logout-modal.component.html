@@ -1,23 +1,23 @@
 <ng-template #logoutModal let-c="close" let-d="dismiss">
 	<div
-		class="modal-header theme-background-color-primary"
+		class="modal-header"
 		[ngClass]="dataService.darkTheme ? 'border-dark' : ''"
 	>
-		<h4 class="modal-title text-color">{{ locale.header }}</h4>
+		<h4 class="modal-title">{{ locale.header }}</h4>
 		<button
 			type="button"
 			class="close"
 			aria-label="Close"
 			(click)="d('Cross click')"
 		>
-			<span aria-hidden="true" class="text-color">&times;</span>
+			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
-	<div class="modal-body theme-background-color-primary text-color">
+	<div class="modal-body">
 		<p>{{ locale.message }}</p>
 	</div>
 	<div
-		class="modal-footer theme-background-color-primary"
+		class="modal-footer"
 		[ngClass]="dataService.darkTheme ? 'border-dark' : ''"
 	>
 		<button type="button" class="btn btn-secondary" (click)="d()">

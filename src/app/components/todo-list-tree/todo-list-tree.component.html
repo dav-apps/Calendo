@@ -3,17 +3,8 @@
 		[dataSource]="dataSource"
 		[treeControl]="treeControl"
 		[dragula]="showRoot ? '' : 'todoList'"
-		class="theme-background-color-primary"
 	>
-		<mat-tree-node
-			*matTreeNodeDef="let node"
-			[ngClass]="
-				showRoot
-					? 'theme-background-color-secondary'
-					: 'theme-background-color-primary'
-			"
-			[id]="node.uuid"
-		>
+		<mat-tree-node *matTreeNodeDef="let node" [id]="node.uuid">
 			<!-- Normal todo -->
 			<ng-container *ngIf="!node.newTodo && !node.newTodoList">
 				<div style="margin-bottom: -8px; margin-left: 5px">
@@ -23,7 +14,7 @@
 					></fab-checkbox>
 				</div>
 				<label
-					class="ml-2 col-form-label text-color cursor ms-fontSize-14"
+					class="ml-2 col-form-label cursor ms-fontSize-14"
 					[ngClass]="node.completed ? 'strikethrough' : ''"
 					style="user-select: none"
 					(click)="ToggleTodoCheckbox(node.uuid)"
@@ -41,7 +32,6 @@
 				>
 					<fa-icon
 						[icon]="faTimes"
-						class="text-color"
 						style="font-size: 15px; display: block"
 					></fa-icon>
 				</button>
@@ -63,7 +53,7 @@
 				</button>
 				<button
 					type="button"
-					class="btn btn-sm ml-2 text-color theme-background-color-primary theme-border-color-primary icon-button"
+					class="btn btn-sm ml-2"
 					style="padding: 5px 8px 3px 8px"
 					(click)="RemoveAllInputNodes()"
 				>
@@ -87,7 +77,7 @@
 				</button>
 				<button
 					type="button"
-					class="btn btn-sm ml-2 text-color theme-background-color-primary theme-border-color-primary icon-button"
+					class="btn btn-sm ml-2"
 					style="padding: 5px 8px 3px 8px"
 					(click)="RemoveAllInputNodes()"
 				>
@@ -98,25 +88,12 @@
 
 		<mat-nested-tree-node
 			*matTreeNodeDef="let node; when: hasNestedChild"
-			[ngClass]="
-				showRoot
-					? 'theme-background-color-secondary'
-					: 'theme-background-color-primary'
-			"
 			[id]="node.uuid"
 		>
-			<div
-				class="d-flex"
-				[ngClass]="
-					showRoot
-						? 'theme-background-color-secondary'
-						: 'theme-background-color-primary'
-				"
-			>
+			<div class="d-flex">
 				<button
 					mat-icon-button
 					matTreeNodeToggle
-					class="text-color"
 					style="height: 35px; width: 35px; outline: none"
 				>
 					<fab-icon
@@ -151,7 +128,7 @@
 				</span>
 
 				<span
-					class="cursor my-auto text-color ml-3"
+					class="cursor my-auto ml-3"
 					style="user-select: none"
 					matTreeNodeToggle
 					*ngIf="!node.editTodoList"
@@ -174,7 +151,7 @@
 				>
 					<button
 						type="button"
-						class="btn ml-2 text-color theme-background-color-primary theme-border-color-primary icon-button"
+						class="btn ml-2"
 						style="height: 30px; width: 30px; padding: 2px 0px 0px 0px"
 						ngbDropdownToggle
 						*ngIf="!readonly"
@@ -184,16 +161,16 @@
 
 					<div
 						ngbDropdownMenu
-						class="theme-background-color-tertiary ms-depth-4 ms-motion-slideUpIn"
+						class="ms-depth-4 ms-motion-slideUpIn"
 					>
 						<button
-							class="dropdown-item text-color cursor"
+							class="cursor"
 							(click)="AddInputToTodoList(node, false)"
 						>
 							{{ locale.newTodo }}
 						</button>
 						<button
-							class="dropdown-item text-color cursor"
+							class="cursor"
 							(click)="AddInputToTodoList(node, true)"
 						>
 							{{ locale.newTodoList }}
@@ -210,7 +187,7 @@
 				>
 					<button
 						type="button"
-						class="btn ml-2 text-color theme-background-color-primary theme-border-color-primary icon-button"
+						class="btn ml-2"
 						style="height: 30px; width: 30px; padding: 2px 0px 0px 0px"
 						ngbDropdownToggle
 						*ngIf="!readonly"
@@ -220,16 +197,16 @@
 
 					<div
 						ngbDropdownMenu
-						class="theme-background-color-tertiary ms-depth-4 ms-motion-slideUpIn"
+						class="ms-depth-4 ms-motion-slideUpIn"
 					>
 						<button
-							class="dropdown-item text-color cursor"
+							class="cursor"
 							(click)="EditTodoList(node)"
 						>
 							{{ locale.rename }}
 						</button>
 						<button
-							class="dropdown-item text-color cursor"
+							class="cursor"
 							(click)="ShowDeleteTodoListModal(node)"
 						>
 							{{ locale.delete }}
@@ -256,11 +233,6 @@
 			</div>
 
 			<div
-				[ngClass]="
-					showRoot
-						? 'theme-background-color-secondary'
-						: 'theme-background-color-primary'
-				"
 				style="padding-left: 25px"
 				[style.display]="treeControl.isExpanded(node) ? '' : 'none'"
 				[dragula]="showRoot ? null : 'todoList'"

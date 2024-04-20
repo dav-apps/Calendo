@@ -3,13 +3,13 @@
 	style="padding-bottom: 56px"
 	*ngIf="!dataService.dav.isLoggedIn"
 >
-	<h1 class="text-center mt-3 text-color font-weight-light">
+	<h1 class="text-center mt-3 font-weight-light">
 		{{ locale.header }}
 	</h1>
-	<h5 class="text-center mt-4 text-color">{{ locale.text1 }}</h5>
+	<h5 class="text-center mt-4">{{ locale.text1 }}</h5>
 
 	<div class="row mt-5">
-		<div class="col-6 col-md-4 offset-md-1 text-center text-color">
+		<div class="col-6 col-md-4 offset-md-1 text-center">
 			<i
 				class="ms-Icon ms-Icon--Sync"
 				style="font-size: 60px"
@@ -20,7 +20,7 @@
 			</p>
 		</div>
 
-		<div class="col-6 col-md-4 offset-md-2 text-center text-color">
+		<div class="col-6 col-md-4 offset-md-2 text-center">
 			<i
 				class="ms-Icon ms-Icon--Lock"
 				style="font-size: 60px"
@@ -71,7 +71,7 @@
 	*ngIf="dataService.dav.isLoggedIn"
 >
 	<h1
-		class="text-center mt-3 text-color font-weight-light"
+		class="text-center mt-3 font-weight-light"
 		style="margin-bottom: 40px"
 	>
 		{{ locale.header }}
@@ -86,9 +86,8 @@
 		/>
 
 		<div style="width: 200px" [style.marginLeft.px]="width > 400 ? 40 : 20">
-			<h4 class="text-color mb-0">
+			<h4 class="mb-0">
 				<a
-					class="text-color"
 					href="https://dav-apps.tech/login?redirect=user"
 					target="blank"
 					>{{ dataService.dav.user.FirstName }}</a
@@ -115,7 +114,7 @@
 				></div>
 			</div>
 
-			<p class="mt-2 text-color" style="margin-bottom: 2px">
+			<p class="mt-2" style="margin-bottom: 2px">
 				{{
 					locale.storageUsed
 						.replace(

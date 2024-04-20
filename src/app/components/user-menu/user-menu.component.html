@@ -14,20 +14,20 @@
 	<div
 		ngbDropdownMenu
 		aria-labelledby="user-menu-dropdown"
-		class="theme-background-color-tertiary ms-depth-4 ms-motion-slideDownIn"
+		class="ms-depth-4 ms-motion-slideDownIn"
 	>
 		<p
 			*ngIf="dataService.dav.isLoggedIn"
-			class="font-weight-light my-auto py-1 text-color"
+			class="font-weight-light my-auto py-1"
 			style="font-size: 16px; margin-left: 23px"
 		>
 			{{ dataService.dav.user.FirstName }}
 		</p>
 		<div class="dropdown-divider" *ngIf="dataService.dav.isLoggedIn"></div>
-		<button class="dropdown-item text-color cursor" routerLink="/account">
+		<button class="cursor" routerLink="/account">
 			{{ locale.account }}
 		</button>
-		<button class="dropdown-item text-color cursor" routerLink="/settings">
+		<button class="cursor" routerLink="/settings">
 			{{ locale.settings }}
 		</button>
 	</div>

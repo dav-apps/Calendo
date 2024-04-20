@@ -1,5 +1,5 @@
 <li
-	class="list-group-item theme-background-color-secondary d-flex"
+	class="list-group-item d-flex"
 	style="padding: 10px 0px 10px 10px"
 >
 	<label class="col-form-label d-flex">
@@ -17,7 +17,7 @@
 			*ngIf="!appointment.allday"
 			class="appointment-item-{{
 				appointment.uuid
-			}} mr-2 text-color ms-fontSize-14"
+			}} mr-2 ms-fontSize-14"
 			style="margin-top: -8px"
 		>
 			<span class="font-italic position-absolute">{{
@@ -29,7 +29,7 @@
 			}}</span>
 		</div>
 		<span
-			class="text-color my-auto"
+			class="my-auto"
 			[ngClass]="appointment.allday ? '' : 'ml-5'"
 			>{{ appointment.name }}</span
 		>
@@ -42,12 +42,12 @@
 
 		<div
 			ngbDropdownMenu
-			class="theme-background-color-tertiary ms-depth-4 ms-motion-slideDownIn"
+			class="ms-depth-4 ms-motion-slideDownIn"
 		>
-			<button class="dropdown-item text-color cursor" (click)="Edit()">
+			<button class="cursor" (click)="Edit()">
 				{{ locale.edit }}
 			</button>
-			<button class="dropdown-item text-color cursor" (click)="Delete()">
+			<button class="cursor" (click)="Delete()">
 				{{ locale.delete }}
 			</button>
 		</div>

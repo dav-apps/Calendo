@@ -1,9 +1,9 @@
 <div (window:resize)="onResize()">
 	<div id="calendar-top-bar">
-		<h3 class="mt-2 ml-3 text-color" style="font-weight: 300">
+		<h3 class="mt-2 ml-3" style="font-weight: 300">
 			<button
 				id="calendar-show-previous-button"
-				class="btn theme-background-color-secondary text-color icon-button"
+				class="btn"
 				*ngIf="!showMobileLayout"
 				(click)="ShowPrevious()"
 				type="button"
@@ -17,7 +17,7 @@
 			</button>
 			<button
 				id="calendar-show-next-button"
-				class="btn theme-background-color-secondary text-color icon-button ml-2 mr-3"
+				class="btn ml-2 mr-3"
 				*ngIf="!showMobileLayout"
 				(click)="ShowNext()"
 				type="button"
@@ -39,7 +39,7 @@
 			*ngFor="let day of weekDayLabels; let i = index"
 			[style.margin-left.px]="calendarDayWidth * i"
 		>
-			<span class="font-weight-light text-color">{{ day }}</span>
+			<span class="font-weight-light">{{ day }}</span>
 			<br />
 			<span
 				[style.background-color]="
@@ -52,7 +52,7 @@
 				[style.padding-left.px]="currentDayOfWeek == i ? 2 : 0"
 				[style.padding-right.px]="currentDayOfWeek == i ? 2 : 0"
 				(click)="goToWeekday(i)"
-				class="text-color cursor"
+				class="cursor"
 				*ngIf="showMobileLayout"
 			>
 				{{ currentWeekDays[i] }}
@@ -82,7 +82,7 @@
 				[style.background-color]="getDayBackgroundColor(i, j)"
 				(click)="dayClicked(date)"
 			>
-				<span class="text-color">{{ getDayOfDate(date) }}</span>
+				<span>{{ getDayOfDate(date) }}</span>
 
 				<!-- Render todos -->
 				<span
@@ -124,21 +124,12 @@
 	>
 		<div
 			class="border"
-			[ngClass]="
-				isTimestampToday(date)
-					? dataService.darkTheme
-						? 'border-dark theme-background-color-primary'
-						: 'light-theme-calendar-day'
-					: dataService.darkTheme
-					? 'border-dark theme-background-color-secondary'
-					: 'theme-background-color-primary'
-			"
 			*ngFor="let date of dataService.mobileCalendarDaysDates; let i = index"
 			[style.height.px]="calendarDayHeight"
 			style="position: relative"
 			(click)="dayClicked(date)"
 		>
-			<span class="text-color">{{ getFullDayOfDate(date) }}</span>
+			<span>{{ getFullDayOfDate(date) }}</span>
 
 			<!-- Render todos -->
 			<span

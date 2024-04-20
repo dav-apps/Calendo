@@ -1,20 +1,20 @@
 <ng-template #createTodoModal let-c="close" let-d="dismiss">
 	<div
-		class="modal-header theme-background-color-primary"
+		class="modal-header"
 		[ngClass]="dataService.darkTheme ? 'border-dark' : ''"
 	>
-		<h4 class="modal-title text-color">{{ locale.header }}</h4>
+		<h4 class="modal-title">{{ locale.header }}</h4>
 		<button
 			type="button"
 			class="close"
 			aria-label="Close"
 			(click)="d('Cross click')"
 		>
-			<span aria-hidden="true" class="text-color">&times;</span>
+			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
-	<div class="modal-body row theme-background-color-primary mx-0">
-		<div class="mx-auto mb-4 px-4 text-color">
+	<div class="modal-body row mx-0">
+		<div class="mx-auto mb-4 px-4">
 			<!-- Set Date checkbox -->
 			<div class="mb-1">
 				<div class="d-inline-flex">
@@ -23,7 +23,7 @@
 						[checked]="newTodoSetDateCheckboxChecked"
 					></fab-checkbox>
 					<label
-						class="col-form-label ml-2 text-color cursor ms-fontSize-14"
+						class="col-form-label ml-2 cursor ms-fontSize-14"
 						style="margin-top: -8px"
 						(click)="ToggleSetDateCheckbox()"
 					>
@@ -40,7 +40,7 @@
 			></ngb-datepicker>
 		</div>
 		<div
-			class="mx-auto mb-4 text-color"
+			class="mx-auto mb-4"
 			style="padding: 0px 60px"
 			[style.display]="showReminderOption ? 'block' : 'none'"
 		>
@@ -54,7 +54,7 @@
 				></fab-checkbox>
 
 				<label
-					class="col-form-label ml-2 text-color ms-fontSize-14"
+					class="col-form-label ml-2 ms-fontSize-14"
 					[ngClass]="newTodoSetDateCheckboxChecked ? 'cursor' : ''"
 					style="margin-top: -8px"
 					(click)="ToggleReminderCheckbox()"
@@ -86,7 +86,7 @@
 		</div>
 	</div>
 	<div
-		class="modal-footer theme-background-color-primary"
+		class="modal-footer"
 		[ngClass]="dataService.darkTheme ? 'border-dark' : ''"
 	>
 		<button

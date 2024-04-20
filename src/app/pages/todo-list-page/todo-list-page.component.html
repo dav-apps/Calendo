@@ -2,18 +2,18 @@
 	<div class="d-flex my-3">
 		<button
 			type="button"
-			class="btn my-auto text-color icon-button"
+			class="btn my-auto"
 			style="height: 30px; width: 35px; padding: 2px 0px 0px 0px"
 			(click)="GoBack()"
 		>
 			<fab-icon iconName="Back"></fab-icon>
 		</button>
-		<h4 class="text-color my-auto ml-3 font-weight-light">
+		<h4 class="my-auto ml-3 font-weight-light">
 			{{ todoList.name }}
 		</h4>
 		<button
 			type="button"
-			class="btn ml-3 text-color icon-button"
+			class="btn ml-3"
 			style="padding: 3px 6px"
 			(click)="ShowEditModal()"
 		>
@@ -21,7 +21,7 @@
 		</button>
 		<button
 			type="button"
-			class="btn ml-2 text-color icon-button"
+			class="btn ml-2"
 			style="padding: 3px 6px"
 			(click)="ShowDeleteModal()"
 		>
@@ -30,11 +30,11 @@
 	</div>
 	<div class="mx-0 pt-3 border-top">
 		<!-- Todo List metadata -->
-		<p class="text-color" *ngIf="todoList.time != 0">
+		<p *ngIf="todoList.time != 0">
 			{{ locale.date }}<span class="ml-2">{{ date }}</span>
 		</p>
 		<p style="margin-bottom: 4px" *ngIf="todoList.groups.length > 0">
-			<span class="text-color">{{ locale.groups }}</span>
+			<span>{{ locale.groups }}</span>
 			<span class="ml-2">
 				<calendo-todo-group-badge
 					*ngFor="let todoGroup of todoList.groups"
@@ -45,14 +45,14 @@
 
 		<!-- Todos list -->
 		<div class="d-flex" style="height: 40px">
-			<p class="ms-fontSize-18 mt-2 text-color">
+			<p class="ms-fontSize-18 mt-2">
 				{{ locale.todos }}
 			</p>
 
 			<div ngbDropdown placement="top-left" style="margin-top: 7px">
 				<button
 					type="button"
-					class="btn ml-2 text-color theme-border-color-primary icon-button"
+					class="btn ml-2"
 					style="height: 30px; width: 30px; padding: 2px 0px 0px 0px"
 					ngbDropdownToggle
 				>
@@ -61,10 +61,10 @@
 
 				<div
 					ngbDropdownMenu
-					class="theme-background-color-tertiary ms-depth-4 ms-motion-slideUpIn"
+					class="ms-depth-4 ms-motion-slideUpIn"
 				>
 					<button
-						class="dropdown-item text-color cursor"
+						class="cursor"
 						(click)="
 							todoListTree.AddInputToTodoList(
 								todoListTree.rootTodoItem,
@@ -75,7 +75,7 @@
 						{{ locale.newTodo }}
 					</button>
 					<button
-						class="dropdown-item text-color cursor"
+						class="cursor"
 						(click)="
 							todoListTree.AddInputToTodoList(
 								todoListTree.rootTodoItem,
