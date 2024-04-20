@@ -530,112 +530,43 @@ body {
 }
 
 // OLD
-:root {
-	--primary: #007bff;
-	--white: #ffffff;
-	--black: #000000;
-	--light-theme-color-primary: #ffffff;
-	--light-theme-color-secondary: #ffffff;
-	--light-theme-color-tertiary: #ffffff;
-	--light-theme-hover-background-color: #f8f9fa;
-	--dark-theme-color-primary: #15202b;
-	--dark-theme-color-secondary: #1c2938;
-	--dark-theme-color-tertiary: #3d4753;
-	--dark-theme-hover-background-color: #232e3c;
-
-	--theme-color-primary: var(
-		--light-theme-color-primary
-	); // Main background color
-	--theme-color-secondary: var(
-		--light-theme-color-secondary
-	); // Background color for specific elements
-	--theme-color-tertiary: var(
-		--light-theme-color-tertiary
-	); // Background color for dropdown menus
-	--hover-background-color: var(--light-theme-hover-background-color);
-	--text-color: var(--black);
-}
-
-[theme="dark"] {
-	--theme-color-primary: var(--dark-theme-color-primary);
-	--theme-color-secondary: var(--dark-theme-color-secondary);
-	--theme-color-tertiary: var(--dark-theme-color-tertiary);
-	--hover-background-color: var(--dark-theme-hover-background-color);
-	--text-color: var(--white);
-}
-
-#root {
-	background-color: var(--theme-color-primary);
-	min-height: 100vh;
-	height: fit-content;
-	overflow: hidden;
-}
-
-.theme-background-color-primary {
-	background-color: var(--theme-color-primary);
-}
-
 .theme-background-color-secondary {
-	background-color: var(--theme-color-secondary);
 }
 
 .theme-background-color-tertiary {
-	background-color: var(--theme-color-tertiary);
-}
-
-.theme-color-primary {
-	color: var(--theme-color-primary);
 }
 
 .theme-color-secondary {
-	color: var(--theme-color-secondary);
 }
 
 .theme-color-tertiary {
-	color: var(--theme-color-tertiary);
-}
-
-.theme-border-color-primary {
-	border-color: var(--theme-color-primary);
 }
 
 .theme-border-color-secondary {
-	border-color: var(--theme-color-secondary);
 }
 
 .theme-border-color-tertiary {
-	border-color: var(--theme-color-tertiary);
 }
 
 .dropdown-item {
-	user-select: none;
 }
 
 .dropdown-item:hover {
-	background-color: var(--hover-background-color);
-	color: var(--text-color);
 }
 
 .dropdown-toggle::after {
-	display: none;
 }
 
 .dropup .dropdown-toggle::after {
-	display: none;
 }
 
 .text-color {
-	color: var(--text-color);
 }
 
 .hidden {
-	display: none;
 }
 
 .icon-button:hover {
-	background-color: var(--hover-background-color);
-	color: var(--text-color);
-	border-color: var(--hover-background-color);
 }
 // OLD END
 
