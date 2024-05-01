@@ -1,8 +1,9 @@
-import { Component, ViewChild } from "@angular/core"
+import { Component, ViewChild, HostListener } from "@angular/core"
 import { Router } from "@angular/router"
 import * as moment from "moment"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
+import { CreateAppointmentDialogComponent } from "src/app/dialogs/create-appointment-dialog/create-appointment-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { NewTodoModalComponent } from "src/app/components/new-todo-modal/new-todo-modal.component"
@@ -13,7 +14,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
 @Component({
-	templateUrl: "./start-page.component.html"
+	templateUrl: "./start-page.component.html",
+	styleUrl: "./start-page.component.scss"
 })
 export class StartPageComponent {
 	locale = this.localizationService.locale.startPage
@@ -31,6 +33,11 @@ export class StartPageComponent {
 	largeDateFontSize: number = 24
 	smallDateFontSize: number = 16
 
+	//#region CreateAppointmentDialog
+	@ViewChild("createAppointmentDialog")
+	createAppointmentDialog: CreateAppointmentDialogComponent
+	//#endregion
+
 	constructor(
 		public dataService: DataService,
 		private localizationService: LocalizationService,
@@ -45,6 +52,12 @@ export class StartPageComponent {
 
 	ngOnInit() {
 		this.setSize()
+	}
+
+	@HostListener("window:resize")
+	setSize() {
+		this.largeDateFontSize = window.innerWidth < 450 ? 21 : 24
+		this.smallDateFontSize = window.innerWidth < 450 ? 15 : 16
 	}
 
 	public async DeleteTodo(todo: Todo) {
@@ -85,7 +98,7 @@ export class StartPageComponent {
 		switch (index) {
 			case 0:
 				// Show the appointment modal
-				this.newAppointmentModalComponent.Show()
+				this.createAppointmentDialog.show()
 				break
 			case 1:
 				// Show the todo modal
@@ -155,14 +168,5 @@ export class StartPageComponent {
 			})
 
 		this.dataService.AdaptSnackbarPosition()
-	}
-
-	onResize() {
-		this.setSize()
-	}
-
-	setSize() {
-		this.largeDateFontSize = window.innerWidth < 450 ? 21 : 24
-		this.smallDateFontSize = window.innerWidth < 450 ? 15 : 16
 	}
 }
