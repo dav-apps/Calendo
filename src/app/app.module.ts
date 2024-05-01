@@ -42,6 +42,9 @@ import { SetNameComponent } from "./components/set-name/set-name.component"
 import { TodoListTreeComponent } from "./components/todo-list-tree/todo-list-tree.component"
 import { environment } from "src/environments/environment"
 
+// Dialogs
+import { CreateAppointmentDialogComponent } from "./dialogs/create-appointment-dialog/create-appointment-dialog.component"
+
 // Services
 import { DataService } from "./services/data-service"
 import { LocalizationService } from "./services/localization-service"
@@ -76,7 +79,9 @@ import { SettingsService } from "./services/settings-service"
 		TodoGroupBadgeComponent,
 		SetTodoGroupsComponent,
 		SetNameComponent,
-		TodoListTreeComponent
+		TodoListTreeComponent,
+		// Dialogs
+		CreateAppointmentDialogComponent
 	],
 	imports: [
 		BrowserModule,

@@ -188,6 +188,16 @@ const enDefaults = {
 		todoListCreated: "Todo list was created",
 		appointmentCreated: "Appointment was created",
 		show: "Show"
+	},
+	dialogs: {
+		createAppointmentDialog: {
+			headline: "Create appointment",
+			nameTextfieldLabel: "Name"
+		}
+	},
+	actions: {
+		create: "Create",
+		cancel: "Cancel"
 	}
 }
 
@@ -416,6 +426,16 @@ const deDefaults = {
 		todoListCreated: "Todo-Liste wurde erstellt",
 		appointmentCreated: "Termin wurde erstellt",
 		show: "Anzeigen"
+	},
+	dialogs: {
+		createAppointmentDialog: {
+			headline: "Termin erstellen",
+			nameTextfieldLabel: "Name"
+		}
+	},
+	actions: {
+		create: "Erstellen",
+		cancel: "Abbrechen"
 	}
 }
 
