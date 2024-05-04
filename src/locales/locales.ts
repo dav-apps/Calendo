@@ -195,11 +195,16 @@ const enDefaults = {
 		createTodoDialog: {
 			headline: "Create todo",
 			nameTextfieldLabel: "Name"
+		},
+		deleteAppointmentDialog: {
+			headline: "Delete appointment",
+			description: "Are you sure you want to delete this appointment?"
 		}
 	},
 	actions: {
 		create: "Create",
-		cancel: "Cancel"
+		cancel: "Cancel",
+		delete: "Delete"
 	}
 }
 
@@ -435,11 +440,17 @@ const deDefaults = {
 		createTodoDialog: {
 			headline: "Todo erstellen",
 			nameTextfieldLabel: "Name"
+		},
+		deleteAppointmentDialog: {
+			headline: "Termin löschen",
+			description:
+				"Bist du dir sicher, dass du diesen Termin löschen möchtest?"
 		}
 	},
 	actions: {
 		create: "Erstellen",
-		cancel: "Abbrechen"
+		cancel: "Abbrechen",
+		delete: "Löschen"
 	}
 }
 
