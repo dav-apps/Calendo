@@ -192,12 +192,17 @@ const enDefaults = {
 		deleteAppointmentDialog: {
 			headline: "Delete appointment",
 			description: "Are you sure you want to delete this appointment?"
+		},
+		logoutDialog: {
+			headline: "Log out",
+			description: "Are you sure you want to log out?"
 		}
 	},
 	actions: {
 		create: "Create",
 		cancel: "Cancel",
-		delete: "Delete"
+		delete: "Delete",
+		logout: "Log out"
 	}
 }
 
@@ -431,12 +436,17 @@ const deDefaults = {
 			headline: "Termin löschen",
 			description:
 				"Bist du dir sicher, dass du diesen Termin löschen möchtest?"
+		},
+		logoutDialog: {
+			headline: "Abmelden",
+			description: "Bist du dir sicher, dass du dich abmelden möchtest?"
 		}
 	},
 	actions: {
 		create: "Erstellen",
 		cancel: "Abbrechen",
-		delete: "Löschen"
+		delete: "Löschen",
+		logout: "Abmelden"
 	}
 }
 

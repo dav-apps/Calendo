@@ -1,0 +1,14 @@
+<dav-dialog
+	#dialog
+	[headline]="locale.headline"
+	[primaryButtonText]="actionsLocale.logout"
+	primaryButtonColor="error"
+	[defaultButtonText]="actionsLocale.cancel"
+	[visible]="visible"
+	maxWidth="340"
+	(dismiss)="visible = false"
+	(primaryButtonClick)="primaryButtonClick.emit()"
+	(defaultButtonClick)="visible = false"
+>
+	<p>{{ locale.description }}</p>
+</dav-dialog>

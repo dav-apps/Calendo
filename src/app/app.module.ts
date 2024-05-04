@@ -45,6 +45,7 @@ import { environment } from "src/environments/environment"
 import { CreateAppointmentDialogComponent } from "./dialogs/create-appointment-dialog/create-appointment-dialog.component"
 import { CreateTodoDialogComponent } from "./dialogs/create-todo-dialog/create-todo-dialog.component"
 import { DeleteAppointmentDialogComponent } from "./dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
+import { LogoutDialogComponent } from "./dialogs/logout-dialog/logout-dialog.component"
 
 // Services
 import { DataService } from "./services/data-service"
@@ -83,7 +84,8 @@ import { SettingsService } from "./services/settings-service"
 		// Dialogs
 		CreateAppointmentDialogComponent,
 		CreateTodoDialogComponent,
-		DeleteAppointmentDialogComponent
+		DeleteAppointmentDialogComponent,
+		LogoutDialogComponent
 	],
 	imports: [
 		BrowserModule,
