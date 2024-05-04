@@ -79,13 +79,6 @@ const enDefaults = {
 			week1: "1 week before"
 		}
 	},
-	deleteAppointmentModal: {
-		header: "Delete appointment",
-		deleteWarning:
-			"Are you sure you want to delete the following appointment?",
-		delete: "Delete",
-		cancel: "Cancel"
-	},
 	logoutModal: {
 		header: "Log out",
 		message: "Are you sure you want to log out?",
@@ -322,13 +315,6 @@ const deDefaults = {
 			day1: "1 Tag vorher",
 			week1: "1 Woche vorher"
 		}
-	},
-	deleteAppointmentModal: {
-		header: "Termin löschen",
-		deleteWarning:
-			"Bist du dir sicher, dass du diesen Termin löschen willst?",
-		delete: "Löschen",
-		cancel: "Abbrechen"
 	},
 	logoutModal: {
 		header: "Abmelden",
