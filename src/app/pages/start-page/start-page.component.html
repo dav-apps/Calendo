@@ -31,7 +31,7 @@
 						<button
 							type="button"
 							class="btn btn-outline-primary btn-sm"
-							(click)="ShowModal(0)"
+							(click)="createAppointmentDialog.show()"
 						>
 							<fa-icon [icon]="faPlus"></fa-icon>
 						</button>
@@ -65,27 +65,10 @@
 						<button
 							type="button"
 							class="btn btn-outline-primary btn-sm"
-							ngbDropdownToggle
+							(click)="createTodoDialog.show()"
 						>
 							<fa-icon [icon]="faPlus"></fa-icon>
 						</button>
-						<div
-							ngbDropdownMenu
-							class="ms-depth-4 ms-motion-slideDownIn"
-						>
-							<button
-								class="cursor"
-								(click)="ShowModal(1)"
-							>
-								{{ locale.newTodo }}
-							</button>
-							<button
-								class="cursor"
-								(click)="ShowModal(2)"
-							>
-								{{ locale.newTodoList }}
-							</button>
-						</div>
 					</li>
 				</ul>
 			</div>
@@ -158,4 +141,8 @@
 	<calendo-create-appointment-dialog
 		#createAppointmentDialog
 	></calendo-create-appointment-dialog>
+
+	<calendo-create-todo-dialog
+		#createTodoDialog
+	></calendo-create-todo-dialog>
 </div>

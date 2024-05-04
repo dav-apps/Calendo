@@ -4,6 +4,7 @@ import * as moment from "moment"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 import { CreateAppointmentDialogComponent } from "src/app/dialogs/create-appointment-dialog/create-appointment-dialog.component"
+import { CreateTodoDialogComponent } from "src/app/dialogs/create-todo-dialog/create-todo-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { NewTodoModalComponent } from "src/app/components/new-todo-modal/new-todo-modal.component"
@@ -36,6 +37,11 @@ export class StartPageComponent {
 	//#region CreateAppointmentDialog
 	@ViewChild("createAppointmentDialog")
 	createAppointmentDialog: CreateAppointmentDialogComponent
+	//#endregion
+
+	//#region CreateTodoDialog
+	@ViewChild("createTodoDialog")
+	createTodoDialog: CreateTodoDialogComponent
 	//#endregion
 
 	constructor(
@@ -92,23 +98,6 @@ export class StartPageComponent {
 
 	GetCurrentDate() {
 		return moment().format("LL")
-	}
-
-	ShowModal(index: number) {
-		switch (index) {
-			case 0:
-				// Show the appointment modal
-				this.createAppointmentDialog.show()
-				break
-			case 1:
-				// Show the todo modal
-				this.newTodoModalComponent.Show()
-				break
-			case 2:
-				// Show the todo list modal
-				this.todoListModalComponent.Show()
-				break
-		}
 	}
 
 	CreateTodo(todo: Todo) {

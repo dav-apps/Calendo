@@ -95,8 +95,6 @@ const enDefaults = {
 	startPage: {
 		appointments: "Appointments",
 		todos: "Todos",
-		newTodo: "Add Todo",
-		newTodoList: "Add Todo list",
 		formats: {
 			smallDate: "M/D",
 			largeDate: "dddd"
@@ -336,8 +334,6 @@ const deDefaults = {
 	startPage: {
 		appointments: "Termine",
 		todos: "Todos",
-		newTodo: "Todo hinzufügen",
-		newTodoList: "Todo-Liste hinzufügen",
 		formats: {
 			smallDate: "D.M",
 			largeDate: "dddd"
