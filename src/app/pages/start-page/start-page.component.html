@@ -139,16 +139,14 @@
 	<calendo-todo-list-modal
 		(save)="CreateTodoList($event)"
 	></calendo-todo-list-modal>
-
-	<calendo-create-appointment-dialog
-		#createAppointmentDialog
-	></calendo-create-appointment-dialog>
-
-	<calendo-create-todo-dialog
-		#createTodoDialog
-	></calendo-create-todo-dialog>
-
-	<calendo-delete-appointment-dialog
-		#deleteAppointmentDialog
-	></calendo-delete-appointment-dialog>
 </div>
+
+<calendo-create-appointment-dialog
+	#createAppointmentDialog
+></calendo-create-appointment-dialog>
+
+<calendo-create-todo-dialog #createTodoDialog></calendo-create-todo-dialog>
+
+<calendo-delete-appointment-dialog
+	#deleteAppointmentDialog
+></calendo-delete-appointment-dialog>

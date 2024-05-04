@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from "@angular/router"
 import * as moment from "moment"
 import { CreateAppointmentDialogComponent } from "src/app/dialogs/create-appointment-dialog/create-appointment-dialog.component"
 import { CreateTodoDialogComponent } from "src/app/dialogs/create-todo-dialog/create-todo-dialog.component"
+import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { Appointment } from "src/app/models/Appointment"
@@ -34,6 +35,11 @@ export class CalendarDayPageComponent {
 	//#region CreateTodoDialog
 	@ViewChild("createTodoDialog")
 	createTodoDialog: CreateTodoDialogComponent
+	//#endregion
+
+	//#region DeleteAppointmentDialog
+	@ViewChild("deleteAppointmentDialog")
+	deleteAppointmentDialog: DeleteAppointmentDialogComponent
 	//#endregion
 
 	constructor(

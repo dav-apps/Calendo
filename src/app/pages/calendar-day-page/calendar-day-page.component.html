@@ -40,6 +40,7 @@
 		<calendo-small-appointment-item
 			class="d-inline-flex"
 			[appointment]="appointment"
+			(delete)="deleteAppointmentDialog.show()"
 			*ngFor="let appointment of dataService.selectedDayAppointments"
 		></calendo-small-appointment-item>
 	</div>
@@ -92,3 +93,7 @@
 ></calendo-create-appointment-dialog>
 
 <calendo-create-todo-dialog #createTodoDialog></calendo-create-todo-dialog>
+
+<calendo-delete-appointment-dialog
+	#deleteAppointmentDialog
+></calendo-delete-appointment-dialog>
