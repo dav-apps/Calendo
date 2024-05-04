@@ -1,7 +1,12 @@
-import { Component, Input, ViewChild } from "@angular/core"
+import {
+	Component,
+	Input,
+	Output,
+	ViewChild,
+	EventEmitter
+} from "@angular/core"
 import * as moment from "moment"
 import { AppointmentModalComponent } from "src/app/components/appointment-modal/appointment-modal.component"
-import { DeleteAppointmentModalComponent } from "src/app/components/delete-appointment-modal/delete-appointment-modal.component"
 import { Appointment } from "src/app/models/Appointment"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
@@ -25,10 +30,9 @@ export class AppointmentItemComponent {
 		environment.appointmentDefaultColor
 	)
 	@Input() showCompleted: boolean = false
+	@Output() delete = new EventEmitter()
 	@ViewChild(AppointmentModalComponent, { static: true })
 	private newAppointmentModalComponent: AppointmentModalComponent
-	@ViewChild(DeleteAppointmentModalComponent, { static: true })
-	private deleteAppointmentModalComponent: DeleteAppointmentModalComponent
 	menuButtonIconProps = {
 		iconName: "More",
 		style: {
@@ -48,14 +52,6 @@ export class AppointmentItemComponent {
 
 	Update(appointment: Appointment) {
 		this.dataService.UpdateAppointment(appointment)
-	}
-
-	Delete() {
-		this.deleteAppointmentModalComponent.Show()
-	}
-
-	Remove() {
-		this.dataService.RemoveAppointment(this.appointment)
 	}
 
 	ConvertUnixTimestampToTime(timestamp: number): string {

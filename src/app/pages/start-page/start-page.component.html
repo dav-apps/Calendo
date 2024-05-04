@@ -20,6 +20,7 @@
 					<calendo-appointment-item
 						[appointment]="appointment"
 						[showCompleted]="true"
+						(delete)="deleteAppointmentDialog.show()"
 						*ngFor="
 							let appointment of dataService.startDaysAppointments[0]
 						"
@@ -145,4 +146,8 @@
 	<calendo-create-todo-dialog
 		#createTodoDialog
 	></calendo-create-todo-dialog>
+
+	<calendo-delete-appointment-dialog
+		#deleteAppointmentDialog
+	></calendo-delete-appointment-dialog>
 </div>
