@@ -44,6 +44,7 @@ import { environment } from "src/environments/environment"
 
 // Dialogs
 import { CreateAppointmentDialogComponent } from "./dialogs/create-appointment-dialog/create-appointment-dialog.component"
+import { CreateTodoDialogComponent } from "./dialogs/create-todo-dialog/create-todo-dialog.component"
 
 // Services
 import { DataService } from "./services/data-service"
@@ -81,7 +82,8 @@ import { SettingsService } from "./services/settings-service"
 		SetNameComponent,
 		TodoListTreeComponent,
 		// Dialogs
-		CreateAppointmentDialogComponent
+		CreateAppointmentDialogComponent,
+		CreateTodoDialogComponent
 	],
 	imports: [
 		BrowserModule,

@@ -193,6 +193,10 @@ const enDefaults = {
 		createAppointmentDialog: {
 			headline: "Create appointment",
 			nameTextfieldLabel: "Name"
+		},
+		createTodoDialog: {
+			headline: "Create todo",
+			nameTextfieldLabel: "Name"
 		}
 	},
 	actions: {
@@ -430,6 +434,10 @@ const deDefaults = {
 	dialogs: {
 		createAppointmentDialog: {
 			headline: "Termin erstellen",
+			nameTextfieldLabel: "Name"
+		},
+		createTodoDialog: {
+			headline: "Todo erstellen",
 			nameTextfieldLabel: "Name"
 		}
 	},

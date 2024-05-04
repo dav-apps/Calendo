@@ -1,0 +1,24 @@
+<dav-dialog
+	#dialog
+	[headline]="locale.headline"
+	[primaryButtonText]="actionsLocale.create"
+	[defaultButtonText]="actionsLocale.cancel"
+	[visible]="visible"
+	[loading]="loading"
+	maxWidth="300"
+	(dismiss)="visible = false"
+	(primaryButtonClick)="submit()"
+	(defaultButtonClick)="visible = false"
+>
+	<form>
+		<div class="dialog-formfield-container">
+			<dav-textfield
+				[value]="name"
+				[label]="locale.nameTextfieldLabel"
+				[disabled]="loading"
+				[errorMessage]="nameError"
+				(change)="nameTextfieldChange($event)"
+			></dav-textfield>
+		</div>
+	</form>
+</dav-dialog>
