@@ -1,7 +1,3 @@
-<calendo-delete-appointment-modal
-	[appointment]="appointment"
-	(remove)="Remove()"
-></calendo-delete-appointment-modal>
 <calendo-appointment-modal (save)="Update($event)"></calendo-appointment-modal>
 
 <div *ngIf="enableDropdown" ngbDropdown placement="bottom-left">
@@ -30,7 +26,7 @@
 		<button class="cursor" (click)="Edit()">
 			{{ locale.edit }}
 		</button>
-		<button class="cursor" (click)="Delete()">
+		<button class="cursor" (click)="delete.emit()">
 			{{ locale.delete }}
 		</button>
 	</div>
