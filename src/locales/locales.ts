@@ -17,10 +17,6 @@ const enDefaults = {
 		todoListName: "Todo list name",
 		appointmentName: "Appointment name"
 	},
-	userMenu: {
-		account: "Your Account",
-		settings: "Settings"
-	},
 	newTodoModal: {
 		header: "New Todo",
 		setDate: "Set a date",
@@ -258,10 +254,6 @@ const deDefaults = {
 		todoName: "Name des Todos",
 		todoListName: "Name der Todo-Liste",
 		appointmentName: "Name des Termins"
-	},
-	userMenu: {
-		account: "Dein Account",
-		settings: "Einstellungen"
 	},
 	newTodoModal: {
 		header: "Neues Todo",

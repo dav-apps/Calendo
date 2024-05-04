@@ -23,7 +23,6 @@ import { TodoListPageComponent } from "./pages/todo-list-page/todo-list-page.com
 
 // Components
 import { AppComponent } from "./app.component"
-import { UserMenuComponent } from "./components/user-menu/user-menu.component"
 import { TodoListItemComponent } from "./components/todo-list-item/todo-list-item.component"
 import { SmallTodoListItemComponent } from "./components/small-todo-list-item/small-todo-list-item.component"
 import { TodoItemComponent } from "./components/todo-item/todo-item.component"
@@ -65,7 +64,6 @@ import { SettingsService } from "./services/settings-service"
 		TodoListPageComponent,
 		// Components
 		AppComponent,
-		UserMenuComponent,
 		TodoListItemComponent,
 		SmallTodoListItemComponent,
 		TodoItemComponent,
