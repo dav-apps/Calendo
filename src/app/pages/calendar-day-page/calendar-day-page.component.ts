@@ -1,15 +1,14 @@
 import { Component, ViewChild } from "@angular/core"
 import { Router, ActivatedRoute } from "@angular/router"
 import * as moment from "moment"
+import { CreateAppointmentDialogComponent } from "src/app/dialogs/create-appointment-dialog/create-appointment-dialog.component"
+import { CreateTodoDialogComponent } from "src/app/dialogs/create-todo-dialog/create-todo-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
-import { AppointmentModalComponent } from "src/app/components/appointment-modal/appointment-modal.component"
-import { NewTodoModalComponent } from "src/app/components/new-todo-modal/new-todo-modal.component"
 import { Appointment } from "src/app/models/Appointment"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
-import { TodoListModalComponent } from "src/app/components/todo-list-modal/todo-list-modal.component"
 import { MatSnackBar } from "@angular/material/snack-bar"
 import { Location } from "@angular/common"
 
@@ -20,18 +19,22 @@ export class CalendarDayPageComponent {
 	locale = this.localizationService.locale.calendarDayPage
 	snackbarLocale = this.localizationService.locale.snackbar
 	faPlus = faPlus
-	@ViewChild(AppointmentModalComponent, { static: true })
-	private newAppointmentModalComponent: AppointmentModalComponent
-	@ViewChild(NewTodoModalComponent, { static: true })
-	private newTodoModalComponent: NewTodoModalComponent
-	@ViewChild("todoListModal", { static: true })
-	private todoListModal: TodoListModalComponent
 	date: moment.Moment = moment()
 	backButtonIconStyles = {
 		root: {
 			fontSize: 19
 		}
 	}
+
+	//#region CreateAppointmentDialog
+	@ViewChild("createAppointmentDialog")
+	createAppointmentDialog: CreateAppointmentDialogComponent
+	//#endregion
+
+	//#region CreateTodoDialog
+	@ViewChild("createTodoDialog")
+	createTodoDialog: CreateTodoDialogComponent
+	//#endregion
 
 	constructor(
 		public dataService: DataService,
@@ -58,10 +61,6 @@ export class CalendarDayPageComponent {
 
 	getCurrentDate() {
 		return this.date.format(this.locale.formats.currentDay)
-	}
-
-	ShowNewAppointmentModal() {
-		this.newAppointmentModalComponent.Show(null, this.date.unix())
 	}
 
 	CreateAppointment(appointment: Appointment) {
@@ -91,10 +90,6 @@ export class CalendarDayPageComponent {
 		}
 	}
 
-	ShowNewTodoModal() {
-		this.newTodoModalComponent.Show(this.date.unix())
-	}
-
 	CreateTodo(todo: Todo) {
 		this.dataService.AddTodo(todo)
 
@@ -122,10 +117,6 @@ export class CalendarDayPageComponent {
 
 	DeleteTodo(todo: Todo) {
 		this.dataService.RemoveTodo(todo)
-	}
-
-	ShowTodoListModal() {
-		this.todoListModal.Show(null, this.date.unix())
 	}
 
 	CreateTodoList(todoList: TodoList) {
