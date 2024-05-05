@@ -35,7 +35,6 @@ import { NewTodoModalComponent } from "./components/new-todo-modal/new-todo-moda
 import { AppointmentModalComponent } from "./components/appointment-modal/appointment-modal.component"
 import { TodoListModalComponent } from "./components/todo-list-modal/todo-list-modal.component"
 import { DeleteTodoListModalComponent } from "./components/delete-todo-list-modal/delete-todo-list-modal.component"
-import { LogoutModalComponent } from "./components/logout-modal/logout-modal.component"
 import { TodoGroupBadgeComponent } from "./components/todo-group-badge/todo-group-badge.component"
 import { SetTodoGroupsComponent } from "./components/set-todo-groups/set-todo-groups.component"
 import { SetNameComponent } from "./components/set-name/set-name.component"
@@ -75,7 +74,6 @@ import { SettingsService } from "./services/settings-service"
 		AppointmentModalComponent,
 		TodoListModalComponent,
 		DeleteTodoListModalComponent,
-		LogoutModalComponent,
 		TodoGroupBadgeComponent,
 		SetTodoGroupsComponent,
 		SetNameComponent,

@@ -75,12 +75,6 @@ const enDefaults = {
 			week1: "1 week before"
 		}
 	},
-	logoutModal: {
-		header: "Log out",
-		message: "Are you sure you want to log out?",
-		logout: "Log out",
-		cancel: "Cancel"
-	},
 	startPage: {
 		appointments: "Appointments",
 		todos: "Todos",
@@ -312,12 +306,6 @@ const deDefaults = {
 			day1: "1 Tag vorher",
 			week1: "1 Woche vorher"
 		}
-	},
-	logoutModal: {
-		header: "Abmelden",
-		message: "Bist du dir sicher, dass du dich abmelden möchtest?",
-		logout: "Abmelden",
-		cancel: "Abbrechen"
 	},
 	startPage: {
 		appointments: "Termine",
