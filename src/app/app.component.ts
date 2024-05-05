@@ -1,4 +1,4 @@
-import { Component, HostListener } from "@angular/core"
+import { Component } from "@angular/core"
 import { Router, ActivatedRoute, NavigationStart } from "@angular/router"
 import {
 	faCircleUser as faCircleUserSolid,
@@ -26,8 +26,6 @@ import { ConvertTableObjectToAppointment } from "./models/Appointment"
 import { ConvertTableObjectToTodo } from "./models/Todo"
 import { TodoList, ConvertTableObjectToTodoList } from "./models/TodoList"
 
-const mobileMaxSize = 768
-
 @Component({
 	selector: "app-root",
 	templateUrl: "./app.component.html",
@@ -47,7 +45,6 @@ export class AppComponent {
 	faSquareCheckRegular = faSquareCheckRegular
 	faCalendarsSolid = faCalendarsSolid
 	faCalendarsRegular = faCalendarsRegular
-	windowWidth: number = 500
 	currentUrl: string = "/"
 	startTabActive: boolean = false
 	calendarTabActive: boolean = false
@@ -94,7 +91,6 @@ export class AppComponent {
 	}
 
 	async ngOnInit() {
-		this.setSize()
 		this.dataService.loadTheme()
 
 		// Initialize dav
@@ -122,12 +118,6 @@ export class AppComponent {
 				UserLoaded: () => this.userLoaded()
 			}
 		})
-	}
-
-	@HostListener("window:resize")
-	setSize() {
-		this.dataService.isMobile = window.innerWidth < mobileMaxSize
-		this.windowWidth = window.innerWidth
 	}
 
 	navigateToPage(path: string) {
