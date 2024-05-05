@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core"
 import { Todo, GetAllTodos } from "../models/Todo"
 import { Appointment, GetAllAppointments } from "../models/Appointment"
 import { TodoList, GetAllTodoLists, GetTodoList } from "../models/TodoList"
-import { Dav } from "dav-js"
+import { Dav, PromiseHolder } from "dav-js"
 import * as DavUIComponents from "dav-ui-components"
 import * as moment from "moment"
 import { LocalizationService } from "./localization-service"
@@ -15,6 +15,7 @@ import { themeKey, lightThemeKey, darkThemeKey } from "src/app/constants"
 export class DataService {
 	dav = Dav
 	locale: string = navigator.language
+	userPromiseHolder = new PromiseHolder()
 	updateInstalled: boolean = false
 
 	//#region StartPage

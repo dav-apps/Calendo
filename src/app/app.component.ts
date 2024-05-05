@@ -16,7 +16,7 @@ import {
 	faSquareCheck as faSquareCheckRegular,
 	faCalendars as faCalendarsRegular
 } from "@fortawesome/pro-regular-svg-icons"
-import { Dav, Environment, TableObject } from "dav-js"
+import { Dav, TableObject } from "dav-js"
 import * as DavUIComponents from "dav-ui-components"
 import { environment } from "../environments/environment"
 import { enUS } from "../locales/locales"
@@ -118,7 +118,8 @@ export class AppComponent {
 					downloaded: boolean
 				) => this.UpdateTableObject(tableObject, downloaded),
 				DeleteTableObject: (tableObject: TableObject) =>
-					this.DeleteTableObject(tableObject)
+					this.DeleteTableObject(tableObject),
+				UserLoaded: () => this.userLoaded()
 			}
 		})
 	}
@@ -228,6 +229,10 @@ export class AppComponent {
 				this.dataService.RemoveTodoList(todoList)
 			}
 		}
+	}
+
+	userLoaded() {
+		this.dataService.userPromiseHolder.Resolve()
 	}
 	//#endregion
 }
