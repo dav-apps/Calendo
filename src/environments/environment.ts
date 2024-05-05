@@ -2,12 +2,12 @@ import { Environment } from "dav-js"
 
 export const environment = {
 	environment: Environment.Development,
-	apiKey: "eUzs3PQZYweXvumcWvagRHjdUroGe5Mo7kN1inHm",
+	apiKey: "gHgHKRbIjdguCM4cv5481hdiF5hZGWZ4x12Ur-7v",
 	websiteUrl: "http://localhost:3000",
-	appId: 3,
-	todoListTableId: 7,
-	todoTableId: 8,
-	appointmentTableId: 9,
+	appId: 5,
+	todoListTableId: 13,
+	todoTableId: 10,
+	appointmentTableId: 11,
 	// Keys for TodoList table
 	todoListNameKey: "name",
 	todoListTimeKey: "time",
