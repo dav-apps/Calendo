@@ -45,26 +45,28 @@
 	</div>
 </div>
 } @else {
-<div class="container mb-4 ms-motion-slideUpIn" style="padding-bottom: 56px">
-	<h1 class="text-center mt-3 font-weight-light" style="margin-bottom: 40px">
-		{{ locale.title }}
-	</h1>
+<div class="container slide-up-in">
+	<div class="header-logged-in-container">
+		<dav-header size="large">
+			{{ locale.title }}
+		</dav-header>
+	</div>
 
-	<div class="d-flex justify-content-center">
-		<img
-			class="rounded-circle shadow"
-			[src]="dataService.dav.user.ProfileImage"
-		/>
+	<div class="user-profile-container">
+		<img class="profile-image" [src]="dataService.dav.user.ProfileImage" />
 
-		<div style="width: 200px">
-			<h4 class="mb-0">
+		<div class="user-details-container">
+			<h4>
 				<a
-					href="https://dav-apps.tech/login?redirect=user"
-					target="blank"
-					>{{ dataService.dav.user.FirstName }}</a
+					class="profile-link"
+					[href]="websiteUrl + '/login?redirect=user'"
+					target="_blank"
 				>
+					{{ dataService.dav.user.FirstName }}
+				</a>
 			</h4>
-			<p class="text-muted mb-1">
+
+			<p class="plan-label">
 				{{
 					dataService.dav.user.Plan == 0
 						? locale.planFree
@@ -74,38 +76,22 @@
 				}}
 			</p>
 
-			<div class="progress mt-3" style="width: 200px; height: 5%">
-				<div
-					class="progress-bar"
-					role="progressbar"
-					[style.width.%]="getUsedStoragePercentage()"
-					aria-valuenow="40"
-					aria-valuemin="0"
-					aria-valuemax="100"
-				></div>
+			<div class="progress-bar-container">
+				<dav-progress-bar [value]="usedStoragePercent"></dav-progress-bar>
 			</div>
 
-			<p class="mt-2" style="margin-bottom: 2px">
-				{{
-					locale.storageUsed
-						.replace(
-							"{0}",
-							bytesToGigabytes(dataService.dav.user.UsedStorage, 1)
-						)
-						.replace(
-							"{1}",
-							bytesToGigabytes(dataService.dav.user.TotalStorage, 0)
-						)
-				}}
+			<p class="used-storage-label">
+				{{ usedStorageText }}
 			</p>
 
-			<button
-				type="button"
-				class="btn btn-outline-danger btn-sm mt-2"
+			<dav-button
+				color="error"
+				outline
+				size="small"
 				(click)="showLogoutDialog()"
 			>
 				{{ locale.logout }}
-			</button>
+			</dav-button>
 		</div>
 	</div>
 </div>

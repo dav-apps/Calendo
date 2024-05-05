@@ -7,6 +7,7 @@ import { Dav } from "dav-js"
 import { LogoutDialogComponent } from "src/app/dialogs/logout-dialog/logout-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
+import { bytesToGigabytesText } from "src/app/utils"
 import { environment } from "src/environments/environment"
 
 @Component({
@@ -20,11 +21,32 @@ export class UserPageComponent {
 	@ViewChild("logoutDialog")
 	logoutDialog: LogoutDialogComponent
 	websiteUrl = environment.websiteUrl
+	usedStoragePercent: number = 0
+	usedStorageText: string = ""
 
 	constructor(
 		public dataService: DataService,
 		private localizationService: LocalizationService
 	) {}
+
+	async ngOnInit() {
+		await this.dataService.userPromiseHolder.AwaitResult()
+
+		this.usedStoragePercent =
+			(this.dataService.dav.user.UsedStorage /
+				this.dataService.dav.user.TotalStorage) *
+			100
+
+		this.usedStorageText = this.locale.storageUsed
+			.replace(
+				"{0}",
+				bytesToGigabytesText(this.dataService.dav.user.UsedStorage, 1)
+			)
+			.replace(
+				"{1}",
+				bytesToGigabytesText(this.dataService.dav.user.TotalStorage, 0)
+			)
+	}
 
 	navigateToLoginPage() {
 		Dav.ShowLoginPage(environment.apiKey, window.location.origin)

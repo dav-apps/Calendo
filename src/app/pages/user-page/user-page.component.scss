@@ -58,3 +58,63 @@
 		grid-template-columns: auto auto;
 	}
 }
+
+.header-logged-in-container {
+	margin-bottom: 32px;
+}
+
+.user-profile-container {
+	display: flex;
+	justify-content: center;
+}
+
+.profile-image {
+	border-radius: 50%;
+	box-shadow: 0 0.5rem 1rem #00000026;
+	width: 130px;
+	height: 130px;
+}
+
+.user-details-container {
+	width: 200px;
+	margin-left: 20px;
+}
+
+.user-details-container > h4 {
+	margin: 0;
+	font-size: 24px;
+	font-weight: 400;
+}
+
+.profile-link {
+	text-decoration: none;
+	color: var(--dav-color-on-surface);
+}
+
+.plan-label {
+	margin: 4px 0;
+	color: var(--dav-color-on-surface-variant);
+	font-weight: 300;
+}
+
+.progress-bar-container {
+	margin-top: 1rem;
+	width: 200px;
+}
+
+.used-storage-label {
+	margin-top: 32px;
+	margin-bottom: 10px;
+	color: var(--dav-color-on-surface);
+}
+
+@media screen and (min-width: 410px) {
+	.profile-image {
+		width: 150px;
+		height: 150px;
+	}
+
+	.user-details-container {
+		margin-left: 40px;
+	}
+}
