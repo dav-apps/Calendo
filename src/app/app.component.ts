@@ -1,5 +1,5 @@
 import { Component, HostListener } from "@angular/core"
-import { Router, NavigationStart } from "@angular/router"
+import { Router, ActivatedRoute, NavigationStart } from "@angular/router"
 import {
 	faCircleUser as faCircleUserSolid,
 	faGear as faGearSolid,
@@ -59,7 +59,8 @@ export class AppComponent {
 	constructor(
 		public dataService: DataService,
 		private localizationService: LocalizationService,
-		private router: Router
+		private router: Router,
+		private activatedRoute: ActivatedRoute
 	) {
 		this.locale = this.localizationService.locale.navbar
 		DavUIComponents.setLocale(this.dataService.locale)
@@ -68,7 +69,7 @@ export class AppComponent {
 			if (data instanceof NavigationStart) {
 				// Update the updated todo lists
 				this.dataService.UpdateUpdatedTodoLists()
-				this.currentUrl = data.url
+				this.currentUrl = data.url.split("?")[0]
 
 				this.startTabActive = this.currentUrl == "/"
 				this.calendarTabActive = this.currentUrl.startsWith("/calendar")
@@ -78,12 +79,22 @@ export class AppComponent {
 				this.settingsButtonSelected = this.currentUrl == "/settings"
 			}
 		})
+
+		this.activatedRoute.queryParams.subscribe(async params => {
+			if (params["accessToken"]) {
+				// Log in with the access token
+				await this.dataService.dav.Login(params["accessToken"])
+
+				// Reload the page without accessToken in the url
+				let url = new URL(window.location.href)
+				url.searchParams.delete("accessToken")
+				window.location.href = url.toString()
+			}
+		})
 	}
 
 	async ngOnInit() {
 		this.setSize()
-
-		// Set the background colors
 		this.dataService.loadTheme()
 
 		// Initialize dav
