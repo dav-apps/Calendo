@@ -1,6 +1,6 @@
 import { Component, ViewChild } from "@angular/core"
 import { Router, ActivatedRoute } from "@angular/router"
-import * as moment from "moment"
+import { DateTime } from "luxon"
 import { CreateAppointmentDialogComponent } from "src/app/dialogs/create-appointment-dialog/create-appointment-dialog.component"
 import { CreateTodoDialogComponent } from "src/app/dialogs/create-todo-dialog/create-todo-dialog.component"
 import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
@@ -20,7 +20,7 @@ export class CalendarDayPageComponent {
 	locale = this.localizationService.locale.calendarDayPage
 	snackbarLocale = this.localizationService.locale.snackbar
 	faPlus = faPlus
-	date: moment.Moment = moment()
+	date = DateTime.now().startOf("day")
 	backButtonIconStyles = {
 		root: {
 			fontSize: 19
@@ -49,14 +49,12 @@ export class CalendarDayPageComponent {
 		private route: ActivatedRoute,
 		private location: Location,
 		private snackBar: MatSnackBar
-	) {
-		moment.locale(this.dataService.locale)
-	}
+	) {}
 
 	ngOnInit() {
 		this.route.params.subscribe(param => {
 			if (param.time) {
-				this.date = moment.unix(param.time).startOf("day")
+				this.date = DateTime.fromSeconds(param.time).startOf("day")
 				this.dataService.selectedDay = this.date
 
 				this.dataService.LoadAllAppointments()
@@ -66,7 +64,7 @@ export class CalendarDayPageComponent {
 	}
 
 	getCurrentDate() {
-		return this.date.format(this.locale.formats.currentDay)
+		return this.date.toFormat(this.locale.formats.currentDay)
 	}
 
 	CreateAppointment(appointment: Appointment) {
@@ -74,10 +72,8 @@ export class CalendarDayPageComponent {
 
 		// Show snackbar if the appointment was created for another day
 		if (
-			this.date.unix() !=
-			moment(appointment.start * 1000)
-				.startOf("day")
-				.unix()
+			this.date.toUnixInteger() !=
+			DateTime.fromSeconds(appointment.start).startOf("day").toUnixInteger()
 		) {
 			// Another day
 			this.snackBar
@@ -105,7 +101,7 @@ export class CalendarDayPageComponent {
 			this.snackBar.open(this.snackbarLocale.todoCreated, null, {
 				duration: 3000
 			})
-		} else if (this.date.unix() != todo.time) {
+		} else if (this.date.toUnixInteger() != todo.time) {
 			// Another day
 			this.snackBar
 				.open(this.snackbarLocale.todoCreated, this.snackbarLocale.show, {

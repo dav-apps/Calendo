@@ -1,6 +1,6 @@
 import { Component, ViewChild, HostListener } from "@angular/core"
 import { Router } from "@angular/router"
-import * as moment from "moment"
+import { DateTime } from "luxon"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 import { CreateAppointmentDialogComponent } from "src/app/dialogs/create-appointment-dialog/create-appointment-dialog.component"
@@ -56,8 +56,6 @@ export class StartPageComponent {
 		private router: Router,
 		private snackBar: MatSnackBar
 	) {
-		moment.locale(this.dataService.locale)
-
 		this.largeDateFormat = this.locale.formats.largeDate
 		this.smallDateFormat = this.locale.formats.smallDate
 	}
@@ -81,29 +79,31 @@ export class StartPageComponent {
 	}
 
 	GetLargeDate(date: number): string {
-		let momentDate = moment.unix(date)
-		let format =
-			momentDate.diff(moment(), "days") > 6
+		let dateTime = DateTime.fromSeconds(date)
+		let formatting =
+			dateTime.diffNow("days").days > 6
 				? this.smallDateFormat
 				: this.largeDateFormat
-		return momentDate.format(format)
+
+		return dateTime.toFormat(formatting)
 	}
 
 	GetSmallDate(date: number): string {
-		let momentDate = moment.unix(date)
-		let format =
-			momentDate.diff(moment(), "days") > 6
+		let dateTime = DateTime.fromSeconds(date)
+		let formatting =
+			dateTime.diffNow("days").days > 6
 				? this.largeDateFormat
 				: this.smallDateFormat
-		return momentDate.format(format)
+
+		return dateTime.toFormat(formatting)
 	}
 
 	GetCurrentWeekday() {
-		return moment().format("dddd")
+		return DateTime.now().toFormat("dddd")
 	}
 
 	GetCurrentDate() {
-		return moment().format("LL")
+		return DateTime.now().toFormat("LL")
 	}
 
 	CreateTodo(todo: Todo) {

@@ -5,7 +5,7 @@ import {
 	ViewChild,
 	EventEmitter
 } from "@angular/core"
-import * as moment from "moment"
+import { DateTime } from "luxon"
 import { AppointmentModalComponent } from "src/app/components/appointment-modal/appointment-modal.component"
 import { Appointment } from "src/app/models/Appointment"
 import { DataService } from "src/app/services/data-service"
@@ -39,15 +39,13 @@ export class SmallAppointmentItemComponent {
 	) {}
 
 	getTimeSpan() {
-		return (
-			moment.unix(this.appointment.start).format("H:mm") +
-			" - " +
-			moment.unix(this.appointment.end).format("H:mm")
-		)
+		return `${DateTime.fromSeconds(this.appointment.start).toFormat(
+			"H:mm"
+		)} - ${DateTime.fromSeconds(this.appointment.end).toFormat("H:mm")}`
 	}
 
 	getStartTime() {
-		return moment.unix(this.appointment.start).format("H:mm")
+		return DateTime.fromSeconds(this.appointment.start).toFormat("H:mm")
 	}
 
 	Edit() {

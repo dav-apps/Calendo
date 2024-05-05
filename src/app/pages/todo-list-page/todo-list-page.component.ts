@@ -1,7 +1,7 @@
 import { Component, ViewChild } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { Location } from "@angular/common"
-import * as moment from "moment"
+import { DateTime } from "luxon"
 import { TodoList, GetTodoList } from "src/app/models/TodoList"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
@@ -28,9 +28,7 @@ export class TodoListPageComponent {
 		private localizationService: LocalizationService,
 		private route: ActivatedRoute,
 		private location: Location
-	) {
-		moment.locale(this.dataService.locale)
-	}
+	) {}
 
 	ngOnInit() {
 		this.route.params.subscribe(async param => {
@@ -46,9 +44,9 @@ export class TodoListPageComponent {
 			this.todoList.groups = list.groups
 			this.todoList.list = list.list
 			this.todoList.items = list.items
-			this.date = moment
-				.unix(this.todoList.time)
-				.format(this.locale.formats.date)
+			this.date = DateTime.fromSeconds(this.todoList.time).toFormat(
+				this.locale.formats.date
+			)
 
 			this.todoListTree.Init()
 		})
@@ -63,9 +61,9 @@ export class TodoListPageComponent {
 			this.todoList.time = updatedTodoList.time
 			this.todoList.groups = updatedTodoList.groups
 
-			this.date = moment
-				.unix(this.todoList.time)
-				.format(this.locale.formats.date)
+			this.date = DateTime.fromSeconds(this.todoList.time).toFormat(
+				this.locale.formats.date
+			)
 		} else {
 			this.dataService.UpdateTodoList(await GetTodoList(this.todoList.uuid))
 		}

@@ -6,7 +6,7 @@ import {
 	EventEmitter
 } from "@angular/core"
 import { NgbDateStruct, NgbModal } from "@ng-bootstrap/ng-bootstrap"
-import * as moment from "moment"
+import { DateTime } from "luxon"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { Notification, SetupWebPushSubscription } from "dav-js"
 import { Todo } from "src/app/models/Todo"
@@ -89,7 +89,9 @@ export class NewTodoModalComponent {
 					if (await SetupWebPushSubscription()) {
 						// Create the notification
 						let notificationTime =
-							moment.unix(todoTimeUnix).startOf("day").unix() +
+							DateTime.fromSeconds(todoTimeUnix)
+								.startOf("day")
+								.toUnixInteger() +
 							this.todoReminderTime.hour * 60 * 60 +
 							this.todoReminderTime.minute * 60
 

@@ -5,7 +5,7 @@ import {
 	ViewChild,
 	EventEmitter
 } from "@angular/core"
-import * as moment from "moment"
+import { DateTime } from "luxon"
 import { AppointmentModalComponent } from "src/app/components/appointment-modal/appointment-modal.component"
 import { Appointment } from "src/app/models/Appointment"
 import { DataService } from "src/app/services/data-service"
@@ -55,12 +55,12 @@ export class AppointmentItemComponent {
 	}
 
 	ConvertUnixTimestampToTime(timestamp: number): string {
-		return moment.unix(timestamp).format("HH:mm")
+		return DateTime.fromSeconds(timestamp).toFormat("HH:mm")
 	}
 
 	IsCompleted(): boolean {
 		if (!this.showCompleted) return false
 
-		return moment.now() / 1000 > this.appointment.end
+		return DateTime.now().toUnixInteger() > this.appointment.end
 	}
 }

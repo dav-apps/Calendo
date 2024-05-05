@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core"
+import { DateTime } from "luxon"
 import { Todo, GetAllTodos } from "../models/Todo"
 import { Appointment, GetAllAppointments } from "../models/Appointment"
 import { TodoList, GetAllTodoLists, GetTodoList } from "../models/TodoList"
 import { Dav, PromiseHolder } from "dav-js"
 import * as DavUIComponents from "dav-ui-components"
-import * as moment from "moment"
 import { LocalizationService } from "./localization-service"
 import { SettingsService } from "./settings-service"
 import { convertStringToTheme } from "src/app/utils"
@@ -59,7 +59,7 @@ export class DataService {
 	desktopCalendarDaysAppointments: Appointment[][][] = []
 	desktopCalendarDaysTodos: Todo[][][] = []
 
-	selectedDay: moment.Moment = moment()
+	selectedDay: DateTime = DateTime.now().startOf("day")
 	selectedDayAppointments: Appointment[] = []
 	selectedDayTodos: Todo[] = []
 	selectedDayTodoLists: TodoList[] = []
@@ -90,7 +90,7 @@ export class DataService {
 		this.startDaysTodoLists = []
 
 		// Add the current day to the start page
-		this.startDaysDates.push(moment().startOf("day").unix())
+		this.startDaysDates.push(DateTime.now().startOf("day").toUnixInteger())
 		this.startDaysAppointments.push([])
 		this.startDaysTodos.push([])
 		this.startDaysTodoLists.push([])
@@ -351,11 +351,16 @@ export class DataService {
 
 	//#region StartPage
 	AddAppointmentToStartPage(appointment: Appointment) {
-		if (appointment.start < moment().startOf("day").unix()) return
+		if (appointment.start < DateTime.now().startOf("day").toUnixInteger())
+			return
 
 		// Check if the day of the appointment is already in the array
 		let index = this.startDaysDates.findIndex(
-			d => d == moment.unix(appointment.start).startOf("day").unix()
+			d =>
+				d ==
+				DateTime.fromSeconds(appointment.start)
+					.startOf("day")
+					.toUnixInteger()
 		)
 
 		if (index !== -1) {
@@ -376,7 +381,9 @@ export class DataService {
 		} else {
 			// Create a new day
 			this.startDaysDates.push(
-				moment.unix(appointment.start).startOf("day").unix()
+				DateTime.fromSeconds(appointment.start)
+					.startOf("day")
+					.toUnixInteger()
 			)
 			this.startDaysAppointments.push([appointment])
 			this.startDaysTodoLists.push([])
@@ -419,7 +426,7 @@ export class DataService {
 
 		// Check if the day of the todo is already in the array
 		let index =
-			todo.time < moment().startOf("day").unix()
+			todo.time < DateTime.now().startOf("day").toUnixInteger()
 				? 0
 				: this.startDaysDates.findIndex(t => t == todo.time)
 
@@ -438,7 +445,9 @@ export class DataService {
 			this.SortTodosArray(this.startDaysTodos[index])
 		} else {
 			// Create a new day
-			this.startDaysDates.push(moment.unix(todo.time).startOf("day").unix())
+			this.startDaysDates.push(
+				DateTime.fromSeconds(todo.time).startOf("day").toUnixInteger()
+			)
 			this.startDaysAppointments.push([])
 			this.startDaysTodoLists.push([])
 			this.startDaysTodos.push([todo])
@@ -478,7 +487,7 @@ export class DataService {
 
 		// Check if the day of the todo list is already in the array
 		let index =
-			todoList.time < moment().startOf("day").unix()
+			todoList.time < DateTime.now().startOf("day").toUnixInteger()
 				? 0
 				: this.startDaysDates.findIndex(t => t == todoList.time)
 
@@ -501,7 +510,7 @@ export class DataService {
 		} else {
 			// Create a new day
 			this.startDaysDates.push(
-				moment.unix(todoList.time).startOf("day").unix()
+				DateTime.fromSeconds(todoList.time).startOf("day").toUnixInteger()
 			)
 			this.startDaysAppointments.push([])
 			this.startDaysTodoLists.push([todoList])
@@ -545,10 +554,12 @@ export class DataService {
 
 		if (this.sortTodosByDate) {
 			if (todo.time != 0) {
-				var date: string = moment
-					.unix(todo.time)
-					.format(this.localizationService.locale.todosPage.formats.date)
-				var timestampOfDate = moment.unix(todo.time).startOf("day").unix()
+				var date: string = DateTime.fromSeconds(todo.time).toFormat(
+					this.localizationService.locale.todosPage.formats.date
+				)
+				var timestampOfDate = DateTime.fromSeconds(todo.time)
+					.startOf("day")
+					.toUnixInteger()
 
 				// Check if the date already exists in the todoDays array
 				var todoDay = this.todoDays.find(
@@ -666,13 +677,12 @@ export class DataService {
 
 		if (this.sortTodosByDate) {
 			if (todoList.time != 0) {
-				let date: string = moment
-					.unix(todoList.time)
-					.format(this.localizationService.locale.todosPage.formats.date)
-				let timestampOfDate = moment
-					.unix(todoList.time)
+				let date: string = DateTime.fromSeconds(todoList.time).toFormat(
+					this.localizationService.locale.todosPage.formats.date
+				)
+				let timestampOfDate = DateTime.fromSeconds(todoList.time)
 					.startOf("day")
-					.unix()
+					.toUnixInteger()
 
 				// Check if the date already exists in the todoDays array
 				let todoDay = this.todoDays.find(
@@ -809,15 +819,16 @@ export class DataService {
 
 	//#region AppointmentsPage
 	AddAppointmentToAppointmentsPage(appointment: Appointment) {
-		var date: string = moment
-			.unix(appointment.start)
-			.format("dddd, D. MMMM YYYY")
-		var timestampOfDate = moment.unix(appointment.start).startOf("day").unix()
-
-		var appointmentStartTimestamp = moment
-			.unix(appointment.start)
+		var date: string = DateTime.fromSeconds(appointment.start).toFormat(
+			"dddd, D. MMMM YYYY"
+		)
+		var timestampOfDate = DateTime.fromSeconds(appointment.start)
+			.startOf("day")
+			.toUnixInteger()
+		var appointmentStartTimestamp = DateTime.fromSeconds(appointment.start)
 			.endOf("day")
-			.unix()
+			.toUnixInteger()
+
 		if (!appointment.allday) {
 			appointmentStartTimestamp = appointment.end
 		}
@@ -825,10 +836,7 @@ export class DataService {
 		// Check if the appointment was created yesterday or a day before
 		let isOld =
 			appointmentStartTimestamp <
-			moment
-				.unix(moment.now() / 1000)
-				.startOf("day")
-				.unix()
+			DateTime.now().startOf("day").toUnixInteger()
 		let appointmentDays = isOld
 			? this.oldAppointmentDays
 			: this.appointmentDays
@@ -926,7 +934,9 @@ export class DataService {
 
 		// Go through each mobileCalendarDay
 		for (let i = 0; i < this.mobileCalendarDaysDates.length; i++) {
-			let date = moment.unix(this.mobileCalendarDaysDates[i]).startOf("day")
+			let date = DateTime.fromSeconds(
+				this.mobileCalendarDaysDates[i]
+			).startOf("day")
 			this.mobileCalendarDaysAppointments[i] =
 				this.GetAppointmentsOfDay(date)
 			this.mobileCalendarDaysTodos[i] = this.GetTodosOfDay(date, false)
@@ -935,9 +945,9 @@ export class DataService {
 		// Go through each desktopCalendarDay
 		for (let i = 0; i < this.desktopCalendarDaysDates.length; i++) {
 			for (let j = 0; j < this.desktopCalendarDaysDates[i].length; j++) {
-				let date = moment
-					.unix(this.desktopCalendarDaysDates[i][j])
-					.startOf("day")
+				let date = DateTime.fromSeconds(
+					this.desktopCalendarDaysDates[i][j]
+				).startOf("day")
 				this.desktopCalendarDaysAppointments[i][j] =
 					this.GetAppointmentsOfDay(date)
 				this.desktopCalendarDaysTodos[i][j] = this.GetTodosOfDay(
@@ -956,13 +966,13 @@ export class DataService {
 	}
 
 	// Get the todos of the given day to show them on the calendar page
-	GetTodosOfDay(day: moment.Moment, completed: boolean) {
+	GetTodosOfDay(day: DateTime, completed: boolean) {
 		var todos: Todo[] = []
 
 		this.allTodos.forEach(todo => {
 			if (
-				moment.unix(todo.time).startOf("day").unix() ===
-					day.startOf("day").unix() &&
+				DateTime.fromSeconds(todo.time).startOf("day").toUnixInteger() ===
+					day.startOf("day").toUnixInteger() &&
 				(completed || !todo.completed)
 			) {
 				todos.push(todo)
@@ -977,8 +987,9 @@ export class DataService {
 		this.SortAppointmentsArray(this.allAppointments)
 
 		if (
-			moment.unix(appointment.start).startOf("day").unix() ==
-			this.selectedDay.startOf("day").unix()
+			DateTime.fromSeconds(appointment.start)
+				.startOf("day")
+				.toUnixInteger() == this.selectedDay.startOf("day").toUnixInteger()
 		) {
 			this.selectedDayAppointments.push(appointment)
 			this.SortAppointmentsArray(this.selectedDayAppointments)
@@ -987,13 +998,14 @@ export class DataService {
 		this.UpdateCalendarDays()
 	}
 
-	GetAppointmentsOfDay(day: moment.Moment) {
+	GetAppointmentsOfDay(day: DateTime) {
 		var appointments: Appointment[] = []
 
 		for (let appointment of this.allAppointments) {
 			if (
-				moment.unix(appointment.start).startOf("day").unix() ===
-				day.startOf("day").unix()
+				DateTime.fromSeconds(appointment.start)
+					.startOf("day")
+					.toUnixInteger() === day.startOf("day").toUnixInteger()
 			) {
 				appointments.push(appointment)
 			}
@@ -1029,8 +1041,8 @@ export class DataService {
 		this.SortTodosArray(this.allTodos)
 
 		if (
-			moment.unix(todo.time).startOf("day").unix() ==
-				this.selectedDay.startOf("day").unix() &&
+			DateTime.fromSeconds(todo.time).startOf("day").toUnixInteger() ==
+				this.selectedDay.startOf("day").toUnixInteger() &&
 			!todo.list
 		) {
 			this.selectedDayTodos.push(todo)
@@ -1070,8 +1082,8 @@ export class DataService {
 		this.SortTodoListsArray(this.allTodoLists)
 
 		if (
-			moment.unix(todoList.time).startOf("day").unix() ==
-			this.selectedDay.startOf("day").unix()
+			DateTime.fromSeconds(todoList.time).startOf("day").toUnixInteger() ==
+			this.selectedDay.startOf("day").toUnixInteger()
 		) {
 			this.selectedDayTodoLists.push(todoList)
 			this.SortTodoListsArray(this.selectedDayTodoLists)

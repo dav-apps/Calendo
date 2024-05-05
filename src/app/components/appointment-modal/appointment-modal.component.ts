@@ -6,7 +6,7 @@ import {
 	EventEmitter
 } from "@angular/core"
 import { NgbModal, NgbDateStruct } from "@ng-bootstrap/ng-bootstrap"
-import * as moment from "moment"
+import { DateTime } from "luxon"
 import { Notification, GetNotification, SetupWebPushSubscription } from "dav-js"
 import { Appointment, GetAppointment } from "src/app/models/Appointment"
 import { DataService } from "src/app/services/data-service"
@@ -101,8 +101,11 @@ export class AppointmentModalComponent {
 						// Calculate the seconds the notification is sent before the appointment starts
 						let difference =
 							(appointment.allday
-								? moment.unix(appointment.start).startOf("day").unix()
+								? DateTime.fromSeconds(appointment.start)
+										.startOf("day")
+										.toUnixInteger()
 								: appointment.start) - notification.Time
+
 						this.SetReminderSelection(difference)
 					}
 				)
@@ -182,7 +185,9 @@ export class AppointmentModalComponent {
 							// Set the time of the notification to (the start of the day - seconds before) or (appointment start - seconds before)
 							let time =
 								(this.appointmentAllDayCheckboxChecked
-									? moment.unix(startUnix).startOf("day").unix()
+									? DateTime.fromSeconds(startUnix)
+											.startOf("day")
+											.toUnixInteger()
 									: startUnix) - this.notificationTime
 							let notification = new Notification({
 								Time: time,
@@ -212,7 +217,9 @@ export class AppointmentModalComponent {
 					if (this.reminderCheckboxChecked) {
 						let time =
 							(this.appointmentAllDayCheckboxChecked
-								? moment.unix(appointment.start).startOf("day").unix()
+								? DateTime.fromSeconds(appointment.start)
+										.startOf("day")
+										.toUnixInteger()
 								: appointment.start) - this.notificationTime
 
 						if (appointment.notificationUuid) {
@@ -323,21 +330,20 @@ export class AppointmentModalComponent {
 		let message = ""
 
 		if (this.appointmentAllDayCheckboxChecked) {
-			let appointmentMoment = moment.unix(start)
 			message =
 				this.notificationLocale.messageSpecificTime +
 				", " +
-				appointmentMoment.format(this.notificationLocale.formats.allDay)
+				DateTime.fromSeconds(start).toFormat(this.notificationLocale.formats.allDay)
 		} else {
-			let appointmentStartMoment = moment.unix(start)
-			let appointmentEndMoment = moment.unix(end)
+			let appointmentStartDate = DateTime.fromSeconds(start)
+			let appointmentEndDate = DateTime.fromSeconds(end)
 
 			message =
-				appointmentStartMoment.format(
+				appointmentStartDate.toFormat(
 					this.notificationLocale.formats.specificTime
 				) +
 				" - " +
-				appointmentEndMoment.format(
+				appointmentEndDate.toFormat(
 					this.notificationLocale.formats.specificTime
 				)
 		}

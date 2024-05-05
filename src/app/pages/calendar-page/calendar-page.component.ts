@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from "@angular/core"
 import { Router } from "@angular/router"
-import * as moment from "moment"
+import { DateTime } from "luxon"
 declare var $: any
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
@@ -32,8 +32,8 @@ export class CalendarPageComponent {
 		: this.calendarHeight / 5
 	calendarDayWidth: number = window.innerWidth / 7
 
-	topDay: moment.Moment = moment() // The day at the very top of the mobile view
-	currentDay: moment.Moment = moment()
+	topDay: DateTime = DateTime.now() // The day at the very top of the mobile view
+	currentDay: DateTime = DateTime.now()
 	currentDayOfWeek: number = 0
 	position: number = 1
 	visibleRows: number = 5 // The number of days that are visible
@@ -46,10 +46,14 @@ export class CalendarPageComponent {
 		private localizationService: LocalizationService,
 		private router: Router
 	) {
-		moment.locale(this.dataService.locale)
+		// Get the short weekday labels
+		let weekdays = []
 
-		// Set the weekday labels in the current language
-		let weekdays = moment.weekdaysMin()
+		for (let i = 0; i < 7; i++) {
+			weekdays.push(
+				DateTime.now().plus({ days: i }).startOf("week").weekdayShort
+			)
+		}
 
 		for (let i = 0; i < weekdays.length; i++) {
 			if (i < 6) {
@@ -90,7 +94,7 @@ export class CalendarPageComponent {
 	}
 
 	async initialize() {
-		this.topDay = moment().subtract(this.dayBuffer, "days")
+		this.topDay = DateTime.now().minus({ days: this.dayBuffer })
 
 		this.fillDaysMobile()
 		this.fillDaysDesktop()
@@ -152,10 +156,8 @@ export class CalendarPageComponent {
 					this.mobileCalendarContainer.nativeElement.scrollTop /
 						this.calendarDayHeight
 				)
-				this.currentDay = moment
-					.unix(this.topDay.unix())
-					.add(this.position, "days")
 
+				this.currentDay = this.topDay.plus({ days: this.position })
 				this.updateCurrentWeekDays()
 			}
 		}
@@ -167,15 +169,15 @@ export class CalendarPageComponent {
 		this.dataService.mobileCalendarDaysTodos = []
 
 		// Get the first day of the top week
-		var date = moment.unix(this.topDay.unix()).startOf("day")
+		let date = this.topDay.startOf("day")
 
 		// Fill the days array with values
 		for (let i = 0; i < this.dayBuffer * 2; i++) {
-			this.dataService.mobileCalendarDaysDates.push(date.unix())
+			this.dataService.mobileCalendarDaysDates.push(date.toUnixInteger())
 			this.dataService.mobileCalendarDaysAppointments.push([])
 			this.dataService.mobileCalendarDaysTodos.push([])
 
-			date.add(1, "days")
+			date = date.plus({ days: 1 })
 		}
 
 		this.updateCurrentWeekDays()
@@ -187,22 +189,17 @@ export class CalendarPageComponent {
 		this.dataService.desktopCalendarDaysAppointments = []
 		this.dataService.desktopCalendarDaysTodos = []
 
-		var startDate = moment
-			.unix(this.currentDay.unix())
+		let startDate = this.currentDay
 			.startOf("month")
-			.isoWeekday(1)
+			.startOf("week")
 			.startOf("day")
-		var endDate = moment
-			.unix(this.currentDay.unix())
-			.endOf("month")
-			.isoWeekday(7)
-			.endOf("day")
-		var date = moment.unix(startDate.unix())
-		var dates = []
+		let endDate = this.currentDay.startOf("month").endOf("week").endOf("day")
+		let date = startDate
+		let dates = []
 
-		while (date.unix() < endDate.unix()) {
-			dates.push(date.unix())
-			date.add(1, "days")
+		while (date < endDate) {
+			dates.push(date.toUnixInteger())
+			date = date.plus({ days: 1 })
 		}
 
 		let datesWeek = []
@@ -239,14 +236,18 @@ export class CalendarPageComponent {
 		this.dataService.UpdateCalendarDays()
 	}
 
-	scrollToDate(date: moment.Moment) {
-		let dateStart: number = date.startOf("day").unix()
+	scrollToDate(date: DateTime) {
+		let dateStart: number = date.startOf("day").toUnixInteger()
 		let days = 0
 
 		for (let day of this.dataService.mobileCalendarDaysDates) {
-			if (moment.unix(day).startOf("day").unix() == dateStart) {
+			if (
+				DateTime.fromSeconds(day).startOf("day").toUnixInteger() ==
+				dateStart
+			) {
 				break
 			}
+
 			days++
 		}
 
@@ -256,51 +257,48 @@ export class CalendarPageComponent {
 	}
 
 	addDayTop() {
-		this.topDay.subtract(1, "day")
+		this.topDay = this.topDay.minus({ days: 1 })
 
 		// Add a new entry at the beginning of the mobileCalendarDaysDates and the todos and appointments arrays
 		this.dataService.mobileCalendarDaysDates.unshift(
-			this.topDay.startOf("day").unix()
+			this.topDay.startOf("day").toUnixInteger()
 		)
 		this.dataService.mobileCalendarDaysAppointments.unshift([])
 		this.dataService.mobileCalendarDaysTodos.unshift([])
 	}
 
 	addDayBottom() {
-		let date = moment
-			.unix(this.topDay.unix())
-			.startOf("day")
-			.add(this.dataService.mobileCalendarDaysDates.length, "days")
+		let date = this.topDay
+			.plus({ days: this.dataService.mobileCalendarDaysDates.length })
 			.startOf("day")
 
 		// Add a new entry at the end of the mobileCalendarDaysDates and the todos and appointments arrays
-		this.dataService.mobileCalendarDaysDates.push(date.unix())
+		this.dataService.mobileCalendarDaysDates.push(date.toUnixInteger())
 		this.dataService.mobileCalendarDaysAppointments.push([])
 		this.dataService.mobileCalendarDaysTodos.push([])
 	}
 
 	ShowPrevious() {
-		this.currentDay.subtract(1, "month")
+		this.currentDay = this.currentDay.minus({ months: 1 })
 		this.fillDaysDesktop()
 		this.setSize()
 	}
 
 	ShowNext() {
-		this.currentDay.add(1, "month")
+		this.currentDay = this.currentDay.plus({ months: 1 })
 		this.fillDaysDesktop()
 		this.setSize()
 	}
 
 	updateCurrentWeekDays() {
-		var date = moment.unix(this.currentDay.unix())
-		date.isoWeekday(1)
+		let date = this.currentDay.startOf("week")
 
 		for (let i = 0; i < 7; i++) {
-			this.currentWeekDays[i] = date.format("D")
-			date.add(1, "day")
+			this.currentWeekDays[i] = date.toFormat("D")
+			date.plus({ days: 1 })
 		}
 
-		this.currentDayOfWeek = this.currentDay.isoWeekday() - 1
+		this.currentDayOfWeek = this.currentDay.weekday - 1
 	}
 
 	setSize() {
@@ -329,7 +327,7 @@ export class CalendarPageComponent {
 		// If it was desktop before and is now mobile
 		if (!showMobileLayoutBefore && this.showMobileLayout) {
 			// Scroll to the current page
-			this.scrollToDate(moment())
+			this.scrollToDate(DateTime.now())
 		}
 	}
 
@@ -338,41 +336,38 @@ export class CalendarPageComponent {
 	}
 
 	goToWeekday(index: number) {
-		this.scrollToDate(
-			moment
-				.unix(this.currentDay.unix())
-				.startOf("isoWeek")
-				.add(index, "days")
-		)
+		this.scrollToDate(this.currentDay.startOf("week").plus({ days: index }))
 	}
 
 	getFullDayOfDate(date: number) {
-		return moment.unix(date).format(this.fullDayFormat)
+		return DateTime.fromSeconds(date).toFormat(this.fullDayFormat)
 	}
 
 	getDayOfDate(date: number) {
-		return moment.unix(date).format(this.dayFormat)
+		DateTime.fromSeconds(date).toFormat(this.dayFormat)
 	}
 
 	getCurrentMonth() {
-		return this.currentDay.format("MMMM")
+		return this.currentDay.toFormat("MMMM")
 	}
 
 	getCurrentYear(): number {
-		return this.currentDay.year()
+		return this.currentDay.year
 	}
 
 	getTimeOfDate(date: number) {
-		return moment.unix(date).format("H:mm")
+		return DateTime.fromSeconds(date).toFormat("H:mm")
 	}
 
 	getDayBackgroundColor(i: number, j: number) {
-		var date = moment.unix(this.dataService.desktopCalendarDaysDates[i][j])
+		let date = DateTime.fromSeconds(
+			this.dataService.desktopCalendarDaysDates[i][j]
+		)
 
 		if (this.isToday(date)) {
 			// Current day
 			return this.dataService.darkTheme ? "#3d4753" : "#dddddd"
-		} else if (date.month() == this.currentDay.month()) {
+		} else if (date.month == this.currentDay.month) {
 			// Current month
 			return this.dataService.darkTheme ? "#1c2938" : "#f9f9f9"
 		} else {
@@ -382,10 +377,13 @@ export class CalendarPageComponent {
 	}
 
 	isTimestampToday(timestamp: number): boolean {
-		return this.isToday(moment.unix(timestamp))
+		return this.isToday(DateTime.fromSeconds(timestamp))
 	}
 
-	isToday(date: moment.Moment): boolean {
-		return date.startOf("day").unix() == moment().startOf("day").unix()
+	isToday(date: DateTime): boolean {
+		return (
+			date.startOf("day").toUnixInteger() ==
+			DateTime.now().startOf("day").toUnixInteger()
+		)
 	}
 }
