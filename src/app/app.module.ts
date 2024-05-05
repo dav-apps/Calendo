@@ -10,6 +10,8 @@ import { MatButtonModule } from "@angular/material/button"
 import { MatSnackBarModule } from "@angular/material/snack-bar"
 import { MatTreeModule } from "@angular/material/tree"
 import { DragulaModule } from "ng2-dragula"
+import { Environment } from "dav-js"
+import { environment } from "src/environments/environment"
 
 // Pages
 import { StartPageComponent } from "./pages/start-page/start-page.component"
@@ -38,7 +40,6 @@ import { TodoGroupBadgeComponent } from "./components/todo-group-badge/todo-grou
 import { SetTodoGroupsComponent } from "./components/set-todo-groups/set-todo-groups.component"
 import { SetNameComponent } from "./components/set-name/set-name.component"
 import { TodoListTreeComponent } from "./components/todo-list-tree/todo-list-tree.component"
-import { environment } from "src/environments/environment"
 
 // Dialogs
 import { CreateAppointmentDialogComponent } from "./dialogs/create-appointment-dialog/create-appointment-dialog.component"
@@ -100,8 +101,10 @@ import { SettingsService } from "./services/settings-service"
 		]),
 		NgbModule,
 		FontAwesomeModule,
-		ServiceWorkerModule.register("/sw.js", {
-			enabled: environment.production
+		ServiceWorkerModule.register("sw.js", {
+			enabled:
+				environment.environment == Environment.Staging ||
+				environment.environment == Environment.Production
 		}),
 		BrowserAnimationsModule,
 		MatButtonModule,

@@ -88,9 +88,7 @@ export class AppComponent {
 
 		// Initialize dav
 		new Dav({
-			environment: environment.production
-				? Environment.Production
-				: Environment.Development,
+			environment: environment.environment,
 			appId: environment.appId,
 			tableIds: [
 				environment.todoTableId,

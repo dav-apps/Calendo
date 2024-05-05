@@ -1,5 +1,7 @@
+import { Environment } from "dav-js"
+
 export const environment = {
-	production: true,
+	environment: Environment.Production,
 	apiKey: "gHgHKRbIjdguCM4cv5481hdiF5hZGWZ4x12Ur-7v",
 	websiteUrl: "https://dav-apps.tech",
 	appId: 5,
