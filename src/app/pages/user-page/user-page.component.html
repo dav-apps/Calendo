@@ -102,13 +102,16 @@
 			<button
 				type="button"
 				class="btn btn-outline-danger btn-sm mt-2"
-				(click)="ShowLogoutModal()"
+				(click)="showLogoutDialog()"
 			>
 				{{ locale.logout }}
 			</button>
 		</div>
 	</div>
-
-	<calendo-logout-modal (logout)="Logout()"></calendo-logout-modal>
 </div>
+
+<calendo-logout-dialog
+	#logoutDialog
+	(primaryButtonClick)="logout()"
+></calendo-logout-dialog>
 }

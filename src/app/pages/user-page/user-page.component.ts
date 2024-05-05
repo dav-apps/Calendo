@@ -4,10 +4,10 @@ import {
 	faLock as faLockLight
 } from "@fortawesome/pro-light-svg-icons"
 import { Dav } from "dav-js"
+import { LogoutDialogComponent } from "src/app/dialogs/logout-dialog/logout-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { environment } from "src/environments/environment"
-import { LogoutModalComponent } from "src/app/components/logout-modal/logout-modal.component"
 
 @Component({
 	templateUrl: "./user-page.component.html",
@@ -17,8 +17,8 @@ export class UserPageComponent {
 	locale = this.localizationService.locale.userPage
 	faRotateLight = faRotateLight
 	faLockLight = faLockLight
-	@ViewChild(LogoutModalComponent)
-	private logoutModalComponent: LogoutModalComponent
+	@ViewChild("logoutDialog")
+	logoutDialog: LogoutDialogComponent
 	websiteUrl = environment.websiteUrl
 
 	constructor(
@@ -34,12 +34,15 @@ export class UserPageComponent {
 		Dav.ShowSignupPage(environment.apiKey, window.location.origin)
 	}
 
-	ShowLogoutModal() {
-		this.logoutModalComponent.Show()
+	showLogoutDialog() {
+		this.logoutDialog.show()
 	}
 
-	Logout() {
-		Dav.Logout().then(() => (window.location.href = "/account"))
+	async logout() {
+		this.logoutDialog.hide()
+
+		await this.dataService.dav.Logout()
+		window.location.href = "/user"
 	}
 
 	bytesToGigabytes(bytes: number, rounding: number): string {
