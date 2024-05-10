@@ -1,18 +1,11 @@
-<div
-	class="container-fluid ms-motion-slideUpIn"
-	style="padding-bottom: 56px"
->
-	<div class="ml-md-5 ml-4">
-		<h1 class="mt-3" style="font-weight: 300">
-			{{ GetCurrentWeekday() }}
-		</h1>
-		<p class="lead font-weight-light">{{ GetCurrentDate() }}</p>
+<div class="container slide-up-in">
+	<div class="head">
+		<h1 class="headline">{{ currentWeekday }}</h1>
+		<h3 class="subhead">{{ currentDate }}</h3>
 	</div>
 
 	<div class="row mt-4">
-		<div
-			class="card col-10 offset-1 col-md-4 mb-5 ms-depth-4"
-		>
+		<div class="card col-10 offset-1 col-md-4 mb-5 ms-depth-4">
 			<div class="card-body" style="padding-bottom: 0px">
 				<h5 class="card-title">{{ locale.appointments }}</h5>
 				<ul class="list-group list-group-flush">
@@ -24,10 +17,7 @@
 							let appointment of dataService.startDaysAppointments[0]
 						"
 					></calendo-appointment-item>
-					<li
-						class="list-group-item"
-						style="padding: 14px 0px 14px 5px"
-					>
+					<li class="list-group-item" style="padding: 14px 0px 14px 5px">
 						<button
 							type="button"
 							class="btn btn-outline-primary btn-sm"
@@ -40,9 +30,7 @@
 			</div>
 		</div>
 
-		<div
-			class="card col-10 offset-1 col-md-4 offset-md-2 mb-5 ms-depth-4"
-		>
+		<div class="card col-10 offset-1 col-md-4 offset-md-2 mb-5 ms-depth-4">
 			<div class="card-body" style="padding-bottom: 0px">
 				<h5 class="card-title">{{ locale.todos }}</h5>
 				<ul class="list-group list-group-flush">

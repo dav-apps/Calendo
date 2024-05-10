@@ -1,7 +1,7 @@
 //#region en
 const enDefaults = {
 	navbar: {
-		start: "Start",
+		overview: "Overview",
 		calendar: "Calendar",
 		todos: "Todos",
 		appointments: "Appointments"
@@ -233,7 +233,7 @@ enAU.todosPage.formats.date = "dddd, D MMMM YYYY"
 //#region de
 const deDefaults = {
 	navbar: {
-		start: "Start",
+		overview: "Übersicht",
 		calendar: "Kalender",
 		todos: "Todos",
 		appointments: "Termine"

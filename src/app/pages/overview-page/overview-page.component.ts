@@ -1,6 +1,6 @@
 import { Component, ViewChild, HostListener } from "@angular/core"
 import { Router } from "@angular/router"
-import { DateTime } from "luxon"
+import { Settings, DateTime } from "luxon"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 import { CreateAppointmentDialogComponent } from "src/app/dialogs/create-appointment-dialog/create-appointment-dialog.component"
@@ -35,6 +35,9 @@ export class OverviewPageComponent {
 	largeDateFontSize: number = 24
 	smallDateFontSize: number = 16
 
+	currentWeekday: string = ""
+	currentDate: string = ""
+
 	//#region CreateAppointmentDialog
 	@ViewChild("createAppointmentDialog")
 	createAppointmentDialog: CreateAppointmentDialogComponent
@@ -56,6 +59,11 @@ export class OverviewPageComponent {
 		private router: Router,
 		private snackBar: MatSnackBar
 	) {
+		Settings.defaultLocale = navigator.language
+
+		this.currentWeekday = DateTime.now().toFormat("EEEE")
+		this.currentDate = DateTime.now().toFormat("DDD")
+
 		this.largeDateFormat = this.locale.formats.largeDate
 		this.smallDateFormat = this.locale.formats.smallDate
 	}
@@ -96,14 +104,6 @@ export class OverviewPageComponent {
 				: this.smallDateFormat
 
 		return dateTime.toFormat(formatting)
-	}
-
-	GetCurrentWeekday() {
-		return DateTime.now().toFormat("dddd")
-	}
-
-	GetCurrentDate() {
-		return DateTime.now().toFormat("LL")
 	}
 
 	CreateTodo(todo: Todo) {
