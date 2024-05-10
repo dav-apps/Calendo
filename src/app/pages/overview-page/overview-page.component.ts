@@ -16,10 +16,10 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
 @Component({
-	templateUrl: "./start-page.component.html",
-	styleUrl: "./start-page.component.scss"
+	templateUrl: "./overview-page.component.html",
+	styleUrl: "./overview-page.component.scss"
 })
-export class StartPageComponent {
+export class OverviewPageComponent {
 	locale = this.localizationService.locale.startPage
 	snackbarLocale = this.localizationService.locale.snackbar
 	faPlus = faPlus

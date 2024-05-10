@@ -14,7 +14,7 @@ import { Environment } from "dav-js"
 import { environment } from "src/environments/environment"
 
 // Pages
-import { StartPageComponent } from "./pages/start-page/start-page.component"
+import { OverviewPageComponent } from "./pages/overview-page/overview-page.component"
 import { TodosPageComponent } from "./pages/todos-page/todos-page.component"
 import { AppointmentsPageComponent } from "./pages/appointments-page/appointments-page.component"
 import { UserPageComponent } from "./pages/user-page/user-page.component"
@@ -54,7 +54,7 @@ import { SettingsService } from "./services/settings-service"
 @NgModule({
 	declarations: [
 		// Pages
-		StartPageComponent,
+		OverviewPageComponent,
 		TodosPageComponent,
 		AppointmentsPageComponent,
 		UserPageComponent,
@@ -88,7 +88,7 @@ import { SettingsService } from "./services/settings-service"
 		BrowserModule,
 		FormsModule,
 		RouterModule.forRoot([
-			{ path: "", component: StartPageComponent },
+			{ path: "", component: OverviewPageComponent },
 			{ path: "calendar", component: CalendarPageComponent },
 			{ path: "calendar/day/:time", component: CalendarDayPageComponent },
 			{ path: "todos", component: TodosPageComponent },
