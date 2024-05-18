@@ -130,6 +130,8 @@
 
 <calendo-create-appointment-dialog
 	#createAppointmentDialog
+	[nameError]="createAppointmentDialogNameError"
+	(primaryButtonClick)="createAppointment($event)"
 ></calendo-create-appointment-dialog>
 
 <calendo-create-todo-dialog #createTodoDialog></calendo-create-todo-dialog>

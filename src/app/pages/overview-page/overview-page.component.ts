@@ -41,6 +41,7 @@ export class OverviewPageComponent {
 	//#region CreateAppointmentDialog
 	@ViewChild("createAppointmentDialog")
 	createAppointmentDialog: CreateAppointmentDialogComponent
+	createAppointmentDialogNameError: string = ""
 	//#endregion
 
 	//#region CreateTodoDialog
@@ -146,6 +147,46 @@ export class OverviewPageComponent {
 			})
 
 		this.dataService.AdaptSnackbarPosition()
+	}
+
+	async createAppointment(event: {
+		name: string
+		date: DateTime
+		allDay: boolean
+		color: string
+		startTimeHour: number
+		startTimeMinute: number
+		endTimeHour: number
+		endTimeMinute: number
+	}) {
+		if (event.name.length == 0) {
+			this.createAppointmentDialog.nameError = "Bitte gib einen Namen ein"
+			return
+		}
+
+		let startTime = event.date.set({
+			hour: event.startTimeHour,
+			minute: event.startTimeMinute
+		})
+
+		let endTime = event.date.set({
+			hour: event.endTimeHour,
+			minute: event.endTimeMinute
+		})
+
+		if (endTime < startTime) {
+			endTime = endTime.plus({ days: 1 })
+		}
+
+		let appointment = await Appointment.Create(
+			event.name,
+			startTime.toUnixInteger(),
+			endTime.toUnixInteger(),
+			event.allDay,
+			event.color
+		)
+
+		this.dataService.AddAppointment(appointment)
 	}
 
 	CreateTodoList(todoList: TodoList) {

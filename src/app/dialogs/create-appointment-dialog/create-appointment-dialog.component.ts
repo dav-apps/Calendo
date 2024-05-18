@@ -152,6 +152,7 @@ export class CreateAppointmentDialogComponent {
 
 		this.primaryButtonClick.emit({
 			name: this.name,
+			date: this.date,
 			allDay: this.allDay,
 			color,
 			startTimeHour: this.startTimeHour,
