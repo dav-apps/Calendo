@@ -6,7 +6,6 @@
 	[visible]="visible"
 	[loading]="loading"
 	maxWidth="300"
-	(dismiss)="visible = false"
 	(primaryButtonClick)="submit()"
 	(defaultButtonClick)="visible = false"
 >
@@ -29,13 +28,33 @@
 		</div>
 
 		<div class="date-container">
-			<dav-calendar></dav-calendar>
+			<dav-calendar
+				(change)="calendarChange($event)"
+			></dav-calendar>
 		</div>
 
 		<div class="time-container">
-			<dav-checkbox label="Ganztägig"></dav-checkbox>
+			<dav-checkbox
+				label="Ganztägig"
+				[checked]="allDay"
+				(change)="allDayCheckboxChange($event)"
+			></dav-checkbox>
 
-			<dav-time-picker (change)="timePickerChange($event)"></dav-time-picker>
+			<div class="time-pickers-container">
+				<dav-time-picker
+					[hour]="startTimeHour"
+					[minute]="startTimeMinute"
+					[disabled]="allDay"
+					(change)="startTimePickerChange($event)"
+				></dav-time-picker>
+
+				<dav-time-picker
+					[hour]="endTimeHour"
+					[minute]="endTimeMinute"
+					[disabled]="allDay"
+					(change)="endTimePickerChange($event)"
+				></dav-time-picker>
+			</div>
 		</div>
 	</form>
 </dav-dialog>

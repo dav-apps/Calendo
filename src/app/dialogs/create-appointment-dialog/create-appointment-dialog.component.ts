@@ -6,6 +6,7 @@ import {
 	ElementRef,
 	EventEmitter
 } from "@angular/core"
+import { DateTime } from "luxon"
 import { Dialog, DropdownOption, DropdownOptionType } from "dav-ui-components"
 import { LocalizationService } from "src/app/services/localization-service"
 import { randomNumber } from "src/app/utils"
@@ -24,8 +25,14 @@ export class CreateAppointmentDialogComponent {
 	@ViewChild("dialog") dialog: ElementRef<Dialog>
 	visible: boolean = false
 	name: string = ""
-
 	colorDropdownSelectedKey: string = "red"
+	date: DateTime = DateTime.now()
+	allDay: boolean = true
+	startTimeHour: number = 14
+	startTimeMinute: number = 0
+	endTimeHour: number = 15
+	endTimeMinute: number = 0
+
 	colorDropdownOptions: DropdownOption[] = [
 		{
 			key: "red",
@@ -84,7 +91,11 @@ export class CreateAppointmentDialogComponent {
 		}
 	]
 
-	constructor(private localizationService: LocalizationService) {}
+	constructor(private localizationService: LocalizationService) {
+		// Select a random color
+		let i = randomNumber(0, this.colorDropdownOptions.length - 1)
+		this.colorDropdownSelectedKey = this.colorDropdownOptions[i].key
+	}
 
 	ngAfterViewInit() {
 		document.body.appendChild(this.dialog.nativeElement)
@@ -95,12 +106,6 @@ export class CreateAppointmentDialogComponent {
 	}
 
 	show() {
-		this.name = ""
-
-		// Select a random color
-		let i = randomNumber(0, this.colorDropdownOptions.length - 1)
-		this.colorDropdownSelectedKey = this.colorDropdownOptions[i].key
-
 		this.visible = true
 	}
 
@@ -116,13 +121,43 @@ export class CreateAppointmentDialogComponent {
 		this.colorDropdownSelectedKey = event.detail.key
 	}
 
-	timePickerChange(event: CustomEvent) {
-		console.log(event)
+	calendarChange(event: CustomEvent) {
+		this.date = event.detail.date
+	}
+
+	allDayCheckboxChange(event: CustomEvent) {
+		this.allDay = event.detail.checked
+	}
+
+	startTimePickerChange(event: CustomEvent) {
+		this.startTimeHour = event.detail.hour
+		this.startTimeMinute = event.detail.minute
+	}
+
+	endTimePickerChange(event: CustomEvent) {
+		this.endTimeHour = event.detail.hour
+		this.endTimeMinute = event.detail.minute
 	}
 
 	submit() {
+		let i = this.colorDropdownOptions.findIndex(
+			o => o.key == this.colorDropdownSelectedKey
+		)
+
+		let color = this.colorDropdownOptions[0].value
+
+		if (i != -1) {
+			color = this.colorDropdownOptions[i].value
+		}
+
 		this.primaryButtonClick.emit({
-			name: this.name
+			name: this.name,
+			allDay: this.allDay,
+			color,
+			startTimeHour: this.startTimeHour,
+			startTimeMinute: this.startTimeMinute,
+			endTimeHour: this.endTimeHour,
+			endTimeMinute: this.endTimeMinute
 		})
 	}
 }
