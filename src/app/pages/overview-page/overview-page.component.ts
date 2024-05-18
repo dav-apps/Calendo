@@ -23,6 +23,7 @@ export class OverviewPageComponent {
 	locale = this.localizationService.locale.startPage
 	snackbarLocale = this.localizationService.locale.snackbar
 	faPlus = faPlus
+	selectedAppointment: Appointment = null
 	@ViewChild(NewTodoModalComponent, { static: true })
 	private newTodoModalComponent: NewTodoModalComponent
 	@ViewChild(AppointmentModalComponent, { static: true })
@@ -81,6 +82,19 @@ export class OverviewPageComponent {
 
 	public async DeleteTodo(todo: Todo) {
 		this.dataService.RemoveTodo(todo)
+	}
+
+	showDeleteAppointmentDialog(appointment: Appointment) {
+		this.selectedAppointment = appointment
+		this.deleteAppointmentDialog.show()
+	}
+
+	async deleteAppointment() {
+		this.deleteAppointmentDialog.hide()
+		this.dataService.RemoveAppointment(this.selectedAppointment)
+
+		await this.selectedAppointment.Delete()
+		this.selectedAppointment = null
 	}
 
 	ShowCalendarDay(date: number) {
@@ -187,6 +201,7 @@ export class OverviewPageComponent {
 		)
 
 		this.dataService.AddAppointment(appointment)
+		this.createAppointmentDialog.hide()
 	}
 
 	CreateTodoList(todoList: TodoList) {
