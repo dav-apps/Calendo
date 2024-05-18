@@ -11,7 +11,7 @@
 	(defaultButtonClick)="visible = false"
 >
 	<form>
-		<div class="dialog-formfield-container">
+		<div class="name-color-container dialog-formfield-container">
 			<dav-textfield
 				[value]="name"
 				[label]="locale.nameTextfieldLabel"
@@ -19,6 +19,23 @@
 				[errorMessage]="nameError"
 				(change)="nameTextfieldChange($event)"
 			></dav-textfield>
+
+			<dav-dropdown
+				[options]="colorDropdownOptions"
+				[selectedKey]="colorDropdownSelectedKey"
+				compact
+				(change)="colorDropdownChange($event)"
+			></dav-dropdown>
+		</div>
+
+		<div class="date-container">
+			<dav-calendar></dav-calendar>
+		</div>
+
+		<div class="time-container">
+			<dav-checkbox label="Ganztägig"></dav-checkbox>
+
+			<dav-time-picker (change)="timePickerChange($event)"></dav-time-picker>
 		</div>
 	</form>
 </dav-dialog>

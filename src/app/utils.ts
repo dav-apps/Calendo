@@ -18,3 +18,7 @@ export function bytesToGigabytesText(bytes: number, rounding: number): string {
 	let gb = Math.round(bytes / 1000000000).toFixed(rounding)
 	return gb == "0.0" ? "0" : gb
 }
+
+export function randomNumber(min: number, max: number) {
+	return Math.floor(Math.random() * (max - min + 1)) + min
+}

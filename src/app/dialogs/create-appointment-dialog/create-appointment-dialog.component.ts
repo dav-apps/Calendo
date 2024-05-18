@@ -6,12 +6,14 @@ import {
 	ElementRef,
 	EventEmitter
 } from "@angular/core"
-import { Dialog } from "dav-ui-components"
+import { Dialog, DropdownOption, DropdownOptionType } from "dav-ui-components"
 import { LocalizationService } from "src/app/services/localization-service"
+import { randomNumber } from "src/app/utils"
 
 @Component({
 	selector: "calendo-create-appointment-dialog",
-	templateUrl: "./create-appointment-dialog.component.html"
+	templateUrl: "./create-appointment-dialog.component.html",
+	styleUrl: "./create-appointment-dialog.component.scss"
 })
 export class CreateAppointmentDialogComponent {
 	locale = this.localizationService.locale.dialogs.createAppointmentDialog
@@ -22,6 +24,65 @@ export class CreateAppointmentDialogComponent {
 	@ViewChild("dialog") dialog: ElementRef<Dialog>
 	visible: boolean = false
 	name: string = ""
+
+	colorDropdownSelectedKey: string = "red"
+	colorDropdownOptions: DropdownOption[] = [
+		{
+			key: "red",
+			value: "#D32F2F",
+			type: DropdownOptionType.color
+		},
+		{
+			key: "orange",
+			value: "#D67724",
+			type: DropdownOptionType.color
+		},
+		{
+			key: "yellow",
+			value: "#FFD600",
+			type: DropdownOptionType.color
+		},
+		{
+			key: "green",
+			value: "#388E3C",
+			type: DropdownOptionType.color
+		},
+		{
+			key: "light-green",
+			value: "#43A047",
+			type: DropdownOptionType.color
+		},
+		{
+			key: "light-blue",
+			value: "#00B0FF",
+			type: DropdownOptionType.color
+		},
+		{
+			key: "blue",
+			value: "#1565C0",
+			type: DropdownOptionType.color
+		},
+		{
+			key: "dark-blue",
+			value: "#283593",
+			type: DropdownOptionType.color
+		},
+		{
+			key: "purple",
+			value: "#7B1FA2",
+			type: DropdownOptionType.color
+		},
+		{
+			key: "gray",
+			value: "#757575",
+			type: DropdownOptionType.color
+		},
+		{
+			key: "black",
+			value: "#000000",
+			type: DropdownOptionType.color
+		}
+	]
 
 	constructor(private localizationService: LocalizationService) {}
 
@@ -35,6 +96,11 @@ export class CreateAppointmentDialogComponent {
 
 	show() {
 		this.name = ""
+
+		// Select a random color
+		let i = randomNumber(0, this.colorDropdownOptions.length - 1)
+		this.colorDropdownSelectedKey = this.colorDropdownOptions[i].key
+
 		this.visible = true
 	}
 
@@ -44,6 +110,14 @@ export class CreateAppointmentDialogComponent {
 
 	nameTextfieldChange(event: Event) {
 		this.name = (event as CustomEvent).detail.value
+	}
+
+	colorDropdownChange(event: CustomEvent) {
+		this.colorDropdownSelectedKey = event.detail.key
+	}
+
+	timePickerChange(event: CustomEvent) {
+		console.log(event)
 	}
 
 	submit() {
