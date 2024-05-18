@@ -100,6 +100,7 @@
 						<calendo-small-appointment-item
 							[appointment]="appointment"
 							(delete)="deleteAppointmentDialog.show()"
+							(contextmenu)="smallAppointmentItemContextMenu($event, appointment)"
 						></calendo-small-appointment-item>
 					</div>
 
@@ -127,6 +128,23 @@
 		(save)="CreateTodoList($event)"
 	></calendo-todo-list-modal>
 </div>
+
+<dav-context-menu
+	#contextMenu
+	[visible]="contextMenuVisible"
+	[posX]="contextMenuPositionX"
+	[posY]="contextMenuPositionY"
+>
+	<!-- Edit -->
+	<dav-context-menu-item value="Edit">
+		<fa-icon slot="icon" [icon]="faEditLight"></fa-icon>
+	</dav-context-menu-item>
+
+	<!-- Delete -->
+	<dav-context-menu-item value="Delete">
+		<fa-icon slot="icon" [icon]="faTrashLight"></fa-icon>
+	</dav-context-menu-item>
+</dav-context-menu>
 
 <calendo-create-appointment-dialog
 	#createAppointmentDialog

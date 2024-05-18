@@ -1,6 +1,12 @@
-import { Component, ViewChild, HostListener } from "@angular/core"
+import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
 import { Router } from "@angular/router"
 import { Settings, DateTime } from "luxon"
+import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import {
+	faEdit as faEditLight,
+	faTrash as faTrashLight
+} from "@fortawesome/pro-light-svg-icons"
+import { ContextMenu } from "dav-ui-components"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 import { CreateAppointmentDialogComponent } from "src/app/dialogs/create-appointment-dialog/create-appointment-dialog.component"
@@ -12,7 +18,6 @@ import { NewTodoModalComponent } from "src/app/components/new-todo-modal/new-tod
 import { AppointmentModalComponent } from "src/app/components/appointment-modal/appointment-modal.component"
 import { TodoListModalComponent } from "src/app/components/todo-list-modal/todo-list-modal.component"
 import { Appointment } from "src/app/models/Appointment"
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
 @Component({
@@ -23,6 +28,8 @@ export class OverviewPageComponent {
 	locale = this.localizationService.locale.startPage
 	snackbarLocale = this.localizationService.locale.snackbar
 	faPlus = faPlus
+	faEditLight = faEditLight
+	faTrashLight = faTrashLight
 	selectedAppointment: Appointment = null
 	@ViewChild(NewTodoModalComponent, { static: true })
 	private newTodoModalComponent: NewTodoModalComponent
@@ -36,6 +43,14 @@ export class OverviewPageComponent {
 
 	currentWeekday: string = ""
 	currentDate: string = ""
+
+	//#region ContextMenu
+	@ViewChild("contextMenu")
+	contextMenu: ElementRef<ContextMenu>
+	contextMenuVisible: boolean = false
+	contextMenuPositionX: number = 0
+	contextMenuPositionY: number = 0
+	//#endregion
 
 	//#region CreateAppointmentDialog
 	@ViewChild("createAppointmentDialog")
@@ -73,6 +88,25 @@ export class OverviewPageComponent {
 	setSize() {
 		this.largeDateFontSize = window.innerWidth < 450 ? 21 : 24
 		this.smallDateFontSize = window.innerWidth < 450 ? 15 : 16
+	}
+
+	@HostListener("document:click", ["$event"])
+	documentClick(event: MouseEvent) {
+		if (!this.contextMenu.nativeElement.contains(event.target as Node)) {
+			this.contextMenuVisible = false
+		}
+	}
+
+	smallAppointmentItemContextMenu(
+		event: PointerEvent,
+		appointment: Appointment
+	) {
+		event.preventDefault()
+
+		this.contextMenuPositionX = event.pageX
+		this.contextMenuPositionY =
+			event.pageY + this.dataService.contentContainer.scrollTop
+		this.contextMenuVisible = true
 	}
 
 	public async DeleteTodo(todo: Todo) {

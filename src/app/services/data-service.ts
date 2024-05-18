@@ -69,6 +69,7 @@ export class DataService {
 	sortTodosByDate: boolean = true
 	isMobile: boolean = false
 	darkTheme: boolean = false
+	contentContainer: HTMLDivElement = null
 	isLoadingAllAppointments: boolean = false // If true, LoadAllAppointments is currently running
 	isLoadingAllTodos: boolean = false
 	updatedTodoLists: string[] = []
