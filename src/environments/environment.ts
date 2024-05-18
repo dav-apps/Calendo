@@ -28,7 +28,7 @@ export const environment = {
 	appointmentEndKey: "end",
 	appointmentAllDayKey: "allday",
 	appointmentColorKey: "color",
-	appointmentDefaultColor: "1565C0",
+	appointmentDefaultColor: "#1565C0",
 	notificationUuidKey: "notification_uuid",
 	visitKey: "visit",
 	// Other constants

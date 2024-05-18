@@ -1,5 +1,4 @@
-<calendo-appointment-modal (save)="Update($event)"></calendo-appointment-modal>
-
+<!--
 <div *ngIf="enableDropdown" ngbDropdown placement="bottom-left">
 	<div
 		class="px-1 rounded cursor"
@@ -31,21 +30,27 @@
 		</button>
 	</div>
 </div>
+-->
 
 <div
-	class="px-1 rounded d-inline-flex"
-	style="font-size: 15px; color: white; user-select: none"
-	[style.background-color]="
-		appointment.color ? '#' + appointment.color : defaultColor
-	"
-	*ngIf="!enableDropdown"
+	class="item-container"
+	[style.backgroundColor]="color"
 >
-	<span *ngIf="!compact">
-		{{ appointment.name }}<br />
-		<span *ngIf="!appointment.allday">{{ getTimeSpan() }}</span>
-	</span>
-	<span *ngIf="compact">
-		<span *ngIf="!appointment.allday">{{ getStartTime() }}</span>
-		{{ appointment.name }}
-	</span>
+	@if (compact) {
+		<span>
+			@if (!appointment.allday) {
+				<span>{{ getStartTime() }}</span>
+			}
+
+			{{ appointment.name }}
+		</span>
+	} @else {
+		<span>
+			{{ appointment.name }}<br />
+
+			@if (!appointment.allday) {
+				<span>{{ getTimeSpan() }}</span>
+			}
+		</span>
+	}
 </div>
