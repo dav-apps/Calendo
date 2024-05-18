@@ -31,8 +31,6 @@ export class OverviewPageComponent {
 	@ViewChild(TodoListModalComponent, { static: true })
 	private todoListModalComponent: TodoListModalComponent
 
-	largeDateFormat: string = this.locale.formats.smallDate
-	smallDateFormat: string = this.locale.formats.largeDate
 	largeDateFontSize: number = 24
 	smallDateFontSize: number = 16
 
@@ -65,9 +63,6 @@ export class OverviewPageComponent {
 
 		this.currentWeekday = DateTime.now().toFormat("EEEE")
 		this.currentDate = DateTime.now().toFormat("DDD")
-
-		this.largeDateFormat = this.locale.formats.largeDate
-		this.smallDateFormat = this.locale.formats.smallDate
 	}
 
 	ngOnInit() {
@@ -103,20 +98,14 @@ export class OverviewPageComponent {
 
 	GetLargeDate(date: number): string {
 		let dateTime = DateTime.fromSeconds(date)
-		let formatting =
-			dateTime.diffNow("days").days > 6
-				? this.smallDateFormat
-				: this.largeDateFormat
+		let formatting = dateTime.diffNow("days").days > 6 ? "D" : "EEEE"
 
 		return dateTime.toFormat(formatting)
 	}
 
 	GetSmallDate(date: number): string {
 		let dateTime = DateTime.fromSeconds(date)
-		let formatting =
-			dateTime.diffNow("days").days > 6
-				? this.largeDateFormat
-				: this.smallDateFormat
+		let formatting = dateTime.diffNow("days").days > 6 ? "EEEE" : "D"
 
 		return dateTime.toFormat(formatting)
 	}

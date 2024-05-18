@@ -77,11 +77,7 @@ const enDefaults = {
 	},
 	startPage: {
 		appointments: "Appointments",
-		todos: "Todos",
-		formats: {
-			smallDate: "M/D",
-			largeDate: "dddd"
-		}
+		todos: "Todos"
 	},
 	todosPage: {
 		header: "Todos",
@@ -199,33 +195,27 @@ const enDefaults = {
 export var enUS = enDefaults
 
 export var enGB = enDefaults
-enGB.startPage.formats.smallDate = "D/M"
 enGB.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY"
 enGB.todosPage.formats.date = "dddd, D MMMM YYYY"
 enGB.appointmentModal.color = "Colour"
 
 export var enNZ = enDefaults
-enNZ.startPage.formats.smallDate = "D/M"
 enNZ.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY"
 enNZ.todosPage.formats.date = "dddd, D MMMM YYYY"
 enNZ.appointmentModal.color = "Colour"
 
 export var enIL = enDefaults
-enIL.startPage.formats.smallDate = "D/M"
 enIL.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY"
 enIL.todosPage.formats.date = "dddd, D MMMM YYYY"
 
 export var enIE = enDefaults
-enIE.startPage.formats.smallDate = "D-M"
 enIE.calendarDayPage.formats.currentDay = "dddd D MMMM YYYY"
 enIE.todosPage.formats.date = "dddd D MMMM YYYY"
 
 export var enCA = enDefaults
-enCA.startPage.formats.smallDate = "M-D"
 enCA.todosPage.formats.date = "dddd, MMMM D, YYYY"
 
 export var enAU = enDefaults
-enAU.startPage.formats.smallDate = "D/M"
 enAU.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY"
 enAU.todosPage.formats.date = "dddd, D MMMM YYYY"
 //#endregion
@@ -309,11 +299,7 @@ const deDefaults = {
 	},
 	startPage: {
 		appointments: "Termine",
-		todos: "Todos",
-		formats: {
-			smallDate: "D.M",
-			largeDate: "dddd"
-		}
+		todos: "Todos"
 	},
 	todosPage: {
 		header: "Todos",
