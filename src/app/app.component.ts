@@ -1,4 +1,4 @@
-import { Component } from "@angular/core"
+import { Component, ViewChild, ElementRef } from "@angular/core"
 import { Router, ActivatedRoute, NavigationStart } from "@angular/router"
 import {
 	faCircleUser as faCircleUserSolid,
@@ -52,6 +52,9 @@ export class AppComponent {
 	appointmentsTabActive: boolean = false
 	userButtonSelected: boolean = false
 	settingsButtonSelected: boolean = false
+
+	@ViewChild("contentContainer")
+	contentContainer: ElementRef<HTMLDivElement>
 
 	constructor(
 		public dataService: DataService,
@@ -118,6 +121,10 @@ export class AppComponent {
 				UserLoaded: () => this.userLoaded()
 			}
 		})
+	}
+
+	ngAfterViewInit() {
+		this.dataService.contentContainer = this.contentContainer.nativeElement
 	}
 
 	navigateToPage(path: string) {
