@@ -20,6 +20,7 @@ export class CalendarDayPageComponent {
 	locale = this.localizationService.locale.calendarDayPage
 	snackbarLocale = this.localizationService.locale.snackbar
 	faPlus = faPlus
+	title: string = ""
 	date = DateTime.now().startOf("day")
 	backButtonIconStyles = {
 		root: {
@@ -55,16 +56,15 @@ export class CalendarDayPageComponent {
 		this.route.params.subscribe(param => {
 			if (param.time) {
 				this.date = DateTime.fromSeconds(param.time).startOf("day")
+				this.title = this.date.toFormat("DDDD")
 				this.dataService.selectedDay = this.date
 
 				this.dataService.LoadAllAppointments()
 				this.dataService.LoadAllTodos()
 			}
 		})
-	}
 
-	getCurrentDate() {
-		return this.date.toFormat(this.locale.formats.currentDay)
+		this.title = this.date.toFormat("DDDD")
 	}
 
 	CreateAppointment(appointment: Appointment) {

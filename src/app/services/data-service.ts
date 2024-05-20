@@ -821,7 +821,7 @@ export class DataService {
 	//#region AppointmentsPage
 	AddAppointmentToAppointmentsPage(appointment: Appointment) {
 		var date: string = DateTime.fromSeconds(appointment.start).toFormat(
-			"dddd, D. MMMM YYYY"
+			"DDDD"
 		)
 		var timestampOfDate = DateTime.fromSeconds(appointment.start)
 			.startOf("day")

@@ -105,10 +105,7 @@ const enDefaults = {
 		newTodo: "Add Todo",
 		newTodoList: "Add Todo list",
 		noAppointments: "No appointments",
-		noTodos: "No todos",
-		formats: {
-			currentDay: "dddd, MMMM D, YYYY"
-		}
+		noTodos: "No todos"
 	},
 	todoListDetailsPage: {
 		date: "Date: ",
@@ -196,28 +193,23 @@ const enDefaults = {
 export var enUS = enDefaults
 
 export var enGB = enDefaults
-enGB.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY"
 enGB.todosPage.formats.date = "dddd, D MMMM YYYY"
 enGB.appointmentModal.color = "Colour"
 
 export var enNZ = enDefaults
-enNZ.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY"
 enNZ.todosPage.formats.date = "dddd, D MMMM YYYY"
 enNZ.appointmentModal.color = "Colour"
 
 export var enIL = enDefaults
-enIL.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY"
 enIL.todosPage.formats.date = "dddd, D MMMM YYYY"
 
 export var enIE = enDefaults
-enIE.calendarDayPage.formats.currentDay = "dddd D MMMM YYYY"
 enIE.todosPage.formats.date = "dddd D MMMM YYYY"
 
 export var enCA = enDefaults
 enCA.todosPage.formats.date = "dddd, MMMM D, YYYY"
 
 export var enAU = enDefaults
-enAU.calendarDayPage.formats.currentDay = "dddd, D MMMM YYYY"
 enAU.todosPage.formats.date = "dddd, D MMMM YYYY"
 //#endregion
 
@@ -328,10 +320,7 @@ const deDefaults = {
 		newTodo: "Todo hinzufügen",
 		newTodoList: "Todo-Liste hinzufügen",
 		noAppointments: "Keine Termine",
-		noTodos: "Keine Todos",
-		formats: {
-			currentDay: "dddd, D. MMMM YYYY"
-		}
+		noTodos: "Keine Todos"
 	},
 	todoListDetailsPage: {
 		date: "Datum: ",
