@@ -820,15 +820,9 @@ export class DataService {
 
 	//#region AppointmentsPage
 	AddAppointmentToAppointmentsPage(appointment: Appointment) {
-		var date: string = DateTime.fromSeconds(appointment.start).toFormat(
-			"DDDD"
-		)
-		var timestampOfDate = DateTime.fromSeconds(appointment.start)
-			.startOf("day")
-			.toUnixInteger()
-		var appointmentStartTimestamp = DateTime.fromSeconds(appointment.start)
-			.endOf("day")
-			.toUnixInteger()
+		let date = DateTime.fromSeconds(appointment.start)
+		let formattedDate = date.toFormat("DDDD")
+		var appointmentStartTimestamp = date.endOf("day").toUnixInteger()
 
 		if (!appointment.allday) {
 			appointmentStartTimestamp = appointment.end
@@ -844,7 +838,7 @@ export class DataService {
 
 		// Check if the date already exists in the appointmentDays or oldAppointmentDays array
 		var appointmentDay = appointmentDays.find(
-			obj => obj["timestamp"] == timestampOfDate
+			day => day.formattedDate == formattedDate
 		)
 
 		if (appointmentDay) {
@@ -854,14 +848,11 @@ export class DataService {
 			// Sort the appointments array
 			this.SortAppointmentsArray(appointmentArray)
 		} else {
-			// Create a new appointmentDay
-			var newAppointmentDay = {
-				date: date,
-				timestamp: timestampOfDate,
+			appointmentDays.push({
+				formattedDate,
+				calendarDayPageLink: `calendar/${date.year}/${date.month}/${date.day}`,
 				appointments: [appointment]
-			}
-
-			appointmentDays.push(newAppointmentDay)
+			})
 
 			// Sort the appointmentDays array
 			appointmentDays.sort((a: object, b: object) => {
@@ -1215,7 +1206,7 @@ export interface TodoDay {
 }
 
 export interface AppointmentDay {
-	date: string
-	timestamp: number
+	formattedDate: string
+	calendarDayPageLink: string
 	appointments: Appointment[]
 }

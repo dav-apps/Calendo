@@ -3,12 +3,13 @@ import { Router } from "@angular/router"
 import { DateTime } from "luxon"
 import {
 	faEdit as faEditLight,
-	faTrash as faTrashLight
+	faTrash as faTrashLight,
+	faArrowRight as faArrowRightLight
 } from "@fortawesome/pro-light-svg-icons"
 import { ContextMenu } from "dav-ui-components"
 import { CreateAppointmentDialogComponent } from "src/app/dialogs/create-appointment-dialog/create-appointment-dialog.component"
 import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
-import { DataService } from "src/app/services/data-service"
+import { AppointmentDay, DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { Appointment } from "src/app/models/Appointment"
 import { MatSnackBar } from "@angular/material/snack-bar"
@@ -23,6 +24,7 @@ export class AppointmentsPageComponent {
 	snackbarLocale = this.localizationService.locale.snackbar
 	faEditLight = faEditLight
 	faTrashLight = faTrashLight
+	faArrowRightLight = faArrowRightLight
 	selectedAppointment: Appointment = null
 
 	//#region ContextMenu
@@ -149,5 +151,14 @@ export class AppointmentsPageComponent {
 
 	ShowCalendarDay(date: number) {
 		this.router.navigate(["/calendar/day", date])
+	}
+
+	appointmentDayMoreButtonClick(
+		event: MouseEvent,
+		appointmentDay: AppointmentDay
+	) {
+		event.preventDefault()
+		this.dataService.contentContainer.scrollTo(0, 0)
+		this.router.navigate([appointmentDay.calendarDayPageLink])
 	}
 }

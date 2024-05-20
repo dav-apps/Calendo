@@ -1,6 +1,6 @@
 <div class="container slide-up-in">
 	<dav-header
-		size="large"
+		size="lg"
 		addButtonVisible
 		(addButtonClick)="createAppointmentDialog.show()"
 	>
@@ -15,40 +15,45 @@
 	</p>
 
 	<!-- List of future appointments -->
-	<div class="row">
-		<div
-			class="card offset-1 col-11 col-md-9 col-lg-7 mx-auto my-4 ms-depth-4"
-			*ngFor="let appointmentDay of dataService.appointmentDays"
-		>
-			<div class="card-body">
-				<h5 class="card-title mb-3">
-					<span (click)="ShowCalendarDay(appointmentDay.timestamp)">{{
-						appointmentDay.date
-					}}</span>
-				</h5>
-				<ul
-					class="list-group list-group-flush d-flex flex-column"
-					*ngFor="let appointment of appointmentDay.appointments"
+	<div class="appointment-list">
+		@for (appointmentDay of dataService.appointmentDays; track
+		appointmentDay.formattedDate) {
+		<div class="appointment-day">
+			<div class="appointment-day-header-container">
+				<h4>
+					{{ appointmentDay.formattedDate }}
+				</h4>
+
+				<dav-icon-button
+					size="sm"
+					[href]="appointmentDay.calendarDayPageLink"
+					(click)="appointmentDayMoreButtonClick($event, appointmentDay)"
 				>
-					<calendo-small-appointment-item
-						class="d-inline-flex"
-						[appointment]="appointment"
-						(contextmenu)="
-							smallAppointmentItemContextMenu($event, appointment)
-						"
-					></calendo-small-appointment-item>
-				</ul>
+					<fa-icon [icon]="faArrowRightLight"></fa-icon>
+				</dav-icon-button>
+			</div>
+
+			<div class="appointment-day-items">
+				@for (appointment of appointmentDay.appointments; track
+				appointment.uuid) {
+				<calendo-small-appointment-item
+					[appointment]="appointment"
+					(contextmenu)="
+						smallAppointmentItemContextMenu($event, appointment)
+					"
+				></calendo-small-appointment-item>
+				}
 			</div>
 		</div>
+		}
 	</div>
 
 	<!-- List of old appointments -->
-	<h2
-		class="font-weight-light text-center mt-3"
-		*ngIf="dataService.oldAppointmentDays.length > 0"
-	>
-		{{ locale.oldAppointments }}
-	</h2>
+	@if (dataService.oldAppointmentDays.length > 0) {
+		<dav-header>
+			{{ locale.oldAppointments }}
+		</dav-header>
+	}
 
 	<div class="row" *ngIf="dataService.oldAppointmentDays.length > 0">
 		<div
@@ -58,7 +63,7 @@
 			<div class="card-body">
 				<h5 class="card-title mb-3">
 					<span (click)="ShowCalendarDay(appointmentDay.timestamp)">{{
-						appointmentDay.date
+						appointmentDay.formattedDate
 					}}</span>
 				</h5>
 				<ul
