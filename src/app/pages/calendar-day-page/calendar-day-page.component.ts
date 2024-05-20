@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from "@angular/core"
+import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
 import { Router, ActivatedRoute } from "@angular/router"
 import { DateTime } from "luxon"
 import {
@@ -67,8 +67,14 @@ export class CalendarDayPageComponent {
 
 	ngOnInit() {
 		this.route.params.subscribe(param => {
-			if (param.time) {
-				this.date = DateTime.fromSeconds(param.time).startOf("day")
+			let year = Number(param.year)
+			let month = Number(param.month)
+			let day = Number(param.day)
+
+			if (isNaN(year) || isNaN(month) || isNaN(day)) {
+				this.router.navigate(["/"])
+			} else {
+				this.date = DateTime.now().set({ year, month, day })
 				this.title = this.date.toFormat("DDDD")
 				this.dataService.selectedDay = this.date
 
@@ -76,8 +82,13 @@ export class CalendarDayPageComponent {
 				this.dataService.LoadAllTodos()
 			}
 		})
+	}
 
-		this.title = this.date.toFormat("DDDD")
+	@HostListener("document:click", ["$event"])
+	documentClick(event: MouseEvent) {
+		if (!this.contextMenu.nativeElement.contains(event.target as Node)) {
+			this.contextMenuVisible = false
+		}
 	}
 
 	smallAppointmentItemContextMenu(
