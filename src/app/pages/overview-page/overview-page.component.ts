@@ -15,7 +15,6 @@ import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appoint
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { NewTodoModalComponent } from "src/app/components/new-todo-modal/new-todo-modal.component"
-import { AppointmentModalComponent } from "src/app/components/appointment-modal/appointment-modal.component"
 import { TodoListModalComponent } from "src/app/components/todo-list-modal/todo-list-modal.component"
 import { Appointment } from "src/app/models/Appointment"
 import { MatSnackBar } from "@angular/material/snack-bar"

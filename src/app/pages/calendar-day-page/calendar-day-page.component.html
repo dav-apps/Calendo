@@ -25,6 +25,7 @@
 		<calendo-small-appointment-item
 			class="d-inline-flex"
 			[appointment]="appointment"
+			(contextmenu)="smallAppointmentItemContextMenu($event, appointment)"
 			(delete)="deleteAppointmentDialog.show()"
 			*ngFor="let appointment of dataService.selectedDayAppointments"
 		></calendo-small-appointment-item>
@@ -73,6 +74,26 @@
 	></calendo-todo-list-modal>
 </div>
 
+<dav-context-menu
+	#contextMenu
+	[visible]="contextMenuVisible"
+	[posX]="contextMenuPositionX"
+	[posY]="contextMenuPositionY"
+>
+	<!-- Edit -->
+	<dav-context-menu-item [value]="actionsLocale.edit">
+		<fa-icon slot="icon" [icon]="faEditLight"></fa-icon>
+	</dav-context-menu-item>
+
+	<!-- Delete -->
+	<dav-context-menu-item
+		[value]="actionsLocale.delete"
+		(click)="showDeleteAppointmentDialog(selectedAppointment)"
+	>
+		<fa-icon slot="icon" [icon]="faTrashLight"></fa-icon>
+	</dav-context-menu-item>
+</dav-context-menu>
+
 <calendo-create-appointment-dialog
 	#createAppointmentDialog
 ></calendo-create-appointment-dialog>
@@ -81,4 +102,5 @@
 
 <calendo-delete-appointment-dialog
 	#deleteAppointmentDialog
+	(primaryButtonClick)="deleteAppointment()"
 ></calendo-delete-appointment-dialog>

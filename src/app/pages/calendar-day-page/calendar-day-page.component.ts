@@ -1,6 +1,11 @@
-import { Component, ViewChild } from "@angular/core"
+import { Component, ViewChild, ElementRef } from "@angular/core"
 import { Router, ActivatedRoute } from "@angular/router"
 import { DateTime } from "luxon"
+import {
+	faEdit as faEditLight,
+	faTrash as faTrashLight
+} from "@fortawesome/pro-light-svg-icons"
+import { ContextMenu } from "dav-ui-components"
 import { CreateAppointmentDialogComponent } from "src/app/dialogs/create-appointment-dialog/create-appointment-dialog.component"
 import { CreateTodoDialogComponent } from "src/app/dialogs/create-todo-dialog/create-todo-dialog.component"
 import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
@@ -19,10 +24,22 @@ import { Location } from "@angular/common"
 })
 export class CalendarDayPageComponent {
 	locale = this.localizationService.locale.calendarDayPage
+	actionsLocale = this.localizationService.locale.actions
 	snackbarLocale = this.localizationService.locale.snackbar
 	faPlus = faPlus
+	faEditLight = faEditLight
+	faTrashLight = faTrashLight
 	title: string = ""
 	date = DateTime.now().startOf("day")
+	selectedAppointment: Appointment = null
+
+	//#region ContextMenu
+	@ViewChild("contextMenu")
+	contextMenu: ElementRef<ContextMenu>
+	contextMenuVisible: boolean = false
+	contextMenuPositionX: number = 0
+	contextMenuPositionY: number = 0
+	//#endregion
 
 	//#region CreateAppointmentDialog
 	@ViewChild("createAppointmentDialog")
@@ -61,6 +78,33 @@ export class CalendarDayPageComponent {
 		})
 
 		this.title = this.date.toFormat("DDDD")
+	}
+
+	smallAppointmentItemContextMenu(
+		event: PointerEvent,
+		appointment: Appointment
+	) {
+		event.preventDefault()
+
+		this.selectedAppointment = appointment
+		this.contextMenuPositionX = event.pageX
+		this.contextMenuPositionY =
+			event.pageY + this.dataService.contentContainer.scrollTop
+		this.contextMenuVisible = true
+	}
+
+	showDeleteAppointmentDialog(appointment: Appointment) {
+		this.selectedAppointment = appointment
+		this.contextMenuVisible = false
+		this.deleteAppointmentDialog.show()
+	}
+
+	async deleteAppointment() {
+		this.deleteAppointmentDialog.hide()
+		this.dataService.RemoveAppointment(this.selectedAppointment)
+
+		await this.selectedAppointment.Delete()
+		this.selectedAppointment = null
 	}
 
 	CreateAppointment(appointment: Appointment) {
