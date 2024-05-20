@@ -136,12 +136,12 @@
 	[posY]="contextMenuPositionY"
 >
 	<!-- Edit -->
-	<dav-context-menu-item value="Edit">
+	<dav-context-menu-item [value]="actionsLocale.edit">
 		<fa-icon slot="icon" [icon]="faEditLight"></fa-icon>
 	</dav-context-menu-item>
 
 	<!-- Delete -->
-	<dav-context-menu-item value="Delete">
+	<dav-context-menu-item [value]="actionsLocale.delete">
 		<fa-icon slot="icon" [icon]="faTrashLight"></fa-icon>
 	</dav-context-menu-item>
 </dav-context-menu>

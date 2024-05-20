@@ -25,7 +25,8 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 	styleUrl: "./overview-page.component.scss"
 })
 export class OverviewPageComponent {
-	locale = this.localizationService.locale.startPage
+	locale = this.localizationService.locale.overviewPage
+	actionsLocale = this.localizationService.locale.actions
 	snackbarLocale = this.localizationService.locale.snackbar
 	faPlus = faPlus
 	faEditLight = faEditLight

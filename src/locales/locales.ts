@@ -75,7 +75,7 @@ const enDefaults = {
 			week1: "1 week before"
 		}
 	},
-	startPage: {
+	overviewPage: {
 		appointments: "Appointments",
 		todos: "Todos"
 	},
@@ -186,6 +186,7 @@ const enDefaults = {
 	},
 	actions: {
 		create: "Create",
+		edit: "Edit",
 		cancel: "Cancel",
 		delete: "Delete",
 		logout: "Log out"
@@ -297,7 +298,7 @@ const deDefaults = {
 			week1: "1 Woche vorher"
 		}
 	},
-	startPage: {
+	overviewPage: {
 		appointments: "Termine",
 		todos: "Todos"
 	},
@@ -410,6 +411,7 @@ const deDefaults = {
 	},
 	actions: {
 		create: "Erstellen",
+		edit: "Bearbeiten",
 		cancel: "Abbrechen",
 		delete: "Löschen",
 		logout: "Abmelden"
