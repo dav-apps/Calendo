@@ -14,7 +14,8 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 import { Location } from "@angular/common"
 
 @Component({
-	templateUrl: "./calendar-day-page.component.html"
+	templateUrl: "./calendar-day-page.component.html",
+	styleUrl: "./calendar-day-page.component.scss"
 })
 export class CalendarDayPageComponent {
 	locale = this.localizationService.locale.calendarDayPage
@@ -22,11 +23,6 @@ export class CalendarDayPageComponent {
 	faPlus = faPlus
 	title: string = ""
 	date = DateTime.now().startOf("day")
-	backButtonIconStyles = {
-		root: {
-			fontSize: 19
-		}
-	}
 
 	//#region CreateAppointmentDialog
 	@ViewChild("createAppointmentDialog")
