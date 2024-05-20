@@ -1,14 +1,11 @@
-<div class="container-fluid ms-motion-slideUpIn" style="padding-bottom: 56px">
-	<h1 class="text-center mt-3 font-weight-light">
-		{{ locale.header }}
-		<button
-			type="button"
-			class="btn btn-outline-primary btn-sm mb-1"
-			(click)="ShowNewAppointmentModal()"
-		>
-			<fa-icon [icon]="faPlus"></fa-icon>
-		</button>
-	</h1>
+<div class="container slide-up-in">
+	<dav-header
+		size="large"
+		addButtonVisible
+		(addButtonClick)="ShowNewAppointmentModal()"
+	>
+		{{ locale.title }}
+	</dav-header>
 
 	<p
 		class="no-items-message font-weight-light text-center mt-3"

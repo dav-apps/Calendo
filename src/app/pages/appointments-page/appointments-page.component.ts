@@ -4,7 +4,6 @@ import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { AppointmentModalComponent } from "src/app/components/appointment-modal/appointment-modal.component"
 import { Appointment } from "src/app/models/Appointment"
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
 @Component({
@@ -14,7 +13,6 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 export class AppointmentsPageComponent {
 	locale = this.localizationService.locale.appointmentsPage
 	snackbarLocale = this.localizationService.locale.snackbar
-	faPlus = faPlus
 	@ViewChild(AppointmentModalComponent, { static: true })
 	private newAppointmentModalComponent: AppointmentModalComponent
 
