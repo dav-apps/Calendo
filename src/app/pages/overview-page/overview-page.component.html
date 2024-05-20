@@ -100,7 +100,9 @@
 						<calendo-small-appointment-item
 							[appointment]="appointment"
 							(delete)="deleteAppointmentDialog.show()"
-							(contextmenu)="smallAppointmentItemContextMenu($event, appointment)"
+							(contextmenu)="
+								smallAppointmentItemContextMenu($event, appointment)
+							"
 						></calendo-small-appointment-item>
 					</div>
 
@@ -141,7 +143,10 @@
 	</dav-context-menu-item>
 
 	<!-- Delete -->
-	<dav-context-menu-item [value]="actionsLocale.delete">
+	<dav-context-menu-item
+		[value]="actionsLocale.delete"
+		(click)="showDeleteAppointmentDialog(selectedAppointment)"
+	>
 		<fa-icon slot="icon" [icon]="faTrashLight"></fa-icon>
 	</dav-context-menu-item>
 </dav-context-menu>

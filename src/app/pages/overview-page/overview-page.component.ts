@@ -104,6 +104,7 @@ export class OverviewPageComponent {
 	) {
 		event.preventDefault()
 
+		this.selectedAppointment = appointment
 		this.contextMenuPositionX = event.pageX
 		this.contextMenuPositionY =
 			event.pageY + this.dataService.contentContainer.scrollTop
@@ -116,6 +117,7 @@ export class OverviewPageComponent {
 
 	showDeleteAppointmentDialog(appointment: Appointment) {
 		this.selectedAppointment = appointment
+		this.contextMenuVisible = false
 		this.deleteAppointmentDialog.show()
 	}
 
