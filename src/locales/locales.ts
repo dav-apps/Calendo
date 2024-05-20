@@ -91,7 +91,7 @@ const enDefaults = {
 		}
 	},
 	appointmentsPage: {
-		header: "Appointments",
+		title: "Appointments",
 		noAppointments: "You have no upcoming appointments",
 		oldAppointments: "Old appointments"
 	},
@@ -314,7 +314,7 @@ const deDefaults = {
 		}
 	},
 	appointmentsPage: {
-		header: "Termine",
+		title: "Termine",
 		noAppointments: "Du hast keine anstehenden Termine",
 		oldAppointments: "Alte Termine"
 	},
