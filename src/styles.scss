@@ -1,5 +1,5 @@
 // Theme colors
-:root {
+:root, * {
 	--black-rgb: 0, 0, 0; /* #000000 */
 	--white-rgb: 255, 255, 255; /* #ffffff */
 
@@ -423,6 +423,22 @@ body {
 	-webkit-touch-callout: none;
 	background-color: var(--dav-color-surface);
 	overflow: hidden;
+}
+
+::-webkit-scrollbar {
+	background-color: var(--dav-color-surface);
+	height: 4px;
+	width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--dav-color-inverse-on-surface);
+	border-radius: 2px;
+}
+
+::-webkit-scrollbar-track {
+	margin-top: calc(env(safe-area-inset-top) + 76px);
+	margin-bottom: calc(env(safe-area-inset-bottom));
 }
 
 .hidden {
