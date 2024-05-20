@@ -2,7 +2,7 @@
 	<dav-header
 		size="large"
 		addButtonVisible
-		(addButtonClick)="ShowNewAppointmentModal()"
+		(addButtonClick)="createAppointmentDialog.show()"
 	>
 		{{ locale.title }}
 	</dav-header>
@@ -76,10 +76,6 @@
 			</div>
 		</div>
 	</div>
-
-	<calendo-appointment-modal
-		(save)="CreateAppointment($event)"
-	></calendo-appointment-modal>
 </div>
 
 <dav-context-menu
@@ -101,6 +97,12 @@
 		<fa-icon slot="icon" [icon]="faTrashLight"></fa-icon>
 	</dav-context-menu-item>
 </dav-context-menu>
+
+<calendo-create-appointment-dialog
+	#createAppointmentDialog
+	[nameError]="createAppointmentDialogNameError"
+	(primaryButtonClick)="createAppointment($event)"
+></calendo-create-appointment-dialog>
 
 <calendo-delete-appointment-dialog
 	#deleteAppointmentDialog

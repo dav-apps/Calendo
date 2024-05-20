@@ -34,8 +34,6 @@ export class OverviewPageComponent {
 	selectedAppointment: Appointment = null
 	@ViewChild(NewTodoModalComponent, { static: true })
 	private newTodoModalComponent: NewTodoModalComponent
-	@ViewChild(AppointmentModalComponent, { static: true })
-	private newAppointmentModalComponent: AppointmentModalComponent
 	@ViewChild(TodoListModalComponent, { static: true })
 	private todoListModalComponent: TodoListModalComponent
 
@@ -170,6 +168,7 @@ export class OverviewPageComponent {
 		this.dataService.AdaptSnackbarPosition()
 	}
 
+	/*
 	CreateAppointment(appointment: Appointment) {
 		this.dataService.AddAppointment(appointment)
 
@@ -188,6 +187,7 @@ export class OverviewPageComponent {
 
 		this.dataService.AdaptSnackbarPosition()
 	}
+	*/
 
 	async createAppointment(event: {
 		name: string
