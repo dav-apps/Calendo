@@ -4,6 +4,34 @@
 	padding: 12px;
 }
 
-dav-header {
+.container > dav-header {
 	margin-bottom: 32px;
+}
+
+.content-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	gap: 46px;
+}
+
+.appointments-content-container,
+.todos-content-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.no-items-message {
+	font-style: italic;
+	font-weight: 100;
+	margin-top: 12px;
+	text-align: center;
+}
+
+@media screen and (min-width: 730px) {
+	.content-container {
+		flex-direction: row;
+		gap: 0;
+	}
 }

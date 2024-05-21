@@ -14,7 +14,6 @@ import { LocalizationService } from "src/app/services/localization-service"
 import { Appointment } from "src/app/models/Appointment"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { MatSnackBar } from "@angular/material/snack-bar"
 import { Location } from "@angular/common"
 
@@ -26,7 +25,6 @@ export class CalendarDayPageComponent {
 	locale = this.localizationService.locale.calendarDayPage
 	actionsLocale = this.localizationService.locale.actions
 	snackbarLocale = this.localizationService.locale.snackbar
-	faPlus = faPlus
 	faEditLight = faEditLight
 	faTrashLight = faTrashLight
 	title: string = ""

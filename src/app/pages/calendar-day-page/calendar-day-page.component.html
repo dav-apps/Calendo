@@ -3,65 +3,64 @@
 		{{ title }}
 	</dav-header>
 
-	<div class="d-flex flex-column">
-		<h3 class="mt-4 mb-3">
-			{{ locale.appointments }}
-			<button
-				type="button"
-				class="btn btn-outline-primary btn-sm mb-1"
-				(click)="createAppointmentDialog.show()"
+	<div class="content-container">
+		<div class="appointments-container">
+			<dav-header
+				size="sm"
+				addButtonVisible
+				(addButtonClick)="createAppointmentDialog.show()"
 			>
-				<fa-icon [icon]="faPlus"></fa-icon>
-			</button>
-		</h3>
+				{{ locale.appointments }}
+			</dav-header>
 
-		<p
-			class="no-items-message font-weight-light"
-			*ngIf="dataService.selectedDayAppointments.length == 0"
-		>
-			{{ locale.noAppointments }}
-		</p>
+			<div class="appointments-content-container">
+				@if (dataService.selectedDayAppointments.length == 0) {
+				<p class="no-items-message">
+					{{ locale.noAppointments }}
+				</p>
+				} @for (appointment of dataService.selectedDayAppointments; track
+				appointment.uuid) {
+				<div style="display: inline-flex; align-self: center">
+					<calendo-small-appointment-item
+						[appointment]="appointment"
+						(contextmenu)="
+							smallAppointmentItemContextMenu($event, appointment)
+						"
+						(delete)="deleteAppointmentDialog.show()"
+					></calendo-small-appointment-item>
+				</div>
+				}
+			</div>
+		</div>
 
-		<calendo-small-appointment-item
-			class="d-inline-flex"
-			[appointment]="appointment"
-			(contextmenu)="smallAppointmentItemContextMenu($event, appointment)"
-			(delete)="deleteAppointmentDialog.show()"
-			*ngFor="let appointment of dataService.selectedDayAppointments"
-		></calendo-small-appointment-item>
-	</div>
-
-	<div>
-		<h3 class="mt-4 mb-3" ngbDropdown placement="bottom-left">
-			{{ locale.todos }}
-			<button
-				type="button"
-				class="btn btn-outline-primary btn-sm mb-1"
-				(click)="createTodoDialog.show()"
+		<div class="todos-container">
+			<dav-header
+				size="sm"
+				addButtonVisible
+				(addButtonClick)="createTodoDialog.show()"
 			>
-				<fa-icon [icon]="faPlus"></fa-icon>
-			</button>
-		</h3>
+				{{ locale.todos }}
+			</dav-header>
 
-		<p
-			class="font-weight-light no-items-message"
-			*ngIf="
-				dataService.selectedDayTodos.length == 0 &&
-				dataService.selectedDayTodoLists.length == 0
-			"
-		>
-			{{ locale.noTodos }}
-		</p>
-
-		<calendo-small-todo-item
-			[todo]="todo"
-			(delete)="DeleteTodo(todo)"
-			*ngFor="let todo of dataService.selectedDayTodos"
-		></calendo-small-todo-item>
-		<calendo-small-todo-list-item
-			[todoList]="todoList"
-			*ngFor="let todoList of dataService.selectedDayTodoLists"
-		></calendo-small-todo-list-item>
+			<div class="todos-content-container">
+				@if (dataService.selectedDayTodos.length == 0 &&
+				dataService.selectedDayTodoLists.length == 0) {
+				<p class="no-items-message">
+					{{ locale.noTodos }}
+				</p>
+				} @for (todo of dataService.selectedDayTodos; track todo.uuid) {
+				<calendo-small-todo-item
+					[todo]="todo"
+					(delete)="DeleteTodo(todo)"
+				></calendo-small-todo-item>
+				} @for (todoList of dataService.selectedDayTodoLists; track
+				todoList.uuid) {
+				<calendo-small-todo-list-item
+					[todoList]="todoList"
+				></calendo-small-todo-list-item>
+				}
+			</div>
+		</div>
 	</div>
 
 	<calendo-appointment-modal
