@@ -7,7 +7,7 @@
 		<div class="appointments-container">
 			<dav-header
 				size="sm"
-				addButtonVisible
+				[addButtonVisible]="!isDateBeforeToday"
 				(addButtonClick)="createAppointmentDialog.show()"
 			>
 				{{ locale.appointments }}
@@ -36,7 +36,7 @@
 		<div class="todos-container">
 			<dav-header
 				size="sm"
-				addButtonVisible
+				[addButtonVisible]="!isDateBeforeToday"
 				(addButtonClick)="createTodoDialog.show()"
 			>
 				{{ locale.todos }}

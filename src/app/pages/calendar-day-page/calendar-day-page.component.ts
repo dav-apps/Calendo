@@ -29,6 +29,7 @@ export class CalendarDayPageComponent {
 	faTrashLight = faTrashLight
 	title: string = ""
 	date = DateTime.now().startOf("day")
+	isDateBeforeToday: boolean = false
 	selectedAppointment: Appointment = null
 
 	//#region ContextMenu
@@ -75,6 +76,7 @@ export class CalendarDayPageComponent {
 			} else {
 				this.date = DateTime.now().set({ year, month, day })
 				this.title = this.date.toFormat("DDDD")
+				this.isDateBeforeToday = this.date < DateTime.now().startOf("day")
 				this.dataService.selectedDay = this.date
 
 				this.dataService.LoadAllAppointments()
