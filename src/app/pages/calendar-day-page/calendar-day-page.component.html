@@ -63,9 +63,6 @@
 		</div>
 	</div>
 
-	<calendo-appointment-modal
-		(save)="CreateAppointment($event)"
-	></calendo-appointment-modal>
 	<calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
 	<calendo-todo-list-modal
 		#todoListModal
@@ -95,6 +92,9 @@
 
 <calendo-create-appointment-dialog
 	#createAppointmentDialog
+	[date]="date"
+	[nameError]="createAppointmentDialogNameError"
+	(primaryButtonClick)="createAppointment($event)"
 ></calendo-create-appointment-dialog>
 
 <calendo-create-todo-dialog #createTodoDialog></calendo-create-todo-dialog>

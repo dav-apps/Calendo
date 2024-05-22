@@ -19,6 +19,7 @@ import { randomNumber } from "src/app/utils"
 export class CreateAppointmentDialogComponent {
 	locale = this.localizationService.locale.dialogs.createAppointmentDialog
 	actionsLocale = this.localizationService.locale.actions
+	@Input() date: DateTime = DateTime.now()
 	@Input() loading: boolean = false
 	@Input() nameError: string = ""
 	@Output() primaryButtonClick = new EventEmitter()
@@ -26,7 +27,6 @@ export class CreateAppointmentDialogComponent {
 	visible: boolean = false
 	name: string = ""
 	colorDropdownSelectedKey: string = "red"
-	date: DateTime = DateTime.now()
 	allDay: boolean = true
 	startTimeHour: number = 14
 	startTimeMinute: number = 0
