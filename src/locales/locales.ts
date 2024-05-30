@@ -164,7 +164,7 @@ const enDefaults = {
 		show: "Show"
 	},
 	dialogs: {
-		createAppointmentDialog: {
+		appointmentDialog: {
 			headline: "Create appointment",
 			nameTextfieldLabel: "Name"
 		},
@@ -380,7 +380,7 @@ const deDefaults = {
 		show: "Anzeigen"
 	},
 	dialogs: {
-		createAppointmentDialog: {
+		appointmentDialog: {
 			headline: "Termin erstellen",
 			nameTextfieldLabel: "Name"
 		},

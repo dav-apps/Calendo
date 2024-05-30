@@ -6,7 +6,7 @@ import {
 	faTrash as faTrashLight
 } from "@fortawesome/pro-light-svg-icons"
 import { ContextMenu } from "dav-ui-components"
-import { CreateAppointmentDialogComponent } from "src/app/dialogs/create-appointment-dialog/create-appointment-dialog.component"
+import { AppointmentDialogComponent } from "src/app/dialogs/appointment-dialog/appointment-dialog.component"
 import { CreateTodoDialogComponent } from "src/app/dialogs/create-todo-dialog/create-todo-dialog.component"
 import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
 import { DataService } from "src/app/services/data-service"
@@ -42,7 +42,7 @@ export class CalendarDayPageComponent {
 
 	//#region CreateAppointmentDialog
 	@ViewChild("createAppointmentDialog")
-	createAppointmentDialog: CreateAppointmentDialogComponent
+	createAppointmentDialog: AppointmentDialogComponent
 	createAppointmentDialogNameError: string = ""
 	//#endregion
 

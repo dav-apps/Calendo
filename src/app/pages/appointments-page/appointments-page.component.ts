@@ -7,7 +7,7 @@ import {
 	faArrowRight as faArrowRightLight
 } from "@fortawesome/pro-light-svg-icons"
 import { ContextMenu } from "dav-ui-components"
-import { CreateAppointmentDialogComponent } from "src/app/dialogs/create-appointment-dialog/create-appointment-dialog.component"
+import { AppointmentDialogComponent } from "src/app/dialogs/appointment-dialog/appointment-dialog.component"
 import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
 import { AppointmentDay, DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
@@ -37,7 +37,7 @@ export class AppointmentsPageComponent {
 
 	//#region CreateAppointmentDialog
 	@ViewChild("createAppointmentDialog")
-	createAppointmentDialog: CreateAppointmentDialogComponent
+	createAppointmentDialog: AppointmentDialogComponent
 	createAppointmentDialogNameError: string = ""
 	//#endregion
 

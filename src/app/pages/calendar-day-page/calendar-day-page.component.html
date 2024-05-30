@@ -90,12 +90,12 @@
 	</dav-context-menu-item>
 </dav-context-menu>
 
-<calendo-create-appointment-dialog
+<calendo-appointment-dialog
 	#createAppointmentDialog
 	[date]="date"
 	[nameError]="createAppointmentDialogNameError"
 	(primaryButtonClick)="createAppointment($event)"
-></calendo-create-appointment-dialog>
+></calendo-appointment-dialog>
 
 <calendo-create-todo-dialog #createTodoDialog></calendo-create-todo-dialog>
 

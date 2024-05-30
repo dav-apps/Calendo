@@ -12,12 +12,12 @@ import { LocalizationService } from "src/app/services/localization-service"
 import { randomNumber } from "src/app/utils"
 
 @Component({
-	selector: "calendo-create-appointment-dialog",
-	templateUrl: "./create-appointment-dialog.component.html",
-	styleUrl: "./create-appointment-dialog.component.scss"
+	selector: "calendo-appointment-dialog",
+	templateUrl: "./appointment-dialog.component.html",
+	styleUrl: "./appointment-dialog.component.scss"
 })
-export class CreateAppointmentDialogComponent {
-	locale = this.localizationService.locale.dialogs.createAppointmentDialog
+export class AppointmentDialogComponent {
+	locale = this.localizationService.locale.dialogs.appointmentDialog
 	actionsLocale = this.localizationService.locale.actions
 	@Input() name: string = ""
 	@Input() nameError: string = ""

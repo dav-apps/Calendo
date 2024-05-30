@@ -41,7 +41,7 @@ import { SetNameComponent } from "./components/set-name/set-name.component"
 import { TodoListTreeComponent } from "./components/todo-list-tree/todo-list-tree.component"
 
 // Dialogs
-import { CreateAppointmentDialogComponent } from "./dialogs/create-appointment-dialog/create-appointment-dialog.component"
+import { AppointmentDialogComponent } from "./dialogs/appointment-dialog/appointment-dialog.component"
 import { CreateTodoDialogComponent } from "./dialogs/create-todo-dialog/create-todo-dialog.component"
 import { DeleteAppointmentDialogComponent } from "./dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
 import { LogoutDialogComponent } from "./dialogs/logout-dialog/logout-dialog.component"
@@ -79,7 +79,7 @@ import { SettingsService } from "./services/settings-service"
 		SetNameComponent,
 		TodoListTreeComponent,
 		// Dialogs
-		CreateAppointmentDialogComponent,
+		AppointmentDialogComponent,
 		CreateTodoDialogComponent,
 		DeleteAppointmentDialogComponent,
 		LogoutDialogComponent
