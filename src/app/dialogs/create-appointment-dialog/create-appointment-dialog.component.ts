@@ -19,73 +19,73 @@ import { randomNumber } from "src/app/utils"
 export class CreateAppointmentDialogComponent {
 	locale = this.localizationService.locale.dialogs.createAppointmentDialog
 	actionsLocale = this.localizationService.locale.actions
-	@Input() date: DateTime = DateTime.now()
-	@Input() loading: boolean = false
+	@Input() name: string = ""
 	@Input() nameError: string = ""
+	@Input() date: DateTime = DateTime.now()
+	@Input() selectedColor: string = "#D32F2F"
+	@Input() allDay: boolean = true
+	@Input() startTimeHour: number = 14
+	@Input() startTimeMinute: number = 0
+	@Input() endTimeHour: number = 15
+	@Input() endTimeMinute: number = 0
+	@Input() loading: boolean = false
 	@Output() primaryButtonClick = new EventEmitter()
 	@ViewChild("dialog") dialog: ElementRef<Dialog>
 	visible: boolean = false
-	name: string = ""
-	colorDropdownSelectedKey: string = "red"
-	allDay: boolean = true
-	startTimeHour: number = 14
-	startTimeMinute: number = 0
-	endTimeHour: number = 15
-	endTimeMinute: number = 0
 
 	colorDropdownOptions: DropdownOption[] = [
 		{
-			key: "red",
+			key: "#D32F2F",
 			value: "#D32F2F",
 			type: DropdownOptionType.color
 		},
 		{
-			key: "orange",
+			key: "#D67724",
 			value: "#D67724",
 			type: DropdownOptionType.color
 		},
 		{
-			key: "yellow",
+			key: "#FFD600",
 			value: "#FFD600",
 			type: DropdownOptionType.color
 		},
 		{
-			key: "green",
+			key: "#388E3C",
 			value: "#388E3C",
 			type: DropdownOptionType.color
 		},
 		{
-			key: "light-green",
+			key: "#43A047",
 			value: "#43A047",
 			type: DropdownOptionType.color
 		},
 		{
-			key: "light-blue",
+			key: "#00B0FF",
 			value: "#00B0FF",
 			type: DropdownOptionType.color
 		},
 		{
-			key: "blue",
+			key: "#1565C0",
 			value: "#1565C0",
 			type: DropdownOptionType.color
 		},
 		{
-			key: "dark-blue",
+			key: "#283593",
 			value: "#283593",
 			type: DropdownOptionType.color
 		},
 		{
-			key: "purple",
+			key: "#7B1FA2",
 			value: "#7B1FA2",
 			type: DropdownOptionType.color
 		},
 		{
-			key: "gray",
+			key: "#757575",
 			value: "#757575",
 			type: DropdownOptionType.color
 		},
 		{
-			key: "black",
+			key: "#000000",
 			value: "#000000",
 			type: DropdownOptionType.color
 		}
@@ -94,7 +94,7 @@ export class CreateAppointmentDialogComponent {
 	constructor(private localizationService: LocalizationService) {
 		// Select a random color
 		let i = randomNumber(0, this.colorDropdownOptions.length - 1)
-		this.colorDropdownSelectedKey = this.colorDropdownOptions[i].key
+		this.selectedColor = this.colorDropdownOptions[i].key
 	}
 
 	ngAfterViewInit() {
@@ -118,7 +118,7 @@ export class CreateAppointmentDialogComponent {
 	}
 
 	colorDropdownChange(event: CustomEvent) {
-		this.colorDropdownSelectedKey = event.detail.key
+		this.selectedColor = event.detail.key
 	}
 
 	calendarChange(event: CustomEvent) {
@@ -141,7 +141,7 @@ export class CreateAppointmentDialogComponent {
 
 	submit() {
 		let i = this.colorDropdownOptions.findIndex(
-			o => o.key == this.colorDropdownSelectedKey
+			o => o.key == this.selectedColor
 		)
 
 		let color = this.colorDropdownOptions[0].value
