@@ -56,6 +56,20 @@ export class OverviewPageComponent {
 	createAppointmentDialogNameError: string = ""
 	//#endregion
 
+	//#region EditAppointmentDialog
+	@ViewChild("editAppointmentDialog")
+	editAppointmentDialog: CreateAppointmentDialogComponent
+	editAppointmentDialogName: string = ""
+	editAppointmentDialogNameError: string = ""
+	editAppointmentDialogDate: DateTime = DateTime.now()
+	editAppointmentDialogSelectedColor: string = ""
+	editAppointmentDialogAllDay: boolean = true
+	editAppointmentDialogStartTimeHour: number = 14
+	editAppointmentDialogStartTimeMinute: number = 0
+	editAppointmentDialogEndTimeHour: number = 15
+	editAppointmentDialogEndTimeMinute: number = 0
+	//#endregion
+
 	//#region CreateTodoDialog
 	@ViewChild("createTodoDialog")
 	createTodoDialog: CreateTodoDialogComponent
@@ -110,6 +124,24 @@ export class OverviewPageComponent {
 
 	public async DeleteTodo(todo: Todo) {
 		this.dataService.RemoveTodo(todo)
+	}
+
+	showEditAppointmentDialog(appointment: Appointment) {
+		let startDate = DateTime.fromSeconds(appointment.start)
+		let endDate = DateTime.fromSeconds(appointment.end)
+
+		this.selectedAppointment = appointment
+		this.contextMenuVisible = false
+		this.editAppointmentDialogName = appointment.name
+		this.editAppointmentDialogDate = startDate
+		this.editAppointmentDialogSelectedColor = appointment.color
+		this.editAppointmentDialogAllDay = appointment.allday
+		this.editAppointmentDialogStartTimeHour = startDate.hour
+		this.editAppointmentDialogStartTimeMinute = startDate.minute
+		this.editAppointmentDialogEndTimeHour = endDate.hour
+		this.editAppointmentDialogEndTimeMinute = endDate.minute
+
+		this.editAppointmentDialog.show()
 	}
 
 	showDeleteAppointmentDialog(appointment: Appointment) {
@@ -227,6 +259,43 @@ export class OverviewPageComponent {
 
 		this.dataService.AddAppointment(appointment)
 		this.createAppointmentDialog.hide()
+	}
+
+	updateAppointment(event: {
+		name: string
+		date: DateTime
+		allDay: boolean
+		color: string
+		startTimeHour: number
+		startTimeMinute: number
+		endTimeHour: number
+		endTimeMinute: number
+	}) {
+		if (event.name.length == 0) {
+			this.editAppointmentDialog.nameError = "Bitte gib einen Namen ein"
+			return
+		}
+
+		let startTime = event.date.set({
+			hour: event.startTimeHour,
+			minute: event.startTimeMinute
+		})
+
+		let endTime = event.date.set({
+			hour: event.endTimeHour,
+			minute: event.endTimeMinute
+		})
+
+		let appointment = this.selectedAppointment
+
+		appointment.name = event.name
+		appointment.start = startTime.toUnixInteger()
+		appointment.end = endTime.toUnixInteger()
+		appointment.allday = event.allDay
+		appointment.color = event.color
+
+		this.dataService.UpdateAppointment(appointment)
+		this.editAppointmentDialog.hide()
 	}
 
 	CreateTodoList(todoList: TodoList) {

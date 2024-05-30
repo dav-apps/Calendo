@@ -135,7 +135,10 @@
 	[posY]="contextMenuPositionY"
 >
 	<!-- Edit -->
-	<dav-context-menu-item [value]="actionsLocale.edit">
+	<dav-context-menu-item
+		[value]="actionsLocale.edit"
+		(click)="showEditAppointmentDialog(selectedAppointment)"
+	>
 		<fa-icon slot="icon" [icon]="faEditLight"></fa-icon>
 	</dav-context-menu-item>
 
@@ -152,6 +155,20 @@
 	#createAppointmentDialog
 	[nameError]="createAppointmentDialogNameError"
 	(primaryButtonClick)="createAppointment($event)"
+></calendo-create-appointment-dialog>
+
+<calendo-create-appointment-dialog
+	#editAppointmentDialog
+	[name]="editAppointmentDialogName"
+	[nameError]="editAppointmentDialogNameError"
+	[date]="editAppointmentDialogDate"
+	[selectedColor]="editAppointmentDialogSelectedColor"
+	[allDay]="editAppointmentDialogAllDay"
+	[startTimeHour]="editAppointmentDialogStartTimeHour"
+	[startTimeMinute]="editAppointmentDialogStartTimeMinute"
+	[endTimeHour]="editAppointmentDialogEndTimeHour"
+	[endTimeMinute]="editAppointmentDialogEndTimeMinute"
+	(primaryButtonClick)="updateAppointment($event)"
 ></calendo-create-appointment-dialog>
 
 <calendo-create-todo-dialog #createTodoDialog></calendo-create-todo-dialog>
