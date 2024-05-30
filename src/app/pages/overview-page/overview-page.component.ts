@@ -261,7 +261,7 @@ export class OverviewPageComponent {
 		this.createAppointmentDialog.hide()
 	}
 
-	updateAppointment(event: {
+	async updateAppointment(event: {
 		name: string
 		date: DateTime
 		allDay: boolean
@@ -288,11 +288,14 @@ export class OverviewPageComponent {
 
 		let appointment = this.selectedAppointment
 
-		appointment.name = event.name
-		appointment.start = startTime.toUnixInteger()
-		appointment.end = endTime.toUnixInteger()
-		appointment.allday = event.allDay
-		appointment.color = event.color
+		await appointment.Update(
+			event.name,
+			startTime.toUnixInteger(),
+			endTime.toUnixInteger(),
+			event.allDay,
+			event.color,
+			null
+		)
 
 		this.dataService.UpdateAppointment(appointment)
 		this.editAppointmentDialog.hide()
