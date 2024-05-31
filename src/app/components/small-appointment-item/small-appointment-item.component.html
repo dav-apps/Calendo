@@ -32,25 +32,22 @@
 </div>
 -->
 
-<div
-	class="item-container"
-	[style.backgroundColor]="color"
->
+<div class="item-container" [style.backgroundColor]="color">
 	@if (compact) {
-		<span>
-			@if (!appointment.allday) {
-				<span>{{ getStartTime() }}</span>
-			}
+	<span>
+		@if (!appointment.allday) {
+		<span>{{ getStartTime() }}</span>
+		}
 
-			{{ appointment.name }}
-		</span>
+		{{ appointment.name }}
+	</span>
 	} @else {
-		<span>
-			{{ appointment.name }}<br />
+	<span>
+		{{ appointment.name }}<br />
 
-			@if (!appointment.allday) {
-				<span>{{ getTimeSpan() }}</span>
-			}
-		</span>
+		@if (!appointment.allday) {
+		<span>{{ getTimeSpan() }}</span>
+		}
+	</span>
 	}
 </div>
