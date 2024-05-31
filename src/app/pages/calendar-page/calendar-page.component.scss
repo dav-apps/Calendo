@@ -1,3 +1,15 @@
-.light-theme-calendar-day {
-	background-color: #f0f0f0;
+.arrow-buttons-container {
+	display: flex;
+	gap: 8px;
+}
+
+.calendar-top-bar {
+	display: flex;
+	gap: 16px;
+	margin: 8px 0;
+}
+
+.calendar-top-bar > h3 {
+	margin-left: 21px;
+	margin-bottom: 0;
 }

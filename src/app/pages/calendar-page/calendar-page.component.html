@@ -1,36 +1,16 @@
-<div (window:resize)="onResize()">
-	<div id="calendar-top-bar">
-		<h3 class="mt-2 ml-3" style="font-weight: 300">
-			<button
-				id="calendar-show-previous-button"
-				class="btn"
-				*ngIf="!showMobileLayout"
-				(click)="ShowPrevious()"
-				type="button"
-				style="height: 36px; width: 36px"
-			>
-				<i
-					class="ms-Icon ms-Icon--ChevronLeftSmall"
-					style="font-size: 12px; margin-left: -3px"
-					aria-hidden="true"
-				></i>
-			</button>
-			<button
-				id="calendar-show-next-button"
-				class="btn ml-2 mr-3"
-				*ngIf="!showMobileLayout"
-				(click)="ShowNext()"
-				type="button"
-				style="height: 36px; width: 36px"
-			>
-				<i
-					class="ms-Icon ms-Icon--ChevronRightSmall"
-					style="font-size: 12px; margin-right: -3px"
-					aria-hidden="true"
-				></i>
-			</button>
-			{{ getCurrentMonth() }} {{ getCurrentYear() }}
-		</h3>
+<div>
+	<div class="calendar-top-bar">
+		<h3>{{ getCurrentMonth() }} {{ getCurrentYear() }}</h3>
+
+		<div class="arrow-buttons-container">
+			<dav-icon-button size="sm" (click)="ShowPrevious()">
+				<fa-icon [icon]="faArrowLeftLight"></fa-icon>
+			</dav-icon-button>
+
+			<dav-icon-button size="sm" (click)="ShowNext()">
+				<fa-icon [icon]="faArrowRightLight"></fa-icon>
+			</dav-icon-button>
+		</div>
 	</div>
 
 	<div id="calendar-label-div" class="position-absolute ml-1">

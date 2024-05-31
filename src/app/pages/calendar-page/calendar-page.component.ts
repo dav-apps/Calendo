@@ -1,11 +1,13 @@
 import { Component, ViewChild, ElementRef } from "@angular/core"
 import { Router } from "@angular/router"
-import { DateTime } from "luxon"
-declare var $: any
+import { Settings, DateTime } from "luxon"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
-import * as platform from "platform"
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
+import {
+	faArrowLeft as faArrowLeftLight,
+	faArrowRight as faArrowRightLight
+} from "@fortawesome/pro-light-svg-icons"
 
 @Component({
 	templateUrl: "./calendar-page.component.html",
@@ -15,6 +17,8 @@ export class CalendarPageComponent {
 	locale = this.localizationService.locale.calendarPage
 	faAngleLeft = faAngleLeft
 	faAngleRight = faAngleRight
+	faArrowLeftLight = faArrowLeftLight
+	faArrowRightLight = faArrowRightLight
 	@ViewChild("calendarContainer", { read: ElementRef, static: true })
 	calendarContainer: ElementRef<any>
 	@ViewChild("mobileCalendarContainer", { read: ElementRef, static: true })
@@ -41,11 +45,17 @@ export class CalendarPageComponent {
 	scrolled: boolean = false // If true, load the todos and appointments in the days after the 2 seconds interval
 	currentWeekDays: string[] = ["1", "2", "3", "4", "5", "6", "7"]
 
+	currentMonth: string = ""
+
 	constructor(
 		public dataService: DataService,
 		private localizationService: LocalizationService,
 		private router: Router
 	) {
+		Settings.defaultLocale = navigator.language
+
+		this.currentMonth = DateTime.now().toFormat("LLLL yyyy")
+
 		// Get the short weekday labels
 		let weekdays = []
 
@@ -67,6 +77,7 @@ export class CalendarPageComponent {
 	async ngOnInit() {
 		await this.initialize()
 
+		/*
 		$("#calendarContainer").scroll(() => this.onScroll())
 		$("#mobileCalendarContainer").scroll(() => this.onScroll())
 
@@ -91,6 +102,7 @@ export class CalendarPageComponent {
 				this.ShowNext()
 			}
 		})
+		*/
 	}
 
 	async initialize() {
@@ -137,6 +149,7 @@ export class CalendarPageComponent {
 				this.addDayTop()
 				this.scrolled = true
 
+				/*
 				// Update the scrollTop value (only needed in Edge and Firefox)
 				if (
 					platform.name.includes("Firefox") ||
@@ -145,6 +158,7 @@ export class CalendarPageComponent {
 					this.mobileCalendarContainer.nativeElement.scrollTop +=
 						this.calendarDayHeight
 				}
+				*/
 			} else if (
 				this.mobileCalendarContainer.nativeElement.scrollTop > bufferBelow
 			) {
@@ -307,6 +321,7 @@ export class CalendarPageComponent {
 		this.calendarContainer.nativeElement.hidden = this.showMobileLayout
 		this.mobileCalendarContainer.nativeElement.hidden = !this.showMobileLayout
 
+		/*
 		this.calendarWidth = window.innerWidth
 		this.calendarHeight =
 			window.innerHeight -
@@ -314,6 +329,7 @@ export class CalendarPageComponent {
 			$("#calendar-top-bar").height() -
 			$("#calendar-label-div").height() -
 			(this.showMobileLayout ? 86 : 56)
+		*/
 
 		this.calendarDayHeight =
 			this.calendarHeight / this.dataService.desktopCalendarDaysDates.length
