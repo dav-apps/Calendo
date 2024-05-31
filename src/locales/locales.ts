@@ -165,7 +165,8 @@ const enDefaults = {
 	},
 	dialogs: {
 		appointmentDialog: {
-			headline: "Create appointment",
+			createHeadline: "Create appointment",
+			editHeadline: "Edit appointment",
 			nameTextfieldLabel: "Name"
 		},
 		createTodoDialog: {
@@ -184,6 +185,7 @@ const enDefaults = {
 	actions: {
 		create: "Create",
 		edit: "Edit",
+		save: "Save",
 		cancel: "Cancel",
 		delete: "Delete",
 		logout: "Log out"
@@ -381,7 +383,8 @@ const deDefaults = {
 	},
 	dialogs: {
 		appointmentDialog: {
-			headline: "Termin erstellen",
+			createHeadline: "Termin erstellen",
+			editHeadline: "Termin bearbeiten",
 			nameTextfieldLabel: "Name"
 		},
 		createTodoDialog: {
@@ -401,6 +404,7 @@ const deDefaults = {
 	actions: {
 		create: "Erstellen",
 		edit: "Bearbeiten",
+		save: "Speichern",
 		cancel: "Abbrechen",
 		delete: "Löschen",
 		logout: "Abmelden"

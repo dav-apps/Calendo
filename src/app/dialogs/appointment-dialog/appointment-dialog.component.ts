@@ -29,6 +29,7 @@ export class AppointmentDialogComponent {
 	@Input() endTimeHour: number = 15
 	@Input() endTimeMinute: number = 0
 	@Input() loading: boolean = false
+	@Input() mode: "create" | "edit" = "create"
 	@Output() primaryButtonClick = new EventEmitter()
 	@ViewChild("dialog") dialog: ElementRef<Dialog>
 	visible: boolean = false
