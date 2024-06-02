@@ -8,10 +8,7 @@ import {
 	faArrowLeft as faArrowLeftLight,
 	faArrowRight as faArrowRightLight
 } from "@fortawesome/pro-light-svg-icons"
-import {
-	CalendarWeekData,
-	CalendarMonthData
-} from "src/app/types"
+import { CalendarWeekData, CalendarMonthData } from "src/app/types"
 import { monthLabelFormat } from "src/app/constants"
 
 @Component({
@@ -41,7 +38,7 @@ export class CalendarPageComponent {
 		let currentWeekDay = DateTime.now().startOf("week")
 
 		for (let i = 0; i < 7; i++) {
-			this.weekdayLabels.push(currentWeekDay.weekdayShort)
+			this.weekdayLabels.push(currentWeekDay.weekdayLong)
 			currentWeekDay = currentWeekDay.plus({ days: 1 })
 		}
 
@@ -105,5 +102,9 @@ export class CalendarPageComponent {
 			label: monthLabel,
 			weeks
 		})
+	}
+
+	navigateToDay(date: DateTime) {
+		this.router.navigate(["calendar", date.year, date.month, date.day])
 	}
 }

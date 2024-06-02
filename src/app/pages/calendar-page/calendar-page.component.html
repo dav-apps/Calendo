@@ -53,7 +53,11 @@
 		@for (week of currentMonth.weeks; track week.id) {
 		<div class="week-container">
 			@for (day of week.days; track day.id) {
-			<div class="day-container">{{ day.label }}</div>
+			<div class="day-container">
+				<button class="day-label" (click)="navigateToDay(day.date)">
+					{{ day.label }}
+				</button>
+			</div>
 			}
 		</div>
 		}

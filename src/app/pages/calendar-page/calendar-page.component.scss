@@ -30,6 +30,7 @@
 
 .weekday-label {
 	width: 100%;
+	text-align: center;
 }
 
 .month-container {
@@ -45,6 +46,22 @@
 }
 
 .day-container {
+	display: flex;
+	flex-direction: column;
 	width: 100%;
 	height: 100%;
+	padding: 8px;
+}
+
+.day-label {
+	background-color: var(--dav-color-surface);
+	font-size: 14px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: 200ms;
+}
+
+.day-label:hover {
+	background-color: var(--dav-color-surface-hover);
 }
