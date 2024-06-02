@@ -13,3 +13,7 @@ export const settingsThemeKey = "settings-theme"
 //#region settings default values
 export const settingsThemeDefault = systemThemeKey
 //#endregion
+
+//#region DateTime formats
+export const monthLabelFormat = "LLLL yyyy"
+//#endregion

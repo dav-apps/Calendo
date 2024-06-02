@@ -1,22 +1,23 @@
-<div>
+<div class="container">
 	<div class="calendar-top-bar">
-		<h3>{{ getCurrentMonth() }} {{ getCurrentYear() }}</h3>
-
 		<div class="arrow-buttons-container">
-			<dav-icon-button size="sm" (click)="ShowPrevious()">
+			<dav-icon-button size="sm" (click)="showPreviousMonth()">
 				<fa-icon [icon]="faArrowLeftLight"></fa-icon>
 			</dav-icon-button>
 
-			<dav-icon-button size="sm" (click)="ShowNext()">
+			<dav-icon-button size="sm" (click)="showNextMonth()">
 				<fa-icon [icon]="faArrowRightLight"></fa-icon>
 			</dav-icon-button>
 		</div>
+
+		<h3>{{ currentMonth?.label ?? "" }}</h3>
 	</div>
 
-	<div id="calendar-label-div" class="position-absolute ml-1">
+	<!--
+	<div>
 		<span
 			class="position-absolute"
-			*ngFor="let day of weekDayLabels; let i = index"
+			*ngFor="let day of weekdayLabels; let i = index"
 			[style.margin-left.px]="calendarDayWidth * i"
 		>
 			<span class="font-weight-light">{{ day }}</span>
@@ -39,7 +40,27 @@
 			</span>
 		</span>
 	</div>
+	-->
 
+	<div class="weekday-labels-container">
+		@for (label of weekdayLabels; track label) {
+		<div class="weekday-label">{{ label }}</div>
+		}
+	</div>
+
+	@if (currentMonth != null) {
+	<div class="month-container">
+		@for (week of currentMonth.weeks; track week.id) {
+		<div class="week-container">
+			@for (day of week.days; track day.id) {
+			<div class="day-container">{{ day.label }}</div>
+			}
+		</div>
+		}
+	</div>
+	}
+
+	<!--
 	<div
 		id="calendarContainer"
 		#calendarContainer
@@ -64,7 +85,6 @@
 			>
 				<span>{{ getDayOfDate(date) }}</span>
 
-				<!-- Render todos -->
 				<span
 					class="badge badge-primary ml-1"
 					*ngIf="dataService.desktopCalendarDaysTodos[i][j].length > 0"
@@ -78,7 +98,6 @@
 					</span>
 				</span>
 
-				<!-- Render appointments -->
 				<div>
 					<calendo-small-appointment-item
 						[appointment]="appointment"
@@ -94,7 +113,9 @@
 			</div>
 		</div>
 	</div>
+	-->
 
+	<!--
 	<div
 		id="mobileCalendarContainer"
 		#mobileCalendarContainer
@@ -111,18 +132,17 @@
 		>
 			<span>{{ getFullDayOfDate(date) }}</span>
 
-			<!-- Render todos -->
 			<span
 				class="badge badge-primary ml-2"
 				*ngIf="dataService.mobileCalendarDaysTodos[i].length > 0"
 			>
-				{{ dataService.mobileCalendarDaysTodos[i].length }} {{ locale.todo }}
+				{{ dataService.mobileCalendarDaysTodos[i].length }}
+				{{ locale.todo }}
 				<span *ngIf="dataService.mobileCalendarDaysTodos[i].length > 1">
 					{{ locale.s }}
 				</span>
 			</span>
 
-			<!-- Render appointments -->
 			<div class="d-flex flex-column">
 				<calendo-small-appointment-item
 					*ngFor="
@@ -138,4 +158,5 @@
 			</div>
 		</div>
 	</div>
+	-->
 </div>
