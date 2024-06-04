@@ -105,7 +105,13 @@ export class CalendarPageComponent {
 		})
 	}
 
-	navigateToDay(date: DateTime) {
+	getCalendarDayPageLink(date: DateTime) {
+		return `calendar/${date.year}/${date.month}/${date.day}`
+	}
+
+	navigateToDay(event: PointerEvent, date: DateTime) {
+		event.preventDefault()
+
 		this.router.navigate(["calendar", date.year, date.month, date.day])
 	}
 }

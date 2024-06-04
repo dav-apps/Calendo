@@ -55,12 +55,15 @@
 
 .day-label {
 	margin-bottom: 8px;
+	color: var(--dav-color-on-surface);
 	background-color: var(--dav-color-surface);
 	font-size: 14px;
 	border: none;
 	border-radius: 8px;
 	cursor: pointer;
 	transition: 200ms;
+	text-align: center;
+	text-decoration: none;
 }
 
 .day-label:hover {

@@ -1,4 +1,5 @@
 import { DateTime } from "luxon"
+import { Appointment } from "./models/Appointment"
 
 export enum Theme {
 	System,
@@ -10,6 +11,7 @@ export interface CalendarDayData {
 	id: string
 	date: DateTime
 	label: string
+	appointments: Appointment[]
 }
 
 export interface CalendarWeekData {

@@ -54,9 +54,13 @@
 		<div class="week-container">
 			@for (day of week.days; track day.id) {
 			<div class="day-container">
-				<button class="day-label" (click)="navigateToDay(day.date)">
+				<a
+					class="day-label"
+					[href]="getCalendarDayPageLink(day.date)"
+					(click)="navigateToDay($event, day.date)"
+				>
 					{{ day.label }}
-				</button>
+				</a>
 
 				@for (appointment of day.appointments; track appointment.uuid) {
 				<calendo-small-appointment-item
