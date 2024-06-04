@@ -57,6 +57,12 @@
 				<button class="day-label" (click)="navigateToDay(day.date)">
 					{{ day.label }}
 				</button>
+
+				@for (appointment of day.appointments; track appointment.uuid) {
+				<calendo-small-appointment-item
+					[appointment]="appointment"
+				></calendo-small-appointment-item>
+				}
 			</div>
 			}
 		</div>

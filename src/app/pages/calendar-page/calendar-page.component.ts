@@ -88,7 +88,8 @@ export class CalendarPageComponent {
 				currentWeek.days.push({
 					id: crypto.randomUUID(),
 					date: currentDate,
-					label: currentDate.toFormat("d")
+					label: currentDate.toFormat("d"),
+					appointments: this.dataService.GetAppointmentsOfDay(currentDate)
 				})
 
 				currentDate = currentDate.plus({ days: 1 })
