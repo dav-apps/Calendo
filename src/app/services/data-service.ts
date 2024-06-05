@@ -111,9 +111,10 @@ export class DataService {
 		var appointments = await GetAllAppointments()
 
 		for (let appointment of appointments) {
+			this.allAppointments.push(appointment)
+
 			this.AddAppointmentToStartPage(appointment)
 			this.AddAppointmentToAppointmentsPage(appointment)
-			this.AddAppointmentToCalendarPage(appointment)
 		}
 
 		this.isLoadingAllAppointments = false
@@ -141,7 +142,6 @@ export class DataService {
 		for (let todo of todos) {
 			this.AddTodoToStartPage(todo)
 			this.AddTodoToTodosPage(todo)
-			this.AddTodoToCalendarPage(todo)
 		}
 
 		// Load todo lists
@@ -150,7 +150,6 @@ export class DataService {
 		for (let todoList of todoLists) {
 			this.AddTodoListToStartPage(todoList)
 			this.AddTodoListToTodosPage(todoList)
-			this.AddTodoListToCalendarPage(todoList)
 		}
 
 		this.isLoadingAllTodos = false
@@ -181,7 +180,6 @@ export class DataService {
 	AddTodoList(todoList: TodoList) {
 		this.AddTodoListToStartPage(todoList)
 		this.AddTodoListToTodosPage(todoList)
-		this.AddTodoListToCalendarPage(todoList)
 	}
 
 	UpdateTodoList(todoList: TodoList) {
@@ -192,13 +190,11 @@ export class DataService {
 	RemoveTodoList(todoList: TodoList) {
 		this.RemoveTodoListFromStartPage(todoList)
 		this.RemoveTodoListFromTodosPage(todoList)
-		this.RemoveTodoListFromCalendarPage(todoList)
 	}
 
 	AddTodo(todo: Todo) {
 		this.AddTodoToStartPage(todo)
 		this.AddTodoToTodosPage(todo)
-		this.AddTodoToCalendarPage(todo)
 	}
 
 	UpdateTodo(todo: Todo) {
@@ -209,13 +205,11 @@ export class DataService {
 	RemoveTodo(todo: Todo) {
 		this.RemoveTodoFromStartPage(todo)
 		this.RemoveTodoFromTodosPage(todo)
-		this.RemoveTodoFromCalendarPage(todo)
 	}
 
 	AddAppointment(appointment: Appointment) {
 		this.AddAppointmentToStartPage(appointment)
 		this.AddAppointmentToAppointmentsPage(appointment)
-		this.AddAppointmentToCalendarPage(appointment)
 	}
 
 	UpdateAppointment(appointment: Appointment) {
@@ -226,7 +220,6 @@ export class DataService {
 	RemoveAppointment(appointment: Appointment) {
 		this.RemoveAppointmentFromStartPage(appointment)
 		this.RemoveAppointmentFromAppointmentsPage(appointment)
-		this.RemoveAppointmentFromCalendarPage(appointment)
 	}
 
 	SortAppointmentsArray(appointments: Appointment[]) {
@@ -919,47 +912,6 @@ export class DataService {
 	//#endregion
 
 	//#region CalendarPage
-	UpdateCalendarDays() {
-		if (this.updatingCalendarDays) {
-			this.updateCalendarDaysAgain = true
-			return
-		}
-
-		this.updatingCalendarDays = true
-
-		// Go through each mobileCalendarDay
-		for (let i = 0; i < this.mobileCalendarDaysDates.length; i++) {
-			let date = DateTime.fromSeconds(
-				this.mobileCalendarDaysDates[i]
-			).startOf("day")
-			this.mobileCalendarDaysAppointments[i] =
-				this.GetAppointmentsOfDay(date)
-			this.mobileCalendarDaysTodos[i] = this.GetTodosOfDay(date, false)
-		}
-
-		// Go through each desktopCalendarDay
-		for (let i = 0; i < this.desktopCalendarDaysDates.length; i++) {
-			for (let j = 0; j < this.desktopCalendarDaysDates[i].length; j++) {
-				let date = DateTime.fromSeconds(
-					this.desktopCalendarDaysDates[i][j]
-				).startOf("day")
-				this.desktopCalendarDaysAppointments[i][j] =
-					this.GetAppointmentsOfDay(date)
-				this.desktopCalendarDaysTodos[i][j] = this.GetTodosOfDay(
-					date,
-					false
-				)
-			}
-		}
-
-		this.updatingCalendarDays = false
-
-		if (this.updateCalendarDaysAgain) {
-			this.updateCalendarDaysAgain = false
-			this.UpdateCalendarDays()
-		}
-	}
-
 	// Get the todos of the given day to show them on the calendar page
 	GetTodosOfDay(day: DateTime, completed: boolean) {
 		var todos: Todo[] = []
@@ -975,22 +927,6 @@ export class DataService {
 		})
 
 		return todos
-	}
-
-	AddAppointmentToCalendarPage(appointment: Appointment) {
-		this.allAppointments.push(appointment)
-		this.SortAppointmentsArray(this.allAppointments)
-
-		if (
-			DateTime.fromSeconds(appointment.start)
-				.startOf("day")
-				.toUnixInteger() == this.selectedDay.startOf("day").toUnixInteger()
-		) {
-			this.selectedDayAppointments.push(appointment)
-			this.SortAppointmentsArray(this.selectedDayAppointments)
-		}
-
-		this.UpdateCalendarDays()
 	}
 
 	GetAppointmentsOfDay(day: DateTime) {
@@ -1009,106 +945,6 @@ export class DataService {
 		this.SortAppointmentsArray(appointments)
 
 		return appointments
-	}
-
-	RemoveAppointmentFromCalendarPage(appointment: Appointment) {
-		let index = this.allAppointments.findIndex(
-			a => a.uuid == appointment.uuid
-		)
-		if (index !== -1) {
-			this.allAppointments.splice(index, 1)
-		}
-
-		index = this.selectedDayAppointments.findIndex(
-			a => a.uuid == appointment.uuid
-		)
-		if (index !== -1) {
-			this.selectedDayAppointments.splice(index, 1)
-		}
-
-		this.UpdateCalendarDays()
-	}
-
-	AddTodoToCalendarPage(todo: Todo) {
-		if (todo.list) return
-
-		this.allTodos.push(todo)
-		this.SortTodosArray(this.allTodos)
-
-		if (
-			DateTime.fromSeconds(todo.time).startOf("day").toUnixInteger() ==
-				this.selectedDay.startOf("day").toUnixInteger() &&
-			!todo.list
-		) {
-			this.selectedDayTodos.push(todo)
-			this.SortTodosArray(this.selectedDayTodos)
-		}
-
-		this.UpdateCalendarDays()
-	}
-
-	RemoveTodoFromCalendarPage(todo: Todo) {
-		let index = this.allTodos.findIndex(t => t.uuid == todo.uuid)
-		if (index !== -1) {
-			this.allTodos.splice(index, 1)
-		}
-
-		index = this.selectedDayTodos.findIndex(t => t.uuid == todo.uuid)
-		if (index !== -1) {
-			this.selectedDayTodos.splice(index, 1)
-		}
-
-		this.UpdateCalendarDays()
-	}
-
-	AddTodoListToCalendarPage(todoList: TodoList) {
-		if (todoList.list) return
-
-		// Add the todos of the list to allTodos
-		let todos: Todo[] = []
-		this.GetNestedTodosInTodoList(todoList, todos)
-		for (let todo of todos) {
-			this.allTodos.push(todo)
-		}
-
-		if (todoList.list) return
-
-		this.allTodoLists.push(todoList)
-		this.SortTodoListsArray(this.allTodoLists)
-
-		if (
-			DateTime.fromSeconds(todoList.time).startOf("day").toUnixInteger() ==
-			this.selectedDay.startOf("day").toUnixInteger()
-		) {
-			this.selectedDayTodoLists.push(todoList)
-			this.SortTodoListsArray(this.selectedDayTodoLists)
-		}
-
-		this.UpdateCalendarDays()
-	}
-
-	RemoveTodoListFromCalendarPage(todoList: TodoList) {
-		// Remove the todos of the todo list
-		let todos: Todo[] = []
-		this.GetNestedTodosInTodoList(todoList, todos)
-		for (let todo of todos) {
-			let i = this.allTodos.findIndex(t => t.uuid == todo.uuid)
-			if (i !== -1) {
-				this.allTodos.splice(i, 1)
-			}
-		}
-
-		let index = this.allTodoLists.findIndex(t => t.uuid == todoList.uuid)
-		if (index !== -1) {
-			this.allTodoLists.splice(index, 1)
-		}
-
-		index = this.selectedDayTodoLists.findIndex(t => t.uuid == todoList.uuid)
-		if (index !== -1) {
-			this.selectedDayTodoLists.splice(index, 1)
-		}
-
-		this.UpdateCalendarDays()
 	}
 	//#endregion
 
