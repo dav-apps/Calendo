@@ -33,6 +33,10 @@ export class CalendarPageComponent {
 		private router: Router
 	) {
 		Settings.defaultLocale = navigator.language
+	}
+
+	async ngOnInit() {
+		await this.dataService.appointmentsPromiseHolder.AwaitResult()
 
 		// Get the short weekday labels
 		let currentWeekDay = DateTime.now().startOf("week")

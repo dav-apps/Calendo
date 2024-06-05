@@ -16,6 +16,7 @@ export class DataService {
 	dav = Dav
 	locale: string = navigator.language
 	userPromiseHolder = new PromiseHolder()
+	appointmentsPromiseHolder = new PromiseHolder()
 	updateInstalled: boolean = false
 
 	//#region StartPage
@@ -108,6 +109,7 @@ export class DataService {
 		this.selectedDayAppointments = []
 
 		var appointments = await GetAllAppointments()
+
 		for (let appointment of appointments) {
 			this.AddAppointmentToStartPage(appointment)
 			this.AddAppointmentToAppointmentsPage(appointment)
@@ -115,6 +117,7 @@ export class DataService {
 		}
 
 		this.isLoadingAllAppointments = false
+		this.appointmentsPromiseHolder.Resolve()
 	}
 
 	async LoadAllTodos() {
