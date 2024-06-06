@@ -48,6 +48,12 @@
 		}
 	</div>
 
+	<div class="short-weekday-labels-container">
+		@for (label of weekdayLabelsShort; track label) {
+		<div class="weekday-label">{{ label }}</div>
+		}
+	</div>
+
 	@if (currentMonth != null) {
 	<div class="month-container">
 		@for (week of currentMonth.weeks; track week.id) {
@@ -62,11 +68,13 @@
 					{{ day.label }}
 				</a>
 
-				@for (appointment of day.appointments; track appointment.uuid) {
-				<calendo-small-appointment-item
-					[appointment]="appointment"
-				></calendo-small-appointment-item>
-				}
+				<div class="day-appointments-container">
+					@for (appointment of day.appointments; track appointment.uuid) {
+					<calendo-small-appointment-item
+						[appointment]="appointment"
+					></calendo-small-appointment-item>
+					}
+				</div>
 			</div>
 			}
 		</div>

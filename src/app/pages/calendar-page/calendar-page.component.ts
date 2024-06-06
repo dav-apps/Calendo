@@ -25,6 +25,7 @@ export class CalendarPageComponent {
 	currentDate: DateTime = DateTime.now()
 	currentMonth: CalendarMonthData = null
 	weekdayLabels: string[] = []
+	weekdayLabelsShort: string[] = []
 	months: CalendarMonthData[] = []
 
 	constructor(
@@ -43,6 +44,7 @@ export class CalendarPageComponent {
 
 		for (let i = 0; i < 7; i++) {
 			this.weekdayLabels.push(currentWeekDay.weekdayLong)
+			this.weekdayLabelsShort.push(currentWeekDay.weekdayShort)
 			currentWeekDay = currentWeekDay.plus({ days: 1 })
 		}
 
