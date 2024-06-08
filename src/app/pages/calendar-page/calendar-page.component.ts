@@ -27,6 +27,7 @@ export class CalendarPageComponent {
 	weekdayLabels: string[] = []
 	weekdayLabelsShort: string[] = []
 	months: CalendarMonthData[] = []
+	mobileMonths: CalendarMonthData[] = []
 
 	constructor(
 		public dataService: DataService,
@@ -74,15 +75,25 @@ export class CalendarPageComponent {
 	}
 
 	loadMonths() {
-		// Check if the current month is already loaded
-		let monthLabel = this.currentDate.toFormat(monthLabelFormat)
+		let date = this.currentDate.minus({ months: 4 })
+
+		for (let i = 0; i < 9; i++) {
+			this.loadMonth(date)
+			date = date.plus({ months: 1 })
+		}
+	}
+
+	loadMonth(date: DateTime) {
+		// Check if the given month is already loaded
+		let monthLabel = date.toFormat(monthLabelFormat)
 		let month = this.months.find(m => m.label == monthLabel)
 		if (month != null) return
 
 		// Load the weeks
-		let currentDate = this.currentDate.startOf("month").startOf("week")
-		let endOfMonth = this.currentDate.endOf("month").endOf("week")
+		let currentDate = date.startOf("month").startOf("week")
+		let endOfMonth = date.endOf("month").endOf("week")
 		let weeks: CalendarWeekData[] = []
+		let mobileWeeks: CalendarWeekData[] = []
 
 		while (currentDate < endOfMonth) {
 			let currentWeek: CalendarWeekData = {
@@ -90,24 +101,57 @@ export class CalendarPageComponent {
 				days: []
 			}
 
+			let currentMobileWeek: CalendarWeekData = {
+				id: currentWeek.id,
+				days: []
+			}
+
 			for (let i = 0; i < 7; i++) {
+				let id = crypto.randomUUID()
+				let label = currentDate.toFormat("d")
+				let appointments =
+					this.dataService.GetAppointmentsOfDay(currentDate)
+
 				currentWeek.days.push({
-					id: crypto.randomUUID(),
+					id,
 					date: currentDate,
-					label: currentDate.toFormat("d"),
-					appointments: this.dataService.GetAppointmentsOfDay(currentDate)
+					label,
+					appointments
 				})
+
+				if (currentDate.hasSame(date, "month")) {
+					currentMobileWeek.days.push({
+						id,
+						date: currentDate,
+						label,
+						appointments
+					})
+				} else {
+					currentMobileWeek.days.push({
+						id,
+						date: null,
+						label: null,
+						appointments: []
+					})
+				}
 
 				currentDate = currentDate.plus({ days: 1 })
 			}
 
 			weeks.push(currentWeek)
+			mobileWeeks.push(currentMobileWeek)
 		}
 
 		this.months.push({
-			date: this.currentDate,
+			date,
 			label: monthLabel,
 			weeks
+		})
+
+		this.mobileMonths.push({
+			date,
+			label: monthLabel,
+			weeks: mobileWeeks
 		})
 	}
 

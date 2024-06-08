@@ -48,39 +48,76 @@
 		}
 	</div>
 
-	<div class="short-weekday-labels-container">
+	<div class="short-weekday-labels-container acrylic">
 		@for (label of weekdayLabelsShort; track label) {
 		<div class="weekday-label">{{ label }}</div>
 		}
 	</div>
 
-	@if (currentMonth != null) {
-	<div class="month-container">
-		@for (week of currentMonth.weeks; track week.id) {
-		<div class="week-container">
-			@for (day of week.days; track day.id) {
-			<div class="day-container">
-				<a
-					class="day-label"
-					[href]="getCalendarDayPageLink(day.date)"
-					(click)="navigateToDay($event, day.date)"
-				>
-					{{ day.label }}
-				</a>
+	<div class="desktop-calendar-container">
+		@if (currentMonth != null) {
+		<div class="month-container">
+			@for (week of currentMonth.weeks; track week.id) {
+			<div class="week-container">
+				@for (day of week.days; track day.id) {
+				<div class="day-container">
+					<a
+						class="day-label"
+						[href]="getCalendarDayPageLink(day.date)"
+						(click)="navigateToDay($event, day.date)"
+					>
+						{{ day.label }}
+					</a>
 
-				<div class="day-appointments-container">
-					@for (appointment of day.appointments; track appointment.uuid) {
-					<calendo-small-appointment-item
-						[appointment]="appointment"
-					></calendo-small-appointment-item>
-					}
+					<div class="day-appointments-container">
+						@for (appointment of day.appointments; track appointment.uuid)
+						{
+						<calendo-small-appointment-item
+							[appointment]="appointment"
+						></calendo-small-appointment-item>
+						}
+					</div>
 				</div>
+				}
 			</div>
 			}
 		</div>
 		}
 	</div>
-	}
+
+	<div class="mobile-months-container">
+		@for (month of mobileMonths; track month.label) {
+		<div class="month-container">
+			{{ month.label }}
+			@for (week of month.weeks; track week.id) {
+			<div class="week-container">
+				@for (day of week.days; track day.id) {
+				<div class="day-container">
+					@if (day.date != null) {
+					<a
+						class="day-label"
+						[href]="getCalendarDayPageLink(day.date)"
+						(click)="navigateToDay($event, day.date)"
+					>
+						{{ day.label }}
+					</a>
+
+					<div class="day-appointments-container">
+						@for (appointment of day.appointments; track appointment.uuid)
+						{
+						<calendo-small-appointment-item
+							[appointment]="appointment"
+						></calendo-small-appointment-item>
+						}
+					</div>
+					}
+				</div>
+				}
+			</div>
+			}
+		</div>
+		}
+	</div>
 
 	<!--
 	<div

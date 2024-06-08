@@ -1,6 +1,4 @@
 .container {
-	position: fixed;
-	width: 100%;
 	display: flex;
 	flex-direction: column;
 }
@@ -12,7 +10,7 @@
 }
 
 .calendar-top-bar {
-	display: flex;
+	display: none;
 	gap: 16px;
 	margin: 8px 0;
 }
@@ -28,12 +26,25 @@
 }
 
 .short-weekday-labels-container {
+	position: fixed;
+	left: 0;
+	right: 0;
 	display: flex;
+	height: 24px;
 }
 
 .weekday-label {
 	width: 100%;
 	text-align: center;
+}
+
+.desktop-calendar-container {
+	display: none;
+}
+
+.mobile-months-container {
+	display: block;
+	padding-top: 24px;
 }
 
 .month-container {
@@ -81,7 +92,24 @@
 
 @media screen and (min-width: 730px) {
 	.container {
+		position: fixed;
 		height: calc(100vh - 76px);
+		width: 100%;
+		overflow: auto;
+	}
+
+	.calendar-top-bar {
+		display: flex;
+	}
+
+	.mobile-months-container {
+		display: none;
+	}
+
+	.desktop-calendar-container {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
 	}
 
 	.weekday-labels-container {
@@ -98,7 +126,7 @@
 
 	.day-label {
 		width: 100%;
-		height: inherit;
+		height: 24px;
 		margin-bottom: 8px;
 		font-size: 14px;
 		border: none;
