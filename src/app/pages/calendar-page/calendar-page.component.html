@@ -96,6 +96,7 @@
 					@if (day.date != null) {
 					<a
 						class="day-label"
+						[class.today-mobile]="day.today"
 						[href]="getCalendarDayPageLink(day.date)"
 						(click)="navigateToDay($event, day.date)"
 					>

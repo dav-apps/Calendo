@@ -56,6 +56,21 @@ export class CalendarPageComponent {
 		)
 	}
 
+	async ngAfterViewInit() {
+		let todayLabel = document.querySelector(".today-mobile")
+
+		while (todayLabel == null) {
+			await new Promise(r => setTimeout(r, 100))
+			todayLabel = document.querySelector(".today-mobile")
+		}
+
+		let rect = todayLabel.getBoundingClientRect()
+
+		this.dataService.contentContainer.scrollTo({
+			top: rect.y - window.innerHeight / 2
+		})
+	}
+
 	showPreviousMonth() {
 		this.currentDate = this.currentDate.minus({ months: 1 })
 		this.loadMonths()
@@ -90,6 +105,7 @@ export class CalendarPageComponent {
 		if (month != null) return
 
 		// Load the weeks
+		let today = DateTime.now()
 		let currentDate = date.startOf("month").startOf("week")
 		let endOfMonth = date.endOf("month").endOf("week")
 		let weeks: CalendarWeekData[] = []
@@ -109,6 +125,7 @@ export class CalendarPageComponent {
 			for (let i = 0; i < 7; i++) {
 				let id = crypto.randomUUID()
 				let label = currentDate.toFormat("d")
+				let isToday = today.hasSame(currentDate, "day")
 				let appointments =
 					this.dataService.GetAppointmentsOfDay(currentDate)
 
@@ -116,6 +133,7 @@ export class CalendarPageComponent {
 					id,
 					date: currentDate,
 					label,
+					today: isToday,
 					appointments
 				})
 
@@ -124,6 +142,7 @@ export class CalendarPageComponent {
 						id,
 						date: currentDate,
 						label,
+						today: isToday,
 						appointments
 					})
 				} else {
@@ -131,6 +150,7 @@ export class CalendarPageComponent {
 						id,
 						date: null,
 						label: null,
+						today: isToday,
 						appointments: []
 					})
 				}

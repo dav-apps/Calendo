@@ -82,6 +82,10 @@
 	text-decoration: none;
 }
 
+.day-label.today-mobile {
+	border: 2px solid rgb(var(--dav-color-primary-rgb), 0.6);
+}
+
 .day-label:hover {
 	background-color: var(--dav-color-surface-hover);
 }

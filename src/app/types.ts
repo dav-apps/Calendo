@@ -11,6 +11,7 @@ export interface CalendarDayData {
 	id: string
 	date: DateTime
 	label: string
+	today: boolean
 	appointments: Appointment[]
 }
 
