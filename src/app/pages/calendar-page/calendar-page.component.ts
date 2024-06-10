@@ -32,6 +32,7 @@ export class CalendarPageComponent {
 	loadPreviousMonthAgain: boolean = false
 	isLoadingNextMonth: boolean = false
 	loadNextMonthAgain: boolean = false
+	todayLabelMobile: HTMLElement = null
 
 	constructor(
 		public dataService: DataService,
@@ -73,20 +74,29 @@ export class CalendarPageComponent {
 				this.loadNextMonth()
 			}
 		})
+
+		window.addEventListener("calendarpage-scrolltop", () => {
+			this.scrollToCurrentDate(true)
+		})
 	}
 
 	async ngAfterViewInit() {
-		let todayLabel = document.querySelector(".today-mobile")
+		await this.scrollToCurrentDate()
+	}
 
-		while (todayLabel == null) {
-			await new Promise(r => setTimeout(r, 100))
-			todayLabel = document.querySelector(".today-mobile")
+	async scrollToCurrentDate(smooth: boolean = false) {
+		if (this.todayLabelMobile == null) {
+			this.todayLabelMobile = document.querySelector(".today-mobile")
+
+			while (this.todayLabelMobile == null) {
+				await new Promise(r => setTimeout(r, 100))
+				this.todayLabelMobile = document.querySelector(".today-mobile")
+			}
 		}
 
-		let rect = todayLabel.getBoundingClientRect()
-
 		this.dataService.contentContainer.scrollTo({
-			top: rect.y - window.innerHeight / 2
+			top: this.todayLabelMobile.offsetTop - window.innerHeight / 2,
+			behavior: smooth ? "smooth" : "instant"
 		})
 	}
 

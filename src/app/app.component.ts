@@ -131,6 +131,14 @@ export class AppComponent {
 		this.router.navigate([path])
 	}
 
+	calendarTabClick() {
+		if (this.router.url == "/calendar") {
+			window.dispatchEvent(new Event("calendarpage-scrolltop"))
+		} else {
+			this.navigateToPage("calendar")
+		}
+	}
+
 	//#region dav-js callback functions
 	async UpdateAllOfTable(tableId: number) {
 		if (tableId === environment.appointmentTableId) {

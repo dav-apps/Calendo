@@ -91,7 +91,7 @@
 
 		<dav-navigation-bar-item
 			[active]="calendarTabActive"
-			(click)="navigateToPage('calendar')"
+			(click)="calendarTabClick()"
 		>
 			@if (calendarTabActive) {
 			<fa-icon slot="icon" [icon]="faCalendarSolid"></fa-icon>
