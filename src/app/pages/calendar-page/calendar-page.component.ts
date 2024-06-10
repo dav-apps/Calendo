@@ -28,6 +28,7 @@ export class CalendarPageComponent {
 	weekdayLabelsShort: string[] = []
 	months: CalendarMonthData[] = []
 	mobileMonths: CalendarMonthData[] = []
+	previousScrollPosition: "top" | "middle" | "bottom" = "middle"
 
 	constructor(
 		public dataService: DataService,
@@ -54,6 +55,32 @@ export class CalendarPageComponent {
 		this.currentMonth = this.months.find(m =>
 			m.date.hasSame(this.currentDate, "month")
 		)
+
+		this.dataService.contentContainer.addEventListener("scroll", () => {
+			let scrollTop = this.dataService.contentContainer.scrollTop
+			let scrollEnd =
+				this.dataService.contentContainer.scrollHeight - window.innerHeight
+			const distance = 400
+
+			if (scrollTop < distance) {
+				// Top scroll position
+				if (this.previousScrollPosition == "middle") {
+					this.loadPreviousMonth()
+				}
+
+				this.previousScrollPosition = "top"
+			} else if (scrollTop > scrollEnd - distance) {
+				// Bottom scroll position
+				if (this.previousScrollPosition == "middle") {
+					this.loadNextMonth()
+				}
+
+				this.previousScrollPosition = "bottom"
+			} else {
+				// Middle scroll position
+				this.previousScrollPosition = "middle"
+			}
+		})
 	}
 
 	async ngAfterViewInit() {
@@ -89,6 +116,22 @@ export class CalendarPageComponent {
 		)
 	}
 
+	loadPreviousMonth() {
+		// Get the earliest month
+		let date = this.mobileMonths[0].date
+		let previousMonthDate = date.minus({ months: 1 })
+
+		this.loadMonth(previousMonthDate, "start")
+	}
+
+	loadNextMonth() {
+		// Get the last month
+		let date = this.mobileMonths[this.mobileMonths.length - 1].date
+		let nextMonthDate = date.plus({ months: 1 })
+
+		this.loadMonth(nextMonthDate)
+	}
+
 	loadMonths() {
 		let date = this.currentDate.minus({ months: 4 })
 
@@ -98,7 +141,7 @@ export class CalendarPageComponent {
 		}
 	}
 
-	loadMonth(date: DateTime) {
+	loadMonth(date: DateTime, position: "start" | "end" = "end") {
 		// Check if the given month is already loaded
 		let monthLabel = date.toFormat(monthLabelFormat)
 		let month = this.months.find(m => m.label == monthLabel)
@@ -162,17 +205,31 @@ export class CalendarPageComponent {
 			mobileWeeks.push(currentMobileWeek)
 		}
 
-		this.months.push({
-			date,
-			label: monthLabel,
-			weeks
-		})
+		if (position == "end") {
+			this.months.push({
+				date,
+				label: monthLabel,
+				weeks
+			})
 
-		this.mobileMonths.push({
-			date,
-			label: monthLabel,
-			weeks: mobileWeeks
-		})
+			this.mobileMonths.push({
+				date,
+				label: monthLabel,
+				weeks: mobileWeeks
+			})
+		} else {
+			this.months.splice(0, 0, {
+				date,
+				label: monthLabel,
+				weeks
+			})
+
+			this.mobileMonths.splice(0, 0, {
+				date,
+				label: monthLabel,
+				weeks: mobileWeeks
+			})
+		}
 	}
 
 	getCalendarDayPageLink(date: DateTime) {
