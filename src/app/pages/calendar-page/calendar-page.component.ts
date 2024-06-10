@@ -28,7 +28,10 @@ export class CalendarPageComponent {
 	weekdayLabelsShort: string[] = []
 	months: CalendarMonthData[] = []
 	mobileMonths: CalendarMonthData[] = []
-	previousScrollPosition: "top" | "middle" | "bottom" = "middle"
+	isLoadingPreviousMonth: boolean = false
+	loadPreviousMonthAgain: boolean = false
+	isLoadingNextMonth: boolean = false
+	loadNextMonthAgain: boolean = false
 
 	constructor(
 		public dataService: DataService,
@@ -57,28 +60,17 @@ export class CalendarPageComponent {
 		)
 
 		this.dataService.contentContainer.addEventListener("scroll", () => {
+			const distance = 1000
 			let scrollTop = this.dataService.contentContainer.scrollTop
 			let scrollEnd =
 				this.dataService.contentContainer.scrollHeight - window.innerHeight
-			const distance = 400
 
 			if (scrollTop < distance) {
 				// Top scroll position
-				if (this.previousScrollPosition == "middle") {
-					this.loadPreviousMonth()
-				}
-
-				this.previousScrollPosition = "top"
+				this.loadPreviousMonth()
 			} else if (scrollTop > scrollEnd - distance) {
 				// Bottom scroll position
-				if (this.previousScrollPosition == "middle") {
-					this.loadNextMonth()
-				}
-
-				this.previousScrollPosition = "bottom"
-			} else {
-				// Middle scroll position
-				this.previousScrollPosition = "middle"
+				this.loadNextMonth()
 			}
 		})
 	}
@@ -117,19 +109,41 @@ export class CalendarPageComponent {
 	}
 
 	loadPreviousMonth() {
+		if (this.isLoadingPreviousMonth) {
+			this.loadPreviousMonthAgain = true
+			return
+		}
+
 		// Get the earliest month
 		let date = this.mobileMonths[0].date
 		let previousMonthDate = date.minus({ months: 1 })
 
 		this.loadMonth(previousMonthDate, "start")
+
+		this.isLoadingPreviousMonth = false
+
+		if (this.loadPreviousMonthAgain) {
+			this.loadPreviousMonth()
+		}
 	}
 
 	loadNextMonth() {
+		if (this.isLoadingNextMonth) {
+			this.loadNextMonthAgain = true
+			return
+		}
+
 		// Get the last month
 		let date = this.mobileMonths[this.mobileMonths.length - 1].date
 		let nextMonthDate = date.plus({ months: 1 })
 
 		this.loadMonth(nextMonthDate)
+
+		this.isLoadingNextMonth = false
+
+		if (this.loadNextMonthAgain) {
+			this.loadNextMonth()
+		}
 	}
 
 	loadMonths() {
