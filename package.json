@@ -7,7 +7,6 @@
     "dev": "ng serve --port 3002",
     "start": "ng serve",
     "build": "ng build --configuration production",
-    "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
