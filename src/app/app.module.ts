@@ -90,6 +90,7 @@ import { SettingsService } from "./services/settings-service"
 		RouterModule.forRoot([
 			{ path: "", component: OverviewPageComponent },
 			{ path: "calendar", component: CalendarPageComponent },
+			{ path: "calendar/:year/:month", component: CalendarPageComponent },
 			{
 				path: "calendar/:year/:month/:day",
 				component: CalendarDayPageComponent

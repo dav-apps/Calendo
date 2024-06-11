@@ -1,5 +1,5 @@
 import { Component } from "@angular/core"
-import { Router } from "@angular/router"
+import { Router, ActivatedRoute } from "@angular/router"
 import { Settings, DateTime } from "luxon"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
@@ -37,7 +37,8 @@ export class CalendarPageComponent {
 	constructor(
 		public dataService: DataService,
 		private localizationService: LocalizationService,
-		private router: Router
+		private router: Router,
+		private activatedRoute: ActivatedRoute
 	) {
 		Settings.defaultLocale = navigator.language
 	}
@@ -45,8 +46,16 @@ export class CalendarPageComponent {
 	async ngOnInit() {
 		await this.dataService.appointmentsPromiseHolder.AwaitResult()
 
+		let params = this.activatedRoute.snapshot.params
+		let year = Number(params.year)
+		let month = Number(params.month)
+
+		if (!isNaN(year) && !isNaN(month)) {
+			this.currentDate = this.currentDate.set({ year, month })
+		}
+
 		// Get the short weekday labels
-		let currentWeekDay = DateTime.now().startOf("week")
+		let currentWeekDay = this.currentDate.startOf("week")
 
 		for (let i = 0; i < 7; i++) {
 			this.weekdayLabels.push(currentWeekDay.weekdayLong)
@@ -107,6 +116,12 @@ export class CalendarPageComponent {
 		this.currentMonth = this.months.find(m =>
 			m.date.hasSame(this.currentDate, "month")
 		)
+
+		this.router.navigate([
+			"calendar",
+			this.currentDate.year,
+			this.currentDate.month
+		])
 	}
 
 	showNextMonth() {
@@ -116,6 +131,12 @@ export class CalendarPageComponent {
 		this.currentMonth = this.months.find(m =>
 			m.date.hasSame(this.currentDate, "month")
 		)
+
+		this.router.navigate([
+			"calendar",
+			this.currentDate.year,
+			this.currentDate.month
+		])
 	}
 
 	loadPreviousMonth() {

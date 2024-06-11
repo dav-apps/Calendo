@@ -74,13 +74,13 @@ export class CalendarDayPageComponent {
 		public dataService: DataService,
 		private localizationService: LocalizationService,
 		private router: Router,
-		private route: ActivatedRoute,
+		private activatedRoute: ActivatedRoute,
 		private location: Location,
 		private snackBar: MatSnackBar
 	) {}
 
 	ngOnInit() {
-		this.route.params.subscribe(param => {
+		this.activatedRoute.params.subscribe(param => {
 			let year = Number(param.year)
 			let month = Number(param.month)
 			let day = Number(param.day)
