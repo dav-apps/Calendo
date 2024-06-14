@@ -21,17 +21,17 @@
 			</dav-tab-bar-item>
 
 			<dav-tab-bar-item
-				[active]="todosTabActive"
-				(click)="navigateToPage('todos')"
-			>
-				{{ locale.todos }}
-			</dav-tab-bar-item>
-
-			<dav-tab-bar-item
 				[active]="appointmentsTabActive"
 				(click)="navigateToPage('appointments')"
 			>
 				{{ locale.appointments }}
+			</dav-tab-bar-item>
+
+			<dav-tab-bar-item
+				[active]="todosTabActive"
+				(click)="navigateToPage('todos')"
+			>
+				{{ locale.todos }}
 			</dav-tab-bar-item>
 		</dav-tab-bar>
 	</div>
@@ -103,19 +103,6 @@
 		</dav-navigation-bar-item>
 
 		<dav-navigation-bar-item
-			[active]="todosTabActive"
-			(click)="navigateToPage('todos')"
-		>
-			@if (todosTabActive) {
-			<fa-icon slot="icon" [icon]="faSquareCheckSolid"></fa-icon>
-			} @else {
-			<fa-icon slot="icon" [icon]="faSquareCheckRegular"></fa-icon>
-			}
-
-			<p slot="label">{{ locale.todos }}</p>
-		</dav-navigation-bar-item>
-
-		<dav-navigation-bar-item
 			[active]="appointmentsTabActive"
 			(click)="navigateToPage('appointments')"
 		>
@@ -126,6 +113,19 @@
 			}
 
 			<p slot="label">{{ locale.appointments }}</p>
+		</dav-navigation-bar-item>
+
+		<dav-navigation-bar-item
+			[active]="todosTabActive"
+			(click)="navigateToPage('todos')"
+		>
+			@if (todosTabActive) {
+			<fa-icon slot="icon" [icon]="faSquareCheckSolid"></fa-icon>
+			} @else {
+			<fa-icon slot="icon" [icon]="faSquareCheckRegular"></fa-icon>
+			}
+
+			<p slot="label">{{ locale.todos }}</p>
 		</dav-navigation-bar-item>
 	</dav-navigation-bar>
 </div>
