@@ -1,5 +1,10 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core"
 import { DateTime } from "luxon"
+import {
+	TonalPalette,
+	argbFromHex,
+	hexFromArgb
+} from "@material/material-color-utilities"
 import { Appointment } from "src/app/models/Appointment"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
@@ -23,7 +28,8 @@ export class SmallAppointmentItemComponent {
 	@Input() enableDropdown: boolean = true
 	@Input() compact: boolean = false
 	@Output() delete = new EventEmitter()
-	color: string = environment.appointmentDefaultColor
+	backgroundColor: string = environment.appointmentDefaultColor
+	textColor: string = environment.appointmentDefaultColor
 
 	constructor(
 		private dataService: DataService,
@@ -32,7 +38,9 @@ export class SmallAppointmentItemComponent {
 
 	ngOnInit() {
 		if (this.appointment.color != null) {
-			this.color = this.appointment.color
+			let palette = TonalPalette.fromInt(argbFromHex(this.appointment.color))
+			this.backgroundColor = hexFromArgb(palette.tone(90))
+			this.textColor = hexFromArgb(palette.tone(10))
 		}
 	}
 

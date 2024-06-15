@@ -32,7 +32,11 @@
 </div>
 -->
 
-<div class="item-container" [style.backgroundColor]="color">
+<div
+	class="item-container"
+	[style.backgroundColor]="backgroundColor"
+	[style.color]="textColor"
+>
 	@if (compact) {
 	<span>
 		@if (!appointment.allday) {
