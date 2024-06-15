@@ -35,59 +35,46 @@ export class AppointmentDialogComponent {
 	visible: boolean = false
 
 	colorDropdownOptions: DropdownOption[] = [
+		// Falu red
 		{
-			key: "#D32F2F",
+			key: "#6F1D1B",
 			value: "#D32F2F",
 			type: DropdownOptionType.color
 		},
+		// Antique white
 		{
-			key: "#D67724",
+			key: "#FFE8D1",
 			value: "#D67724",
 			type: DropdownOptionType.color
 		},
+		// Old gold
 		{
-			key: "#FFD600",
+			key: "#BFAE48",
 			value: "#FFD600",
 			type: DropdownOptionType.color
 		},
+		// Dark green
 		{
-			key: "#388E3C",
-			value: "#388E3C",
+			key: "#11270B",
+			value: "#388e3c",
 			type: DropdownOptionType.color
 		},
+		// Air force blue
 		{
-			key: "#43A047",
-			value: "#43A047",
+			key: "#568EA3",
+			value: "#1565c0",
 			type: DropdownOptionType.color
 		},
+		// Indigo
 		{
-			key: "#00B0FF",
-			value: "#00B0FF",
+			key: "#470063",
+			value: "#7b1fa2",
 			type: DropdownOptionType.color
 		},
+		// Dim gray
 		{
-			key: "#1565C0",
-			value: "#1565C0",
-			type: DropdownOptionType.color
-		},
-		{
-			key: "#283593",
-			value: "#283593",
-			type: DropdownOptionType.color
-		},
-		{
-			key: "#7B1FA2",
-			value: "#7B1FA2",
-			type: DropdownOptionType.color
-		},
-		{
-			key: "#757575",
+			key: "#616163",
 			value: "#757575",
-			type: DropdownOptionType.color
-		},
-		{
-			key: "#000000",
-			value: "#000000",
 			type: DropdownOptionType.color
 		}
 	]
