@@ -10,7 +10,7 @@
 	(defaultButtonClick)="visible = false"
 >
 	<form>
-		<div class="dialog-formfield-container">
+		<div class="name-container dialog-formfield-container">
 			<dav-textfield
 				[value]="name"
 				[label]="locale.nameTextfieldLabel"
@@ -18,6 +18,20 @@
 				[errorMessage]="nameError"
 				(change)="nameTextfieldChange($event)"
 			></dav-textfield>
+		</div>
+
+		<div class="date-container">
+			<dav-checkbox
+				label="Datum speichern"
+				[checked]="saveDate"
+				(change)="saveDateCheckboxChange($event)"
+			></dav-checkbox>
+
+			<dav-calendar
+				[date]="date"
+				[disabled]="!saveDate"
+				(change)="calendarChange($event)"
+			></dav-calendar>
 		</div>
 	</form>
 </dav-dialog>
