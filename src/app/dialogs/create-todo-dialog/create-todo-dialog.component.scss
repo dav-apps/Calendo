@@ -12,3 +12,23 @@
 	gap: 16px;
 	margin-top: 16px;
 }
+
+.label-input-container {
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	margin-top: 16px;
+	gap: 4px;
+}
+
+.label-input-container > dav-icon-button {
+	width: 30px;
+	height: 30px;
+}
+
+.labels-container {
+	display: flex;
+	justify-content: center;
+	gap: 6px;
+	margin-top: 16px;
+}

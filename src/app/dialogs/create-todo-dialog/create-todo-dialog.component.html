@@ -33,5 +33,25 @@
 				(change)="calendarChange($event)"
 			></dav-calendar>
 		</div>
+
+		<div class="label-input-container">
+			<dav-textfield
+				[value]="label"
+				label="Label hinzufügen"
+				(change)="labelTextfieldChange($event)"
+			></dav-textfield>
+
+			<dav-icon-button size="sm" shape="square" (click)="addLabel()">
+				<fa-icon [icon]="faPlus"></fa-icon>
+			</dav-icon-button>
+		</div>
+
+		@if (labels.length > 0) {
+		<div class="labels-container">
+			@for (label of labels; track label) {
+			<dav-badge tonal color="secondary">{{ label }}</dav-badge>
+			}
+		</div>
+		}
 	</form>
 </dav-dialog>

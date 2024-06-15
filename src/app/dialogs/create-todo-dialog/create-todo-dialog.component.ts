@@ -7,6 +7,7 @@ import {
 	EventEmitter
 } from "@angular/core"
 import { DateTime } from "luxon"
+import { faPlus } from "@fortawesome/pro-light-svg-icons"
 import { Dialog } from "dav-ui-components"
 import { LocalizationService } from "src/app/services/localization-service"
 
@@ -18,6 +19,7 @@ import { LocalizationService } from "src/app/services/localization-service"
 export class CreateTodoDialogComponent {
 	locale = this.localizationService.locale.dialogs.createTodoDialog
 	actionsLocale = this.localizationService.locale.actions
+	faPlus = faPlus
 	@Input() loading: boolean = false
 	@Input() nameError: string = ""
 	@Input() date: DateTime = DateTime.now()
@@ -26,6 +28,8 @@ export class CreateTodoDialogComponent {
 	visible: boolean = false
 	name: string = ""
 	saveDate: boolean = false
+	label: string = ""
+	labels: string[] = []
 
 	constructor(private localizationService: LocalizationService) {}
 
@@ -56,6 +60,22 @@ export class CreateTodoDialogComponent {
 
 	saveDateCheckboxChange(event: CustomEvent) {
 		this.saveDate = event.detail.checked
+	}
+
+	labelTextfieldChange(event: Event) {
+		this.label = (event as CustomEvent).detail.value
+	}
+
+	addLabel() {
+		let label = this.label
+		this.label = ""
+
+		if (label.length == 0) return
+
+		let i = this.labels.findIndex(l => l == label)
+		if (i != -1) return
+
+		this.labels.push(label)
 	}
 
 	submit() {
