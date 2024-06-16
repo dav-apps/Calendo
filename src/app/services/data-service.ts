@@ -20,6 +20,10 @@ export class DataService {
 	todosPromiseHolder = new PromiseHolder()
 	updateInstalled: boolean = false
 
+	allAppointments: Appointment[] = []
+	allTodos: Todo[] = []
+	allTodoLists: TodoList[] = []
+
 	//#region StartPage
 	startDaysDates: number[] = [] // Contains the timestamps of the start of the days
 	startDaysAppointments: Appointment[][] = [] // Contains the appointments for the individual days
@@ -44,27 +48,6 @@ export class DataService {
 	//#region AppointmentsPage
 	appointmentDays: AppointmentDay[] = []
 	oldAppointmentDays: AppointmentDay[] = []
-	//#endregion
-
-	//#region CalendarPage
-	private updatingCalendarDays: boolean = false
-	private updateCalendarDaysAgain: boolean = false
-	allAppointments: Appointment[] = [] // Save all objects to add them to the calendar days in UpdateCalendarDays
-	allTodos: Todo[] = []
-	allTodoLists: TodoList[] = []
-
-	mobileCalendarDaysDates: number[] = []
-	mobileCalendarDaysAppointments: Appointment[][] = []
-	mobileCalendarDaysTodos: Todo[][] = []
-
-	desktopCalendarDaysDates: number[][] = []
-	desktopCalendarDaysAppointments: Appointment[][][] = []
-	desktopCalendarDaysTodos: Todo[][][] = []
-
-	selectedDay: DateTime = DateTime.now().startOf("day")
-	selectedDayAppointments: Appointment[] = []
-	selectedDayTodos: Todo[] = []
-	selectedDayTodoLists: TodoList[] = []
 	//#endregion
 
 	//#region All pages
@@ -106,8 +89,6 @@ export class DataService {
 		this.appointmentDays = []
 		this.oldAppointmentDays = []
 		this.allAppointments = []
-		this.ClearCalendarDaysAppointments()
-		this.selectedDayAppointments = []
 
 		var appointments = await GetAllAppointments()
 
@@ -134,9 +115,6 @@ export class DataService {
 		this.todoGroups = []
 		this.allTodos = []
 		this.allTodoLists = []
-		this.ClearCalendarDaysTodos()
-		this.selectedDayTodos = []
-		this.selectedDayTodoLists = []
 
 		// Load todos
 		var todos = await GetAllTodos()
@@ -155,28 +133,6 @@ export class DataService {
 
 		this.isLoadingAllTodos = false
 		this.todosPromiseHolder.Resolve()
-	}
-
-	ClearCalendarDaysAppointments() {
-		for (let appointments of this.mobileCalendarDaysAppointments) {
-			appointments = []
-		}
-
-		this.ClearCalendarDaysDates()
-	}
-
-	ClearCalendarDaysTodos() {
-		for (let todos of this.mobileCalendarDaysTodos) {
-			todos = []
-		}
-
-		this.ClearCalendarDaysDates()
-	}
-
-	ClearCalendarDaysDates() {
-		for (let date of this.mobileCalendarDaysDates) {
-			date = 0
-		}
 	}
 
 	AddTodoList(todoList: TodoList) {

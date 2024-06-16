@@ -32,6 +32,7 @@ export class CalendarDayPageComponent {
 	isDateBeforeToday: boolean = false
 	appointments: Appointment[] = []
 	todos: Todo[] = []
+	todoLists: TodoList[] = []
 	selectedAppointment: Appointment = null
 
 	//#region ContextMenu
@@ -86,7 +87,6 @@ export class CalendarDayPageComponent {
 				this.date = DateTime.now().set({ year, month, day })
 				this.title = this.date.toFormat("DDDD")
 				this.isDateBeforeToday = this.date < DateTime.now().startOf("day")
-				this.dataService.selectedDay = this.date
 
 				this.appointments = this.dataService.GetAppointmentsOfDay(this.date)
 				this.todos = this.dataService.GetTodosOfDay(this.date)

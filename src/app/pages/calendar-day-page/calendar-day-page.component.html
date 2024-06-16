@@ -42,8 +42,7 @@
 			</dav-header>
 
 			<div class="todos-content-container">
-				@if (todos.length == 0 &&
-				dataService.selectedDayTodoLists.length == 0) {
+				@if (todos.length == 0 && todoLists.length == 0) {
 				<p class="no-items-message">
 					{{ locale.noTodos }}
 				</p>
@@ -52,8 +51,7 @@
 					[todo]="todo"
 					(delete)="DeleteTodo(todo)"
 				></calendo-small-todo-item>
-				} @for (todoList of dataService.selectedDayTodoLists; track
-				todoList.uuid) {
+				} @for (todoList of todoLists; track todoList.uuid) {
 				<calendo-small-todo-list-item
 					[todoList]="todoList"
 				></calendo-small-todo-list-item>
