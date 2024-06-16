@@ -14,8 +14,6 @@ import { CreateTodoDialogComponent } from "src/app/dialogs/create-todo-dialog/cr
 import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
-import { NewTodoModalComponent } from "src/app/components/new-todo-modal/new-todo-modal.component"
-import { TodoListModalComponent } from "src/app/components/todo-list-modal/todo-list-modal.component"
 import { Appointment } from "src/app/models/Appointment"
 import { MatSnackBar } from "@angular/material/snack-bar"
 
@@ -31,10 +29,6 @@ export class OverviewPageComponent {
 	faEditLight = faEditLight
 	faTrashLight = faTrashLight
 	selectedAppointment: Appointment = null
-	@ViewChild(NewTodoModalComponent, { static: true })
-	private newTodoModalComponent: NewTodoModalComponent
-	@ViewChild(TodoListModalComponent, { static: true })
-	private todoListModalComponent: TodoListModalComponent
 
 	largeDateFontSize: number = 24
 	smallDateFontSize: number = 16
@@ -166,6 +160,19 @@ export class OverviewPageComponent {
 		return dateTime.toFormat(formatting)
 	}
 
+	async createTodo(event: { name: string; date: DateTime; labels: string[] }) {
+		let todo = await Todo.Create(
+			event.name,
+			false,
+			event.date.toUnixInteger(),
+			event.labels
+		)
+
+		this.dataService.AddTodo(todo)
+		this.createTodoDialog.hide()
+	}
+
+	/*
 	CreateTodo(todo: Todo) {
 		this.dataService.AddTodo(todo)
 
@@ -188,6 +195,7 @@ export class OverviewPageComponent {
 
 		this.dataService.AdaptSnackbarPosition()
 	}
+	*/
 
 	/*
 	CreateAppointment(appointment: Appointment) {

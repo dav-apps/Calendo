@@ -121,11 +121,6 @@
 			</div>
 		</ng-container>
 	</div>
-
-	<calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
-	<calendo-todo-list-modal
-		(save)="CreateTodoList($event)"
-	></calendo-todo-list-modal>
 </div>
 
 <dav-context-menu
@@ -162,7 +157,10 @@
 	(primaryButtonClick)="updateAppointment($event)"
 ></calendo-appointment-dialog>
 
-<calendo-create-todo-dialog #createTodoDialog></calendo-create-todo-dialog>
+<calendo-create-todo-dialog
+	#createTodoDialog
+	(primaryButtonClick)="createTodo($event)"
+></calendo-create-todo-dialog>
 
 <calendo-delete-appointment-dialog
 	#deleteAppointmentDialog

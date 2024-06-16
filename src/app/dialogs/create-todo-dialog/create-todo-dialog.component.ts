@@ -80,7 +80,9 @@ export class CreateTodoDialogComponent {
 
 	submit() {
 		this.primaryButtonClick.emit({
-			name: this.name
+			name: this.name,
+			date: this.saveDate ? this.date : null,
+			labels: this.labels
 		})
 	}
 }
