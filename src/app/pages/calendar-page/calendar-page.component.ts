@@ -1,4 +1,4 @@
-import { Component } from "@angular/core"
+import { Component, ViewChild, ElementRef } from "@angular/core"
 import { Router, ActivatedRoute } from "@angular/router"
 import { Settings, DateTime } from "luxon"
 import { DataService } from "src/app/services/data-service"
@@ -33,6 +33,9 @@ export class CalendarPageComponent {
 	isLoadingNextMonth: boolean = false
 	loadNextMonthAgain: boolean = false
 	todayLabelMobile: HTMLElement = null
+
+	@ViewChild("container")
+	container: ElementRef<HTMLDivElement>
 
 	constructor(
 		public dataService: DataService,
@@ -87,10 +90,25 @@ export class CalendarPageComponent {
 		window.addEventListener("calendarpage-scrolltop", () => {
 			this.scrollToCurrentDate(true)
 		})
+
+		this.container.nativeElement.addEventListener(
+			"mousewheel",
+			(event: WheelEvent) => this.onScroll(event)
+		)
 	}
 
 	async ngAfterViewInit() {
 		await this.scrollToCurrentDate()
+	}
+
+	onScroll(event: WheelEvent) {
+		if (window.innerWidth < 730) return
+
+		if (event.deltaY > 0) {
+			this.showNextMonth()
+		} else {
+			this.showPreviousMonth()
+		}
 	}
 
 	async scrollToCurrentDate(smooth: boolean = false) {
