@@ -95,21 +95,11 @@
 <calendo-appointment-dialog
 	#createAppointmentDialog
 	[date]="date"
-	[nameError]="createAppointmentDialogNameError"
 	(primaryButtonClick)="createAppointment($event)"
 ></calendo-appointment-dialog>
 
 <calendo-appointment-dialog
 	#editAppointmentDialog
-	[name]="editAppointmentDialogName"
-	[nameError]="editAppointmentDialogNameError"
-	[date]="editAppointmentDialogDate"
-	[selectedColor]="editAppointmentDialogSelectedColor"
-	[allDay]="editAppointmentDialogAllDay"
-	[startTimeHour]="editAppointmentDialogStartTimeHour"
-	[startTimeMinute]="editAppointmentDialogStartTimeMinute"
-	[endTimeHour]="editAppointmentDialogEndTimeHour"
-	[endTimeMinute]="editAppointmentDialogEndTimeMinute"
 	mode="edit"
 	(primaryButtonClick)="updateAppointment($event)"
 ></calendo-appointment-dialog>

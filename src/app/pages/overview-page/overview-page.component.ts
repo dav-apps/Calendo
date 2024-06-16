@@ -53,7 +53,6 @@ export class OverviewPageComponent {
 	//#region CreateAppointmentDialog
 	@ViewChild("createAppointmentDialog")
 	createAppointmentDialog: AppointmentDialogComponent
-	createAppointmentDialogNameError: string = ""
 	//#endregion
 
 	//#region EditAppointmentDialog
