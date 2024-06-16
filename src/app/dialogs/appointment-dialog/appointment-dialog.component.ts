@@ -22,7 +22,7 @@ export class AppointmentDialogComponent {
 	@Input() name: string = ""
 	@Input() nameError: string = ""
 	@Input() date: DateTime = DateTime.now()
-	@Input() selectedColor: string = "#D32F2F"
+	@Input() selectedColor: string = ""
 	@Input() allDay: boolean = true
 	@Input() startTimeHour: number = 14
 	@Input() startTimeMinute: number = 0
@@ -33,6 +33,7 @@ export class AppointmentDialogComponent {
 	@Output() primaryButtonClick = new EventEmitter()
 	@ViewChild("dialog") dialog: ElementRef<Dialog>
 	visible: boolean = false
+	colorDropdownSelectedKey: string = ""
 
 	colorDropdownOptions: DropdownOption[] = [
 		// Falu red
@@ -79,11 +80,7 @@ export class AppointmentDialogComponent {
 		}
 	]
 
-	constructor(private localizationService: LocalizationService) {
-		// Select a random color
-		let i = randomNumber(0, this.colorDropdownOptions.length - 1)
-		this.selectedColor = this.colorDropdownOptions[i].key
-	}
+	constructor(private localizationService: LocalizationService) {}
 
 	ngAfterViewInit() {
 		document.body.appendChild(this.dialog.nativeElement)
@@ -94,6 +91,22 @@ export class AppointmentDialogComponent {
 	}
 
 	show() {
+		if (this.selectedColor.length == 0) {
+			// Select a random color
+			let i = randomNumber(0, this.colorDropdownOptions.length - 1)
+			this.colorDropdownSelectedKey = this.colorDropdownOptions[i].key
+		} else {
+			let i = this.colorDropdownOptions.findIndex(
+				option =>
+					option.key == this.selectedColor ||
+					option.value == this.selectedColor
+			)
+
+			if (i != -1) {
+				this.colorDropdownSelectedKey = this.colorDropdownOptions[i].key
+			}
+		}
+
 		this.visible = true
 	}
 

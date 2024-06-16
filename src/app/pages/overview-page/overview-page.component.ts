@@ -59,15 +59,6 @@ export class OverviewPageComponent {
 	//#region EditAppointmentDialog
 	@ViewChild("editAppointmentDialog")
 	editAppointmentDialog: AppointmentDialogComponent
-	editAppointmentDialogName: string = ""
-	editAppointmentDialogNameError: string = ""
-	editAppointmentDialogDate: DateTime = DateTime.now()
-	editAppointmentDialogSelectedColor: string = ""
-	editAppointmentDialogAllDay: boolean = true
-	editAppointmentDialogStartTimeHour: number = 14
-	editAppointmentDialogStartTimeMinute: number = 0
-	editAppointmentDialogEndTimeHour: number = 15
-	editAppointmentDialogEndTimeMinute: number = 0
 	//#endregion
 
 	//#region CreateTodoDialog
@@ -132,14 +123,14 @@ export class OverviewPageComponent {
 
 		this.selectedAppointment = appointment
 		this.contextMenuVisible = false
-		this.editAppointmentDialogName = appointment.name
-		this.editAppointmentDialogDate = startDate
-		this.editAppointmentDialogSelectedColor = appointment.color
-		this.editAppointmentDialogAllDay = appointment.allday
-		this.editAppointmentDialogStartTimeHour = startDate.hour
-		this.editAppointmentDialogStartTimeMinute = startDate.minute
-		this.editAppointmentDialogEndTimeHour = endDate.hour
-		this.editAppointmentDialogEndTimeMinute = endDate.minute
+		this.editAppointmentDialog.name = appointment.name
+		this.editAppointmentDialog.date = startDate
+		this.editAppointmentDialog.selectedColor = appointment.color
+		this.editAppointmentDialog.allDay = appointment.allday
+		this.editAppointmentDialog.startTimeHour = startDate.hour
+		this.editAppointmentDialog.startTimeMinute = startDate.minute
+		this.editAppointmentDialog.endTimeHour = endDate.hour
+		this.editAppointmentDialog.endTimeMinute = endDate.minute
 
 		this.editAppointmentDialog.show()
 	}
