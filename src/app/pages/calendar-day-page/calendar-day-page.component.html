@@ -14,12 +14,11 @@
 			</dav-header>
 
 			<div class="appointments-content-container">
-				@if (dataService.selectedDayAppointments.length == 0) {
+				@if (appointments.length == 0) {
 				<p class="no-items-message">
 					{{ locale.noAppointments }}
 				</p>
-				} @for (appointment of dataService.selectedDayAppointments; track
-				appointment.uuid) {
+				} @for (appointment of appointments; track appointment.uuid) {
 				<div style="display: inline-flex; align-self: center">
 					<calendo-small-appointment-item
 						[appointment]="appointment"
@@ -43,12 +42,12 @@
 			</dav-header>
 
 			<div class="todos-content-container">
-				@if (dataService.selectedDayTodos.length == 0 &&
+				@if (todos.length == 0 &&
 				dataService.selectedDayTodoLists.length == 0) {
 				<p class="no-items-message">
 					{{ locale.noTodos }}
 				</p>
-				} @for (todo of dataService.selectedDayTodos; track todo.uuid) {
+				} @for (todo of todos; track todo.uuid) {
 				<calendo-small-todo-item
 					[todo]="todo"
 					(delete)="DeleteTodo(todo)"

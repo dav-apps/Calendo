@@ -30,6 +30,8 @@ export class CalendarDayPageComponent {
 	title: string = ""
 	date = DateTime.now().startOf("day")
 	isDateBeforeToday: boolean = false
+	appointments: Appointment[] = []
+	todos: Todo[] = []
 	selectedAppointment: Appointment = null
 
 	//#region ContextMenu
@@ -79,7 +81,10 @@ export class CalendarDayPageComponent {
 		private snackBar: MatSnackBar
 	) {}
 
-	ngOnInit() {
+	async ngOnInit() {
+		await this.dataService.appointmentsPromiseHolder.AwaitResult()
+		await this.dataService.todosPromiseHolder.AwaitResult()
+
 		this.activatedRoute.params.subscribe(param => {
 			let year = Number(param.year)
 			let month = Number(param.month)
@@ -93,8 +98,8 @@ export class CalendarDayPageComponent {
 				this.isDateBeforeToday = this.date < DateTime.now().startOf("day")
 				this.dataService.selectedDay = this.date
 
-				this.dataService.LoadAllAppointments()
-				this.dataService.LoadAllTodos()
+				this.appointments = this.dataService.GetAppointmentsOfDay(this.date)
+				this.todos = this.dataService.GetTodosOfDay(this.date)
 			}
 		})
 	}

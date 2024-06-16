@@ -17,6 +17,7 @@ export class DataService {
 	locale: string = navigator.language
 	userPromiseHolder = new PromiseHolder()
 	appointmentsPromiseHolder = new PromiseHolder()
+	todosPromiseHolder = new PromiseHolder()
 	updateInstalled: boolean = false
 
 	//#region StartPage
@@ -153,6 +154,7 @@ export class DataService {
 		}
 
 		this.isLoadingAllTodos = false
+		this.todosPromiseHolder.Resolve()
 	}
 
 	ClearCalendarDaysAppointments() {
@@ -913,18 +915,17 @@ export class DataService {
 
 	//#region CalendarPage
 	// Get the todos of the given day to show them on the calendar page
-	GetTodosOfDay(day: DateTime, completed: boolean) {
+	GetTodosOfDay(day: DateTime, completed: boolean = false) {
 		var todos: Todo[] = []
 
-		this.allTodos.forEach(todo => {
+		for (let todo of this.allTodos) {
 			if (
-				DateTime.fromSeconds(todo.time).startOf("day").toUnixInteger() ===
-					day.startOf("day").toUnixInteger() &&
+				DateTime.fromSeconds(todo.time).hasSame(day, "day") &&
 				(completed || !todo.completed)
 			) {
 				todos.push(todo)
 			}
-		})
+		}
 
 		return todos
 	}
@@ -933,11 +934,7 @@ export class DataService {
 		var appointments: Appointment[] = []
 
 		for (let appointment of this.allAppointments) {
-			if (
-				DateTime.fromSeconds(appointment.start)
-					.startOf("day")
-					.toUnixInteger() === day.startOf("day").toUnixInteger()
-			) {
+			if (DateTime.fromSeconds(appointment.start).hasSame(day, "day")) {
 				appointments.push(appointment)
 			}
 		}
