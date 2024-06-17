@@ -80,7 +80,7 @@ const enDefaults = {
 		todos: "Todos"
 	},
 	todosPage: {
-		header: "Todos",
+		title: "Todos",
 		sortByGroup: "Sort by group",
 		sortByDate: "Sort by date",
 		newTodo: "Add Todo",
@@ -296,7 +296,7 @@ const deDefaults = {
 		todos: "Todos"
 	},
 	todosPage: {
-		header: "Todos",
+		title: "Todos",
 		sortByGroup: "Nach Gruppe sortieren",
 		sortByDate: "Nach Datum sortieren",
 		newTodo: "Todo hinzufügen",

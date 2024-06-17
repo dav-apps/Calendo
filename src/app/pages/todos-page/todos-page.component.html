@@ -1,10 +1,18 @@
-<div class="container-fluid ms-motion-slideUpIn" style="padding-bottom: 56px">
+<div class="container slide-up-in">
+	<dav-header
+		size="lg"
+		addButtonVisible
+		(addButtonClick)="createTodoDialog.show()"
+	>
+		{{ locale.title }}
+	</dav-header>
+
 	<h1
 		class="text-center mt-3 font-weight-light"
 		ngbDropdown
 		placement="bottom-right"
 	>
-		{{ locale.header }}
+		{{ locale.title }}
 		<button
 			type="button"
 			class="btn btn-outline-primary btn-sm mb-1"
@@ -172,3 +180,8 @@
 		(save)="CreateTodoList($event)"
 	></calendo-todo-list-modal>
 </div>
+
+<calendo-create-todo-dialog
+	#createTodoDialog
+	(primaryButtonClick)="createTodo($event)"
+></calendo-create-todo-dialog>

@@ -1,7 +1,9 @@
 import { Component, ViewChild } from "@angular/core"
 import { Router } from "@angular/router"
+import { DateTime } from "luxon"
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons"
 import { Todo } from "../../models/Todo"
+import { CreateTodoDialogComponent } from "src/app/dialogs/create-todo-dialog/create-todo-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { NewTodoModalComponent } from "src/app/components/new-todo-modal/new-todo-modal.component"
@@ -17,10 +19,11 @@ export class TodosPageComponent {
 	locale = this.localizationService.locale.todosPage
 	snackbarLocale = this.localizationService.locale.snackbar
 	faEllipsisH = faEllipsisH
-	@ViewChild(NewTodoModalComponent, { static: true })
-	private newTodoModalComponent: NewTodoModalComponent
-	@ViewChild(TodoListModalComponent, { static: true })
-	private todoListModalComponent: TodoListModalComponent
+
+	//#region CreateTodoDialog
+	@ViewChild("createTodoDialog")
+	createTodoDialog: CreateTodoDialogComponent
+	//#endregion
 
 	constructor(
 		public dataService: DataService,
@@ -34,10 +37,19 @@ export class TodosPageComponent {
 		this.dataService.LoadAllTodos()
 	}
 
-	ShowNewTodoModal() {
-		this.newTodoModalComponent.Show()
+	async createTodo(event: { name: string; date: DateTime; labels: string[] }) {
+		let todo = await Todo.Create(
+			event.name,
+			false,
+			event.date.toUnixInteger(),
+			event.labels
+		)
+
+		this.dataService.AddTodo(todo)
+		this.createTodoDialog.hide()
 	}
 
+	/*
 	CreateTodo(todo: Todo) {
 		this.dataService.AddTodo(todo)
 
@@ -60,6 +72,7 @@ export class TodosPageComponent {
 
 		this.dataService.AdaptSnackbarPosition()
 	}
+	*/
 
 	DeleteTodo(todo: Todo) {
 		this.dataService.RemoveTodo(todo)
