@@ -7,48 +7,6 @@
 		{{ locale.title }}
 	</dav-header>
 
-	<h1
-		class="text-center mt-3 font-weight-light"
-		ngbDropdown
-		placement="bottom-right"
-	>
-		{{ locale.title }}
-		<button
-			type="button"
-			class="btn btn-outline-primary btn-sm mb-1"
-			ngbDropdownToggle
-		>
-			<fa-icon [icon]="faEllipsisH"></fa-icon>
-		</button>
-		<div
-			ngbDropdownMenu
-			class="ms-depth-4 ms-motion-slideDownIn"
-		>
-			<button
-				class="cursor"
-				(click)="SortByGroupOrDate()"
-			>
-				{{
-					dataService.sortTodosByDate
-						? locale.sortByGroup
-						: locale.sortByDate
-				}}
-			</button>
-			<button
-				class="cursor"
-				(click)="ShowNewTodoModal()"
-			>
-				{{ locale.newTodo }}
-			</button>
-			<button
-				class="cursor"
-				(click)="ShowNewTodoListModal()"
-			>
-				{{ locale.newTodoList }}
-			</button>
-		</div>
-	</h1>
-
 	<p
 		class="no-items-message font-weight-light text-center mt-3"
 		*ngIf="
@@ -174,11 +132,6 @@
 			</div>
 		</div>
 	</div>
-
-	<calendo-new-todo-modal (save)="CreateTodo($event)"></calendo-new-todo-modal>
-	<calendo-todo-list-modal
-		(save)="CreateTodoList($event)"
-	></calendo-todo-list-modal>
 </div>
 
 <calendo-create-todo-dialog

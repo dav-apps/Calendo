@@ -81,10 +81,6 @@ const enDefaults = {
 	},
 	todosPage: {
 		title: "Todos",
-		sortByGroup: "Sort by group",
-		sortByDate: "Sort by date",
-		newTodo: "Add Todo",
-		newTodoList: "Add Todo list",
 		noTodos: "You have no todos",
 		formats: {
 			date: "dddd, MMMM D, YYYY"
@@ -297,10 +293,6 @@ const deDefaults = {
 	},
 	todosPage: {
 		title: "Todos",
-		sortByGroup: "Nach Gruppe sortieren",
-		sortByDate: "Nach Datum sortieren",
-		newTodo: "Todo hinzufügen",
-		newTodoList: "Todo-Liste hinzufügen",
 		noTodos: "Du hast keine Todos",
 		formats: {
 			date: "dddd, D. MMMM YYYY"
