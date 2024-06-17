@@ -25,3 +25,10 @@ export interface CalendarMonthData {
 	label: string
 	weeks: CalendarWeekData[]
 }
+
+export interface AppointmentDay {
+	date: DateTime
+	formattedDate: string
+	calendarDayPageLink: string
+	appointments: Appointment[]
+}

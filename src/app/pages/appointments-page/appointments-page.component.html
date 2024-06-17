@@ -9,7 +9,7 @@
 
 	<!-- List of future appointments -->
 	<div class="appointment-list">
-		@for (appointmentDay of dataService.appointmentDays; track
+		@for (appointmentDay of appointmentDays; track
 		appointmentDay.formattedDate) {
 		<div class="appointment-day">
 			<div class="appointment-day-header-container">
@@ -42,15 +42,15 @@
 	</div>
 
 	<!-- List of old appointments -->
-	@if (dataService.oldAppointmentDays.length > 0 &&
-	dataService.appointmentDays.length > 0) {
+	@if (oldAppointmentDays.length > 0 &&
+	appointmentDays.length > 0) {
 	<dav-header class="old-appointments-header">
 		{{ locale.oldAppointments }}
 	</dav-header>
 	}
 
 	<div class="appointment-list">
-		@for (appointmentDay of dataService.oldAppointmentDays; track
+		@for (appointmentDay of oldAppointmentDays; track
 		appointmentDay.formattedDate) {
 		<div class="appointment-day">
 			<div class="appointment-day-header-container">

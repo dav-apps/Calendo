@@ -45,11 +45,6 @@ export class DataService {
 	todoGroups: { name: string; todos: Todo[]; todoLists: TodoList[] }[] = []
 	//#endregion
 
-	//#region AppointmentsPage
-	appointmentDays: AppointmentDay[] = []
-	oldAppointmentDays: AppointmentDay[] = []
-	//#endregion
-
 	//#region All pages
 	sortTodosByDate: boolean = true
 	isMobile: boolean = false
@@ -86,8 +81,6 @@ export class DataService {
 		if (this.isLoadingAllAppointments) return
 		this.isLoadingAllAppointments = true
 
-		this.appointmentDays = []
-		this.oldAppointmentDays = []
 		this.allAppointments = []
 
 		var appointments = await GetAllAppointments()
@@ -96,7 +89,6 @@ export class DataService {
 			this.allAppointments.push(appointment)
 
 			this.AddAppointmentToStartPage(appointment)
-			this.AddAppointmentToAppointmentsPage(appointment)
 		}
 
 		this.isLoadingAllAppointments = false
@@ -167,7 +159,6 @@ export class DataService {
 
 	AddAppointment(appointment: Appointment) {
 		this.AddAppointmentToStartPage(appointment)
-		this.AddAppointmentToAppointmentsPage(appointment)
 	}
 
 	UpdateAppointment(appointment: Appointment) {
@@ -177,7 +168,6 @@ export class DataService {
 
 	RemoveAppointment(appointment: Appointment) {
 		this.RemoveAppointmentFromStartPage(appointment)
-		this.RemoveAppointmentFromAppointmentsPage(appointment)
 	}
 
 	SortAppointmentsArray(appointments: Appointment[]) {
@@ -773,6 +763,7 @@ export class DataService {
 	//#endregion
 
 	//#region AppointmentsPage
+	/*
 	AddAppointmentToAppointmentsPage(appointment: Appointment) {
 		let date = DateTime.fromSeconds(appointment.start)
 		let formattedDate = date.toFormat("DDDD")
@@ -821,7 +812,9 @@ export class DataService {
 			})
 		}
 	}
+	*/
 
+	/*
 	RemoveAppointmentFromAppointmentsPage(appointment: Appointment) {
 		let i = 0
 
@@ -867,6 +860,7 @@ export class DataService {
 			i++
 		}
 	}
+	*/
 	//#endregion
 
 	//#region CalendarPage
@@ -995,10 +989,4 @@ export interface TodoDay {
 	timestamp: number
 	todos: Todo[]
 	todoLists: TodoList[]
-}
-
-export interface AppointmentDay {
-	formattedDate: string
-	calendarDayPageLink: string
-	appointments: Appointment[]
 }
