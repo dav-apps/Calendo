@@ -8,9 +8,7 @@
 	{{ appointment.name }}
 
 	<span class="compact-time-span">
-		@if (appointment.allday) {
-			Gesamter Tag
-		} @else {
+		@if (!appointment.allday) {
 		{{ timeSpan }}
 		}
 	</span>

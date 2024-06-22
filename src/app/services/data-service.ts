@@ -172,8 +172,8 @@ export class DataService {
 
 	SortAppointmentsArray(appointments: Appointment[]) {
 		appointments.sort((a: Appointment, b: Appointment) => {
-			if (a.allday) return 1
-			if (b.allday) return -1
+			if (a.allday) return -1
+			if (b.allday) return 1
 
 			if (a.start < b.start) {
 				return -1
