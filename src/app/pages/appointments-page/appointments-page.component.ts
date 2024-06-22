@@ -56,7 +56,9 @@ export class AppointmentsPageComponent {
 		public snackBar: MatSnackBar
 	) {}
 
-	ngOnInit() {
+	async ngOnInit() {
+		await this.dataService.appointmentsPromiseHolder.AwaitResult()
+
 		for (let appointment of this.dataService.allAppointments) {
 			this.addAppointmentDay(appointment)
 		}

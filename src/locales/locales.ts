@@ -84,7 +84,7 @@ const enDefaults = {
 	},
 	appointmentsPage: {
 		title: "Appointments",
-		oldAppointments: "Old appointments"
+		oldAppointments: "Past appointments"
 	},
 	calendarPage: {
 		todo: "Todo",
@@ -292,7 +292,7 @@ const deDefaults = {
 	},
 	appointmentsPage: {
 		title: "Termine",
-		oldAppointments: "Alte Termine"
+		oldAppointments: "Vergangene Termine"
 	},
 	calendarPage: {
 		todo: "Todo",

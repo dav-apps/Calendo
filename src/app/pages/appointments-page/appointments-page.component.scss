@@ -23,7 +23,8 @@ dav-header {
 .appointment-day {
 	display: flex;
 	flex-direction: column;
-	width: 310px;
+	width: 80%;
+	max-width: 280px;
 }
 
 .appointment-day-items {
@@ -35,6 +36,7 @@ dav-header {
 	display: flex;
 	gap: 12px;
 	align-items: center;
+	margin-bottom: 8px;
 
 	h4 {
 		font-size: 22px;

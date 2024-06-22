@@ -1,22 +1,25 @@
 <div
 	class="item-container"
+	[class.compact]="compact"
 	[style.backgroundColor]="backgroundColor"
 	[style.color]="textColor"
 >
 	@if (compact) {
-	<span>
-		@if (!appointment.allday) {
-		<span>{{ getStartTime() }}</span>
-		}
+	{{ appointment.name }}
 
-		{{ appointment.name }}
+	<span class="compact-time-span">
+		@if (appointment.allday) {
+			Gesamter Tag
+		} @else {
+		{{ timeSpan }}
+		}
 	</span>
 	} @else {
 	<span>
 		{{ appointment.name }}<br />
 
 		@if (!appointment.allday) {
-		<span>{{ getTimeSpan() }}</span>
+		<span>{{ timeSpan }}</span>
 		}
 	</span>
 	}

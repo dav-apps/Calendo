@@ -28,6 +28,7 @@ export class SmallAppointmentItemComponent {
 	@Output() delete = new EventEmitter()
 	backgroundColor: string = environment.appointmentDefaultColor
 	textColor: string = environment.appointmentDefaultColor
+	timeSpan: string = ""
 
 	constructor(private dataService: DataService) {}
 
@@ -37,6 +38,8 @@ export class SmallAppointmentItemComponent {
 			this.backgroundColor = hexFromArgb(palette.tone(90))
 			this.textColor = hexFromArgb(palette.tone(10))
 		}
+
+		this.timeSpan = this.getTimeSpan()
 	}
 
 	getTimeSpan() {
@@ -44,12 +47,6 @@ export class SmallAppointmentItemComponent {
 			"H:mm"
 		)} - ${DateTime.fromSeconds(this.appointment.end).toFormat("H:mm")}`
 	}
-
-	getStartTime() {
-		return DateTime.fromSeconds(this.appointment.start).toFormat("H:mm")
-	}
-
-	Edit() {}
 
 	Update(appointment: Appointment) {
 		this.dataService.UpdateAppointment(appointment)

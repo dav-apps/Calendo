@@ -7,3 +7,12 @@
 	padding: 3px 8px;
 	cursor: pointer;
 }
+
+.item-container.compact {
+	width: 100%;
+	justify-content: space-between;
+}
+
+.compact-time-span {
+	text-align: end;
+}
