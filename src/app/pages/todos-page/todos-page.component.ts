@@ -50,53 +50,53 @@ export class TodosPageComponent {
 	addTodo(todo: Todo) {
 		if (todo.list != null) return
 
-		if (this.dataService.sortTodosByDate) {
-			if (todo.time != 0) {
-				let date = DateTime.fromSeconds(todo.time)
-				let formattedDate = date.toFormat("DDDD")
+		// Sort by date
+		if (todo.time != 0) {
+			let date = DateTime.fromSeconds(todo.time)
+			let formattedDate = date.toFormat("DDDD")
 
-				// Check if the date already exists in the todoDays array
-				let todoDay = this.todoDays.find(
-					obj => obj.formattedDate == formattedDate
-				)
+			// Check if the date already exists in the todoDays array
+			let todoDay = this.todoDays.find(
+				obj => obj.formattedDate == formattedDate
+			)
 
-				if (todoDay != null) {
-					// Add the todo to the array of the todoDay
-					todoDay.todos.push(todo)
+			if (todoDay != null) {
+				// Add the todo to the array of the todoDay
+				todoDay.todos.push(todo)
+			} else {
+				// Add a new day to the array
+				this.todoDays.push({
+					date,
+					formattedDate,
+					todos: [todo],
+					todoLists: []
+				})
+			}
+
+			// Sort the todoDays array
+			this.dataService.SortTodoDays(this.todoDays)
+		} else {
+			this.todosWithoutDate.push(todo)
+		}
+
+		// Sort by group
+		if (todo.groups.length == 0) {
+			this.todosWithoutGroup.push(todo)
+		} else {
+			for (let groupName of todo.groups) {
+				// Check if the todoGroup already exists
+				let i = this.todoGroups.findIndex(g => g.name == groupName)
+
+				if (i != -1) {
+					// Add the todo to the todoGroup
+					this.todoGroups[i].todos.push(todo)
 				} else {
-					// Add a new day to the array
-					this.todoDays.push({
-						date,
-						formattedDate,
+					// Create the todoGroup
+					this.todoGroups.push({
+						name: groupName,
 						todos: [todo],
 						todoLists: []
 					})
-				}
-
-				this.dataService.SortTodoDays(this.todoDays)
-			} else {
-				this.todosWithoutDate.push(todo)
-			}
-		} else {
-			// Sort by group
-			if (todo.groups.length == 0) {
-				this.todosWithoutGroup.push(todo)
-			} else {
-				for (let groupName of todo.groups) {
-					// Check if the todoGroup already exists
-					let i = this.todoGroups.findIndex(g => g.name == groupName)
-
-					if (i != -1) {
-						// Add the todo to the todoGroup
-						this.todoGroups[i].todos.push(todo)
-					} else {
-						// Create the todoGroup
-						this.todoGroups.push({
-							name: groupName,
-							todos: [todo],
-							todoLists: []
-						})
-					}
 				}
 			}
 		}
@@ -105,53 +105,52 @@ export class TodosPageComponent {
 	addTodoList(todoList: TodoList) {
 		if (todoList.list != null) return
 
-		if (this.dataService.sortTodosByDate) {
-			if (todoList.time != 0) {
-				let date = DateTime.fromSeconds(todoList.time)
-				let formattedDate = date.toFormat("DDDD")
+		// Sort by date
+		if (todoList.time != 0) {
+			let date = DateTime.fromSeconds(todoList.time)
+			let formattedDate = date.toFormat("DDDD")
 
-				// Check if the date already exists in the todoDays array
-				let todoDay = this.todoDays.find(
-					obj => obj.formattedDate == formattedDate
-				)
+			// Check if the date already exists in the todoDays array
+			let todoDay = this.todoDays.find(
+				obj => obj.formattedDate == formattedDate
+			)
 
-				if (todoDay != null) {
-					// Add the todoList to the array of the todoDay
-					todoDay.todoLists.push(todoList)
-				} else {
-					this.todoDays.push({
-						date,
-						formattedDate,
-						todos: [],
-						todoLists: []
-					})
-				}
+			if (todoDay != null) {
+				// Add the todoList to the array of the todoDay
+				todoDay.todoLists.push(todoList)
 			} else {
-				this.todoListsWithoutDate.push(todoList)
+				this.todoDays.push({
+					date,
+					formattedDate,
+					todos: [],
+					todoLists: []
+				})
 			}
 
 			// Sort the todoDays array
 			this.dataService.SortTodoDays(this.todoDays)
 		} else {
-			// Sort by group
-			if (todoList.groups.length == 0) {
-				this.todoListsWithoutGroup.push(todoList)
-			} else {
-				for (let groupName of todoList.groups) {
-					// Check if the todoGroup already exists
-					let i = this.todoGroups.findIndex(g => g.name == groupName)
+			this.todoListsWithoutDate.push(todoList)
+		}
 
-					if (i != -1) {
-						// Add the todoList to the todoGroup
-						this.todoGroups[i].todoLists.push(todoList)
-					} else {
-						// Create the todoGroup
-						this.todoGroups.push({
-							name: groupName,
-							todos: [],
-							todoLists: [todoList]
-						})
-					}
+		// Sort by group
+		if (todoList.groups.length == 0) {
+			this.todoListsWithoutGroup.push(todoList)
+		} else {
+			for (let groupName of todoList.groups) {
+				// Check if the todoGroup already exists
+				let i = this.todoGroups.findIndex(g => g.name == groupName)
+
+				if (i != -1) {
+					// Add the todoList to the todoGroup
+					this.todoGroups[i].todoLists.push(todoList)
+				} else {
+					// Create the todoGroup
+					this.todoGroups.push({
+						name: groupName,
+						todos: [],
+						todoLists: [todoList]
+					})
 				}
 			}
 		}
@@ -219,10 +218,12 @@ export class TodosPageComponent {
 
 	// This is called when a todo list in the Sort By Groups mode was updated; Update all todo lists of the same object
 	TodoListUpdated(todoListUuid: string, todoGroup: string) {
+		/*
 		this.dataService.UpdateTodoListsOnSortByGroupTodoPage(
 			todoListUuid,
 			todoGroup
 		)
+		*/
 	}
 
 	ShowCalendarDay(date: number) {

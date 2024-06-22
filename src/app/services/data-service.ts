@@ -30,20 +30,6 @@ export class DataService {
 	startDaysTodoLists: TodoList[][] = [] // Contains the todo lists for the individual days
 	//#endregion
 
-	//#region TodosPage
-	todosWithoutDate: TodoDay = {
-		date: DateTime.now(),
-		formattedDate: "",
-		todos: [],
-		todoLists: []
-	}
-	todoDays: TodoDay[] = []
-
-	todosWithoutGroup: Todo[] = []
-	todoListsWithoutGroup: TodoList[] = []
-	todoGroups: { name: string; todos: Todo[]; todoLists: TodoList[] }[] = []
-	//#endregion
-
 	//#region All pages
 	sortTodosByDate: boolean = true
 	isMobile: boolean = false
@@ -93,12 +79,6 @@ export class DataService {
 		if (this.isLoadingAllTodos) return
 		this.isLoadingAllTodos = true
 
-		this.todosWithoutDate.todos = []
-		this.todosWithoutDate.todoLists = []
-		this.todoDays = []
-		this.todosWithoutGroup = []
-		this.todoListsWithoutGroup = []
-		this.todoGroups = []
 		this.allTodos = []
 		this.allTodoLists = []
 
@@ -725,6 +705,7 @@ export class DataService {
 	*/
 
 	// This is called from TodosPage in SortByGroups when a todo list is updated, to update all of the same todo list on the page
+	/*
 	async UpdateTodoListsOnSortByGroupTodoPage(
 		uuid: string,
 		todoGroupName: string
@@ -744,6 +725,7 @@ export class DataService {
 			}
 		}
 	}
+	*/
 	//#endregion
 
 	//#region AppointmentsPage
