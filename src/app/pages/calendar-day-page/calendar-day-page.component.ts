@@ -14,7 +14,6 @@ import { LocalizationService } from "src/app/services/localization-service"
 import { Appointment } from "src/app/models/Appointment"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
-import { MatSnackBar } from "@angular/material/snack-bar"
 import { Location } from "@angular/common"
 
 @Component({
@@ -24,7 +23,6 @@ import { Location } from "@angular/common"
 export class CalendarDayPageComponent {
 	locale = this.localizationService.locale.calendarDayPage
 	actionsLocale = this.localizationService.locale.actions
-	snackbarLocale = this.localizationService.locale.snackbar
 	faEditLight = faEditLight
 	faTrashLight = faTrashLight
 	title: string = ""
@@ -68,8 +66,7 @@ export class CalendarDayPageComponent {
 		private localizationService: LocalizationService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		private location: Location,
-		private snackBar: MatSnackBar
+		private location: Location
 	) {}
 
 	async ngOnInit() {
@@ -145,33 +142,6 @@ export class CalendarDayPageComponent {
 		await this.selectedAppointment.Delete()
 		this.selectedAppointment = null
 	}
-
-	/*
-	CreateAppointment(appointment: Appointment) {
-		this.dataService.AddAppointment(appointment)
-
-		// Show snackbar if the appointment was created for another day
-		if (
-			this.date.toUnixInteger() !=
-			DateTime.fromSeconds(appointment.start).startOf("day").toUnixInteger()
-		) {
-			// Another day
-			this.snackBar
-				.open(
-					this.snackbarLocale.appointmentCreated,
-					this.snackbarLocale.show,
-					{ duration: 3000 }
-				)
-				.onAction()
-				.subscribe(() => {
-					// Show the day of the appointment
-					this.router.navigate(["calendar/day", appointment.start])
-				})
-
-			this.dataService.AdaptSnackbarPosition()
-		}
-	}
-	*/
 
 	async createAppointment(event: {
 		name: string
@@ -256,27 +226,6 @@ export class CalendarDayPageComponent {
 
 	CreateTodo(todo: Todo) {
 		this.dataService.AddTodo(todo)
-
-		// Show snackbar if the todo was created for another day
-		if (todo.time == 0) {
-			// Show snackbar without action
-			this.snackBar.open(this.snackbarLocale.todoCreated, null, {
-				duration: 3000
-			})
-		} else if (this.date.toUnixInteger() != todo.time) {
-			// Another day
-			this.snackBar
-				.open(this.snackbarLocale.todoCreated, this.snackbarLocale.show, {
-					duration: 3000
-				})
-				.onAction()
-				.subscribe(() => {
-					// Show the day of the todo
-					this.router.navigate(["calendar/day", todo.time])
-				})
-		}
-
-		this.dataService.AdaptSnackbarPosition()
 	}
 
 	DeleteTodo(todo: Todo) {
@@ -285,19 +234,6 @@ export class CalendarDayPageComponent {
 
 	CreateTodoList(todoList: TodoList) {
 		this.dataService.AddTodoList(todoList)
-
-		// Show snackbar
-		this.snackBar
-			.open(this.snackbarLocale.todoListCreated, this.snackbarLocale.show, {
-				duration: 3000
-			})
-			.onAction()
-			.subscribe(() => {
-				// Show the todo list
-				this.router.navigate(["todolist", todoList.uuid])
-			})
-
-		this.dataService.AdaptSnackbarPosition()
 	}
 
 	GoBack() {

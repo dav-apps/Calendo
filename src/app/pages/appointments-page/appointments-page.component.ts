@@ -12,7 +12,6 @@ import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appoint
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { Appointment } from "src/app/models/Appointment"
-import { MatSnackBar } from "@angular/material/snack-bar"
 import { AppointmentDay } from "src/app/types"
 
 @Component({
@@ -22,7 +21,6 @@ import { AppointmentDay } from "src/app/types"
 export class AppointmentsPageComponent {
 	locale = this.localizationService.locale.appointmentsPage
 	actionsLocale = this.localizationService.locale.actions
-	snackbarLocale = this.localizationService.locale.snackbar
 	faEditLight = faEditLight
 	faTrashLight = faTrashLight
 	faArrowRightLight = faArrowRightLight
@@ -52,8 +50,7 @@ export class AppointmentsPageComponent {
 	constructor(
 		public dataService: DataService,
 		private localizationService: LocalizationService,
-		public router: Router,
-		public snackBar: MatSnackBar
+		public router: Router
 	) {}
 
 	async ngOnInit() {
@@ -178,27 +175,6 @@ export class AppointmentsPageComponent {
 		await this.selectedAppointment.Delete()
 		this.selectedAppointment = null
 	}
-
-	/*
-	CreateAppointment(appointment: Appointment) {
-		this.dataService.AddAppointment(appointment)
-
-		// Show snackbar
-		this.snackBar
-			.open(
-				this.snackbarLocale.appointmentCreated,
-				this.snackbarLocale.show,
-				{ duration: 3000 }
-			)
-			.onAction()
-			.subscribe(() => {
-				// Show the day of the appointment
-				this.router.navigate(["calendar/day", appointment.start])
-			})
-
-		this.dataService.AdaptSnackbarPosition()
-	}
-	*/
 
 	appointmentDayMoreButtonClick(
 		event: MouseEvent,

@@ -145,12 +145,6 @@ const enDefaults = {
 			title: "Don't forget..."
 		}
 	},
-	snackbar: {
-		todoCreated: "Todo was created",
-		todoListCreated: "Todo list was created",
-		appointmentCreated: "Appointment was created",
-		show: "Show"
-	},
 	dialogs: {
 		appointmentDialog: {
 			createHeadline: "Create appointment",
@@ -344,12 +338,6 @@ const deDefaults = {
 		todo: {
 			title: "Nicht vergessen..."
 		}
-	},
-	snackbar: {
-		todoCreated: "Todo wurde erstellt",
-		todoListCreated: "Todo-Liste wurde erstellt",
-		appointmentCreated: "Termin wurde erstellt",
-		show: "Anzeigen"
 	},
 	dialogs: {
 		appointmentDialog: {

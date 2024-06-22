@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
-import { Router } from "@angular/router"
 import { Settings, DateTime } from "luxon"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import {
@@ -15,7 +14,6 @@ import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appoint
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { Appointment } from "src/app/models/Appointment"
-import { MatSnackBar } from "@angular/material/snack-bar"
 
 @Component({
 	templateUrl: "./overview-page.component.html",
@@ -24,7 +22,6 @@ import { MatSnackBar } from "@angular/material/snack-bar"
 export class OverviewPageComponent {
 	locale = this.localizationService.locale.overviewPage
 	actionsLocale = this.localizationService.locale.actions
-	snackbarLocale = this.localizationService.locale.snackbar
 	faPlus = faPlus
 	faEditLight = faEditLight
 	faTrashLight = faTrashLight
@@ -66,9 +63,7 @@ export class OverviewPageComponent {
 
 	constructor(
 		public dataService: DataService,
-		private localizationService: LocalizationService,
-		private router: Router,
-		private snackBar: MatSnackBar
+		private localizationService: LocalizationService
 	) {
 		Settings.defaultLocale = navigator.language
 
@@ -142,10 +137,6 @@ export class OverviewPageComponent {
 		this.selectedAppointment = null
 	}
 
-	ShowCalendarDay(date: number) {
-		this.router.navigate(["/calendar/day", date])
-	}
-
 	GetLargeDate(date: number): string {
 		let dateTime = DateTime.fromSeconds(date)
 		let formatting = dateTime.diffNow("days").days > 6 ? "D" : "EEEE"
@@ -171,52 +162,6 @@ export class OverviewPageComponent {
 		this.dataService.AddTodo(todo)
 		this.createTodoDialog.hide()
 	}
-
-	/*
-	CreateTodo(todo: Todo) {
-		this.dataService.AddTodo(todo)
-
-		// Show snackbar
-		if (todo.time == 0) {
-			this.snackBar.open(this.snackbarLocale.todoCreated, null, {
-				duration: 3000
-			})
-		} else {
-			this.snackBar
-				.open(this.snackbarLocale.todoCreated, this.snackbarLocale.show, {
-					duration: 3000
-				})
-				.onAction()
-				.subscribe(() => {
-					// Show the day of the todo
-					this.router.navigate(["calendar/day", todo.time])
-				})
-		}
-
-		this.dataService.AdaptSnackbarPosition()
-	}
-	*/
-
-	/*
-	CreateAppointment(appointment: Appointment) {
-		this.dataService.AddAppointment(appointment)
-
-		// Show snackbar
-		this.snackBar
-			.open(
-				this.snackbarLocale.appointmentCreated,
-				this.snackbarLocale.show,
-				{ duration: 3000 }
-			)
-			.onAction()
-			.subscribe(() => {
-				// Show the day of the appointment
-				this.router.navigate(["calendar/day", appointment.start])
-			})
-
-		this.dataService.AdaptSnackbarPosition()
-	}
-	*/
 
 	async createAppointment(event: {
 		name: string
@@ -301,18 +246,5 @@ export class OverviewPageComponent {
 
 	CreateTodoList(todoList: TodoList) {
 		this.dataService.AddTodoList(todoList)
-
-		// Show snackbar
-		this.snackBar
-			.open(this.snackbarLocale.todoListCreated, this.snackbarLocale.show, {
-				duration: 3000
-			})
-			.onAction()
-			.subscribe(() => {
-				// Show the todo list
-				this.router.navigate(["todolist", todoList.uuid])
-			})
-
-		this.dataService.AdaptSnackbarPosition()
 	}
 }

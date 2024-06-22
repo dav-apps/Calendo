@@ -73,17 +73,12 @@
 				*ngIf="i > 0"
 			>
 				<div class="col-3">
-					<h4
-						class="cursor"
-						[style.font-size.px]="largeDateFontSize"
-						(click)="ShowCalendarDay(dataService.startDaysDates[i])"
-					>
+					<h4 class="cursor" [style.font-size.px]="largeDateFontSize">
 						{{ GetLargeDate(date) }}
 					</h4>
 					<p
 						class="font-weight-light cursor"
 						[style.font-size.px]="smallDateFontSize"
-						(click)="ShowCalendarDay(dataService.startDaysDates[i])"
 					>
 						{{ GetSmallDate(date) }}
 					</p>

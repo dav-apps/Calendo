@@ -7,7 +7,6 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome"
 import { ServiceWorkerModule } from "@angular/service-worker"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { MatButtonModule } from "@angular/material/button"
-import { MatSnackBarModule } from "@angular/material/snack-bar"
 import { MatTreeModule } from "@angular/material/tree"
 import { DragulaModule } from "ng2-dragula"
 import { Environment } from "dav-js"
@@ -110,7 +109,6 @@ import { SettingsService } from "./services/settings-service"
 		}),
 		BrowserAnimationsModule,
 		MatButtonModule,
-		MatSnackBarModule,
 		MatTreeModule,
 		DragulaModule.forRoot()
 	],
