@@ -14,3 +14,29 @@ dav-header {
 	align-items: center;
 	gap: 32px;
 }
+
+.todo-day {
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	max-width: 300px;
+}
+
+.todo-day-items {
+	display: inline-flex;
+	flex-direction: column;
+}
+
+.todo-day-header-container {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	margin-bottom: 8px;
+
+	h4 {
+		font-size: 22px;
+		font-weight: 400;
+		color: var(--dav-color-on-surface);
+		margin: 0;
+	}
+}

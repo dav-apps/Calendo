@@ -38,6 +38,7 @@ export interface AppointmentDay {
 export interface TodoDay {
 	date: DateTime
 	formattedDate: string
+	calendarDayPageLink: string
 	todos: Todo[]
 	todoLists: TodoList[]
 }

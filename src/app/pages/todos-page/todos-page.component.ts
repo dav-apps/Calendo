@@ -1,5 +1,7 @@
 import { Component, ViewChild } from "@angular/core"
+import { Router } from "@angular/router"
 import { DateTime } from "luxon"
+import { faArrowRight as faArrowRightLight } from "@fortawesome/pro-light-svg-icons"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 import { CreateTodoDialogComponent } from "src/app/dialogs/create-todo-dialog/create-todo-dialog.component"
@@ -13,6 +15,7 @@ import { TodoDay, TodoGroup } from "src/app/types"
 })
 export class TodosPageComponent {
 	locale = this.localizationService.locale.todosPage
+	faArrowRightLight = faArrowRightLight
 	todosWithoutDate: Todo[] = []
 	todoListsWithoutDate: TodoList[] = []
 	todoDays: TodoDay[] = []
@@ -27,7 +30,8 @@ export class TodosPageComponent {
 
 	constructor(
 		public dataService: DataService,
-		private localizationService: LocalizationService
+		private localizationService: LocalizationService,
+		private router: Router
 	) {}
 
 	async ngOnInit() {
@@ -63,6 +67,7 @@ export class TodosPageComponent {
 				this.todoDays.push({
 					date,
 					formattedDate,
+					calendarDayPageLink: `calendar/${date.year}/${date.month}/${date.day}`,
 					todos: [todo],
 					todoLists: []
 				})
@@ -117,6 +122,7 @@ export class TodosPageComponent {
 				this.todoDays.push({
 					date,
 					formattedDate,
+					calendarDayPageLink: `calendar/${date.year}/${date.month}/${date.day}`,
 					todos: [],
 					todoLists: []
 				})
@@ -175,5 +181,11 @@ export class TodosPageComponent {
 			todoGroup
 		)
 		*/
+	}
+
+	todoDayMoreButtonClick(event: MouseEvent, todoDay: TodoDay) {
+		event.preventDefault()
+		this.dataService.contentContainer.scrollTo(0, 0)
+		this.router.navigate([todoDay.calendarDayPageLink])
 	}
 }
