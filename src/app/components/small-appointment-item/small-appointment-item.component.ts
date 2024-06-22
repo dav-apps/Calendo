@@ -7,7 +7,6 @@ import {
 } from "@material/material-color-utilities"
 import { Appointment } from "src/app/models/Appointment"
 import { DataService } from "src/app/services/data-service"
-import { LocalizationService } from "src/app/services/localization-service"
 import { environment } from "src/environments/environment"
 
 @Component({
@@ -16,7 +15,6 @@ import { environment } from "src/environments/environment"
 	styleUrl: "./small-appointment-item.component.scss"
 })
 export class SmallAppointmentItemComponent {
-	locale = this.localizationService.locale.smallAppointmentItem
 	@Input() appointment: Appointment = new Appointment(
 		"",
 		"",
@@ -31,10 +29,7 @@ export class SmallAppointmentItemComponent {
 	backgroundColor: string = environment.appointmentDefaultColor
 	textColor: string = environment.appointmentDefaultColor
 
-	constructor(
-		private dataService: DataService,
-		private localizationService: LocalizationService
-	) {}
+	constructor(private dataService: DataService) {}
 
 	ngOnInit() {
 		if (this.appointment.color != null) {

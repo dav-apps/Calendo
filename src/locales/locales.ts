@@ -50,10 +50,6 @@ const enDefaults = {
 		edit: "Edit",
 		delete: "Delete"
 	},
-	smallAppointmentItem: {
-		edit: "Edit",
-		delete: "Delete"
-	},
 	appointmentModal: {
 		newAppointment: "New Appointment",
 		editAppointment: "Edit Appointment",
@@ -259,10 +255,6 @@ const deDefaults = {
 		cancel: "Abbrechen"
 	},
 	appointmentItem: {
-		edit: "Bearbeiten",
-		delete: "Löschen"
-	},
-	smallAppointmentItem: {
 		edit: "Bearbeiten",
 		delete: "Löschen"
 	},

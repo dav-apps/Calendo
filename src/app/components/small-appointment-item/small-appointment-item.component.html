@@ -1,37 +1,3 @@
-<!--
-<div *ngIf="enableDropdown" ngbDropdown placement="bottom-left">
-	<div
-		class="px-1 rounded cursor"
-		style="font-size: 15px; color: white; user-select: none"
-		[style.background-color]="
-			appointment.color ? '#' + appointment.color : defaultColor
-		"
-		ngbDropdownToggle
-	>
-		<p *ngIf="!compact">
-			{{ appointment.name }}<br />
-			<span *ngIf="!appointment.allday">{{ getTimeSpan() }}</span>
-		</p>
-		<p *ngIf="compact">
-			<span *ngIf="!appointment.allday">{{ getStartTime() }}</span>
-			{{ appointment.name }}
-		</p>
-	</div>
-
-	<div
-		ngbDropdownMenu
-		class="ms-depth-4 ms-motion-slideDownIn"
-	>
-		<button class="cursor" (click)="Edit()">
-			{{ locale.edit }}
-		</button>
-		<button class="cursor" (click)="delete.emit()">
-			{{ locale.delete }}
-		</button>
-	</div>
-</div>
--->
-
 <div
 	class="item-container"
 	[style.backgroundColor]="backgroundColor"
