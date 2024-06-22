@@ -5,10 +5,9 @@ import { Appointment, GetAllAppointments } from "../models/Appointment"
 import { TodoList, GetAllTodoLists, GetTodoList } from "../models/TodoList"
 import { Dav, PromiseHolder } from "dav-js"
 import * as DavUIComponents from "dav-ui-components"
-import { LocalizationService } from "./localization-service"
 import { SettingsService } from "./settings-service"
 import { convertStringToTheme } from "src/app/utils"
-import { Theme } from "src/app/types"
+import { Theme, TodoDay } from "src/app/types"
 import { themeKey, lightThemeKey, darkThemeKey } from "src/app/constants"
 
 @Injectable()
@@ -33,8 +32,8 @@ export class DataService {
 
 	//#region TodosPage
 	todosWithoutDate: TodoDay = {
-		date: "",
-		timestamp: 0,
+		date: DateTime.now(),
+		formattedDate: "",
 		todos: [],
 		todoLists: []
 	}
@@ -55,10 +54,7 @@ export class DataService {
 	updatedTodoLists: string[] = []
 	//#endregion
 
-	constructor(
-		private localizationService: LocalizationService,
-		private settingsService: SettingsService
-	) {
+	constructor(private settingsService: SettingsService) {
 		this.InitStartDays()
 		this.LoadAllAppointments()
 		this.LoadAllTodos()
@@ -87,8 +83,6 @@ export class DataService {
 
 		for (let appointment of appointments) {
 			this.allAppointments.push(appointment)
-
-			this.AddAppointmentToStartPage(appointment)
 		}
 
 		this.isLoadingAllAppointments = false
@@ -111,16 +105,14 @@ export class DataService {
 		// Load todos
 		var todos = await GetAllTodos()
 		for (let todo of todos) {
-			this.AddTodoToStartPage(todo)
-			this.AddTodoToTodosPage(todo)
+			this.allTodos.push(todo)
 		}
 
 		// Load todo lists
 		let todoLists = await GetAllTodoLists()
 
 		for (let todoList of todoLists) {
-			this.AddTodoListToStartPage(todoList)
-			this.AddTodoListToTodosPage(todoList)
+			this.allTodoLists.push(todoList)
 		}
 
 		this.isLoadingAllTodos = false
@@ -129,7 +121,6 @@ export class DataService {
 
 	AddTodoList(todoList: TodoList) {
 		this.AddTodoListToStartPage(todoList)
-		this.AddTodoListToTodosPage(todoList)
 	}
 
 	UpdateTodoList(todoList: TodoList) {
@@ -139,12 +130,10 @@ export class DataService {
 
 	RemoveTodoList(todoList: TodoList) {
 		this.RemoveTodoListFromStartPage(todoList)
-		this.RemoveTodoListFromTodosPage(todoList)
 	}
 
 	AddTodo(todo: Todo) {
 		this.AddTodoToStartPage(todo)
-		this.AddTodoToTodosPage(todo)
 	}
 
 	UpdateTodo(todo: Todo) {
@@ -154,7 +143,6 @@ export class DataService {
 
 	RemoveTodo(todo: Todo) {
 		this.RemoveTodoFromStartPage(todo)
-		this.RemoveTodoFromTodosPage(todo)
 	}
 
 	AddAppointment(appointment: Appointment) {
@@ -238,18 +226,16 @@ export class DataService {
 		}
 	}
 
-	SortTodoDays() {
-		this.todoDays.sort(
-			(a: { timestamp: number }, b: { timestamp: number }) => {
-				if (a.timestamp < b.timestamp) {
-					return -1
-				} else if (a.timestamp > b.timestamp) {
-					return 1
-				} else {
-					return 0
-				}
+	SortTodoDays(todoDays: TodoDay[]) {
+		todoDays.sort((a: TodoDay, b: TodoDay) => {
+			if (a.date < b.date) {
+				return -1
+			} else if (a.date > b.date) {
+				return 1
+			} else {
+				return 0
 			}
-		)
+		})
 	}
 
 	async loadTheme(theme?: Theme) {
@@ -494,21 +480,18 @@ export class DataService {
 	//#endregion
 
 	//#region TodosPage
+	/*
 	AddTodoToTodosPage(todo: Todo) {
 		if (todo.list) return
 
 		if (this.sortTodosByDate) {
 			if (todo.time != 0) {
-				var date: string = DateTime.fromSeconds(todo.time).toFormat(
-					this.localizationService.locale.todosPage.formats.date
-				)
-				var timestampOfDate = DateTime.fromSeconds(todo.time)
-					.startOf("day")
-					.toUnixInteger()
+				let date = DateTime.fromSeconds(todo.time)
+				let formattedDate: string = date.toFormat("DDDD")
 
 				// Check if the date already exists in the todoDays array
 				var todoDay = this.todoDays.find(
-					obj => obj.timestamp == timestampOfDate
+					obj => obj.formattedDate == formattedDate
 				)
 
 				if (todoDay) {
@@ -516,21 +499,19 @@ export class DataService {
 					todoDay.todos.push(todo)
 				} else {
 					// Add a new day to the array
-					var newTodoDay = {
+					this.todoDays.push({
 						date,
-						timestamp: timestampOfDate,
+						formattedDate,
 						todos: [todo],
 						todoLists: []
-					}
-
-					this.todoDays.push(newTodoDay)
+					})
 				}
 			} else {
 				this.todosWithoutDate.todos.push(todo)
 			}
 
 			// Sort the todoDays array
-			this.SortTodoDays()
+			this.SortTodoDays(this.todoDays)
 		} else {
 			// Sort by group
 			if (todo.groups.length == 0) {
@@ -563,7 +544,9 @@ export class DataService {
 			}
 		}
 	}
+	*/
 
+	/*
 	RemoveTodoFromTodosPage(todo: Todo) {
 		// Remove the todo from the todoDays
 		let index = this.todosWithoutDate.todos.findIndex(
@@ -616,22 +599,20 @@ export class DataService {
 			})
 		}
 	}
+	*/
 
+	/*
 	AddTodoListToTodosPage(todoList: TodoList) {
 		if (todoList.list) return
 
 		if (this.sortTodosByDate) {
 			if (todoList.time != 0) {
-				let date: string = DateTime.fromSeconds(todoList.time).toFormat(
-					this.localizationService.locale.todosPage.formats.date
-				)
-				let timestampOfDate = DateTime.fromSeconds(todoList.time)
-					.startOf("day")
-					.toUnixInteger()
+				let date = DateTime.fromSeconds(todoList.time)
+				let formattedDate = date.toFormat("DDDD")
 
 				// Check if the date already exists in the todoDays array
 				let todoDay = this.todoDays.find(
-					obj => obj.timestamp == timestampOfDate
+					obj => obj.formattedDate == formattedDate
 				)
 
 				if (todoDay) {
@@ -641,7 +622,7 @@ export class DataService {
 					// Add a new day to the array
 					let newTodoDay = {
 						date,
-						timestamp: timestampOfDate,
+						formattedDate,
 						todos: [],
 						todoLists: [todoList]
 					}
@@ -653,7 +634,7 @@ export class DataService {
 			}
 
 			// Sort the todoDays array
-			this.SortTodoDays()
+			this.SortTodoDays(this.todoDays)
 		} else {
 			// Sort by group
 			if (todoList.groups.length == 0) {
@@ -686,7 +667,9 @@ export class DataService {
 			}
 		}
 	}
+	*/
 
+	/*
 	RemoveTodoListFromTodosPage(todoList: TodoList) {
 		// Remove the todolist from the todoDays
 		let index = this.todosWithoutDate.todoLists.findIndex(
@@ -739,6 +722,7 @@ export class DataService {
 			})
 		}
 	}
+	*/
 
 	// This is called from TodosPage in SortByGroups when a todo list is updated, to update all of the same todo list on the page
 	async UpdateTodoListsOnSortByGroupTodoPage(
@@ -982,11 +966,4 @@ export class DataService {
 		}
 	}
 	//#endregion
-}
-
-export interface TodoDay {
-	date: string
-	timestamp: number
-	todos: Todo[]
-	todoLists: TodoList[]
 }

@@ -60,7 +60,7 @@ export class AppointmentsPageComponent {
 		await this.dataService.appointmentsPromiseHolder.AwaitResult()
 
 		for (let appointment of this.dataService.allAppointments) {
-			this.addAppointmentDay(appointment)
+			this.addAppointment(appointment)
 		}
 	}
 
@@ -84,7 +84,7 @@ export class AppointmentsPageComponent {
 		this.contextMenuVisible = true
 	}
 
-	addAppointmentDay(appointment: Appointment) {
+	addAppointment(appointment: Appointment) {
 		let date = DateTime.fromSeconds(appointment.start)
 		let formattedDate = date.toFormat("DDDD")
 		let isOld = date < DateTime.now()
@@ -199,10 +199,6 @@ export class AppointmentsPageComponent {
 		this.dataService.AdaptSnackbarPosition()
 	}
 	*/
-
-	ShowCalendarDay(date: number) {
-		this.router.navigate(["/calendar/day", date])
-	}
 
 	appointmentDayMoreButtonClick(
 		event: MouseEvent,

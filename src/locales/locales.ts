@@ -77,10 +77,7 @@ const enDefaults = {
 	},
 	todosPage: {
 		title: "Todos",
-		noTodos: "You have no todos",
-		formats: {
-			date: "dddd, MMMM D, YYYY"
-		}
+		noTodos: "You have no todos"
 	},
 	appointmentsPage: {
 		title: "Appointments",
@@ -186,24 +183,18 @@ const enDefaults = {
 export var enUS = enDefaults
 
 export var enGB = enDefaults
-enGB.todosPage.formats.date = "dddd, D MMMM YYYY"
 enGB.appointmentModal.color = "Colour"
 
 export var enNZ = enDefaults
-enNZ.todosPage.formats.date = "dddd, D MMMM YYYY"
 enNZ.appointmentModal.color = "Colour"
 
 export var enIL = enDefaults
-enIL.todosPage.formats.date = "dddd, D MMMM YYYY"
 
 export var enIE = enDefaults
-enIE.todosPage.formats.date = "dddd D MMMM YYYY"
 
 export var enCA = enDefaults
-enCA.todosPage.formats.date = "dddd, MMMM D, YYYY"
 
 export var enAU = enDefaults
-enAU.todosPage.formats.date = "dddd, D MMMM YYYY"
 //#endregion
 
 //#region de
@@ -285,10 +276,7 @@ const deDefaults = {
 	},
 	todosPage: {
 		title: "Todos",
-		noTodos: "Du hast keine Todos",
-		formats: {
-			date: "dddd, D. MMMM YYYY"
-		}
+		noTodos: "Du hast keine Todos"
 	},
 	appointmentsPage: {
 		title: "Termine",

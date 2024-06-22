@@ -1,5 +1,7 @@
 import { DateTime } from "luxon"
 import { Appointment } from "./models/Appointment"
+import { Todo } from "./models/Todo"
+import { TodoList } from "./models/TodoList"
 
 export enum Theme {
 	System,
@@ -31,4 +33,17 @@ export interface AppointmentDay {
 	formattedDate: string
 	calendarDayPageLink: string
 	appointments: Appointment[]
+}
+
+export interface TodoDay {
+	date: DateTime
+	formattedDate: string
+	todos: Todo[]
+	todoLists: TodoList[]
+}
+
+export interface TodoGroup {
+	name: string
+	todos: Todo[]
+	todoLists: TodoList[]
 }
