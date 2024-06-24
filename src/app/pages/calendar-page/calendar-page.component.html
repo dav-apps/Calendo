@@ -59,7 +59,11 @@
 	<div class="mobile-months-container">
 		@for (month of mobileMonths; track month.label) {
 		<div class="month-container">
-			{{ month.label }}
+			<div class="mobile-month-label-container">
+				<p class="mobile-month-label">{{ month.label }}</p>
+				<div class="mobile-month-label-border"></div>
+			</div>
+
 			@for (week of month.weeks; track week.id) {
 			<div class="week-container">
 				@for (day of week.days; track day.id) {
