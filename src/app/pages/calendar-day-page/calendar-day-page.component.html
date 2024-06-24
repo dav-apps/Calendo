@@ -5,41 +5,48 @@
 
 	<div class="content-container">
 		<div class="appointments-container">
-			<dav-header
-				size="sm"
-				[addButtonVisible]="!isDateBeforeToday"
-				(addButtonClick)="createAppointmentDialog.show()"
-			>
-				{{ locale.appointments }}
-			</dav-header>
+			<div class="appointments-header-container">
+				<dav-header
+					size="sm"
+					[addButtonVisible]="!isDateBeforeToday"
+					(addButtonClick)="createAppointmentDialog.show()"
+				>
+					{{ locale.appointments }}
+				</dav-header>
+			</div>
 
 			<div class="appointments-content-container">
 				@if (appointments.length == 0) {
 				<p class="no-items-message">
 					{{ locale.noAppointments }}
 				</p>
-				} @for (appointment of appointments; track appointment.uuid) {
-				<div style="display: inline-flex; align-self: center">
+				}
+
+				<div class="appointment-items">
+					@for (appointment of appointments; track appointment.uuid) {
 					<calendo-small-appointment-item
 						[appointment]="appointment"
+						[compact]="true"
 						(contextmenu)="
 							smallAppointmentItemContextMenu($event, appointment)
 						"
 						(delete)="deleteAppointmentDialog.show()"
 					></calendo-small-appointment-item>
+					}
 				</div>
-				}
 			</div>
 		</div>
 
 		<div class="todos-container">
-			<dav-header
-				size="sm"
-				[addButtonVisible]="!isDateBeforeToday"
-				(addButtonClick)="createTodoDialog.show()"
-			>
-				{{ locale.todos }}
-			</dav-header>
+			<div class="todos-header-container">
+				<dav-header
+					size="sm"
+					[addButtonVisible]="!isDateBeforeToday"
+					(addButtonClick)="createTodoDialog.show()"
+				>
+					{{ locale.todos }}
+				</dav-header>
+			</div>
 
 			<div class="todos-content-container">
 				@if (todos.length == 0 && todoLists.length == 0) {

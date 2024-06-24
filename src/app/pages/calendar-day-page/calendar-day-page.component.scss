@@ -15,11 +15,25 @@
 	gap: 46px;
 }
 
+.appointments-container,
+.todos-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.appointments-header-container,
+.todos-header-container {
+	margin-bottom: 8px;
+}
+
 .appointments-content-container,
 .todos-content-container {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	width: 100%;
+	max-width: 380px;
 }
 
 .no-items-message {
@@ -29,9 +43,32 @@
 	text-align: center;
 }
 
+.appointment-items {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
 @media screen and (min-width: 730px) {
 	.content-container {
 		flex-direction: row;
 		gap: 0;
+	}
+
+	.appointments-container,
+	.todos-container {
+		width: 40%;
+	}
+
+	.appointments-content-container,
+	.todos-content-container {
+		width: 100%;
+	}
+}
+
+@media screen and (min-width: 1020px) {
+	.appointments-container,
+	.todos-container {
+		width: 30%;
 	}
 }
