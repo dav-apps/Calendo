@@ -31,9 +31,14 @@
 .todos-content-container {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	width: 100%;
-	max-width: 380px;
+	max-width: 300px;
+}
+
+.todos-content-container {
+	align-items: start;
+	width: unset;
+	max-width: 100%;
 }
 
 .no-items-message {
@@ -58,11 +63,6 @@
 	.appointments-container,
 	.todos-container {
 		width: 40%;
-	}
-
-	.appointments-content-container,
-	.todos-content-container {
-		width: 100%;
 	}
 }
 

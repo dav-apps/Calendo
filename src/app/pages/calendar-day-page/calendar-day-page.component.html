@@ -54,10 +54,10 @@
 					{{ locale.noTodos }}
 				</p>
 				} @for (todo of todos; track todo.uuid) {
-				<calendo-small-todo-item
+				<calendo-todo-item
 					[todo]="todo"
 					(delete)="DeleteTodo(todo)"
-				></calendo-small-todo-item>
+				></calendo-todo-item>
 				} @for (todoList of todoLists; track todoList.uuid) {
 				<calendo-small-todo-list-item
 					[todoList]="todoList"
