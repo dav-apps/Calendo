@@ -224,8 +224,17 @@ export class CalendarDayPageComponent {
 		this.editAppointmentDialog.hide()
 	}
 
-	CreateTodo(todo: Todo) {
+	async createTodo(event: { name: string; date: DateTime; labels: string[] }) {
+		let todo = await Todo.Create(
+			event.name,
+			false,
+			event.date.toUnixInteger(),
+			event.labels
+		)
+
 		this.dataService.AddTodo(todo)
+		this.todos.push(todo)
+		this.createTodoDialog.hide()
 	}
 
 	DeleteTodo(todo: Todo) {

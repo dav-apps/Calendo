@@ -23,11 +23,11 @@ export class CreateTodoDialogComponent {
 	@Input() loading: boolean = false
 	@Input() nameError: string = ""
 	@Input() date: DateTime = DateTime.now()
+	@Input() saveDate: boolean = false
 	@Output() primaryButtonClick = new EventEmitter()
 	@ViewChild("dialog") dialog: ElementRef<Dialog>
 	visible: boolean = false
 	name: string = ""
-	saveDate: boolean = false
 	label: string = ""
 	labels: string[] = []
 
