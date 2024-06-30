@@ -24,9 +24,9 @@
 	-->
 
 	<div class="todos-list">
-		@if (dataService.sortTodosByDate) {
+		@if (dataService.sortTodosByDate) { @if (todosWithoutDate.length > 0) {
 		<!-- Sort by date -->
-		<div class="">
+		<div>
 			@for (todo of todosWithoutDate; track todo.uuid) {
 			<calendo-todo-item
 				[todo]="todo"
@@ -36,8 +36,7 @@
 			<calendo-todo-list-item [todoList]="todoList"></calendo-todo-list-item>
 			}
 		</div>
-
-		@for (todoDay of todoDays; track todoDay.formattedDate) {
+		} @for (todoDay of todoDays; track todoDay.formattedDate) {
 		<div class="todo-day">
 			<div class="todo-day-header-container">
 				<h4>
