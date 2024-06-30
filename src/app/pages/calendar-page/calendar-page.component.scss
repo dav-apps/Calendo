@@ -166,6 +166,10 @@
 		border-radius: 8px;
 	}
 
+	.day-label.today {
+		border: 2px solid rgb(var(--dav-color-primary-rgb), 0.6)
+	}
+
 	.day-appointments-container {
 		display: block;
 	}

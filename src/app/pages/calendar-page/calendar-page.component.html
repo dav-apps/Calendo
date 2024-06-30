@@ -34,6 +34,7 @@
 				<div class="day-container">
 					<a
 						class="day-label"
+						[class.today]="day.today"
 						[href]="getCalendarDayPageLink(day.date)"
 						(click)="navigateToDay($event, day.date)"
 					>
