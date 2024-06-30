@@ -40,6 +40,15 @@
 						{{ day.label }}
 					</a>
 
+					@if (day.todos.length > 0) {
+					<div class="day-todos-label">
+						<span>
+							{{ day.todos.length }}
+							{{ day.todos.length == 1 ? locale.todo : locale.todos }}
+						</span>
+					</div>
+					}
+
 					<div class="day-appointments-container">
 						@for (appointment of day.appointments; track appointment.uuid)
 						{

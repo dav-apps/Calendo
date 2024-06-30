@@ -234,13 +234,15 @@ export class CalendarPageComponent {
 				let isToday = today.hasSame(currentDate, "day")
 				let appointments =
 					this.dataService.GetAppointmentsOfDay(currentDate)
+				let todos = this.dataService.GetTodosOfDay(currentDate)
 
 				currentWeek.days.push({
 					id,
 					date: currentDate,
 					label,
 					today: isToday,
-					appointments
+					appointments,
+					todos
 				})
 
 				if (currentDate.hasSame(date, "month")) {
@@ -249,7 +251,8 @@ export class CalendarPageComponent {
 						date: currentDate,
 						label,
 						today: isToday,
-						appointments
+						appointments,
+						todos
 					})
 				} else {
 					currentMobileWeek.days.push({
@@ -257,7 +260,8 @@ export class CalendarPageComponent {
 						date: null,
 						label: null,
 						today: isToday,
-						appointments: []
+						appointments: [],
+						todos: []
 					})
 				}
 

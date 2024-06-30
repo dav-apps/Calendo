@@ -15,6 +15,7 @@ export interface CalendarDayData {
 	label: string
 	today: boolean
 	appointments: Appointment[]
+	todos: Todo[]
 }
 
 export interface CalendarWeekData {

@@ -84,6 +84,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	gap: 6px;
 	width: 100%;
 	padding: 8px;
 }
@@ -109,6 +110,14 @@
 
 .day-label:hover {
 	background-color: var(--dav-color-surface-hover);
+}
+
+.day-todos-label {
+	color: var(--dav-color-on-primary-container);
+	background-color: var(--dav-color-primary-container);
+	font-size: 12px;
+	border-radius: 12px;
+	padding: 3px 8px;
 }
 
 .day-appointments-container {
@@ -152,7 +161,6 @@
 	.day-label {
 		width: 100%;
 		height: 24px;
-		margin-bottom: 8px;
 		font-size: 14px;
 		border: none;
 		border-radius: 8px;

@@ -45,7 +45,7 @@ const enDefaults = {
 	},
 	calendarPage: {
 		todo: "Todo",
-		s: "s"
+		todos: "Todos"
 	},
 	calendarDayPage: {
 		appointments: "Appointments",
@@ -196,7 +196,7 @@ const deDefaults = {
 	},
 	calendarPage: {
 		todo: "Todo",
-		s: "s"
+		todos: "Todos"
 	},
 	calendarDayPage: {
 		appointments: "Termine",
