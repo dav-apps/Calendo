@@ -2,7 +2,6 @@ import { BrowserModule } from "@angular/platform-browser"
 import { FormsModule } from "@angular/forms"
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core"
 import { RouterModule } from "@angular/router"
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap"
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome"
 import { ServiceWorkerModule } from "@angular/service-worker"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
@@ -92,7 +91,6 @@ import { SettingsService } from "./services/settings-service"
 			{ path: "user", component: UserPageComponent },
 			{ path: "settings", component: SettingsPageComponent }
 		]),
-		NgbModule,
 		FontAwesomeModule,
 		ServiceWorkerModule.register("sw.js", {
 			enabled:
