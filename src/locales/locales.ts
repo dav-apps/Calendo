@@ -17,18 +17,6 @@ const enDefaults = {
 		todoListName: "Todo list name",
 		appointmentName: "Appointment name"
 	},
-	newTodoModal: {
-		header: "New Todo",
-		setDate: "Set a date",
-		save: "Save",
-		reminder: "Reminder"
-	},
-	todoListModal: {
-		newTodoList: "New Todo list",
-		editTodoList: "Edit Todo list",
-		setDate: "Set a date",
-		save: "Save"
-	},
 	todoListTree: {
 		newTodo: "Add Todo",
 		newTodoList: "Add Todo list",
@@ -39,37 +27,9 @@ const enDefaults = {
 		delete: "Delete",
 		save: "Save"
 	},
-	deleteTodoListModal: {
-		header: "Delete Todo list",
-		message:
-			"Are you sure you want to delete the Todo list and all its todos and todo lists?",
-		delete: "Delete",
-		cancel: "Cancel"
-	},
 	appointmentItem: {
 		edit: "Edit",
 		delete: "Delete"
-	},
-	appointmentModal: {
-		newAppointment: "New Appointment",
-		editAppointment: "Edit Appointment",
-		entireDay: "Entire Day",
-		start: "Start",
-		end: "End",
-		color: "Color",
-		save: "Save",
-		reminder: "Reminder",
-		reminderTimes: {
-			minutes0: "0 minutes before",
-			minutes15: "15 minutes before",
-			minutes30: "30 minutes before",
-			hour1: "1 hour before",
-			hours3: "3 hours before",
-			hours6: "6 hours before",
-			hours12: "12 hours before",
-			day1: "1 day before",
-			week1: "1 week before"
-		}
 	},
 	overviewPage: {
 		appointments: "Appointments",
@@ -177,10 +137,8 @@ const enDefaults = {
 export var enUS = enDefaults
 
 export var enGB = enDefaults
-enGB.appointmentModal.color = "Colour"
 
 export var enNZ = enDefaults
-enNZ.appointmentModal.color = "Colour"
 
 export var enIL = enDefaults
 
@@ -210,18 +168,6 @@ const deDefaults = {
 		todoListName: "Name der Todo-Liste",
 		appointmentName: "Name des Termins"
 	},
-	newTodoModal: {
-		header: "Neues Todo",
-		setDate: "Datum speichern",
-		save: "Speichern",
-		reminder: "Erinnerung"
-	},
-	todoListModal: {
-		newTodoList: "Neue Todo-Liste",
-		editTodoList: "Todo-Liste bearbeiten",
-		setDate: "Datum speichern",
-		save: "Speichern"
-	},
 	todoListTree: {
 		newTodo: "Todo hinzufügen",
 		newTodoList: "Todo-Liste hinzufügen",
@@ -232,37 +178,9 @@ const deDefaults = {
 		delete: "Löschen",
 		save: "Speichern"
 	},
-	deleteTodoListModal: {
-		header: "Todo-Liste löschen",
-		message:
-			"Bist du dir sicher, dass du die Todo-Liste und alle dazugehörigen Todos und Todo-Listen löschen willst?",
-		delete: "Löschen",
-		cancel: "Abbrechen"
-	},
 	appointmentItem: {
 		edit: "Bearbeiten",
 		delete: "Löschen"
-	},
-	appointmentModal: {
-		newAppointment: "Neuer Termin",
-		editAppointment: "Termin bearbeiten",
-		entireDay: "Ganzer Tag",
-		start: "Anfang",
-		end: "Ende",
-		color: "Farbe",
-		save: "Speichern",
-		reminder: "Erinnerung",
-		reminderTimes: {
-			minutes0: "0 Minuten vorher",
-			minutes15: "15 Minuten vorher",
-			minutes30: "30 Minuten vorher",
-			hour1: "1 Stunde vorher",
-			hours3: "3 Stunden vorher",
-			hours6: "6 Stunden vorher",
-			hours12: "12 Stunden vorher",
-			day1: "1 Tag vorher",
-			week1: "1 Woche vorher"
-		}
 	},
 	overviewPage: {
 		appointments: "Termine",

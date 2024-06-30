@@ -159,10 +159,7 @@
 						<fab-icon iconName="Add"></fab-icon>
 					</button>
 
-					<div
-						ngbDropdownMenu
-						class="ms-depth-4 ms-motion-slideUpIn"
-					>
+					<div ngbDropdownMenu class="ms-depth-4 ms-motion-slideUpIn">
 						<button
 							class="cursor"
 							(click)="AddInputToTodoList(node, false)"
@@ -195,20 +192,11 @@
 						<fab-icon iconName="More"></fab-icon>
 					</button>
 
-					<div
-						ngbDropdownMenu
-						class="ms-depth-4 ms-motion-slideUpIn"
-					>
-						<button
-							class="cursor"
-							(click)="EditTodoList(node)"
-						>
+					<div ngbDropdownMenu class="ms-depth-4 ms-motion-slideUpIn">
+						<button class="cursor" (click)="EditTodoList(node)">
 							{{ locale.rename }}
 						</button>
-						<button
-							class="cursor"
-							(click)="ShowDeleteTodoListModal(node)"
-						>
+						<button class="cursor">
 							{{ locale.delete }}
 						</button>
 					</div>

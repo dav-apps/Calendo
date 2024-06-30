@@ -512,17 +512,6 @@ export class TodoListTreeComponent {
 		this.ReloadTree()
 	}
 
-	async ShowDeleteTodoListModal(node: TodoNode) {
-		// Get the todo list
-		let todoList = await GetTodoList(node.uuid)
-		if (!todoList) return
-
-		if (todoList.items.length == 0) {
-			// Delete the todo list immediately
-			await this.RemoveTodoList(todoList)
-		}
-	}
-
 	async RemoveTodoList(todoList: TodoList) {
 		// Remove the todo list from the parent todo list
 		let parentNode = this.FindParentNodeInTree(

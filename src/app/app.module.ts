@@ -30,10 +30,6 @@ import { TodoItemComponent } from "./components/todo-item/todo-item.component"
 import { SmallTodoItemComponent } from "./components/small-todo-item/small-todo-item.component"
 import { AppointmentItemComponent } from "./components/appointment-item/appointment-item.component"
 import { SmallAppointmentItemComponent } from "./components/small-appointment-item/small-appointment-item.component"
-import { NewTodoModalComponent } from "./components/new-todo-modal/new-todo-modal.component"
-import { AppointmentModalComponent } from "./components/appointment-modal/appointment-modal.component"
-import { TodoListModalComponent } from "./components/todo-list-modal/todo-list-modal.component"
-import { DeleteTodoListModalComponent } from "./components/delete-todo-list-modal/delete-todo-list-modal.component"
 import { TodoGroupBadgeComponent } from "./components/todo-group-badge/todo-group-badge.component"
 import { SetTodoGroupsComponent } from "./components/set-todo-groups/set-todo-groups.component"
 import { SetNameComponent } from "./components/set-name/set-name.component"
@@ -69,10 +65,6 @@ import { SettingsService } from "./services/settings-service"
 		SmallTodoItemComponent,
 		AppointmentItemComponent,
 		SmallAppointmentItemComponent,
-		NewTodoModalComponent,
-		AppointmentModalComponent,
-		TodoListModalComponent,
-		DeleteTodoListModalComponent,
 		TodoGroupBadgeComponent,
 		SetTodoGroupsComponent,
 		SetNameComponent,
