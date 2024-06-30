@@ -1,7 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser"
 import { FormsModule } from "@angular/forms"
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core"
-import { RouterModule } from "@angular/router"
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome"
 import { ServiceWorkerModule } from "@angular/service-worker"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
@@ -10,6 +9,9 @@ import { MatTreeModule } from "@angular/material/tree"
 import { DragulaModule } from "ng2-dragula"
 import { Environment } from "dav-js"
 import { environment } from "src/environments/environment"
+
+// Local modules
+import { AppRoutingModule } from "./app-routing.module"
 
 // Pages
 import { OverviewPageComponent } from "./pages/overview-page/overview-page.component"
@@ -77,20 +79,7 @@ import { SettingsService } from "./services/settings-service"
 	imports: [
 		BrowserModule,
 		FormsModule,
-		RouterModule.forRoot([
-			{ path: "", component: OverviewPageComponent },
-			{ path: "calendar", component: CalendarPageComponent },
-			{ path: "calendar/:year/:month", component: CalendarPageComponent },
-			{
-				path: "calendar/:year/:month/:day",
-				component: CalendarDayPageComponent
-			},
-			{ path: "todos", component: TodosPageComponent },
-			{ path: "appointments", component: AppointmentsPageComponent },
-			{ path: "todolist/:uuid", component: TodoListPageComponent },
-			{ path: "user", component: UserPageComponent },
-			{ path: "settings", component: SettingsPageComponent }
-		]),
+		AppRoutingModule,
 		FontAwesomeModule,
 		ServiceWorkerModule.register("sw.js", {
 			enabled:
