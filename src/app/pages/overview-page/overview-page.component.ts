@@ -31,6 +31,13 @@ export class OverviewPageComponent {
 	currentWeekday: string = ""
 	currentDate: string = ""
 
+	currentDay: StartDay = {
+		date: DateTime.now(),
+		formattedDate: DateTime.now().toFormat("DDDD"),
+		appointments: [],
+		todos: [],
+		todoLists: []
+	}
 	days: StartDay[] = []
 
 	//#region ContextMenu
@@ -110,7 +117,24 @@ export class OverviewPageComponent {
 
 	addAppointment(appointment: Appointment) {
 		let date = DateTime.fromSeconds(appointment.start)
-		if (date < DateTime.now()) return
+		if (date < DateTime.now().startOf("day")) return
+
+		if (date.hasSame(this.currentDay.date, "day")) {
+			let i = this.currentDay.appointments.findIndex(
+				a => a.uuid == appointment.uuid
+			)
+
+			if (i != -1) {
+				// Replace the appointment
+				this.currentDay.appointments[i] = appointment
+			} else {
+				// Add the appointment
+				this.currentDay.appointments.push(appointment)
+			}
+
+			this.dataService.SortAppointmentsArray(this.currentDay.appointments)
+			return
+		}
 
 		let formattedDate = date.toFormat("DDDD")
 		let day = this.days.find(day => day.formattedDate == formattedDate)
@@ -148,6 +172,21 @@ export class OverviewPageComponent {
 		let date = DateTime.fromSeconds(todo.time)
 		if (date < DateTime.now()) return
 
+		if (date.hasSame(this.currentDay.date, "day")) {
+			let i = this.currentDay.todos.findIndex(t => t.uuid == todo.uuid)
+
+			if (i != -1) {
+				// Replace the todo
+				this.currentDay.todos[i] = todo
+			} else {
+				// Add the todo
+				this.currentDay.todos.push(todo)
+			}
+
+			this.dataService.SortTodosArray(this.currentDay.todos)
+			return
+		}
+
 		let formattedDate = date.toFormat("DDDD")
 		let day = this.days.find(day => day.formattedDate == formattedDate)
 
@@ -183,6 +222,23 @@ export class OverviewPageComponent {
 
 		let date = DateTime.fromSeconds(todoList.time)
 		if (date < DateTime.now()) return
+
+		if (date.hasSame(this.currentDay.date, "day")) {
+			let i = this.currentDay.todoLists.findIndex(
+				t => t.uuid == todoList.uuid
+			)
+
+			if (i != -1) {
+				// Replace the todo list
+				this.currentDay.todoLists[i] = todoList
+			} else {
+				// Add the todo
+				this.currentDay.todoLists.push(todoList)
+			}
+
+			this.dataService.SortTodoListsArray(this.currentDay.todoLists)
+			return
+		}
 
 		let formattedDate = date.toFormat("DDDD")
 		let day = this.days.find(day => day.formattedDate == formattedDate)
