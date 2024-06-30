@@ -9,6 +9,14 @@ export enum Theme {
 	Dark
 }
 
+export interface StartDay {
+	date: DateTime
+	formattedDate: string
+	appointments: Appointment[]
+	todos: Todo[]
+	todoLists: TodoList[]
+}
+
 export interface CalendarDayData {
 	id: string
 	date: DateTime

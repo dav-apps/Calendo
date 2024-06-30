@@ -99,44 +99,32 @@ export class DataService {
 		this.todosPromiseHolder.Resolve()
 	}
 
-	AddTodoList(todoList: TodoList) {
-		this.AddTodoListToStartPage(todoList)
-	}
+	AddTodoList(todoList: TodoList) {}
 
 	UpdateTodoList(todoList: TodoList) {
 		this.RemoveTodoList(todoList)
 		this.AddTodoList(todoList)
 	}
 
-	RemoveTodoList(todoList: TodoList) {
-		this.RemoveTodoListFromStartPage(todoList)
-	}
+	RemoveTodoList(todoList: TodoList) {}
 
-	AddTodo(todo: Todo) {
-		this.AddTodoToStartPage(todo)
-	}
+	AddTodo(todo: Todo) {}
 
 	UpdateTodo(todo: Todo) {
 		this.RemoveTodo(todo)
 		this.AddTodo(todo)
 	}
 
-	RemoveTodo(todo: Todo) {
-		this.RemoveTodoFromStartPage(todo)
-	}
+	RemoveTodo(todo: Todo) {}
 
-	AddAppointment(appointment: Appointment) {
-		this.AddAppointmentToStartPage(appointment)
-	}
+	AddAppointment(appointment: Appointment) {}
 
 	UpdateAppointment(appointment: Appointment) {
 		this.RemoveAppointment(appointment)
 		this.AddAppointment(appointment)
 	}
 
-	RemoveAppointment(appointment: Appointment) {
-		this.RemoveAppointmentFromStartPage(appointment)
-	}
+	RemoveAppointment(appointment: Appointment) {}
 
 	SortAppointmentsArray(appointments: Appointment[]) {
 		appointments.sort((a: Appointment, b: Appointment) => {
@@ -175,35 +163,6 @@ export class DataService {
 				return 0
 			}
 		})
-	}
-
-	SortStartDays() {
-		for (let j = 0; j < this.startDaysDates.length; j++) {
-			for (let i = 1; i < this.startDaysDates.length; i++) {
-				if (this.startDaysDates[i - 1] > this.startDaysDates[i]) {
-					// Swap the dates
-					let firstDate = this.startDaysDates[i - 1]
-					let secondDate = this.startDaysDates[i]
-					this.startDaysDates[i - 1] = secondDate
-					this.startDaysDates[i] = firstDate
-
-					let firstAppointments = this.startDaysAppointments[i - 1]
-					let secondAppointments = this.startDaysAppointments[i]
-					this.startDaysAppointments[i - 1] = secondAppointments
-					this.startDaysAppointments[i] = firstAppointments
-
-					let firstTodos = this.startDaysTodos[i - 1]
-					let secondTodos = this.startDaysTodos[i]
-					this.startDaysTodos[i - 1] = secondTodos
-					this.startDaysTodos[i] = firstTodos
-
-					let firstTodoLists = this.startDaysTodoLists[i - 1]
-					let secondTodoLists = this.startDaysTodoLists[i]
-					this.startDaysTodoLists[i - 1] = secondTodoLists
-					this.startDaysTodoLists[i] = firstTodoLists
-				}
-			}
-		}
 	}
 
 	SortTodoDays(todoDays: TodoDay[]) {
@@ -259,205 +218,6 @@ export class DataService {
 				: DavUIComponents.Theme.light
 		)
 	}
-
-	//#region StartPage
-	AddAppointmentToStartPage(appointment: Appointment) {
-		if (appointment.start < DateTime.now().startOf("day").toUnixInteger())
-			return
-
-		// Check if the day of the appointment is already in the array
-		let index = this.startDaysDates.findIndex(
-			d =>
-				d ==
-				DateTime.fromSeconds(appointment.start)
-					.startOf("day")
-					.toUnixInteger()
-		)
-
-		if (index !== -1) {
-			// Check if the appointment is already in the appointments array of the day
-			let i = this.startDaysAppointments[index].findIndex(
-				a => a.uuid == appointment.uuid
-			)
-
-			if (i !== -1) {
-				// Replace the appointment
-				this.startDaysAppointments[index][i] = appointment
-			} else {
-				// Add the appointment
-				this.startDaysAppointments[index].push(appointment)
-			}
-
-			this.SortAppointmentsArray(this.startDaysAppointments[index])
-		} else {
-			// Create a new day
-			this.startDaysDates.push(
-				DateTime.fromSeconds(appointment.start)
-					.startOf("day")
-					.toUnixInteger()
-			)
-			this.startDaysAppointments.push([appointment])
-			this.startDaysTodoLists.push([])
-			this.startDaysTodos.push([])
-
-			// Sort the arrays
-			this.SortStartDays()
-		}
-	}
-
-	RemoveAppointmentFromStartPage(appointment: Appointment) {
-		// Remove the appointment from all arrays
-		for (let i = 0; i < this.startDaysAppointments.length; i++) {
-			let index = this.startDaysAppointments[i].findIndex(
-				a => a.uuid == appointment.uuid
-			)
-
-			if (index !== -1) {
-				this.startDaysAppointments[i].splice(index, 1)
-
-				if (
-					this.startDaysAppointments[i].length == 0 &&
-					this.startDaysTodos[i].length == 0 &&
-					this.startDaysTodoLists[i].length == 0 &&
-					i != 0
-				) {
-					// Remove the day
-					this.startDaysAppointments.splice(i, 1)
-					this.startDaysTodos.splice(i, 1)
-					this.startDaysTodoLists.splice(i, 1)
-					this.startDaysDates.splice(i, 1)
-				}
-			}
-		}
-	}
-
-	AddTodoToStartPage(todo: Todo) {
-		// Don't add the todo if it belongs to a list
-		if (todo.list) return
-
-		// Check if the day of the todo is already in the array
-		let index =
-			todo.time < DateTime.now().startOf("day").toUnixInteger()
-				? 0
-				: this.startDaysDates.findIndex(t => t == todo.time)
-
-		if (index !== -1) {
-			// Check if the todo is already in the todos array of the day
-			let i = this.startDaysTodos[index].findIndex(t => t.uuid == todo.uuid)
-
-			if (i !== -1) {
-				// Replace the todo
-				this.startDaysTodos[index][i] = todo
-			} else {
-				// Add the todo
-				this.startDaysTodos[index].push(todo)
-			}
-
-			this.SortTodosArray(this.startDaysTodos[index])
-		} else {
-			// Create a new day
-			this.startDaysDates.push(
-				DateTime.fromSeconds(todo.time).startOf("day").toUnixInteger()
-			)
-			this.startDaysAppointments.push([])
-			this.startDaysTodoLists.push([])
-			this.startDaysTodos.push([todo])
-
-			// Sort the arrays
-			this.SortStartDays()
-		}
-	}
-
-	RemoveTodoFromStartPage(todo: Todo) {
-		// Remove the todo from all arrays
-		for (let i = 0; i < this.startDaysTodos.length; i++) {
-			let index = this.startDaysTodos[i].findIndex(t => t.uuid == todo.uuid)
-
-			if (index !== -1) {
-				this.startDaysTodos[i].splice(index, 1)
-
-				if (
-					this.startDaysAppointments[i].length == 0 &&
-					this.startDaysTodos[i].length == 0 &&
-					this.startDaysTodoLists[i].length == 0 &&
-					i != 0
-				) {
-					// Remove the day
-					this.startDaysAppointments.splice(i, 1)
-					this.startDaysTodos.splice(i, 1)
-					this.startDaysTodoLists.splice(i, 1)
-					this.startDaysDates.splice(i, 1)
-				}
-			}
-		}
-	}
-
-	AddTodoListToStartPage(todoList: TodoList) {
-		// Don't add the list if it belongs to another list
-		if (todoList.list) return
-
-		// Check if the day of the todo list is already in the array
-		let index =
-			todoList.time < DateTime.now().startOf("day").toUnixInteger()
-				? 0
-				: this.startDaysDates.findIndex(t => t == todoList.time)
-
-		if (index !== -1) {
-			// Add the list to the existing day
-			// Check if the list is already in the todos array of the day
-			let i = this.startDaysTodoLists[index].findIndex(
-				t => t.uuid == todoList.uuid
-			)
-
-			if (i !== -1) {
-				// Replace the todo list
-				this.startDaysTodoLists[index][i] = todoList
-			} else {
-				// Add the todo list
-				this.startDaysTodoLists[index].push(todoList)
-			}
-
-			this.SortTodoListsArray(this.startDaysTodoLists[index])
-		} else {
-			// Create a new day
-			this.startDaysDates.push(
-				DateTime.fromSeconds(todoList.time).startOf("day").toUnixInteger()
-			)
-			this.startDaysAppointments.push([])
-			this.startDaysTodoLists.push([todoList])
-			this.startDaysTodos.push([])
-
-			// Sort the arrays
-			this.SortStartDays()
-		}
-	}
-
-	RemoveTodoListFromStartPage(todoList: TodoList) {
-		// Remove the todo list from all arrays
-		for (let i = 0; i < this.startDaysTodoLists.length; i++) {
-			let index = this.startDaysTodoLists[i].findIndex(
-				t => t.uuid == todoList.uuid
-			)
-
-			if (index !== -1) {
-				this.startDaysTodoLists[i].splice(index, 1)
-
-				if (
-					this.startDaysAppointments[i].length == 0 &&
-					this.startDaysTodos[i].length == 0 &&
-					this.startDaysTodoLists[i].length == 0 &&
-					i != 0
-				) {
-					// Remove the day
-					this.startDaysAppointments.splice(i, 1)
-					this.startDaysTodos.splice(i, 1)
-					this.startDaysTodoLists.splice(i, 1)
-					this.startDaysDates.splice(i, 1)
-				}
-			}
-		}
-	}
-	//#endregion
 
 	//#region TodosPage
 	/*

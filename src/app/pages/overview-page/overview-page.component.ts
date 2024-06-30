@@ -6,6 +6,7 @@ import {
 	faTrash as faTrashLight
 } from "@fortawesome/pro-light-svg-icons"
 import { ContextMenu } from "dav-ui-components"
+import { Appointment } from "src/app/models/Appointment"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 import { AppointmentDialogComponent } from "src/app/dialogs/appointment-dialog/appointment-dialog.component"
@@ -13,7 +14,7 @@ import { CreateTodoDialogComponent } from "src/app/dialogs/create-todo-dialog/cr
 import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
-import { Appointment } from "src/app/models/Appointment"
+import { StartDay } from "src/app/types"
 
 @Component({
 	templateUrl: "./overview-page.component.html",
@@ -27,11 +28,10 @@ export class OverviewPageComponent {
 	faTrashLight = faTrashLight
 	selectedAppointment: Appointment = null
 
-	largeDateFontSize: number = 24
-	smallDateFontSize: number = 16
-
 	currentWeekday: string = ""
 	currentDate: string = ""
+
+	days: StartDay[] = []
 
 	//#region ContextMenu
 	@ViewChild("contextMenu")
@@ -71,14 +71,21 @@ export class OverviewPageComponent {
 		this.currentDate = DateTime.now().toFormat("DDD")
 	}
 
-	ngOnInit() {
-		this.setSize()
-	}
+	async ngOnInit() {
+		await this.dataService.appointmentsPromiseHolder.AwaitResult()
+		await this.dataService.todosPromiseHolder.AwaitResult()
 
-	@HostListener("window:resize")
-	setSize() {
-		this.largeDateFontSize = window.innerWidth < 450 ? 21 : 24
-		this.smallDateFontSize = window.innerWidth < 450 ? 15 : 16
+		for (let appointment of this.dataService.allAppointments) {
+			this.addAppointment(appointment)
+		}
+
+		for (let todo of this.dataService.allTodos) {
+			this.addTodo(todo)
+		}
+
+		for (let todoList of this.dataService.allTodoLists) {
+			this.addTodoList(todoList)
+		}
 	}
 
 	@HostListener("document:click", ["$event"])
@@ -99,6 +106,124 @@ export class OverviewPageComponent {
 		this.contextMenuPositionY =
 			event.pageY + this.dataService.contentContainer.scrollTop
 		this.contextMenuVisible = true
+	}
+
+	addAppointment(appointment: Appointment) {
+		let date = DateTime.fromSeconds(appointment.start)
+		if (date < DateTime.now()) return
+
+		let formattedDate = date.toFormat("DDDD")
+		let day = this.days.find(day => day.formattedDate == formattedDate)
+
+		if (day != null) {
+			let i = day.appointments.findIndex(a => a.uuid == appointment.uuid)
+
+			if (i != -1) {
+				// Replace the appointment
+				day.appointments[i] = appointment
+			} else {
+				// Add the appointment
+				day.appointments.push(appointment)
+			}
+
+			this.dataService.SortAppointmentsArray(day.appointments)
+		} else {
+			// Create a new day
+			this.days.push({
+				date,
+				formattedDate,
+				appointments: [appointment],
+				todos: [],
+				todoLists: []
+			})
+
+			// Sort the days
+			this.sortDays()
+		}
+	}
+
+	addTodo(todo: Todo) {
+		if (todo.list != null) return
+
+		let date = DateTime.fromSeconds(todo.time)
+		if (date < DateTime.now()) return
+
+		let formattedDate = date.toFormat("DDDD")
+		let day = this.days.find(day => day.formattedDate == formattedDate)
+
+		if (day != null) {
+			let i = day.todos.findIndex(t => t.uuid == todo.uuid)
+
+			if (i != -1) {
+				// Replace the todo
+				day.todos[i] = todo
+			} else {
+				// Add the todo
+				day.todos.push(todo)
+			}
+
+			this.dataService.SortTodosArray(day.todos)
+		} else {
+			// Create a new day
+			this.days.push({
+				date,
+				formattedDate,
+				appointments: [],
+				todos: [todo],
+				todoLists: []
+			})
+
+			// Sort the days
+			this.sortDays()
+		}
+	}
+
+	addTodoList(todoList: TodoList) {
+		if (todoList.list != null) return
+
+		let date = DateTime.fromSeconds(todoList.time)
+		if (date < DateTime.now()) return
+
+		let formattedDate = date.toFormat("DDDD")
+		let day = this.days.find(day => day.formattedDate == formattedDate)
+
+		if (day != null) {
+			let i = day.todoLists.findIndex(t => t.uuid == todoList.uuid)
+
+			if (i != -1) {
+				// Replace the todo list
+				day.todoLists[i] = todoList
+			} else {
+				// Add the todo
+				day.todoLists.push(todoList)
+			}
+
+			this.dataService.SortTodoListsArray(day.todoLists)
+		} else {
+			// Create a new day
+			this.days.push({
+				date,
+				formattedDate,
+				appointments: [],
+				todos: [],
+				todoLists: [todoList]
+			})
+
+			// Sort the days
+			this.sortDays()
+		}
+	}
+
+	sortDays() {
+		this.days.sort((a: StartDay, b: StartDay) => {
+			if (a.date < b.date) {
+				return -1
+			} else if (a.date > b.date) {
+				return 1
+			} else {
+				return 0
+			}
+		})
 	}
 
 	public async DeleteTodo(todo: Todo) {

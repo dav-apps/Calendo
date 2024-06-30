@@ -73,13 +73,10 @@
 				*ngIf="i > 0"
 			>
 				<div class="col-3">
-					<h4 class="cursor" [style.font-size.px]="largeDateFontSize">
+					<h4 class="cursor">
 						{{ GetLargeDate(date) }}
 					</h4>
-					<p
-						class="font-weight-light cursor"
-						[style.font-size.px]="smallDateFontSize"
-					>
+					<p class="font-weight-light cursor">
 						{{ GetSmallDate(date) }}
 					</p>
 				</div>
