@@ -237,15 +237,7 @@ export class CalendarDayPageComponent {
 		this.createTodoDialog.hide()
 	}
 
-	DeleteTodo(todo: Todo) {
-		this.dataService.RemoveTodo(todo)
-	}
-
-	CreateTodoList(todoList: TodoList) {
-		this.dataService.AddTodoList(todoList)
-	}
-
-	GoBack() {
+	goBack() {
 		this.location.back()
 	}
 }

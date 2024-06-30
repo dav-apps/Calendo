@@ -15,7 +15,6 @@
 			type="button"
 			class="btn ml-3"
 			style="padding: 3px 6px"
-			(click)="ShowEditModal()"
 		>
 			<fab-icon iconName="Edit"></fab-icon>
 		</button>
@@ -23,7 +22,6 @@
 			type="button"
 			class="btn ml-2"
 			style="padding: 3px 6px"
-			(click)="ShowDeleteModal()"
 		>
 			<fab-icon iconName="Delete"></fab-icon>
 		</button>
@@ -95,12 +93,3 @@
 		></calendo-todo-list-tree>
 	</div>
 </div>
-
-<calendo-todo-list-modal
-	#todoListModal
-	(save)="Update($event)"
-></calendo-todo-list-modal>
-<calendo-delete-todo-list-modal
-	#deleteTodoListModal
-	(remove)="Remove()"
-></calendo-delete-todo-list-modal>

@@ -1,12 +1,5 @@
-import {
-	Component,
-	Input,
-	Output,
-	ViewChild,
-	EventEmitter
-} from "@angular/core"
+import { Component, Input, Output, EventEmitter } from "@angular/core"
 import { DateTime } from "luxon"
-import { AppointmentModalComponent } from "src/app/components/appointment-modal/appointment-modal.component"
 import { Appointment } from "src/app/models/Appointment"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
@@ -31,8 +24,6 @@ export class AppointmentItemComponent {
 	)
 	@Input() showCompleted: boolean = false
 	@Output() delete = new EventEmitter()
-	@ViewChild(AppointmentModalComponent, { static: true })
-	private newAppointmentModalComponent: AppointmentModalComponent
 	menuButtonIconProps = {
 		iconName: "More",
 		style: {
@@ -45,14 +36,6 @@ export class AppointmentItemComponent {
 		public dataService: DataService,
 		private localizationService: LocalizationService
 	) {}
-
-	Edit() {
-		this.newAppointmentModalComponent.Show(this.appointment)
-	}
-
-	Update(appointment: Appointment) {
-		this.dataService.UpdateAppointment(appointment)
-	}
 
 	ConvertUnixTimestampToTime(timestamp: number): string {
 		return DateTime.fromSeconds(timestamp).toFormat("HH:mm")

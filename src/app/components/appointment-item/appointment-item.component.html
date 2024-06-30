@@ -44,7 +44,7 @@
 			ngbDropdownMenu
 			class="ms-depth-4 ms-motion-slideDownIn"
 		>
-			<button class="cursor" (click)="Edit()">
+			<button class="cursor">
 				{{ locale.edit }}
 			</button>
 			<button class="cursor" (click)="delete.emit()">
@@ -53,5 +53,3 @@
 		</div>
 	</div>
 </li>
-
-<calendo-appointment-modal (save)="Update($event)"></calendo-appointment-modal>

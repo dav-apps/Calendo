@@ -1,5 +1,5 @@
 <div class="container slide-up-in">
-	<dav-header size="lg" backButtonVisible (backButtonClick)="GoBack()">
+	<dav-header size="lg" backButtonVisible (backButtonClick)="goBack()">
 		{{ title }}
 	</dav-header>
 
@@ -54,10 +54,7 @@
 					{{ locale.noTodos }}
 				</p>
 				} @for (todo of todos; track todo.uuid) {
-				<calendo-todo-item
-					[todo]="todo"
-					(delete)="DeleteTodo(todo)"
-				></calendo-todo-item>
+				<calendo-todo-item [todo]="todo"></calendo-todo-item>
 				} @for (todoList of todoLists; track todoList.uuid) {
 				<calendo-small-todo-list-item
 					[todoList]="todoList"
@@ -66,12 +63,6 @@
 			</div>
 		</div>
 	</div>
-
-	<calendo-new-todo-modal></calendo-new-todo-modal>
-	<calendo-todo-list-modal
-		#todoListModal
-		(save)="CreateTodoList($event)"
-	></calendo-todo-list-modal>
 </div>
 
 <dav-context-menu

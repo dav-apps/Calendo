@@ -1,10 +1,4 @@
-import {
-	Component,
-	Input,
-	Output,
-	EventEmitter,
-	ViewChild
-} from "@angular/core"
+import { Component, Input, Output, EventEmitter } from "@angular/core"
 import { Router } from "@angular/router"
 import { MatTreeNestedDataSource } from "@angular/material/tree"
 import { NestedTreeControl } from "@angular/cdk/tree"
@@ -14,7 +8,6 @@ import { TodoList, GetTodoList } from "../../models/TodoList"
 import { generateUuid } from "dav-js"
 import { DataService } from "src/app/services/data-service"
 import { faTimes } from "@fortawesome/free-solid-svg-icons"
-import { DeleteTodoListModalComponent } from "../delete-todo-list-modal/delete-todo-list-modal.component"
 import { DragulaService } from "ng2-dragula"
 import { LocalizationService } from "src/app/services/localization-service"
 declare var $: any
@@ -30,8 +23,6 @@ export class TodoListTreeComponent {
 	treeControl: NestedTreeControl<TodoNode>
 	dataChange: BehaviorSubject<TodoNode[]> = new BehaviorSubject<TodoNode[]>([])
 	subs = new Subscription() // Holds all subscriptions
-	@ViewChild("deleteTodoListModal", { static: true })
-	deleteTodoListModal: DeleteTodoListModalComponent
 	@Input()
 	todoList: TodoList = new TodoList()
 	@Input()
@@ -529,9 +520,6 @@ export class TodoListTreeComponent {
 		if (todoList.items.length == 0) {
 			// Delete the todo list immediately
 			await this.RemoveTodoList(todoList)
-		} else {
-			// Show the confirmation modal
-			this.deleteTodoListModal.Show(todoList)
 		}
 	}
 
