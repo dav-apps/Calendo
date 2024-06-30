@@ -9,14 +9,15 @@
 			<div class="card-body" style="padding-bottom: 0px">
 				<h5 class="card-title">{{ locale.appointments }}</h5>
 				<ul class="list-group list-group-flush">
+					@for (appointment of currentDay.appointments; track
+					appointment.uuid) {
 					<calendo-appointment-item
 						[appointment]="appointment"
 						[showCompleted]="true"
 						(delete)="showDeleteAppointmentDialog(appointment)"
-						*ngFor="
-							let appointment of dataService.startDaysAppointments[0]
-						"
 					></calendo-appointment-item>
+					}
+
 					<li class="list-group-item" style="padding: 14px 0px 14px 5px">
 						<button
 							type="button"
@@ -34,15 +35,16 @@
 			<div class="card-body" style="padding-bottom: 0px">
 				<h5 class="card-title">{{ locale.todos }}</h5>
 				<ul class="list-group list-group-flush">
+					@for (todo of currentDay.todos; track todo.uuid) {
 					<calendo-todo-item
 						[todo]="todo"
-						*ngFor="let todo of dataService.startDaysTodos[0]"
 						(delete)="DeleteTodo(todo)"
 					></calendo-todo-item>
+					} @for (todoList of currentDay.todoLists; track todoList.uuid) {
 					<calendo-todo-list-item
 						[todoList]="todoList"
-						*ngFor="let todoList of dataService.startDaysTodoLists[0]"
 					></calendo-todo-list-item>
+					}
 
 					<li
 						class="list-group-item"
@@ -64,54 +66,49 @@
 	</div>
 
 	<div class="container">
-		<ng-container
-			*ngFor="let date of dataService.startDaysDates; let i = index"
+		@for (day of days; track day.formattedDate) {
+		<div
+			class="row py-4 ml-md-4 border-top"
+			[ngClass]="dataService.darkTheme ? 'border-dark' : ''"
 		>
+			<div class="col-3">
+				<h4 class="cursor">
+					{{ GetLargeDate(day.date) }}
+				</h4>
+				<p class="font-weight-light cursor">
+					{{ GetSmallDate(day.date) }}
+				</p>
+			</div>
 			<div
-				class="row py-4 ml-md-4 border-top"
-				[ngClass]="dataService.darkTheme ? 'border-dark' : ''"
-				*ngIf="i > 0"
+				class="offset-1 col-8 offset-lg-0 col-lg-9 d-flex flex-column mt-1"
 			>
-				<div class="col-3">
-					<h4 class="cursor">
-						{{ GetLargeDate(date) }}
-					</h4>
-					<p class="font-weight-light cursor">
-						{{ GetSmallDate(date) }}
-					</p>
-				</div>
-				<div
-					class="offset-1 col-8 offset-lg-0 col-lg-9 d-flex flex-column mt-1"
-				>
-					<div
-						class="d-inline-flex"
-						*ngFor="
-							let appointment of dataService.startDaysAppointments[i]
+				@for (appointment of day.appointments; track appointment.uuid) {
+				<div class="d-inline-flex">
+					<calendo-small-appointment-item
+						[appointment]="appointment"
+						(delete)="deleteAppointmentDialog.show()"
+						(contextmenu)="
+							smallAppointmentItemContextMenu($event, appointment)
 						"
-					>
-						<calendo-small-appointment-item
-							[appointment]="appointment"
-							(delete)="deleteAppointmentDialog.show()"
-							(contextmenu)="
-								smallAppointmentItemContextMenu($event, appointment)
-							"
-						></calendo-small-appointment-item>
-					</div>
+					></calendo-small-appointment-item>
+				</div>
+				}
 
-					<div class="d-flex flex-wrap">
-						<calendo-small-todo-item
-							[todo]="todo"
-							*ngFor="let todo of dataService.startDaysTodos[i]"
-							(delete)="DeleteTodo(todo)"
-						></calendo-small-todo-item>
-						<calendo-small-todo-list-item
-							[todoList]="todoList"
-							*ngFor="let todoList of dataService.startDaysTodoLists[i]"
-						></calendo-small-todo-list-item>
-					</div>
+				<div class="d-flex flex-wrap">
+					@for (todo of day.todos; track todo.uuid) {
+					<calendo-small-todo-item
+						[todo]="todo"
+						(delete)="DeleteTodo(todo)"
+					></calendo-small-todo-item>
+					} @for (todoList of day.todoLists; track todoList.uuid) {
+					<calendo-small-todo-list-item
+						[todoList]="todoList"
+					></calendo-small-todo-list-item>
+					}
 				</div>
 			</div>
-		</ng-container>
+		</div>
+		}
 	</div>
 </div>
 

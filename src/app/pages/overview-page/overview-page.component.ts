@@ -318,18 +318,16 @@ export class OverviewPageComponent {
 		this.selectedAppointment = null
 	}
 
-	GetLargeDate(date: number): string {
-		let dateTime = DateTime.fromSeconds(date)
-		let formatting = dateTime.diffNow("days").days > 6 ? "D" : "EEEE"
+	GetLargeDate(date: DateTime): string {
+		let formatting = date.diffNow("days").days > 6 ? "D" : "EEEE"
 
-		return dateTime.toFormat(formatting)
+		return date.toFormat(formatting)
 	}
 
-	GetSmallDate(date: number): string {
-		let dateTime = DateTime.fromSeconds(date)
-		let formatting = dateTime.diffNow("days").days > 6 ? "EEEE" : "D"
+	GetSmallDate(date: DateTime): string {
+		let formatting = date.diffNow("days").days > 6 ? "EEEE" : "D"
 
-		return dateTime.toFormat(formatting)
+		return date.toFormat(formatting)
 	}
 
 	async createTodo(event: { name: string; date: DateTime; labels: string[] }) {
