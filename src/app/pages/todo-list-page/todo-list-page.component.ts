@@ -48,8 +48,6 @@ export class TodoListPageComponent {
 
 	async Update(updatedTodoList?: TodoList) {
 		if (updatedTodoList) {
-			this.dataService.UpdateTodoList(updatedTodoList)
-
 			// Update the local properties
 			this.todoList.name = updatedTodoList.name
 			this.todoList.time = updatedTodoList.time
@@ -58,17 +56,10 @@ export class TodoListPageComponent {
 			this.date = DateTime.fromSeconds(this.todoList.time).toFormat(
 				this.locale.formats.date
 			)
-		} else {
-			this.dataService.UpdateTodoList(await GetTodoList(this.todoList.uuid))
 		}
 	}
 
 	GoBack() {
-		this.location.back()
-	}
-
-	Remove() {
-		this.dataService.RemoveTodoList(this.todoList)
 		this.location.back()
 	}
 }

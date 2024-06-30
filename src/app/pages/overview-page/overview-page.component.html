@@ -36,10 +36,7 @@
 				<h5 class="card-title">{{ locale.todos }}</h5>
 				<ul class="list-group list-group-flush">
 					@for (todo of currentDay.todos; track todo.uuid) {
-					<calendo-todo-item
-						[todo]="todo"
-						(delete)="DeleteTodo(todo)"
-					></calendo-todo-item>
+					<calendo-todo-item [todo]="todo"></calendo-todo-item>
 					} @for (todoList of currentDay.todoLists; track todoList.uuid) {
 					<calendo-todo-list-item
 						[todoList]="todoList"
@@ -96,10 +93,7 @@
 
 				<div class="d-flex flex-wrap">
 					@for (todo of day.todos; track todo.uuid) {
-					<calendo-small-todo-item
-						[todo]="todo"
-						(delete)="DeleteTodo(todo)"
-					></calendo-small-todo-item>
+					<calendo-small-todo-item [todo]="todo"></calendo-small-todo-item>
 					} @for (todoList of day.todoLists; track todoList.uuid) {
 					<calendo-small-todo-list-item
 						[todoList]="todoList"

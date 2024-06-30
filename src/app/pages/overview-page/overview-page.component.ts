@@ -166,6 +166,28 @@ export class OverviewPageComponent {
 		}
 	}
 
+	removeAppointment(appointment) {
+		let date = DateTime.fromSeconds(appointment.start)
+		if (date < DateTime.now().startOf("day")) return
+
+		if (date.hasSame(this.currentDay.date, "day")) {
+			let i = this.currentDay.appointments.findIndex(
+				a => a.uuid == appointment.uuid
+			)
+
+			if (i != -1) this.currentDay.appointments.splice(i, 1)
+			return
+		}
+
+		let formattedDate = date.toFormat("DDDD")
+		let day = this.days.find(day => day.formattedDate == formattedDate)
+
+		if (day != null) {
+			let i = day.appointments.findIndex(a => a.uuid == appointment.uuid)
+			if (i != -1) day.appointments.splice(i, 1)
+		}
+	}
+
 	addTodo(todo: Todo) {
 		if (todo.list != null) return
 
@@ -282,10 +304,6 @@ export class OverviewPageComponent {
 		})
 	}
 
-	public async DeleteTodo(todo: Todo) {
-		this.dataService.RemoveTodo(todo)
-	}
-
 	showEditAppointmentDialog(appointment: Appointment) {
 		let startDate = DateTime.fromSeconds(appointment.start)
 		let endDate = DateTime.fromSeconds(appointment.end)
@@ -312,7 +330,7 @@ export class OverviewPageComponent {
 
 	async deleteAppointment() {
 		this.deleteAppointmentDialog.hide()
-		this.dataService.RemoveAppointment(this.selectedAppointment)
+		this.removeAppointment(this.selectedAppointment)
 
 		await this.selectedAppointment.Delete()
 		this.selectedAppointment = null
@@ -338,7 +356,7 @@ export class OverviewPageComponent {
 			event.labels
 		)
 
-		this.dataService.AddTodo(todo)
+		this.addTodo(todo)
 		this.createTodoDialog.hide()
 	}
 
@@ -379,7 +397,7 @@ export class OverviewPageComponent {
 			event.color
 		)
 
-		this.dataService.AddAppointment(appointment)
+		this.addAppointment(appointment)
 		this.createAppointmentDialog.hide()
 	}
 
@@ -419,11 +437,7 @@ export class OverviewPageComponent {
 			null
 		)
 
-		this.dataService.UpdateAppointment(appointment)
+		this.addAppointment(appointment)
 		this.editAppointmentDialog.hide()
-	}
-
-	CreateTodoList(todoList: TodoList) {
-		this.dataService.AddTodoList(todoList)
 	}
 }

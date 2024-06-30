@@ -68,7 +68,6 @@ export class AppComponent {
 		this.router.events.forEach(data => {
 			if (data instanceof NavigationStart) {
 				// Update the updated todo lists
-				this.dataService.UpdateUpdatedTodoLists()
 				this.currentUrl = data.url.split("?")[0]
 
 				this.startTabActive = this.currentUrl == "/"
@@ -157,7 +156,7 @@ export class AppComponent {
 			var appointment = ConvertTableObjectToAppointment(tableObject)
 
 			if (appointment) {
-				this.dataService.UpdateAppointment(appointment)
+				// TODO: Reload appointment on current page
 			}
 		} else if (tableObject.TableId == environment.todoTableId) {
 			// Update todo
@@ -169,10 +168,10 @@ export class AppComponent {
 				let root = await this.dataService.GetRootOfTodo(todo)
 
 				if (root) {
-					this.dataService.UpdateTodoList(root)
+					// TODO: Reload todo list on current page
 				}
 			} else {
-				this.dataService.UpdateTodo(todo)
+				// TODO: Reload todo on current page
 			}
 		} else if (tableObject.TableId == environment.todoListTableId) {
 			// Update todo list
@@ -189,7 +188,7 @@ export class AppComponent {
 				}
 
 				if (root) {
-					this.dataService.UpdateTodoList(todoList)
+					// TODO: Reload todo list on current page
 				}
 			}
 		}
@@ -201,7 +200,7 @@ export class AppComponent {
 			var appointment = ConvertTableObjectToAppointment(tableObject)
 
 			if (appointment) {
-				this.dataService.RemoveAppointment(appointment)
+				// TODO: Remove appointment on current page
 			}
 		} else if (tableObject.TableId == environment.todoTableId) {
 			// Remove todo
@@ -213,10 +212,10 @@ export class AppComponent {
 				let root = await this.dataService.GetRootOfTodo(todo)
 
 				if (root) {
-					this.dataService.UpdateTodoList(root)
+					// TODO: Remove todo list on current page
 				}
 			} else {
-				this.dataService.RemoveTodo(todo)
+				// TODO: Remove todo on current page
 			}
 		} else if (tableObject.TableId == environment.todoListTableId) {
 			// Remove todo list
@@ -228,10 +227,10 @@ export class AppComponent {
 				let root = await this.dataService.GetRootOfTodoList(todoList)
 
 				if (root) {
-					this.dataService.UpdateTodoList(root)
+					// TODO: Remove todo list on current page
 				}
 			} else {
-				this.dataService.RemoveTodoList(todoList)
+				// TODO: Remove todo list on current page
 			}
 		}
 	}

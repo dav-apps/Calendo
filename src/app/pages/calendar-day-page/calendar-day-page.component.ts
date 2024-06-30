@@ -111,6 +111,11 @@ export class CalendarDayPageComponent {
 		this.contextMenuVisible = true
 	}
 
+	removeAppointment(appointment: Appointment) {
+		let i = this.appointments.findIndex(a => a.uuid == appointment.uuid)
+		if (i != -1) this.appointments.splice(i, 1)
+	}
+
 	showEditAppointmentDialog(appointment: Appointment) {
 		let startDate = DateTime.fromSeconds(appointment.start)
 		let endDate = DateTime.fromSeconds(appointment.end)
@@ -137,7 +142,7 @@ export class CalendarDayPageComponent {
 
 	async deleteAppointment() {
 		this.deleteAppointmentDialog.hide()
-		this.dataService.RemoveAppointment(this.selectedAppointment)
+		this.removeAppointment(this.selectedAppointment)
 
 		await this.selectedAppointment.Delete()
 		this.selectedAppointment = null
@@ -180,7 +185,9 @@ export class CalendarDayPageComponent {
 			event.color
 		)
 
-		this.dataService.AddAppointment(appointment)
+		this.appointments.push(appointment)
+		this.dataService.SortAppointmentsArray(this.appointments)
+
 		this.createAppointmentDialog.hide()
 	}
 
@@ -220,7 +227,9 @@ export class CalendarDayPageComponent {
 			null
 		)
 
-		this.dataService.UpdateAppointment(appointment)
+		let i = this.appointments.findIndex(a => a.uuid == appointment.uuid)
+		if (i != -1) this.appointments[i] = appointment
+
 		this.editAppointmentDialog.hide()
 	}
 
@@ -232,8 +241,9 @@ export class CalendarDayPageComponent {
 			event.labels
 		)
 
-		this.dataService.AddTodo(todo)
 		this.todos.push(todo)
+		this.dataService.SortTodosArray(this.todos)
+
 		this.createTodoDialog.hide()
 	}
 

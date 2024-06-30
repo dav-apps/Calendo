@@ -165,12 +165,8 @@ export class TodosPageComponent {
 			event.labels
 		)
 
-		this.dataService.AddTodo(todo)
+		this.addTodo(todo)
 		this.createTodoDialog.hide()
-	}
-
-	DeleteTodo(todo: Todo) {
-		this.dataService.RemoveTodo(todo)
 	}
 
 	// This is called when a todo list in the Sort By Groups mode was updated; Update all todo lists of the same object

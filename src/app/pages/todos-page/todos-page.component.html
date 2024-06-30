@@ -28,10 +28,7 @@
 		<!-- Sort by date -->
 		<div>
 			@for (todo of todosWithoutDate; track todo.uuid) {
-			<calendo-todo-item
-				[todo]="todo"
-				(delete)="DeleteTodo(todo)"
-			></calendo-todo-item>
+			<calendo-todo-item [todo]="todo"></calendo-todo-item>
 			} @for (todoList of todoListsWithoutDate; track todoList.uuid) {
 			<calendo-todo-list-item [todoList]="todoList"></calendo-todo-list-item>
 			}
@@ -54,10 +51,7 @@
 
 			<div class="todo-day-items">
 				@for (todo of todoDay.todos; track todo.uuid) {
-				<calendo-todo-item
-					[todo]="todo"
-					(delete)="DeleteTodo(todo)"
-				></calendo-todo-item>
+				<calendo-todo-item [todo]="todo"></calendo-todo-item>
 				} @for (todoList of todoDay.todoLists; track todoList.uuid) {
 				<calendo-todo-list-item
 					[todoList]="todoList"
@@ -71,7 +65,6 @@
 			@for (todo of todosWithoutGroup; track todo.uuid) {
 			<calendo-todo-item
 				[todo]="todo"
-				(delete)="DeleteTodo(todo)"
 				[showBadge]="false"
 			></calendo-todo-item>
 			} @for (todoList of todoListsWithoutGroup; track todoList.uuid) {
@@ -92,7 +85,6 @@
 				<calendo-todo-item
 					[todo]="todo"
 					[showBadge]="false"
-					(delete)="DeleteTodo(todo)"
 				></calendo-todo-item>
 				} @for (todoList of todoGroup.todoLists; track todoList.uuid) {
 				<calendo-todo-list-item

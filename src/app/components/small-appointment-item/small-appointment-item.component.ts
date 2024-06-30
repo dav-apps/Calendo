@@ -47,8 +47,4 @@ export class SmallAppointmentItemComponent {
 			"H:mm"
 		)} - ${DateTime.fromSeconds(this.appointment.end).toFormat("H:mm")}`
 	}
-
-	Update(appointment: Appointment) {
-		this.dataService.UpdateAppointment(appointment)
-	}
 }

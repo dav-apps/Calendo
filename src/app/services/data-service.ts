@@ -23,13 +23,6 @@ export class DataService {
 	allTodos: Todo[] = []
 	allTodoLists: TodoList[] = []
 
-	//#region StartPage
-	startDaysDates: number[] = [] // Contains the timestamps of the start of the days
-	startDaysAppointments: Appointment[][] = [] // Contains the appointments for the individual days
-	startDaysTodos: Todo[][] = [] // Contains the todos for the individual days
-	startDaysTodoLists: TodoList[][] = [] // Contains the todo lists for the individual days
-	//#endregion
-
 	//#region All pages
 	sortTodosByDate: boolean = true
 	isMobile: boolean = false
@@ -41,22 +34,8 @@ export class DataService {
 	//#endregion
 
 	constructor(private settingsService: SettingsService) {
-		this.InitStartDays()
 		this.LoadAllAppointments()
 		this.LoadAllTodos()
-	}
-
-	InitStartDays() {
-		this.startDaysDates = []
-		this.startDaysAppointments = []
-		this.startDaysTodos = []
-		this.startDaysTodoLists = []
-
-		// Add the current day to the start page
-		this.startDaysDates.push(DateTime.now().startOf("day").toUnixInteger())
-		this.startDaysAppointments.push([])
-		this.startDaysTodos.push([])
-		this.startDaysTodoLists.push([])
 	}
 
 	async LoadAllAppointments() {
@@ -98,33 +77,6 @@ export class DataService {
 		this.isLoadingAllTodos = false
 		this.todosPromiseHolder.Resolve()
 	}
-
-	AddTodoList(todoList: TodoList) {}
-
-	UpdateTodoList(todoList: TodoList) {
-		this.RemoveTodoList(todoList)
-		this.AddTodoList(todoList)
-	}
-
-	RemoveTodoList(todoList: TodoList) {}
-
-	AddTodo(todo: Todo) {}
-
-	UpdateTodo(todo: Todo) {
-		this.RemoveTodo(todo)
-		this.AddTodo(todo)
-	}
-
-	RemoveTodo(todo: Todo) {}
-
-	AddAppointment(appointment: Appointment) {}
-
-	UpdateAppointment(appointment: Appointment) {
-		this.RemoveAppointment(appointment)
-		this.AddAppointment(appointment)
-	}
-
-	RemoveAppointment(appointment: Appointment) {}
 
 	SortAppointmentsArray(appointments: Appointment[]) {
 		appointments.sort((a: Appointment, b: Appointment) => {
@@ -647,15 +599,6 @@ export class DataService {
 	}
 
 	// Reload the todo lists in updatedTodoLists
-	async UpdateUpdatedTodoLists() {
-		for (let uuid of this.updatedTodoLists) {
-			let todoList = await GetTodoList(uuid)
-			if (todoList) this.UpdateTodoList(todoList)
-		}
-
-		this.updatedTodoLists = []
-	}
-
 	async GetRootOfTodo(todo: Todo): Promise<TodoList> {
 		if (!todo.list) return null
 

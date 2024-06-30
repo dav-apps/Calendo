@@ -121,6 +121,28 @@ export class AppointmentsPageComponent {
 		}
 	}
 
+	removeAppointment(appointment: Appointment) {
+		let date = DateTime.fromSeconds(appointment.start)
+		let formattedDate = date.toFormat("DDDD")
+		let isOld = date < DateTime.now()
+
+		// Check if the appointment is in appointmentDays or oldAppointmentDays
+		let appointmentDays = isOld
+			? this.oldAppointmentDays
+			: this.appointmentDays
+
+		let appointmentDay = appointmentDays.find(
+			day => day.formattedDate == formattedDate
+		)
+
+		if (appointmentDay != null) {
+			let i = appointmentDay.appointments.findIndex(
+				a => a.uuid == appointment.uuid
+			)
+			if (i != -1) appointmentDay.appointments.splice(i, 1)
+		}
+	}
+
 	async createAppointment(event: {
 		name: string
 		date: DateTime
@@ -158,7 +180,7 @@ export class AppointmentsPageComponent {
 			event.color
 		)
 
-		this.dataService.AddAppointment(appointment)
+		this.addAppointment(appointment)
 		this.createAppointmentDialog.hide()
 	}
 
@@ -170,7 +192,7 @@ export class AppointmentsPageComponent {
 
 	async deleteAppointment() {
 		this.deleteAppointmentDialog.hide()
-		this.dataService.RemoveAppointment(this.selectedAppointment)
+		this.removeAppointment(this.selectedAppointment)
 
 		await this.selectedAppointment.Delete()
 		this.selectedAppointment = null
