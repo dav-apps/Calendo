@@ -35,6 +35,11 @@ export class TodosPageComponent {
 	createTodoDialog: CreateTodoDialogComponent
 	//#endregion
 
+	//#region CreateTodoDialog
+	@ViewChild("createTodoListDialog")
+	createTodoListDialog: CreateTodoDialogComponent
+	//#endregion
+
 	//#region AddButtonContextMenu
 	@ViewChild("addButtonContextMenu")
 	addButtonContextMenu: ElementRef<ContextMenu>
@@ -205,6 +210,22 @@ export class TodosPageComponent {
 
 		this.addTodo(todo)
 		this.createTodoDialog.hide()
+	}
+
+	async createTodoList(event: {
+		name: string
+		date: DateTime
+		labels: string[]
+	}) {
+		let todoList = await TodoList.Create(
+			event.name,
+			event.date.toUnixInteger(),
+			[],
+			event.labels
+		)
+
+		this.addTodoList(todoList)
+		this.createTodoListDialog.hide()
 	}
 
 	// This is called when a todo list in the Sort By Groups mode was updated; Update all todo lists of the same object

@@ -111,7 +111,10 @@
 		<fa-icon slot="icon" [icon]="faCircleCheckLight"></fa-icon>
 	</dav-context-menu-item>
 
-	<dav-context-menu-item [value]="locale.createTodoList">
+	<dav-context-menu-item
+		[value]="locale.createTodoList"
+		(click)="addButtonContextMenuVisible = false; createTodoListDialog.show()"
+	>
 		<fa-icon slot="icon" [icon]="faListCheckLight"></fa-icon>
 	</dav-context-menu-item>
 </dav-context-menu>
@@ -119,4 +122,10 @@
 <calendo-create-todo-dialog
 	#createTodoDialog
 	(primaryButtonClick)="createTodo($event)"
+></calendo-create-todo-dialog>
+
+<calendo-create-todo-dialog
+	#createTodoListDialog
+	[list]="true"
+	(primaryButtonClick)="createTodoList($event)"
 ></calendo-create-todo-dialog>

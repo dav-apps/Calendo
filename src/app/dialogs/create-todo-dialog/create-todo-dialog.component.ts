@@ -21,6 +21,7 @@ export class CreateTodoDialogComponent {
 	actionsLocale = this.localizationService.locale.actions
 	faPlus = faPlus
 	@Input() loading: boolean = false
+	@Input() list: boolean = false
 	@Input() nameError: string = ""
 	@Input() date: DateTime = DateTime.now()
 	@Input() saveDate: boolean = false

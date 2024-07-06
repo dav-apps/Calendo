@@ -115,6 +115,7 @@ const enDefaults = {
 		},
 		createTodoDialog: {
 			headline: "Create todo",
+			listHeadline: "Create todo list",
 			nameTextfieldLabel: "Name"
 		},
 		deleteAppointmentDialog: {
@@ -269,6 +270,7 @@ const deDefaults = {
 		},
 		createTodoDialog: {
 			headline: "Todo erstellen",
+			listHeadline: "Todo-Liste erstellen",
 			nameTextfieldLabel: "Name"
 		},
 		deleteAppointmentDialog: {

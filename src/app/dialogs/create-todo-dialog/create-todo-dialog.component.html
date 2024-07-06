@@ -1,6 +1,6 @@
 <dav-dialog
 	#dialog
-	[headline]="locale.headline"
+	[headline]="list ? locale.listHeadline : locale.headline"
 	[primaryButtonText]="actionsLocale.create"
 	[defaultButtonText]="actionsLocale.cancel"
 	[visible]="visible"
