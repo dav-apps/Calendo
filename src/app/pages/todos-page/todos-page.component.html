@@ -2,7 +2,7 @@
 	<dav-header
 		size="lg"
 		addButtonVisible
-		(addButtonClick)="createTodoDialog.show()"
+		(addButtonClick)="addButtonClick($event)"
 	>
 		{{ locale.title }}
 	</dav-header>
@@ -97,6 +97,24 @@
 		} }
 	</div>
 </div>
+
+<dav-context-menu
+	#addButtonContextMenu
+	[visible]="addButtonContextMenuVisible"
+	[posX]="addButtonContextMenuPositionX"
+	[posY]="addButtonContextMenuPositionY"
+>
+	<dav-context-menu-item
+		[value]="locale.createTodo"
+		(click)="addButtonContextMenuVisible = false; createTodoDialog.show()"
+	>
+		<fa-icon slot="icon" [icon]="faCircleCheckLight"></fa-icon>
+	</dav-context-menu-item>
+
+	<dav-context-menu-item [value]="locale.createTodoList">
+		<fa-icon slot="icon" [icon]="faListCheckLight"></fa-icon>
+	</dav-context-menu-item>
+</dav-context-menu>
 
 <calendo-create-todo-dialog
 	#createTodoDialog

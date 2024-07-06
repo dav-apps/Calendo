@@ -1,7 +1,12 @@
-import { Component, ViewChild } from "@angular/core"
+import { Component, ElementRef, ViewChild, HostListener } from "@angular/core"
 import { Router } from "@angular/router"
 import { DateTime } from "luxon"
-import { faArrowRight as faArrowRightLight } from "@fortawesome/pro-light-svg-icons"
+import {
+	faCircleCheck as faCircleCheckLight,
+	faListCheck as faListCheckLight,
+	faArrowRight as faArrowRightLight
+} from "@fortawesome/pro-light-svg-icons"
+import { ContextMenu } from "dav-ui-components"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 import { CreateTodoDialogComponent } from "src/app/dialogs/create-todo-dialog/create-todo-dialog.component"
@@ -15,6 +20,8 @@ import { TodoDay, TodoGroup } from "src/app/types"
 })
 export class TodosPageComponent {
 	locale = this.localizationService.locale.todosPage
+	faCircleCheckLight = faCircleCheckLight
+	faListCheckLight = faListCheckLight
 	faArrowRightLight = faArrowRightLight
 	todosWithoutDate: Todo[] = []
 	todoListsWithoutDate: TodoList[] = []
@@ -26,6 +33,15 @@ export class TodosPageComponent {
 	//#region CreateTodoDialog
 	@ViewChild("createTodoDialog")
 	createTodoDialog: CreateTodoDialogComponent
+	//#endregion
+
+	//#region AddButtonContextMenu
+	@ViewChild("addButtonContextMenu")
+	addButtonContextMenu: ElementRef<ContextMenu>
+	addButtonContextMenuVisible: boolean = false
+	addButtonContextMenuPositionX: number = 0
+	addButtonContextMenuPositionY: number = 0
+	preventHidingAddButtonContextMenu = false
 	//#endregion
 
 	constructor(
@@ -43,6 +59,28 @@ export class TodosPageComponent {
 
 		for (let todoList of this.dataService.allTodoLists) {
 			this.addTodoList(todoList)
+		}
+	}
+
+	@HostListener("document:click", ["$event"])
+	documentClick(event: MouseEvent) {
+		if (this.preventHidingAddButtonContextMenu) {
+			this.preventHidingAddButtonContextMenu = false
+		} else if (
+			!this.addButtonContextMenu.nativeElement.contains(event.target as Node)
+		) {
+			this.addButtonContextMenuVisible = false
+		}
+	}
+
+	addButtonClick(event: CustomEvent) {
+		if (this.addButtonContextMenuVisible) {
+			this.addButtonContextMenuVisible = false
+		} else {
+			this.addButtonContextMenuPositionX = event.detail.contextMenuPosition.x
+			this.addButtonContextMenuPositionY = event.detail.contextMenuPosition.y
+			this.addButtonContextMenuVisible = true
+			this.preventHidingAddButtonContextMenu = true
 		}
 	}
 
