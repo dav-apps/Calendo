@@ -1,3 +1,4 @@
+<!--
 <li
 	class="list-group-item d-flex"
 	style="padding: 10px 0px"
@@ -8,11 +9,17 @@
 		readonly="true"
 		(update)="UpdateTodoList()"
 	></calendo-todo-list-tree>
-
-	<div class="ml-auto" style="margin-top: 3px">
-		<fab-icon-button
-			[iconProps]="menuButtonIconProps"
-			(click)="ShowDetails()"
-		></fab-icon-button>
-	</div>
 </li>
+-->
+
+<div class="container">
+	<p>{{ todoList.name }}</p>
+
+	<dav-icon-button
+		size="sm"
+		[href]="'/todolist/' + todoList.uuid"
+		(click)="navigateToTodoList($event)"
+	>
+		<fa-icon [icon]="faArrowRightLight"></fa-icon>
+	</dav-icon-button>
+</div>

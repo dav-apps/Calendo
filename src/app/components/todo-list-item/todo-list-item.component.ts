@@ -1,28 +1,26 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core"
 import { Router } from "@angular/router"
+import { faArrowRight as faArrowRightLight } from "@fortawesome/pro-light-svg-icons"
 import { TodoList } from "src/app/models/TodoList"
-import { DataService } from "../../services/data-service"
+import { DataService } from "src/app/services/data-service"
 
 @Component({
 	selector: "calendo-todo-list-item",
-	templateUrl: "./todo-list-item.component.html"
+	templateUrl: "./todo-list-item.component.html",
+	styleUrl: "./todo-list-item.component.scss"
 })
 export class TodoListItemComponent {
+	faArrowRightLight = faArrowRightLight
 	@Input()
 	todoList: TodoList = new TodoList()
 	@Output()
 	update = new EventEmitter()
-	menuButtonIconProps = {
-		iconName: "More",
-		style: {
-			fontSize: 16,
-			color: this.dataService.darkTheme ? "white" : "black"
-		}
-	}
 
 	constructor(public dataService: DataService, private router: Router) {}
 
-	ShowDetails() {
+	navigateToTodoList(event: PointerEvent) {
+		event.preventDefault()
+
 		this.router.navigate(["todolist", this.todoList.uuid])
 	}
 
