@@ -1,52 +1,24 @@
-<div class="ml-3 ms-motion-slideUpIn" style="padding-bottom: 56px">
-	<div class="d-flex my-3">
-		<button
-			type="button"
-			class="btn my-auto"
-			style="height: 30px; width: 35px; padding: 2px 0px 0px 0px"
-			(click)="GoBack()"
-		>
-			<fab-icon iconName="Back"></fab-icon>
-		</button>
-		<h4 class="my-auto ml-3 font-weight-light">
-			{{ todoList.name }}
-		</h4>
-		<button
-			type="button"
-			class="btn ml-3"
-			style="padding: 3px 6px"
-		>
-			<fab-icon iconName="Edit"></fab-icon>
-		</button>
-		<button
-			type="button"
-			class="btn ml-2"
-			style="padding: 3px 6px"
-		>
-			<fab-icon iconName="Delete"></fab-icon>
-		</button>
-	</div>
-	<div class="mx-0 pt-3 border-top">
-		<!-- Todo List metadata -->
+<div class="container slide-up-in">
+	<dav-header
+		size="lg"
+		addButtonVisible
+		backButtonVisible
+		deleteButtonVisible
+		(backButtonClick)="goBack()"
+	>
+		{{ todoList.name }}
+	</dav-header>
+
+	<div class="metadata">
 		<p *ngIf="todoList.time != 0">
-			{{ locale.date }}<span class="ml-2">{{ date }}</span>
-		</p>
-		<p style="margin-bottom: 4px" *ngIf="todoList.groups.length > 0">
-			<span>{{ locale.groups }}</span>
-			<span class="ml-2">
-				<calendo-todo-group-badge
-					*ngFor="let todoGroup of todoList.groups"
-					[groupName]="todoGroup"
-				></calendo-todo-group-badge>
-			</span>
+			{{ date }}
 		</p>
 
-		<!-- Todos list -->
-		<div class="d-flex" style="height: 40px">
-			<p class="ms-fontSize-18 mt-2">
-				{{ locale.todos }}
-			</p>
+		<!-- TODO: Group badges -->
+	</div>
 
+	<div>
+		<div>
 			<div ngbDropdown placement="top-left" style="margin-top: 7px">
 				<button
 					type="button"

@@ -8,10 +8,11 @@ import { LocalizationService } from "src/app/services/localization-service"
 import { TodoListTreeComponent } from "../../components/todo-list-tree/todo-list-tree.component"
 
 @Component({
-	templateUrl: "./todo-list-page.component.html"
+	templateUrl: "./todo-list-page.component.html",
+	styleUrl: "./todo-list-page.component.scss"
 })
 export class TodoListPageComponent {
-	locale = this.localizationService.locale.todoListDetailsPage
+	locale = this.localizationService.locale.todoListPage
 	@ViewChild("todoListTree", { static: true })
 	todoListTree: TodoListTreeComponent
 	todoList: TodoList = new TodoList()
@@ -38,9 +39,7 @@ export class TodoListPageComponent {
 			this.todoList.groups = list.groups
 			this.todoList.list = list.list
 			this.todoList.items = list.items
-			this.date = DateTime.fromSeconds(this.todoList.time).toFormat(
-				this.locale.formats.date
-			)
+			this.date = DateTime.fromSeconds(this.todoList.time).toFormat("DD")
 
 			this.todoListTree.Init()
 		})
@@ -53,13 +52,11 @@ export class TodoListPageComponent {
 			this.todoList.time = updatedTodoList.time
 			this.todoList.groups = updatedTodoList.groups
 
-			this.date = DateTime.fromSeconds(this.todoList.time).toFormat(
-				this.locale.formats.date
-			)
+			this.date = DateTime.fromSeconds(this.todoList.time).toFormat("DD")
 		}
 	}
 
-	GoBack() {
+	goBack() {
 		this.location.back()
 	}
 }

@@ -57,15 +57,9 @@ const enDefaults = {
 		noAppointments: "No appointments",
 		noTodos: "No todos"
 	},
-	todoListDetailsPage: {
-		date: "Date: ",
-		groups: "Groups: ",
-		todos: "Todos",
+	todoListPage: {
 		newTodo: "Add Todo",
-		newTodoList: "Add Todo list",
-		formats: {
-			date: "L"
-		}
+		newTodoList: "Add Todo list"
 	},
 	userPage: {
 		title: "Your Account",
@@ -211,15 +205,9 @@ const deDefaults = {
 		noAppointments: "Keine Termine",
 		noTodos: "Keine Todos"
 	},
-	todoListDetailsPage: {
-		date: "Datum: ",
-		groups: "Gruppen: ",
-		todos: "Todos",
+	todoListPage: {
 		newTodo: "Todo hinzufügen",
-		newTodoList: "Todo-Liste hinzufügen",
-		formats: {
-			date: "L"
-		}
+		newTodoList: "Todo-Liste hinzufügen"
 	},
 	userPage: {
 		title: "Dein Account",
