@@ -4,6 +4,7 @@
 		addButtonVisible
 		backButtonVisible
 		deleteButtonVisible
+		(addButtonClick)="addButtonClick($event)"
 		(backButtonClick)="goBack()"
 	>
 		{{ todoList.name }}
@@ -16,52 +17,25 @@
 
 		<!-- TODO: Group badges -->
 	</div>
-
-	<div>
-		<div>
-			<div ngbDropdown placement="top-left" style="margin-top: 7px">
-				<button
-					type="button"
-					class="btn ml-2"
-					style="height: 30px; width: 30px; padding: 2px 0px 0px 0px"
-					ngbDropdownToggle
-				>
-					<fab-icon iconName="Add"></fab-icon>
-				</button>
-
-				<div
-					ngbDropdownMenu
-					class="ms-depth-4 ms-motion-slideUpIn"
-				>
-					<button
-						class="cursor"
-						(click)="
-							todoListTree.AddInputToTodoList(
-								todoListTree.rootTodoItem,
-								false
-							)
-						"
-					>
-						{{ locale.newTodo }}
-					</button>
-					<button
-						class="cursor"
-						(click)="
-							todoListTree.AddInputToTodoList(
-								todoListTree.rootTodoItem,
-								true
-							)
-						"
-					>
-						{{ locale.newTodoList }}
-					</button>
-				</div>
-			</div>
-		</div>
-		<calendo-todo-list-tree
-			#todoListTree
-			[todoList]="todoList"
-			(update)="Update()"
-		></calendo-todo-list-tree>
-	</div>
 </div>
+
+<dav-context-menu
+	#addButtonContextMenu
+	[visible]="addButtonContextMenuVisible"
+	[posX]="addButtonContextMenuPositionX"
+	[posY]="addButtonContextMenuPositionY"
+>
+	<dav-context-menu-item
+		[value]="locale.addTodo"
+		(click)="addButtonContextMenuVisible = false"
+	>
+		<fa-icon slot="icon" [icon]="faCircleCheckLight"></fa-icon>
+	</dav-context-menu-item>
+
+	<dav-context-menu-item
+		[value]="locale.addTodoList"
+		(click)="addButtonContextMenuVisible = false"
+	>
+		<fa-icon slot="icon" [icon]="faListCheckLight"></fa-icon>
+	</dav-context-menu-item>
+</dav-context-menu>

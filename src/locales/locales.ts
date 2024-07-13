@@ -58,8 +58,8 @@ const enDefaults = {
 		noTodos: "No todos"
 	},
 	todoListPage: {
-		newTodo: "Add Todo",
-		newTodoList: "Add Todo list"
+		addTodo: "Add Todo",
+		addTodoList: "Add Todo list"
 	},
 	userPage: {
 		title: "Your Account",
@@ -206,8 +206,8 @@ const deDefaults = {
 		noTodos: "Keine Todos"
 	},
 	todoListPage: {
-		newTodo: "Todo hinzufügen",
-		newTodoList: "Todo-Liste hinzufügen"
+		addTodo: "Todo hinzufügen",
+		addTodoList: "Todo-Liste hinzufügen"
 	},
 	userPage: {
 		title: "Dein Account",

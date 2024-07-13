@@ -1,7 +1,12 @@
-import { Component, ViewChild } from "@angular/core"
+import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { Location } from "@angular/common"
 import { DateTime } from "luxon"
+import {
+	faCircleCheck as faCircleCheckLight,
+	faListCheck as faListCheckLight
+} from "@fortawesome/pro-light-svg-icons"
+import { ContextMenu } from "dav-ui-components"
 import { TodoList, GetTodoList } from "src/app/models/TodoList"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
@@ -13,10 +18,21 @@ import { TodoListTreeComponent } from "../../components/todo-list-tree/todo-list
 })
 export class TodoListPageComponent {
 	locale = this.localizationService.locale.todoListPage
+	faCircleCheckLight = faCircleCheckLight
+	faListCheckLight = faListCheckLight
 	@ViewChild("todoListTree", { static: true })
 	todoListTree: TodoListTreeComponent
 	todoList: TodoList = new TodoList()
 	date: string = ""
+
+	//#region AddButtonContextMenu
+	@ViewChild("addButtonContextMenu")
+	addButtonContextMenu: ElementRef<ContextMenu>
+	addButtonContextMenuVisible: boolean = false
+	addButtonContextMenuPositionX: number = 0
+	addButtonContextMenuPositionY: number = 0
+	preventHidingAddButtonContextMenu = false
+	//#endregion
 
 	constructor(
 		private dataService: DataService,
@@ -43,6 +59,28 @@ export class TodoListPageComponent {
 
 			this.todoListTree.Init()
 		})
+	}
+
+	@HostListener("document:click", ["$event"])
+	documentClick(event: MouseEvent) {
+		if (this.preventHidingAddButtonContextMenu) {
+			this.preventHidingAddButtonContextMenu = false
+		} else if (
+			!this.addButtonContextMenu.nativeElement.contains(event.target as Node)
+		) {
+			this.addButtonContextMenuVisible = false
+		}
+	}
+
+	addButtonClick(event: CustomEvent) {
+		if (this.addButtonContextMenuVisible) {
+			this.addButtonContextMenuVisible = false
+		} else {
+			this.addButtonContextMenuPositionX = event.detail.contextMenuPosition.x
+			this.addButtonContextMenuPositionY = event.detail.contextMenuPosition.y
+			this.addButtonContextMenuVisible = true
+			this.preventHidingAddButtonContextMenu = true
+		}
 	}
 
 	async Update(updatedTodoList?: TodoList) {
