@@ -8,6 +8,12 @@ dav-header {
 	margin-bottom: 32px;
 }
 
+.divider {
+	border-top: 1px solid rgba(var(--dav-color-outline-rgb), 0.4);
+	width: 80%;
+	max-width: 300px;
+}
+
 .todos-list {
 	display: flex;
 	flex-direction: column;

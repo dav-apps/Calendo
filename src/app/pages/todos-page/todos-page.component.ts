@@ -35,7 +35,7 @@ export class TodosPageComponent {
 	createTodoDialog: CreateTodoDialogComponent
 	//#endregion
 
-	//#region CreateTodoDialog
+	//#region CreateTodoListDialog
 	@ViewChild("createTodoListDialog")
 	createTodoListDialog: CreateTodoDialogComponent
 	//#endregion
@@ -204,7 +204,7 @@ export class TodosPageComponent {
 		let todo = await Todo.Create(
 			event.name,
 			false,
-			event.date.toUnixInteger(),
+			event.date?.toUnixInteger(),
 			event.labels
 		)
 
@@ -219,7 +219,7 @@ export class TodosPageComponent {
 	}) {
 		let todoList = await TodoList.Create(
 			event.name,
-			event.date.toUnixInteger(),
+			event.date?.toUnixInteger(),
 			[],
 			event.labels
 		)
