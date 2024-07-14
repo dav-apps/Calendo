@@ -11,6 +11,7 @@ import { TodoListTreeComponent } from "src/app/components/todo-list-tree/todo-li
 import { TodoDialogComponent } from "src/app/dialogs/todo-dialog/todo-dialog.component"
 import { TodoListAddDialogComponent } from "src/app/dialogs/todo-list-add-dialog/todo-list-add-dialog.component"
 import { DeleteTodoListDialogComponent } from "src/app/dialogs/delete-todo-list-dialog/delete-todo-list-dialog.component"
+import { Todo } from "src/app/models/Todo"
 import { TodoList, GetTodoList } from "src/app/models/TodoList"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
@@ -138,7 +139,18 @@ export class TodoListPageComponent {
 		this.editTodoListDialog.hide()
 	}
 
-	addTodo(event: { name: string }) {}
+	async addTodo(event: { name: string }) {
+		let todo = await Todo.Create(
+			event.name,
+			false,
+			null,
+			null,
+			this.todoList.uuid
+		)
+
+		await this.todoList.AddItem(todo)
+		this.addTodoDialog.hide()
+	}
 
 	addTodoList(event: { name: string }) {}
 
