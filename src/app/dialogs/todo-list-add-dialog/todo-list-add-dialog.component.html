@@ -1,0 +1,23 @@
+<dav-dialog
+	#dialog
+	[headline]="mode == 'todo' ? locale.addTodoHeadline : locale.addTodoListHeadline"
+	[primaryButtonText]="actionsLocale.add"
+	[defaultButtonText]="actionsLocale.cancel"
+	[visible]="visible"
+	[loading]="loading"
+	maxWidth="300"
+	(primaryButtonClick)="submit()"
+	(defaultButtonClick)="visible = false"
+>
+	<form>
+		<div class="dialog-formfield-container">
+			<dav-textfield
+				[value]="name"
+				[label]="locale.nameTextfieldLabel"
+				[disabled]="loading"
+				[errorMessage]="nameError"
+				(change)="nameTextfieldChange($event)"
+			></dav-textfield>
+		</div>
+	</form>
+</dav-dialog>

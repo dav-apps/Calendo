@@ -107,15 +107,20 @@ const enDefaults = {
 			editHeadline: "Edit appointment",
 			nameTextfieldLabel: "Name"
 		},
+		deleteAppointmentDialog: {
+			headline: "Delete appointment",
+			description: "Are you sure you want to delete this appointment?"
+		},
 		todoDialog: {
 			createTodoHeadline: "Create todo",
 			createTodoListHeadline: "Create todo list",
 			editTodoListHeadline: "Edit todo list",
 			nameTextfieldLabel: "Name"
 		},
-		deleteAppointmentDialog: {
-			headline: "Delete appointment",
-			description: "Are you sure you want to delete this appointment?"
+		todoListAddDialog: {
+			addTodoHeadline: "Add todo",
+			addTodoListHeadline: "Add todo list",
+			nameTextfieldLabel: "Name"
 		},
 		deleteTodoListDialog: {
 			headline: "Delete todo list",
@@ -128,6 +133,7 @@ const enDefaults = {
 		}
 	},
 	actions: {
+		add: "Add",
 		create: "Create",
 		edit: "Edit",
 		save: "Save",
@@ -262,16 +268,21 @@ const deDefaults = {
 			editHeadline: "Termin bearbeiten",
 			nameTextfieldLabel: "Name"
 		},
+		deleteAppointmentDialog: {
+			headline: "Termin löschen",
+			description:
+				"Bist du dir sicher, dass du diesen Termin löschen möchtest?"
+		},
 		todoDialog: {
 			createTodoHeadline: "Todo erstellen",
 			createTodoListHeadline: "Todo-Liste erstellen",
 			editTodoListHeadline: "Todo-Liste bearbeiten",
 			nameTextfieldLabel: "Name"
 		},
-		deleteAppointmentDialog: {
-			headline: "Termin löschen",
-			description:
-				"Bist du dir sicher, dass du diesen Termin löschen möchtest?"
+		todoListAddDialog: {
+			addTodoHeadline: "Todo hinzufügen",
+			addTodoListHeadline: "Todo-Liste hinzufügen",
+			nameTextfieldLabel: "Name"
 		},
 		deleteTodoListDialog: {
 			headline: "Todo-Liste löschen",
@@ -284,6 +295,7 @@ const deDefaults = {
 		}
 	},
 	actions: {
+		add: "Hinzufügen",
 		create: "Erstellen",
 		edit: "Bearbeiten",
 		save: "Speichern",
