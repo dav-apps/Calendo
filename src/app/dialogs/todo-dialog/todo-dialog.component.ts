@@ -17,17 +17,19 @@ import { LocalizationService } from "src/app/services/localization-service"
 	styleUrl: "./todo-dialog.component.scss"
 })
 export class TodoDialogComponent {
-	locale = this.localizationService.locale.dialogs.createTodoDialog
+	locale = this.localizationService.locale.dialogs.todoDialog
 	actionsLocale = this.localizationService.locale.actions
 	faPlus = faPlus
 	@Input() loading: boolean = false
-	@Input() list: boolean = false
+	@Input() mode: "createTodo" | "createTodoList" | "editTodoList" =
+		"createTodo"
 	@Input() nameError: string = ""
 	@Input() date: DateTime = DateTime.now()
 	@Input() saveDate: boolean = false
 	@Output() primaryButtonClick = new EventEmitter()
 	@ViewChild("dialog") dialog: ElementRef<Dialog>
 	visible: boolean = false
+	headline: string = this.locale.createTodoHeadline
 	name: string = ""
 	label: string = ""
 	labels: string[] = []
@@ -43,6 +45,18 @@ export class TodoDialogComponent {
 	}
 
 	show() {
+		switch (this.mode) {
+			case "createTodoList":
+				this.headline = this.locale.createTodoListHeadline
+				break
+			case "editTodoList":
+				this.headline = this.locale.editTodoListHeadline
+				break
+			default:
+				this.headline = this.locale.createTodoHeadline
+				break
+		}
+
 		this.name = ""
 		this.visible = true
 	}

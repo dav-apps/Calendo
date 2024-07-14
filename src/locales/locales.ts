@@ -107,9 +107,10 @@ const enDefaults = {
 			editHeadline: "Edit appointment",
 			nameTextfieldLabel: "Name"
 		},
-		createTodoDialog: {
-			headline: "Create todo",
-			listHeadline: "Create todo list",
+		todoDialog: {
+			createTodoHeadline: "Create todo",
+			createTodoListHeadline: "Create todo list",
+			editTodoListHeadline: "Edit todo list",
 			nameTextfieldLabel: "Name"
 		},
 		deleteAppointmentDialog: {
@@ -261,9 +262,10 @@ const deDefaults = {
 			editHeadline: "Termin bearbeiten",
 			nameTextfieldLabel: "Name"
 		},
-		createTodoDialog: {
-			headline: "Todo erstellen",
-			listHeadline: "Todo-Liste erstellen",
+		todoDialog: {
+			createTodoHeadline: "Todo erstellen",
+			createTodoListHeadline: "Todo-Liste erstellen",
+			editTodoListHeadline: "Todo-Liste bearbeiten",
 			nameTextfieldLabel: "Name"
 		},
 		deleteAppointmentDialog: {
