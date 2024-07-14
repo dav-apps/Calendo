@@ -38,7 +38,7 @@ import { TodoListTreeComponent } from "./components/todo-list-tree/todo-list-tre
 
 // Dialogs
 import { AppointmentDialogComponent } from "./dialogs/appointment-dialog/appointment-dialog.component"
-import { CreateTodoDialogComponent } from "./dialogs/create-todo-dialog/create-todo-dialog.component"
+import { TodoDialogComponent } from "./dialogs/todo-dialog/todo-dialog.component"
 import { DeleteAppointmentDialogComponent } from "./dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
 import { DeleteTodoListDialogComponent } from "./dialogs/delete-todo-list-dialog/delete-todo-list-dialog.component"
 import { LogoutDialogComponent } from "./dialogs/logout-dialog/logout-dialog.component"
@@ -73,7 +73,7 @@ import { SettingsService } from "./services/settings-service"
 		TodoListTreeComponent,
 		// Dialogs
 		AppointmentDialogComponent,
-		CreateTodoDialogComponent,
+		TodoDialogComponent,
 		DeleteAppointmentDialogComponent,
 		DeleteTodoListDialogComponent,
 		LogoutDialogComponent

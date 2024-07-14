@@ -12,11 +12,11 @@ import { Dialog } from "dav-ui-components"
 import { LocalizationService } from "src/app/services/localization-service"
 
 @Component({
-	selector: "calendo-create-todo-dialog",
-	templateUrl: "./create-todo-dialog.component.html",
-	styleUrl: "./create-todo-dialog.component.scss"
+	selector: "calendo-todo-dialog",
+	templateUrl: "./todo-dialog.component.html",
+	styleUrl: "./todo-dialog.component.scss"
 })
-export class CreateTodoDialogComponent {
+export class TodoDialogComponent {
 	locale = this.localizationService.locale.dialogs.createTodoDialog
 	actionsLocale = this.localizationService.locale.actions
 	faPlus = faPlus

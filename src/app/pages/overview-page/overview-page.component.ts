@@ -10,7 +10,7 @@ import { Appointment } from "src/app/models/Appointment"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 import { AppointmentDialogComponent } from "src/app/dialogs/appointment-dialog/appointment-dialog.component"
-import { CreateTodoDialogComponent } from "src/app/dialogs/create-todo-dialog/create-todo-dialog.component"
+import { TodoDialogComponent } from "src/app/dialogs/todo-dialog/todo-dialog.component"
 import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
@@ -60,7 +60,7 @@ export class OverviewPageComponent {
 
 	//#region CreateTodoDialog
 	@ViewChild("createTodoDialog")
-	createTodoDialog: CreateTodoDialogComponent
+	createTodoDialog: TodoDialogComponent
 	//#endregion
 
 	//#region DeleteAppointmentDialog

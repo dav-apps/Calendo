@@ -9,7 +9,7 @@ import {
 import { ContextMenu } from "dav-ui-components"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
-import { CreateTodoDialogComponent } from "src/app/dialogs/create-todo-dialog/create-todo-dialog.component"
+import { TodoDialogComponent } from "src/app/dialogs/todo-dialog/todo-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { TodoDay, TodoGroup } from "src/app/types"
@@ -41,12 +41,12 @@ export class TodosPageComponent {
 
 	//#region CreateTodoDialog
 	@ViewChild("createTodoDialog")
-	createTodoDialog: CreateTodoDialogComponent
+	createTodoDialog: TodoDialogComponent
 	//#endregion
 
 	//#region CreateTodoListDialog
 	@ViewChild("createTodoListDialog")
-	createTodoListDialog: CreateTodoDialogComponent
+	createTodoListDialog: TodoDialogComponent
 	//#endregion
 
 	constructor(
