@@ -109,11 +109,17 @@ export class Todo {
 			{
 				name: environment.todoCompletedKey,
 				value: this.completed.toString()
-			},
-			{ name: environment.todoTimeKey, value: this.time.toString() }
+			}
 		]
 
-		if (this.groups.length > 0) {
+		if (this.time != null && this.time != 0) {
+			properties.push({
+				name: environment.todoTimeKey,
+				value: this.time.toString()
+			})
+		}
+
+		if (this.groups?.length > 0) {
 			properties.push({
 				name: environment.todoGroupsKey,
 				value: this.groups.join(",")

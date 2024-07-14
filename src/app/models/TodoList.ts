@@ -63,6 +63,11 @@ export class TodoList {
 		await this.Save()
 	}
 
+	async AddItem(item: Todo | TodoList) {
+		this.items.push(item)
+		await this.Save()
+	}
+
 	async SetItems(items: (Todo | TodoList)[]) {
 		this.items = items
 		await this.Save()
