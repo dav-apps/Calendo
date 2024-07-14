@@ -116,6 +116,11 @@ const enDefaults = {
 			headline: "Delete appointment",
 			description: "Are you sure you want to delete this appointment?"
 		},
+		deleteTodoListDialog: {
+			headline: "Delete todo list",
+			description:
+				"Are you sure? All associated todos and todo lists will be removed."
+		},
 		logoutDialog: {
 			headline: "Log out",
 			description: "Are you sure you want to log out?"
@@ -265,6 +270,11 @@ const deDefaults = {
 			headline: "Termin löschen",
 			description:
 				"Bist du dir sicher, dass du diesen Termin löschen möchtest?"
+		},
+		deleteTodoListDialog: {
+			headline: "Todo-Liste löschen",
+			description:
+				"Bist du sicher? Alle dazugehörigen Todos und Todo-Listen werden entfernt."
 		},
 		logoutDialog: {
 			headline: "Abmelden",
