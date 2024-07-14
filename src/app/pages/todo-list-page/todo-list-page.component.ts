@@ -9,6 +9,7 @@ import {
 import { ContextMenu } from "dav-ui-components"
 import { TodoListTreeComponent } from "src/app/components/todo-list-tree/todo-list-tree.component"
 import { TodoDialogComponent } from "src/app/dialogs/todo-dialog/todo-dialog.component"
+import { TodoListAddDialogComponent } from "src/app/dialogs/todo-list-add-dialog/todo-list-add-dialog.component"
 import { DeleteTodoListDialogComponent } from "src/app/dialogs/delete-todo-list-dialog/delete-todo-list-dialog.component"
 import { TodoList, GetTodoList } from "src/app/models/TodoList"
 import { DataService } from "src/app/services/data-service"
@@ -39,6 +40,16 @@ export class TodoListPageComponent {
 	//#region EditTodoListDialog
 	@ViewChild("editTodoListDialog")
 	editTodoListDialog: TodoDialogComponent
+	//#endregion
+
+	//#region AddTodoDialog
+	@ViewChild("addTodoDialog")
+	addTodoDialog: TodoListAddDialogComponent
+	//#endregion
+
+	//#region AddTodoListDialog
+	@ViewChild("addTodoListDialog")
+	addTodoListDialog: TodoListAddDialogComponent
 	//#endregion
 
 	//#region DeleteTodoListDialog
@@ -127,16 +138,9 @@ export class TodoListPageComponent {
 		this.editTodoListDialog.hide()
 	}
 
-	async Update(updatedTodoList?: TodoList) {
-		if (updatedTodoList) {
-			// Update the local properties
-			this.todoList.name = updatedTodoList.name
-			this.todoList.time = updatedTodoList.time
-			this.todoList.groups = updatedTodoList.groups
+	addTodo(event: { name: string }) {}
 
-			this.date = DateTime.fromSeconds(this.todoList.time).toFormat("DD")
-		}
-	}
+	addTodoList(event: { name: string }) {}
 
 	async deleteTodoList() {
 		await this.todoList.Delete()

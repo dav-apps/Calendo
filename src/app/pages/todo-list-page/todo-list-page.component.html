@@ -36,14 +36,14 @@
 >
 	<dav-context-menu-item
 		[value]="locale.addTodo"
-		(click)="addButtonContextMenuVisible = false"
+		(click)="addButtonContextMenuVisible = false; addTodoDialog.show()"
 	>
 		<fa-icon slot="icon" [icon]="faCircleCheckLight"></fa-icon>
 	</dav-context-menu-item>
 
 	<dav-context-menu-item
 		[value]="locale.addTodoList"
-		(click)="addButtonContextMenuVisible = false"
+		(click)="addButtonContextMenuVisible = false; addTodoListDialog.show()"
 	>
 		<fa-icon slot="icon" [icon]="faListCheckLight"></fa-icon>
 	</dav-context-menu-item>
@@ -54,6 +54,17 @@
 	mode="editTodoList"
 	(primaryButtonClick)="updateTodoList($event)"
 ></calendo-todo-dialog>
+
+<calendo-todo-list-add-dialog
+	#addTodoDialog
+	(primaryButtonClick)="addTodo($event)"
+></calendo-todo-list-add-dialog>
+
+<calendo-todo-list-add-dialog
+	#addTodoListDialog
+	mode="todoList"
+	(primaryButtonClick)="addTodoList($event)"
+></calendo-todo-list-add-dialog>
 
 <calendo-delete-todo-list-dialog
 	#deleteTodoListDialog
