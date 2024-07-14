@@ -94,6 +94,11 @@ export class TodoDialogComponent {
 		this.labels.push(label)
 	}
 
+	removeLabel(label: string) {
+		let i = this.labels.findIndex(l => l == label)
+		if (i != -1) this.labels.splice(i, 1)
+	}
+
 	submit() {
 		this.primaryButtonClick.emit({
 			name: this.name,

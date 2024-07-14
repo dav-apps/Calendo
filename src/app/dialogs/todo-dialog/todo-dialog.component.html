@@ -49,7 +49,9 @@
 		@if (labels.length > 0) {
 		<div class="labels-container">
 			@for (label of labels; track label) {
-			<dav-badge tonal color="secondary">{{ label }}</dav-badge>
+			<dav-badge tonal color="secondary" (click)="removeLabel(label)">
+				{{ label }}
+			</dav-badge>
 			}
 		</div>
 		}
