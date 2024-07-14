@@ -7,10 +7,11 @@ import {
 	faListCheck as faListCheckLight
 } from "@fortawesome/pro-light-svg-icons"
 import { ContextMenu } from "dav-ui-components"
+import { TodoListTreeComponent } from "../../components/todo-list-tree/todo-list-tree.component"
+import { DeleteTodoListDialogComponent } from "src/app/dialogs/delete-todo-list-dialog/delete-todo-list-dialog.component"
 import { TodoList, GetTodoList } from "src/app/models/TodoList"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
-import { TodoListTreeComponent } from "../../components/todo-list-tree/todo-list-tree.component"
 
 @Component({
 	templateUrl: "./todo-list-page.component.html",
@@ -32,6 +33,11 @@ export class TodoListPageComponent {
 	addButtonContextMenuPositionX: number = 0
 	addButtonContextMenuPositionY: number = 0
 	preventHidingAddButtonContextMenu = false
+	//#endregion
+
+	//#region DeleteTodoListDialog
+	@ViewChild("deleteTodoListDialog")
+	deleteTodoListDialog: DeleteTodoListDialogComponent
 	//#endregion
 
 	constructor(
@@ -57,7 +63,7 @@ export class TodoListPageComponent {
 			this.todoList.items = list.items
 			this.date = DateTime.fromSeconds(this.todoList.time).toFormat("DD")
 
-			this.todoListTree.Init()
+			//this.todoListTree.Init()
 		})
 	}
 
@@ -96,5 +102,10 @@ export class TodoListPageComponent {
 
 	goBack() {
 		this.location.back()
+	}
+
+	async deleteTodoList() {
+		await this.todoList.Delete()
+		this.goBack()
 	}
 }

@@ -6,6 +6,7 @@
 		deleteButtonVisible
 		(addButtonClick)="addButtonClick($event)"
 		(backButtonClick)="goBack()"
+		(deleteButtonClick)="deleteTodoListDialog.show()"
 	>
 		{{ todoList.name }}
 	</dav-header>
@@ -39,3 +40,8 @@
 		<fa-icon slot="icon" [icon]="faListCheckLight"></fa-icon>
 	</dav-context-menu-item>
 </dav-context-menu>
+
+<calendo-delete-todo-list-dialog
+	#deleteTodoListDialog
+	(primaryButtonClick)="deleteTodoList()"
+></calendo-delete-todo-list-dialog>

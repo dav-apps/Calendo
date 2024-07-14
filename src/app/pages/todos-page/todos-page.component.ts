@@ -30,6 +30,15 @@ export class TodosPageComponent {
 	todoListsWithoutGroup: TodoList[] = []
 	todoGroups: TodoGroup[] = []
 
+	//#region AddButtonContextMenu
+	@ViewChild("addButtonContextMenu")
+	addButtonContextMenu: ElementRef<ContextMenu>
+	addButtonContextMenuVisible: boolean = false
+	addButtonContextMenuPositionX: number = 0
+	addButtonContextMenuPositionY: number = 0
+	preventHidingAddButtonContextMenu = false
+	//#endregion
+
 	//#region CreateTodoDialog
 	@ViewChild("createTodoDialog")
 	createTodoDialog: CreateTodoDialogComponent
@@ -38,15 +47,6 @@ export class TodosPageComponent {
 	//#region CreateTodoListDialog
 	@ViewChild("createTodoListDialog")
 	createTodoListDialog: CreateTodoDialogComponent
-	//#endregion
-
-	//#region AddButtonContextMenu
-	@ViewChild("addButtonContextMenu")
-	addButtonContextMenu: ElementRef<ContextMenu>
-	addButtonContextMenuVisible: boolean = false
-	addButtonContextMenuPositionX: number = 0
-	addButtonContextMenuPositionY: number = 0
-	preventHidingAddButtonContextMenu = false
 	//#endregion
 
 	constructor(
