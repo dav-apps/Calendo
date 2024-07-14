@@ -7,7 +7,8 @@ import {
 	faListCheck as faListCheckLight
 } from "@fortawesome/pro-light-svg-icons"
 import { ContextMenu } from "dav-ui-components"
-import { TodoListTreeComponent } from "../../components/todo-list-tree/todo-list-tree.component"
+import { TodoListTreeComponent } from "src/app/components/todo-list-tree/todo-list-tree.component"
+import { TodoDialogComponent } from "src/app/dialogs/todo-dialog/todo-dialog.component"
 import { DeleteTodoListDialogComponent } from "src/app/dialogs/delete-todo-list-dialog/delete-todo-list-dialog.component"
 import { TodoList, GetTodoList } from "src/app/models/TodoList"
 import { DataService } from "src/app/services/data-service"
@@ -33,6 +34,11 @@ export class TodoListPageComponent {
 	addButtonContextMenuPositionX: number = 0
 	addButtonContextMenuPositionY: number = 0
 	preventHidingAddButtonContextMenu = false
+	//#endregion
+
+	//#region EditTodoListDialog
+	@ViewChild("editTodoListDialog")
+	editTodoListDialog: TodoDialogComponent
 	//#endregion
 
 	//#region DeleteTodoListDialog
@@ -89,6 +95,38 @@ export class TodoListPageComponent {
 		}
 	}
 
+	showEditTodoListDialog() {
+		this.editTodoListDialog.name = this.todoList.name
+		this.editTodoListDialog.labels = this.todoList.groups
+
+		if (this.todoList.time != 0) {
+			this.editTodoListDialog.date = DateTime.fromSeconds(this.todoList.time)
+			this.editTodoListDialog.saveDate = true
+		} else {
+			this.editTodoListDialog.saveDate = false
+		}
+
+		this.editTodoListDialog.show()
+	}
+
+	async updateTodoList(event: {
+		name: string
+		date: DateTime
+		labels: string[]
+	}) {
+		if (event.date != null) {
+			this.date = DateTime.fromSeconds(this.todoList.time).toFormat("DD")
+		}
+
+		await this.todoList.Update(
+			event.name,
+			event.date?.toUnixInteger() ?? 0,
+			event.labels
+		)
+
+		this.editTodoListDialog.hide()
+	}
+
 	async Update(updatedTodoList?: TodoList) {
 		if (updatedTodoList) {
 			// Update the local properties
@@ -100,12 +138,12 @@ export class TodoListPageComponent {
 		}
 	}
 
-	goBack() {
-		this.location.back()
-	}
-
 	async deleteTodoList() {
 		await this.todoList.Delete()
 		this.goBack()
+	}
+
+	goBack() {
+		this.location.back()
 	}
 }

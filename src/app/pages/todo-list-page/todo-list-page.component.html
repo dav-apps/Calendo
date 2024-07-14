@@ -3,9 +3,11 @@
 		size="lg"
 		addButtonVisible
 		backButtonVisible
+		editButtonVisible
 		deleteButtonVisible
 		(addButtonClick)="addButtonClick($event)"
 		(backButtonClick)="goBack()"
+		(editButtonClick)="showEditTodoListDialog()"
 		(deleteButtonClick)="deleteTodoListDialog.show()"
 	>
 		{{ todoList.name }}
@@ -46,6 +48,12 @@
 		<fa-icon slot="icon" [icon]="faListCheckLight"></fa-icon>
 	</dav-context-menu-item>
 </dav-context-menu>
+
+<calendo-todo-dialog
+	#editTodoListDialog
+	mode="editTodoList"
+	(primaryButtonClick)="updateTodoList($event)"
+></calendo-todo-dialog>
 
 <calendo-delete-todo-list-dialog
 	#deleteTodoListDialog

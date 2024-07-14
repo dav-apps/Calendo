@@ -23,16 +23,16 @@ export class TodoDialogComponent {
 	@Input() loading: boolean = false
 	@Input() mode: "createTodo" | "createTodoList" | "editTodoList" =
 		"createTodo"
+	@Input() name: string = ""
 	@Input() nameError: string = ""
 	@Input() date: DateTime = DateTime.now()
 	@Input() saveDate: boolean = false
+	@Input() labels: string[] = []
 	@Output() primaryButtonClick = new EventEmitter()
 	@ViewChild("dialog") dialog: ElementRef<Dialog>
 	visible: boolean = false
 	headline: string = this.locale.createTodoHeadline
-	name: string = ""
 	label: string = ""
-	labels: string[] = []
 
 	constructor(private localizationService: LocalizationService) {}
 
@@ -47,17 +47,18 @@ export class TodoDialogComponent {
 	show() {
 		switch (this.mode) {
 			case "createTodoList":
+				this.name = ""
 				this.headline = this.locale.createTodoListHeadline
 				break
 			case "editTodoList":
 				this.headline = this.locale.editTodoListHeadline
 				break
 			default:
+				this.name = ""
 				this.headline = this.locale.createTodoHeadline
 				break
 		}
 
-		this.name = ""
 		this.visible = true
 	}
 
