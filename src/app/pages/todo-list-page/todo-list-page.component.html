@@ -12,11 +12,17 @@
 	</dav-header>
 
 	<div class="metadata">
-		<p *ngIf="todoList.time != 0">
+		@if (todoList.time != 0) {
+		<p>
 			{{ date }}
 		</p>
-
-		<!-- TODO: Group badges -->
+		} @if (todoList.groups.length > 0) {
+		<div class="labels-container">
+			@for (group of todoList.groups; track group) {
+			<dav-badge tonal color="secondary">{{ group }}</dav-badge>
+			}
+		</div>
+		}
 	</div>
 </div>
 
