@@ -42,7 +42,14 @@ export class Todo {
 		notificationUuid: string = null,
 		uuid: string = null
 	): Promise<Todo> {
-		let todo = new Todo(name, completed, time, groups, list, notificationUuid)
+		let todo = new Todo(
+			name,
+			completed,
+			time,
+			groups ?? [],
+			list,
+			notificationUuid
+		)
 		todo.uuid = uuid
 		await todo.Save()
 		return todo
@@ -126,7 +133,7 @@ export class Todo {
 			})
 		}
 
-		if (this.list) {
+		if (this.list != null) {
 			properties.push({
 				name: environment.todoListKey,
 				value: this.list

@@ -37,7 +37,7 @@ export class TodoList {
 		list: string = null,
 		uuid: string = null
 	): Promise<TodoList> {
-		let todoList = new TodoList(name, time, items, groups, list)
+		let todoList = new TodoList(name, time, items ?? [], groups ?? [], list)
 		todoList.uuid = uuid
 		await todoList.Save()
 		return todoList
@@ -91,9 +91,15 @@ export class TodoList {
 		}
 
 		let properties: Property[] = [
-			{ name: environment.todoListNameKey, value: this.name },
-			{ name: environment.todoListTimeKey, value: this.time.toString() }
+			{ name: environment.todoListNameKey, value: this.name }
 		]
+
+		if (this.time != null && this.time != 0) {
+			properties.push({
+				name: environment.todoListTimeKey,
+				value: this.time.toString()
+			})
+		}
 
 		// Create the items string
 		let itemUuids: string[] = []
@@ -108,13 +114,15 @@ export class TodoList {
 		await tableObject.RemoveProperty(environment.todoListTodoListsKey)
 
 		// Groups
-		properties.push({
-			name: environment.todoListGroupsKey,
-			value: this.groups.join(",")
-		})
+		if (this.groups?.length > 0) {
+			properties.push({
+				name: environment.todoListGroupsKey,
+				value: this.groups.join(",")
+			})
+		}
 
 		// List
-		if (this.list) {
+		if (this.list != null) {
 			properties.push({
 				name: environment.todoListListKey,
 				value: this.list

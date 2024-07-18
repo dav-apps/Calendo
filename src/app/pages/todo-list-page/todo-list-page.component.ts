@@ -152,7 +152,18 @@ export class TodoListPageComponent {
 		this.addTodoDialog.hide()
 	}
 
-	addTodoList(event: { name: string }) {}
+	async addTodoList(event: { name: string }) {
+		let todoList = await TodoList.Create(
+			event.name,
+			null,
+			null,
+			null,
+			this.todoList.uuid
+		)
+
+		await this.todoList.AddItem(todoList)
+		this.addTodoListDialog.hide()
+	}
 
 	async deleteTodoList() {
 		await this.todoList.Delete()
