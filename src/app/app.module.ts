@@ -35,6 +35,7 @@ import { TodoGroupBadgeComponent } from "./components/todo-group-badge/todo-grou
 import { SetTodoGroupsComponent } from "./components/set-todo-groups/set-todo-groups.component"
 import { SetNameComponent } from "./components/set-name/set-name.component"
 import { TodoListTreeComponent } from "./components/todo-list-tree/todo-list-tree.component"
+import { TodoListTreeItemComponent } from "./components/todo-list-tree-item/todo-list-tree-item.component"
 
 // Dialogs
 import { AppointmentDialogComponent } from "./dialogs/appointment-dialog/appointment-dialog.component"
@@ -72,6 +73,7 @@ import { SettingsService } from "./services/settings-service"
 		SetTodoGroupsComponent,
 		SetNameComponent,
 		TodoListTreeComponent,
+		TodoListTreeItemComponent,
 		// Dialogs
 		AppointmentDialogComponent,
 		DeleteAppointmentDialogComponent,
