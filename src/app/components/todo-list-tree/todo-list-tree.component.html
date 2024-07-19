@@ -1,5 +1,13 @@
-<div class="container">
-	@for (item of todoList.items; track item.uuid) {
-	<div>{{ item.name }}</div>
-	}
+<div
+	class="container"
+	dragula="TODOS"
+	[(dragulaModel)]="todoList.items"
+	(dragulaModelChange)="todoDragged($event)"
+>
+	@for (item of todoList.items; track item.uuid) { @if (!isItemTodoList(item))
+	{
+	<calendo-todo-item [todo]="item"></calendo-todo-item>
+	} @else {
+		<div>{{ item.name }}</div>
+	} }
 </div>

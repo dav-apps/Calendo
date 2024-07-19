@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core"
 import { faPlus } from "@fortawesome/pro-light-svg-icons"
+import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 
 @Component({
@@ -13,4 +14,12 @@ export class TodoListTreeComponent {
 	@Input() showRoot: boolean = false
 	@Input() readonly: boolean = false
 	@Output() update = new EventEmitter()
+
+	todoDragged(event: (Todo | TodoList)[]) {
+		this.todoList.SetItems(event)
+	}
+
+	isItemTodoList(item: Todo | TodoList) {
+		return item instanceof TodoList
+	}
 }
