@@ -72,6 +72,11 @@ export class TodoListPageComponent {
 	editSubTodoListDialog: TodoListSubItemDialogComponent
 	//#endregion
 
+	//#region DeleteSubTodoListDialog
+	@ViewChild("deleteSubTodoListDialog")
+	deleteSubTodoListDialog: DeleteTodoListDialogComponent
+	//#endregion
+
 	//#region DeleteTodoListDialog
 	@ViewChild("deleteTodoListDialog")
 	deleteTodoListDialog: DeleteTodoListDialogComponent
@@ -178,6 +183,11 @@ export class TodoListPageComponent {
 		this.editSubTodoListDialog.show()
 	}
 
+	showDeleteSubTodoListDialog() {
+		this.moreButtonContextMenuVisible = false
+		this.deleteSubTodoListDialog.show()
+	}
+
 	async updateTodoList(event: {
 		name: string
 		date: DateTime
@@ -227,6 +237,16 @@ export class TodoListPageComponent {
 		this.editSubTodoListDialog.hide()
 	}
 
+	async deleteSubTodoList() {
+		await this.moreButtonContextMenuSelectedItem.Delete()
+		this.removeItem(
+			this.moreButtonContextMenuSelectedItem.uuid,
+			this.todoList
+		)
+		this.moreButtonContextMenuSelectedItem = null
+		this.deleteSubTodoListDialog.hide()
+	}
+
 	async deleteTodoList() {
 		await this.todoList.Delete()
 		this.goBack()
@@ -234,5 +254,20 @@ export class TodoListPageComponent {
 
 	goBack() {
 		this.location.back()
+	}
+
+	async removeItem(itemUuid: string, parent: TodoList) {
+		for (let i = 0; i < parent.items.length; i++) {
+			let item = parent.items[i]
+
+			if (item.uuid == itemUuid) {
+				// Remove the item & save the new item list
+				parent.items.splice(i, 1)
+				await parent.SetItems(parent.items)
+				break
+			} else if (item instanceof TodoList) {
+				await this.removeItem(itemUuid, item)
+			}
+		}
 	}
 }

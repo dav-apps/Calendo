@@ -73,6 +73,7 @@
 
 	<dav-context-menu-item
 		[value]="actionsLocale.delete"
+		(click)="showDeleteSubTodoListDialog()"
 	>
 		<fa-icon slot="icon" [icon]="faTrash"></fa-icon>
 	</dav-context-menu-item>
@@ -100,6 +101,11 @@
 	mode="editTodoList"
 	(primaryButtonClick)="updateSubTodoList($event)"
 ></calendo-todo-list-sub-item-dialog>
+
+<calendo-delete-todo-list-dialog
+	#deleteSubTodoListDialog
+	(primaryButtonClick)="deleteSubTodoList()"
+></calendo-delete-todo-list-dialog>
 
 <calendo-delete-todo-list-dialog
 	#deleteTodoListDialog

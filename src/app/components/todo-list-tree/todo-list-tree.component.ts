@@ -13,7 +13,6 @@ export class TodoListTreeComponent {
 	@Input() todoList: TodoList = new TodoList()
 	@Input() showRoot: boolean = false
 	@Input() readonly: boolean = false
-	@Output() update = new EventEmitter()
 	@Output() addButtonClick = new EventEmitter()
 	@Output() moreButtonClick = new EventEmitter()
 
