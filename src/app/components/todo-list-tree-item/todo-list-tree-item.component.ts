@@ -1,4 +1,5 @@
-import { Component, Input } from "@angular/core"
+import { Component, Input, Output, EventEmitter } from "@angular/core"
+import { faPlus } from "@fortawesome/pro-light-svg-icons"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 
@@ -8,11 +9,14 @@ import { TodoList } from "src/app/models/TodoList"
 	styleUrl: "./todo-list-tree-item.component.scss"
 })
 export class TodoListTreeItemComponent {
+	faPlus = faPlus
 	@Input() item: Todo | TodoList
+	@Output() addTodo = new EventEmitter()
+	@Output() addTodoList = new EventEmitter()
 	subItems: (Todo | TodoList)[] = []
 
-	constructor() {
-		if (!this.isItemTodoList) {
+	ngOnInit() {
+		if (this.isItemTodoList) {
 			this.subItems = (this.item as TodoList).items
 		}
 	}

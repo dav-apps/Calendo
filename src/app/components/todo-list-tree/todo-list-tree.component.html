@@ -5,6 +5,10 @@
 	(dragulaModelChange)="todoDragged($event)"
 >
 	@for (item of todoList.items; track item.uuid) {
-	<calendo-todo-list-tree-item [item]="item"></calendo-todo-list-tree-item>
+	<calendo-todo-list-tree-item
+		[item]="item"
+		(addTodo)="addTodo.emit($event)"
+		(addTodoList)="addTodoList.emit($event)"
+	></calendo-todo-list-tree-item>
 	}
 </div>

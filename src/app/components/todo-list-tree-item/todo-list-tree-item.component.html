@@ -1,8 +1,21 @@
 @if (!isItemTodoList(item)) {
 <calendo-todo-item [todo]="item"></calendo-todo-item>
 } @else {
-<div>{{ item.name }}</div>
+<div class="list-header">
+	<p>{{ item.name }}</p>
 
-@for (subItem of subItems; track item.uuid) {
-<calendo-todo-list-tree-item [item]="subItem"></calendo-todo-list-tree-item>
-} }
+	<dav-icon-button size="sm" (click)="addTodo.emit(item)">
+		<fa-icon [icon]="faPlus"></fa-icon>
+	</dav-icon-button>
+</div>
+
+<div class="items-container">
+	@for (subItem of subItems; track item.uuid) {
+	<calendo-todo-list-tree-item
+		[item]="subItem"
+		(addTodo)="addTodo.emit($event)"
+		(addTodoList)="addTodoList.emit($event)"
+	></calendo-todo-list-tree-item>
+	}
+</div>
+}

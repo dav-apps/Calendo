@@ -14,6 +14,8 @@ export class TodoListTreeComponent {
 	@Input() showRoot: boolean = false
 	@Input() readonly: boolean = false
 	@Output() update = new EventEmitter()
+	@Output() addTodo = new EventEmitter()
+	@Output() addTodoList = new EventEmitter()
 
 	todoDragged(event: (Todo | TodoList)[]) {
 		this.todoList.SetItems(event)

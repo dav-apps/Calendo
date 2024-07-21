@@ -31,6 +31,8 @@
 		<calendo-todo-list-tree
 			#todoListTree
 			[todoList]="todoList"
+			(addTodo)="showAddTodoDialog($event)"
+			(addTodoList)="showAddTodoListDialog($event)"
 		></calendo-todo-list-tree>
 	</div>
 </div>
@@ -43,14 +45,14 @@
 >
 	<dav-context-menu-item
 		[value]="locale.addTodo"
-		(click)="addButtonContextMenuVisible = false; addTodoDialog.show()"
+		(click)="showAddTodoDialog(todoList)"
 	>
 		<fa-icon slot="icon" [icon]="faCircleCheckLight"></fa-icon>
 	</dav-context-menu-item>
 
 	<dav-context-menu-item
 		[value]="locale.addTodoList"
-		(click)="addButtonContextMenuVisible = false; addTodoListDialog.show()"
+		(click)="showAddTodoListDialog(todoList)"
 	>
 		<fa-icon slot="icon" [icon]="faListCheckLight"></fa-icon>
 	</dav-context-menu-item>

@@ -1,0 +1,13 @@
+.list-header {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.list-header > p {
+	margin: 0;
+}
+
+.items-container {
+	margin-left: 6px;
+}

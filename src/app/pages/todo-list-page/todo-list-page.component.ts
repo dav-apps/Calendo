@@ -46,11 +46,13 @@ export class TodoListPageComponent {
 	//#region AddTodoDialog
 	@ViewChild("addTodoDialog")
 	addTodoDialog: TodoListAddDialogComponent
+	addTodoDialogParent: TodoList
 	//#endregion
 
 	//#region AddTodoListDialog
 	@ViewChild("addTodoListDialog")
 	addTodoListDialog: TodoListAddDialogComponent
+	addTodoListDialogParent: TodoList
 	//#endregion
 
 	//#region DeleteTodoListDialog
@@ -121,6 +123,18 @@ export class TodoListPageComponent {
 		this.editTodoListDialog.show()
 	}
 
+	showAddTodoDialog(parent: TodoList) {
+		this.addButtonContextMenuVisible = false
+		this.addTodoDialogParent = parent
+		this.addTodoDialog.show()
+	}
+
+	showAddTodoListDialog(parent: TodoList) {
+		this.addButtonContextMenuVisible = false
+		this.addTodoListDialogParent = parent
+		this.addTodoListDialog.show()
+	}
+
 	async updateTodoList(event: {
 		name: string
 		date: DateTime
@@ -145,10 +159,10 @@ export class TodoListPageComponent {
 			false,
 			null,
 			null,
-			this.todoList.uuid
+			this.addTodoDialogParent.uuid
 		)
 
-		await this.todoList.AddItem(todo)
+		await this.addTodoDialogParent.AddItem(todo)
 		this.addTodoDialog.hide()
 	}
 
@@ -158,10 +172,10 @@ export class TodoListPageComponent {
 			null,
 			null,
 			null,
-			this.todoList.uuid
+			this.addTodoListDialogParent.uuid
 		)
 
-		await this.todoList.AddItem(todoList)
+		await this.addTodoListDialogParent.AddItem(todoList)
 		this.addTodoListDialog.hide()
 	}
 
