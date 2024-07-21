@@ -120,6 +120,7 @@ const enDefaults = {
 		todoListSubItemDialog: {
 			addTodoHeadline: "Add todo",
 			addTodoListHeadline: "Add todo list",
+			editTodoListHeadline: "Edit todo list",
 			nameTextfieldLabel: "Name"
 		},
 		deleteTodoListDialog: {
@@ -282,6 +283,7 @@ const deDefaults = {
 		todoListSubItemDialog: {
 			addTodoHeadline: "Todo hinzufügen",
 			addTodoListHeadline: "Todo-Liste hinzufügen",
+			editTodoListHeadline: "Todo-Liste bearbeiten",
 			nameTextfieldLabel: "Name"
 		},
 		deleteTodoListDialog: {

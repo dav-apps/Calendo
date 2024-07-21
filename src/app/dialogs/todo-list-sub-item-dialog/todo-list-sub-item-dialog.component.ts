@@ -16,12 +16,13 @@ import { LocalizationService } from "src/app/services/localization-service"
 export class TodoListSubItemDialogComponent {
 	locale = this.localizationService.locale.dialogs.todoListSubItemDialog
 	actionsLocale = this.localizationService.locale.actions
-	@Input() mode: "todo" | "todoList" = "todo"
+	@Input() mode: "addTodo" | "addTodoList" | "editTodoList" = "addTodo"
 	@Input() loading: boolean = false
 	@Input() nameError: string = ""
 	@Output() primaryButtonClick = new EventEmitter()
 	@ViewChild("dialog") dialog: ElementRef<Dialog>
 	visible: boolean = false
+	headline: string = this.locale.addTodoHeadline
 	name: string = ""
 
 	constructor(private localizationService: LocalizationService) {}
@@ -35,7 +36,20 @@ export class TodoListSubItemDialogComponent {
 	}
 
 	show() {
-		this.name = ""
+		switch (this.mode) {
+			case "addTodoList":
+				this.name = ""
+				this.headline = this.locale.addTodoListHeadline
+				break
+			case "editTodoList":
+				this.headline = this.locale.editTodoListHeadline
+				break
+			default:
+				this.name = ""
+				this.headline = this.locale.addTodoHeadline
+				break
+		}
+
 		this.visible = true
 	}
 
