@@ -18,8 +18,4 @@ export class TodoListTreeComponent {
 	todoDragged(event: (Todo | TodoList)[]) {
 		this.todoList.SetItems(event)
 	}
-
-	isItemTodoList(item: Todo | TodoList) {
-		return item instanceof TodoList
-	}
 }

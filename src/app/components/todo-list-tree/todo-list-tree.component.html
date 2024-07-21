@@ -4,10 +4,7 @@
 	[(dragulaModel)]="todoList.items"
 	(dragulaModelChange)="todoDragged($event)"
 >
-	@for (item of todoList.items; track item.uuid) { @if (!isItemTodoList(item))
-	{
-	<calendo-todo-item [todo]="item"></calendo-todo-item>
-	} @else {
-		<div>{{ item.name }}</div>
-	} }
+	@for (item of todoList.items; track item.uuid) {
+	<calendo-todo-list-tree-item [item]="item"></calendo-todo-list-tree-item>
+	}
 </div>
