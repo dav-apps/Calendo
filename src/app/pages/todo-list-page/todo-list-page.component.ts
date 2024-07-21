@@ -11,7 +11,7 @@ import {
 import { ContextMenu } from "dav-ui-components"
 import { TodoListTreeComponent } from "src/app/components/todo-list-tree/todo-list-tree.component"
 import { TodoDialogComponent } from "src/app/dialogs/todo-dialog/todo-dialog.component"
-import { TodoListAddDialogComponent } from "src/app/dialogs/todo-list-add-dialog/todo-list-add-dialog.component"
+import { TodoListSubItemDialogComponent } from "src/app/dialogs/todo-list-sub-item-dialog/todo-list-sub-item-dialog.component"
 import { DeleteTodoListDialogComponent } from "src/app/dialogs/delete-todo-list-dialog/delete-todo-list-dialog.component"
 import { Todo } from "src/app/models/Todo"
 import { TodoList, GetTodoList } from "src/app/models/TodoList"
@@ -58,13 +58,13 @@ export class TodoListPageComponent {
 
 	//#region AddTodoDialog
 	@ViewChild("addTodoDialog")
-	addTodoDialog: TodoListAddDialogComponent
+	addTodoDialog: TodoListSubItemDialogComponent
 	addItemDialogParent: TodoList
 	//#endregion
 
 	//#region AddTodoListDialog
 	@ViewChild("addTodoListDialog")
-	addTodoListDialog: TodoListAddDialogComponent
+	addTodoListDialog: TodoListSubItemDialogComponent
 	//#endregion
 
 	//#region DeleteTodoListDialog

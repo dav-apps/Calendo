@@ -10,11 +10,11 @@ import { Dialog } from "dav-ui-components"
 import { LocalizationService } from "src/app/services/localization-service"
 
 @Component({
-	selector: "calendo-todo-list-add-dialog",
-	templateUrl: "./todo-list-add-dialog.component.html"
+	selector: "calendo-todo-list-sub-item-dialog",
+	templateUrl: "./todo-list-sub-item-dialog.component.html"
 })
-export class TodoListAddDialogComponent {
-	locale = this.localizationService.locale.dialogs.todoListAddDialog
+export class TodoListSubItemDialogComponent {
+	locale = this.localizationService.locale.dialogs.todoListSubItemDialog
 	actionsLocale = this.localizationService.locale.actions
 	@Input() mode: "todo" | "todoList" = "todo"
 	@Input() loading: boolean = false
