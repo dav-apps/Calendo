@@ -32,6 +32,7 @@
 			#todoListTree
 			[todoList]="todoList"
 			(addButtonClick)="addButtonClick($event)"
+			(moreButtonClick)="moreButtonClick($event)"
 		></calendo-todo-list-tree>
 	</div>
 </div>
@@ -46,14 +47,33 @@
 		[value]="locale.addTodo"
 		(click)="showAddTodoDialog()"
 	>
-		<fa-icon slot="icon" [icon]="faCircleCheckLight"></fa-icon>
+		<fa-icon slot="icon" [icon]="faCircleCheck"></fa-icon>
 	</dav-context-menu-item>
 
 	<dav-context-menu-item
 		[value]="locale.addTodoList"
 		(click)="showAddTodoListDialog()"
 	>
-		<fa-icon slot="icon" [icon]="faListCheckLight"></fa-icon>
+		<fa-icon slot="icon" [icon]="faListCheck"></fa-icon>
+	</dav-context-menu-item>
+</dav-context-menu>
+
+<dav-context-menu
+	#moreButtonContextMenu
+	[visible]="moreButtonContextMenuVisible"
+	[posX]="moreButtonContextMenuPositionX"
+	[posY]="moreButtonContextMenuPositionY"
+>
+	<dav-context-menu-item
+		[value]="actionsLocale.edit"
+	>
+		<fa-icon slot="icon" [icon]="faEdit"></fa-icon>
+	</dav-context-menu-item>
+
+	<dav-context-menu-item
+		[value]="actionsLocale.delete"
+	>
+		<fa-icon slot="icon" [icon]="faTrash"></fa-icon>
 	</dav-context-menu-item>
 </dav-context-menu>
 

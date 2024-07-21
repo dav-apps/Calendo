@@ -3,8 +3,10 @@ import { ActivatedRoute } from "@angular/router"
 import { Location } from "@angular/common"
 import { DateTime } from "luxon"
 import {
-	faCircleCheck as faCircleCheckLight,
-	faListCheck as faListCheckLight
+	faCircleCheck,
+	faListCheck,
+	faEdit,
+	faTrash
 } from "@fortawesome/pro-light-svg-icons"
 import { ContextMenu } from "dav-ui-components"
 import { TodoListTreeComponent } from "src/app/components/todo-list-tree/todo-list-tree.component"
@@ -22,8 +24,11 @@ import { LocalizationService } from "src/app/services/localization-service"
 })
 export class TodoListPageComponent {
 	locale = this.localizationService.locale.todoListPage
-	faCircleCheckLight = faCircleCheckLight
-	faListCheckLight = faListCheckLight
+	actionsLocale = this.localizationService.locale.actions
+	faCircleCheck = faCircleCheck
+	faListCheck = faListCheck
+	faEdit = faEdit
+	faTrash = faTrash
 	@ViewChild("todoListTree", { static: true })
 	todoListTree: TodoListTreeComponent
 	todoList: TodoList = new TodoList()
@@ -35,6 +40,15 @@ export class TodoListPageComponent {
 	addButtonContextMenuVisible: boolean = false
 	addButtonContextMenuPositionX: number = 0
 	addButtonContextMenuPositionY: number = 0
+	//#endregion
+
+	//#region MoreButtonContextMenu
+	@ViewChild("moreButtonContextMenu")
+	moreButtonContextMenu: ElementRef<ContextMenu>
+	moreButtonContextMenuVisible: boolean = false
+	moreButtonContextMenuPositionX: number = 0
+	moreButtonContextMenuPositionY: number = 0
+	moreButtonContextMenuSelectedItem: TodoList
 	//#endregion
 
 	//#region EditTodoListDialog
@@ -86,9 +100,15 @@ export class TodoListPageComponent {
 	@HostListener("document:click", ["$event"])
 	documentClick(event: PointerEvent) {
 		if (
-			!this.addButtonContextMenu.nativeElement.contains(event.target as Node)
+			!this.addButtonContextMenu.nativeElement.contains(
+				event.target as Node
+			) &&
+			!this.moreButtonContextMenu.nativeElement.contains(
+				event.target as Node
+			)
 		) {
 			this.addButtonContextMenuVisible = false
+			this.moreButtonContextMenuVisible = false
 		}
 	}
 
@@ -101,7 +121,24 @@ export class TodoListPageComponent {
 				e.event.detail.contextMenuPosition.x
 			this.addButtonContextMenuPositionY =
 				e.event.detail.contextMenuPosition.y
+
 			this.addButtonContextMenuVisible = true
+			this.moreButtonContextMenuVisible = false
+		}
+	}
+
+	moreButtonClick(e: { event: CustomEvent; item: TodoList }) {
+		if (this.moreButtonContextMenuVisible) {
+			this.moreButtonContextMenuVisible = false
+		} else {
+			this.moreButtonContextMenuSelectedItem = e.item
+			this.moreButtonContextMenuPositionX =
+				e.event.detail.contextMenuPosition.x
+			this.moreButtonContextMenuPositionY =
+				e.event.detail.contextMenuPosition.y
+
+			this.addButtonContextMenuVisible = false
+			this.moreButtonContextMenuVisible = true
 		}
 	}
 

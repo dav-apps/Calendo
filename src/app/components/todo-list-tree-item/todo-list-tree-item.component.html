@@ -4,12 +4,21 @@
 <div class="list-header">
 	<p>{{ item.name }}</p>
 
-	<dav-icon-button
-		size="sm"
-		(click)="addButtonClick.emit({ event: $event, parent: item })"
-	>
-		<fa-icon [icon]="faPlus"></fa-icon>
-	</dav-icon-button>
+	<div class="list-header-buttons">
+		<dav-icon-button
+			size="xs"
+			(click)="addButtonClick.emit({ event: $event, parent: item })"
+		>
+			<fa-icon [icon]="faPlus"></fa-icon>
+		</dav-icon-button>
+
+		<dav-icon-button
+			size="xs"
+			(click)="moreButtonClick.emit({ event: $event, item })"
+		>
+			<fa-icon [icon]="faEllipsis"></fa-icon>
+		</dav-icon-button>
+	</div>
 </div>
 
 <div class="items-container">
@@ -17,6 +26,7 @@
 	<calendo-todo-list-tree-item
 		[item]="subItem"
 		(addButtonClick)="addButtonClick.emit($event)"
+		(moreButtonClick)="moreButtonClick.emit($event)"
 	></calendo-todo-list-tree-item>
 	}
 </div>
