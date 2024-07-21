@@ -67,6 +67,11 @@ export class TodoListPageComponent {
 	addTodoListDialog: TodoListSubItemDialogComponent
 	//#endregion
 
+	//#region EditSubTodoListDialog
+	@ViewChild("editSubTodoListDialog")
+	editSubTodoListDialog: TodoListSubItemDialogComponent
+	//#endregion
+
 	//#region DeleteTodoListDialog
 	@ViewChild("deleteTodoListDialog")
 	deleteTodoListDialog: DeleteTodoListDialogComponent
@@ -166,6 +171,13 @@ export class TodoListPageComponent {
 		this.addTodoListDialog.show()
 	}
 
+	showEditSubTodoListDialog() {
+		this.moreButtonContextMenuVisible = false
+		this.editSubTodoListDialog.name =
+			this.moreButtonContextMenuSelectedItem.name
+		this.editSubTodoListDialog.show()
+	}
+
 	async updateTodoList(event: {
 		name: string
 		date: DateTime
@@ -208,6 +220,11 @@ export class TodoListPageComponent {
 
 		await this.addItemDialogParent.AddItem(todoList)
 		this.addTodoListDialog.hide()
+	}
+
+	async updateSubTodoList(event: { name: string }) {
+		await this.moreButtonContextMenuSelectedItem.Update(event.name)
+		this.editSubTodoListDialog.hide()
 	}
 
 	async deleteTodoList() {

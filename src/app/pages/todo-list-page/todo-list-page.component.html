@@ -66,6 +66,7 @@
 >
 	<dav-context-menu-item
 		[value]="actionsLocale.edit"
+		(click)="showEditSubTodoListDialog()"
 	>
 		<fa-icon slot="icon" [icon]="faEdit"></fa-icon>
 	</dav-context-menu-item>
@@ -90,8 +91,14 @@
 
 <calendo-todo-list-sub-item-dialog
 	#addTodoListDialog
-	mode="todoList"
+	mode="addTodoList"
 	(primaryButtonClick)="addTodoList($event)"
+></calendo-todo-list-sub-item-dialog>
+
+<calendo-todo-list-sub-item-dialog
+	#editSubTodoListDialog
+	mode="editTodoList"
+	(primaryButtonClick)="updateSubTodoList($event)"
 ></calendo-todo-list-sub-item-dialog>
 
 <calendo-delete-todo-list-dialog
