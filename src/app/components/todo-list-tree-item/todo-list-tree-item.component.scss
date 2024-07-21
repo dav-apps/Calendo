@@ -9,5 +9,8 @@
 }
 
 .items-container {
-	margin-left: 6px;
+	margin-bottom: 12px;
+	margin-left: 2px;
+	padding-left: 10px;
+	border-left: 1px solid rgb(var(--dav-color-outline-rgb), 0.15);
 }
