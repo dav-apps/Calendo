@@ -45,13 +45,12 @@ export class TodoListPageComponent {
 	//#region AddTodoDialog
 	@ViewChild("addTodoDialog")
 	addTodoDialog: TodoListAddDialogComponent
-	addTodoDialogParent: TodoList
+	addItemDialogParent: TodoList
 	//#endregion
 
 	//#region AddTodoListDialog
 	@ViewChild("addTodoListDialog")
 	addTodoListDialog: TodoListAddDialogComponent
-	addTodoListDialogParent: TodoList
 	//#endregion
 
 	//#region DeleteTodoListDialog
@@ -81,8 +80,6 @@ export class TodoListPageComponent {
 			this.todoList.list = list.list
 			this.todoList.items = list.items
 			this.date = DateTime.fromSeconds(this.todoList.time).toFormat("DD")
-
-			//this.todoListTree.Init()
 		})
 	}
 
@@ -95,12 +92,15 @@ export class TodoListPageComponent {
 		}
 	}
 
-	addButtonClick(event: CustomEvent) {
+	addButtonClick(e: { event: CustomEvent; parent: TodoList }) {
 		if (this.addButtonContextMenuVisible) {
 			this.addButtonContextMenuVisible = false
 		} else {
-			this.addButtonContextMenuPositionX = event.detail.contextMenuPosition.x
-			this.addButtonContextMenuPositionY = event.detail.contextMenuPosition.y
+			this.addItemDialogParent = e.parent
+			this.addButtonContextMenuPositionX =
+				e.event.detail.contextMenuPosition.x
+			this.addButtonContextMenuPositionY =
+				e.event.detail.contextMenuPosition.y
 			this.addButtonContextMenuVisible = true
 		}
 	}
@@ -119,15 +119,13 @@ export class TodoListPageComponent {
 		this.editTodoListDialog.show()
 	}
 
-	showAddTodoDialog(parent: TodoList) {
+	showAddTodoDialog() {
 		this.addButtonContextMenuVisible = false
-		this.addTodoDialogParent = parent
 		this.addTodoDialog.show()
 	}
 
-	showAddTodoListDialog(parent: TodoList) {
+	showAddTodoListDialog() {
 		this.addButtonContextMenuVisible = false
-		this.addTodoListDialogParent = parent
 		this.addTodoListDialog.show()
 	}
 
@@ -155,10 +153,10 @@ export class TodoListPageComponent {
 			false,
 			null,
 			null,
-			this.addTodoDialogParent.uuid
+			this.addItemDialogParent.uuid
 		)
 
-		await this.addTodoDialogParent.AddItem(todo)
+		await this.addItemDialogParent.AddItem(todo)
 		this.addTodoDialog.hide()
 	}
 
@@ -168,10 +166,10 @@ export class TodoListPageComponent {
 			null,
 			null,
 			null,
-			this.addTodoListDialogParent.uuid
+			this.addItemDialogParent.uuid
 		)
 
-		await this.addTodoListDialogParent.AddItem(todoList)
+		await this.addItemDialogParent.AddItem(todoList)
 		this.addTodoListDialog.hide()
 	}
 

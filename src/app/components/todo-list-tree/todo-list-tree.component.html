@@ -7,8 +7,7 @@
 	@for (item of todoList.items; track item.uuid) {
 	<calendo-todo-list-tree-item
 		[item]="item"
-		(addTodo)="addTodo.emit($event)"
-		(addTodoList)="addTodoList.emit($event)"
+		(addButtonClick)="addButtonClick.emit($event)"
 	></calendo-todo-list-tree-item>
 	}
 </div>

@@ -11,8 +11,7 @@ import { TodoList } from "src/app/models/TodoList"
 export class TodoListTreeItemComponent {
 	faPlus = faPlus
 	@Input() item: Todo | TodoList
-	@Output() addTodo = new EventEmitter()
-	@Output() addTodoList = new EventEmitter()
+	@Output() addButtonClick = new EventEmitter()
 	subItems: (Todo | TodoList)[] = []
 
 	ngOnInit() {

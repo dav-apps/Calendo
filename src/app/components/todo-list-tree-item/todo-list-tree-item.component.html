@@ -4,7 +4,10 @@
 <div class="list-header">
 	<p>{{ item.name }}</p>
 
-	<dav-icon-button size="sm" (click)="addTodo.emit(item)">
+	<dav-icon-button
+		size="sm"
+		(click)="addButtonClick.emit({ event: $event, parent: item })"
+	>
 		<fa-icon [icon]="faPlus"></fa-icon>
 	</dav-icon-button>
 </div>
@@ -13,8 +16,7 @@
 	@for (subItem of subItems; track item.uuid) {
 	<calendo-todo-list-tree-item
 		[item]="subItem"
-		(addTodo)="addTodo.emit($event)"
-		(addTodoList)="addTodoList.emit($event)"
+		(addButtonClick)="addButtonClick.emit($event)"
 	></calendo-todo-list-tree-item>
 	}
 </div>
