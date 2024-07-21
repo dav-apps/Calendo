@@ -35,7 +35,6 @@ export class TodoListPageComponent {
 	addButtonContextMenuVisible: boolean = false
 	addButtonContextMenuPositionX: number = 0
 	addButtonContextMenuPositionY: number = 0
-	preventHidingAddButtonContextMenu = false
 	//#endregion
 
 	//#region EditTodoListDialog
@@ -88,10 +87,8 @@ export class TodoListPageComponent {
 	}
 
 	@HostListener("document:click", ["$event"])
-	documentClick(event: MouseEvent) {
-		if (this.preventHidingAddButtonContextMenu) {
-			this.preventHidingAddButtonContextMenu = false
-		} else if (
+	documentClick(event: PointerEvent) {
+		if (
 			!this.addButtonContextMenu.nativeElement.contains(event.target as Node)
 		) {
 			this.addButtonContextMenuVisible = false
@@ -105,7 +102,6 @@ export class TodoListPageComponent {
 			this.addButtonContextMenuPositionX = event.detail.contextMenuPosition.x
 			this.addButtonContextMenuPositionY = event.detail.contextMenuPosition.y
 			this.addButtonContextMenuVisible = true
-			this.preventHidingAddButtonContextMenu = true
 		}
 	}
 
