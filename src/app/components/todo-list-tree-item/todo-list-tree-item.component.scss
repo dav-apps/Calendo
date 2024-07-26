@@ -13,9 +13,17 @@
 	gap: 4px;
 }
 
+.chevron-icon {
+	transition: 200ms;
+}
+
+.chevron-icon.expanded {
+	transform: rotate(90deg);
+}
+
 .items-container {
 	margin-bottom: 12px;
-	margin-left: 2px;
-	padding-left: 10px;
+	margin-left: 13px;
+	padding-left: 13px;
 	border-left: 1px solid rgb(var(--dav-color-outline-rgb), 0.15);
 }

@@ -2,6 +2,16 @@
 <calendo-todo-item [todo]="item"></calendo-todo-item>
 } @else {
 <div class="list-header">
+	<div class="list-header-buttons">
+		<dav-icon-button size="xs" (click)="chevronButtonClick()">
+			<fa-icon
+				class="chevron-icon"
+				[class.expanded]="expanded"
+				[icon]="faChevronRight"
+			></fa-icon>
+		</dav-icon-button>
+	</div>
+
 	<p>{{ item.name }}</p>
 
 	<div class="list-header-buttons">

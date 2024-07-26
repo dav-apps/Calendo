@@ -1,5 +1,9 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core"
-import { faPlus, faEllipsis } from "@fortawesome/pro-light-svg-icons"
+import {
+	faPlus,
+	faEllipsis,
+	faChevronRight
+} from "@fortawesome/pro-light-svg-icons"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 
@@ -11,10 +15,12 @@ import { TodoList } from "src/app/models/TodoList"
 export class TodoListTreeItemComponent {
 	faPlus = faPlus
 	faEllipsis = faEllipsis
+	faChevronRight = faChevronRight
 	@Input() item: Todo | TodoList
 	@Output() addButtonClick = new EventEmitter()
 	@Output() moreButtonClick = new EventEmitter()
 	subItems: (Todo | TodoList)[] = []
+	expanded: boolean = false
 
 	ngOnInit() {
 		if (this.isItemTodoList) {
@@ -24,5 +30,9 @@ export class TodoListTreeItemComponent {
 
 	isItemTodoList(item: Todo | TodoList) {
 		return item instanceof TodoList
+	}
+
+	chevronButtonClick() {
+		this.expanded = !this.expanded
 	}
 }
