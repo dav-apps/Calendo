@@ -31,7 +31,10 @@
 	</div>
 </div>
 
-<div class="items-container">
+<div
+	class="items-container"
+	[@expandCollapse]="expanded ? 'expanded' : 'collapsed'"
+>
 	@for (subItem of subItems; track item.uuid) {
 	<calendo-todo-list-tree-item
 		[item]="subItem"
