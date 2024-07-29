@@ -1,46 +1,51 @@
 @if (!isItemTodoList(item)) {
-<calendo-todo-item [todo]="item"></calendo-todo-item>
-} @else {
-<div class="list-header">
-	<div class="list-header-buttons">
-		<dav-icon-button size="xs" (click)="chevronButtonClick()">
-			<fa-icon
-				class="chevron-icon"
-				[class.expanded]="expanded"
-				[icon]="faChevronRight"
-			></fa-icon>
-		</dav-icon-button>
-	</div>
-
-	<p>{{ item.name }}</p>
-
-	<div class="list-header-buttons">
-		<dav-icon-button
-			size="xs"
-			(click)="addButtonClick.emit({ event: $event, parent: item })"
-		>
-			<fa-icon [icon]="faPlus"></fa-icon>
-		</dav-icon-button>
-
-		<dav-icon-button
-			size="xs"
-			(click)="moreButtonClick.emit({ event: $event, item })"
-		>
-			<fa-icon [icon]="faEllipsis"></fa-icon>
-		</dav-icon-button>
-	</div>
+<div [style.marginLeft]="level == 0 ? '4px' : ''">
+	<calendo-todo-item [todo]="item"></calendo-todo-item>
 </div>
+} @else {
+<div [style.marginLeft]="level > 0 ? '-4px' : ''">
+	<div class="list-header">
+		<div class="list-header-buttons">
+			<dav-icon-button size="xs" (click)="chevronButtonClick()">
+				<fa-icon
+					class="chevron-icon"
+					[class.expanded]="expanded"
+					[icon]="faChevronRight"
+				></fa-icon>
+			</dav-icon-button>
+		</div>
 
-<div
-	class="items-container"
-	[@expandCollapse]="expanded ? 'expanded' : 'collapsed'"
->
-	@for (subItem of subItems; track item.uuid) {
-	<calendo-todo-list-tree-item
-		[item]="subItem"
-		(addButtonClick)="addButtonClick.emit($event)"
-		(moreButtonClick)="moreButtonClick.emit($event)"
-	></calendo-todo-list-tree-item>
-	}
+		<p>{{ item.name }}</p>
+
+		<div class="list-header-buttons">
+			<dav-icon-button
+				size="xs"
+				(click)="addButtonClick.emit({ event: $event, parent: item })"
+			>
+				<fa-icon [icon]="faPlus"></fa-icon>
+			</dav-icon-button>
+
+			<dav-icon-button
+				size="xs"
+				(click)="moreButtonClick.emit({ event: $event, item })"
+			>
+				<fa-icon [icon]="faEllipsis"></fa-icon>
+			</dav-icon-button>
+		</div>
+	</div>
+
+	<div
+		class="items-container"
+		[@expandCollapse]="expanded ? 'expanded' : 'collapsed'"
+	>
+		@for (subItem of subItems; track item.uuid) {
+		<calendo-todo-list-tree-item
+			[item]="subItem"
+			[level]="level + 1"
+			(addButtonClick)="addButtonClick.emit($event)"
+			(moreButtonClick)="moreButtonClick.emit($event)"
+		></calendo-todo-list-tree-item>
+		}
+	</div>
 </div>
 }

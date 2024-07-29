@@ -40,6 +40,7 @@ export class TodoListTreeItemComponent {
 	faEllipsis = faEllipsis
 	faChevronRight = faChevronRight
 	@Input() item: Todo | TodoList
+	@Input() level: number = 0
 	@Output() addButtonClick = new EventEmitter()
 	@Output() moreButtonClick = new EventEmitter()
 	subItems: (Todo | TodoList)[] = []
