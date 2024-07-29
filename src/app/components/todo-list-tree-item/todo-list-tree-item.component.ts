@@ -20,7 +20,8 @@ import { TodoList } from "src/app/models/TodoList"
 					transform: "translateY(-10px)",
 					opacity: 0,
 					height: 0,
-					marginBottom: 0
+					marginBottom: 0,
+					visibility: "hidden"
 				})
 			),
 			state(
