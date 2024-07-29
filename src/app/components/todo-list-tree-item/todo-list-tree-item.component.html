@@ -20,13 +20,6 @@
 		<div class="list-header-buttons">
 			<dav-icon-button
 				size="xs"
-				(click)="addButtonClick.emit({ event: $event, parent: item })"
-			>
-				<fa-icon [icon]="faPlus"></fa-icon>
-			</dav-icon-button>
-
-			<dav-icon-button
-				size="xs"
 				(click)="moreButtonClick.emit({ event: $event, item })"
 			>
 				<fa-icon [icon]="faEllipsis"></fa-icon>
@@ -42,7 +35,6 @@
 		<calendo-todo-list-tree-item
 			[item]="subItem"
 			[level]="level + 1"
-			(addButtonClick)="addButtonClick.emit($event)"
 			(moreButtonClick)="moreButtonClick.emit($event)"
 		></calendo-todo-list-tree-item>
 		}

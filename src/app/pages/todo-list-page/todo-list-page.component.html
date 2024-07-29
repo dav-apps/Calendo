@@ -5,7 +5,7 @@
 		backButtonVisible
 		editButtonVisible
 		deleteButtonVisible
-		(addButtonClick)="addButtonClick({ event: $event, parent: todoList })"
+		(addButtonClick)="addButtonClick($event)"
 		(backButtonClick)="goBack()"
 		(editButtonClick)="showEditTodoListDialog()"
 		(deleteButtonClick)="deleteTodoListDialog.show()"
@@ -31,7 +31,6 @@
 		<calendo-todo-list-tree
 			#todoListTree
 			[todoList]="todoList"
-			(addButtonClick)="addButtonClick($event)"
 			(moreButtonClick)="moreButtonClick($event)"
 		></calendo-todo-list-tree>
 	</div>
@@ -64,6 +63,22 @@
 	[posX]="moreButtonContextMenuPositionX"
 	[posY]="moreButtonContextMenuPositionY"
 >
+	<dav-context-menu-item
+		[value]="locale.addTodo"
+		(click)="showAddTodoDialog()"
+	>
+		<fa-icon slot="icon" [icon]="faCircleCheck"></fa-icon>
+	</dav-context-menu-item>
+
+	<dav-context-menu-item
+		[value]="locale.addTodoList"
+		(click)="showAddTodoListDialog()"
+	>
+		<fa-icon slot="icon" [icon]="faListCheck"></fa-icon>
+	</dav-context-menu-item>
+
+	<dav-context-menu-divider></dav-context-menu-divider>
+
 	<dav-context-menu-item
 		[value]="actionsLocale.edit"
 		(click)="showEditSubTodoListDialog()"

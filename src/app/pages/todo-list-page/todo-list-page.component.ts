@@ -122,15 +122,13 @@ export class TodoListPageComponent {
 		}
 	}
 
-	addButtonClick(e: { event: CustomEvent; parent: TodoList }) {
+	addButtonClick(event: CustomEvent) {
 		if (this.addButtonContextMenuVisible) {
 			this.addButtonContextMenuVisible = false
 		} else {
-			this.addItemDialogParent = e.parent
-			this.addButtonContextMenuPositionX =
-				e.event.detail.contextMenuPosition.x
-			this.addButtonContextMenuPositionY =
-				e.event.detail.contextMenuPosition.y
+			this.addItemDialogParent = this.todoList
+			this.addButtonContextMenuPositionX = event.detail.contextMenuPosition.x
+			this.addButtonContextMenuPositionY = event.detail.contextMenuPosition.y
 
 			this.addButtonContextMenuVisible = true
 			this.moreButtonContextMenuVisible = false
@@ -141,6 +139,7 @@ export class TodoListPageComponent {
 		if (this.moreButtonContextMenuVisible) {
 			this.moreButtonContextMenuVisible = false
 		} else {
+			this.addItemDialogParent = e.item
 			this.moreButtonContextMenuSelectedItem = e.item
 			this.moreButtonContextMenuPositionX =
 				e.event.detail.contextMenuPosition.x
@@ -167,12 +166,12 @@ export class TodoListPageComponent {
 	}
 
 	showAddTodoDialog() {
-		this.addButtonContextMenuVisible = false
+		this.moreButtonContextMenuVisible = false
 		this.addTodoDialog.show()
 	}
 
 	showAddTodoListDialog() {
-		this.addButtonContextMenuVisible = false
+		this.moreButtonContextMenuVisible = false
 		this.addTodoListDialog.show()
 	}
 
