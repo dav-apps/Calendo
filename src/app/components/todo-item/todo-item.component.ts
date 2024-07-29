@@ -12,8 +12,8 @@ export class TodoItemComponent {
 	@Input() showBadge: boolean = true
 	@Output() delete = new EventEmitter()
 
-	ToggleCheckbox() {
-		this.todo.SetCompleted(!this.todo.completed)
+	async checkboxChange(event: CustomEvent) {
+		await this.todo.SetCompleted(event.detail.checked)
 	}
 
 	Delete() {

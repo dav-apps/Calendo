@@ -2,6 +2,7 @@
 	<dav-checkbox
 		[label]="todo.name"
 		[checked]="todo.completed"
+		(change)="checkboxChange($event)"
 	></dav-checkbox>
 </div>
 
