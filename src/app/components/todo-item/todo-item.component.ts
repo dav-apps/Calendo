@@ -1,10 +1,11 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core"
 import { Todo } from "../../models/Todo"
-import { faTimes } from "@fortawesome/free-solid-svg-icons"
+import { faTimes } from "@fortawesome/pro-light-svg-icons"
 
 @Component({
 	selector: "calendo-todo-item",
-	templateUrl: "./todo-item.component.html"
+	templateUrl: "./todo-item.component.html",
+	styleUrl: "./todo-item.component.scss"
 })
 export class TodoItemComponent {
 	faTimes = faTimes
@@ -16,7 +17,7 @@ export class TodoItemComponent {
 		await this.todo.SetCompleted(event.detail.checked)
 	}
 
-	Delete() {
+	deleteTodo() {
 		this.todo.Delete()
 		this.delete.emit()
 	}

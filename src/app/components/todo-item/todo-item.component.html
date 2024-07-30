@@ -1,9 +1,16 @@
-<div>
+<div class="container">
 	<dav-checkbox
 		[label]="todo.name"
 		[checked]="todo.completed"
+		strikeThrough
 		(change)="checkboxChange($event)"
 	></dav-checkbox>
+
+	@if (todo.completed) {
+	<dav-icon-button size="xs" (click)="deleteTodo()">
+		<fa-icon [icon]="faTimes"></fa-icon>
+	</dav-icon-button>
+	}
 </div>
 
 <!--
