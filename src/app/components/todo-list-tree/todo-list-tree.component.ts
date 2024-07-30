@@ -14,6 +14,7 @@ export class TodoListTreeComponent {
 	@Input() showRoot: boolean = false
 	@Input() readonly: boolean = false
 	@Output() moreButtonClick = new EventEmitter()
+	@Output() removeTodo = new EventEmitter()
 
 	todoDragged(event: (Todo | TodoList)[]) {
 		this.todoList.SetItems(event)

@@ -1,6 +1,12 @@
 @if (!isItemTodoList(item)) {
-<div [style.marginLeft]="level == 0 ? '4px' : ''">
-	<calendo-todo-item [todo]="item"></calendo-todo-item>
+<div
+	[@hide]="hidden ? 'hidden' : 'visible'"
+	[style.marginLeft]="level == 0 ? '4px' : ''"
+>
+	<calendo-todo-item
+		[todo]="item"
+		(delete)="hideTodoItem()"
+	></calendo-todo-item>
 </div>
 } @else {
 <div [style.marginLeft]="level > 0 ? '-4px' : ''">
@@ -36,6 +42,7 @@
 			[item]="subItem"
 			[level]="level + 1"
 			(moreButtonClick)="moreButtonClick.emit($event)"
+			(removeTodo)="removeTodo.emit($event)"
 		></calendo-todo-list-tree-item>
 		}
 	</div>

@@ -32,6 +32,7 @@
 			#todoListTree
 			[todoList]="todoList"
 			(moreButtonClick)="moreButtonClick($event)"
+			(removeTodo)="removeItem($event, todoList)"
 		></calendo-todo-list-tree>
 	</div>
 </div>

@@ -166,11 +166,13 @@ export class TodoListPageComponent {
 	}
 
 	showAddTodoDialog() {
+		this.addButtonContextMenuVisible = false
 		this.moreButtonContextMenuVisible = false
 		this.addTodoDialog.show()
 	}
 
 	showAddTodoListDialog() {
+		this.addButtonContextMenuVisible = false
 		this.moreButtonContextMenuVisible = false
 		this.addTodoListDialog.show()
 	}

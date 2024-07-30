@@ -33,6 +33,24 @@ import { TodoList } from "src/app/models/TodoList"
 			),
 			transition("expanded => collapsed", [animate("200ms 0s ease-in-out")]),
 			transition("collapsed => expanded", [animate("200ms 0s ease-in-out")])
+		]),
+		trigger("hide", [
+			state(
+				"hidden",
+				style({
+					transform: "translateY(-10px)",
+					opacity: 0,
+					height: 0
+				})
+			),
+			state(
+				"visible",
+				style({
+					transform: "",
+					opacity: 1
+				})
+			),
+			transition("visible => hidden", [animate("200ms 0s ease-in-out")])
 		])
 	]
 })
@@ -43,7 +61,9 @@ export class TodoListTreeItemComponent {
 	@Input() item: Todo | TodoList
 	@Input() level: number = 0
 	@Output() moreButtonClick = new EventEmitter()
+	@Output() removeTodo = new EventEmitter()
 	subItems: (Todo | TodoList)[] = []
+	hidden: boolean = false
 	expanded: boolean = false
 
 	ngOnInit() {
@@ -54,6 +74,14 @@ export class TodoListTreeItemComponent {
 
 	isItemTodoList(item: Todo | TodoList) {
 		return item instanceof TodoList
+	}
+
+	hideTodoItem() {
+		this.hidden = true
+
+		setTimeout(() => {
+			this.removeTodo.emit(this.item.uuid)
+		}, 250)
 	}
 
 	chevronButtonClick() {
