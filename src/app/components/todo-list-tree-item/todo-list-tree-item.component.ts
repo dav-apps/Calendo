@@ -60,15 +60,33 @@ export class TodoListTreeItemComponent {
 	faChevronRight = faChevronRight
 	@Input() item: Todo | TodoList
 	@Input() level: number = 0
+	@Output() completedChange = new EventEmitter()
 	@Output() moreButtonClick = new EventEmitter()
 	@Output() removeTodo = new EventEmitter()
 	subItems: (Todo | TodoList)[] = []
 	hidden: boolean = false
 	expanded: boolean = false
+	completed: boolean = false
 
 	ngOnInit() {
-		if (this.isItemTodoList) {
-			this.subItems = (this.item as TodoList).items
+		if (this.item instanceof TodoList) {
+			this.subItems = this.item.items
+		}
+
+		this.checkCompleted()
+	}
+
+	checkCompleted() {
+		let completedBefore = this.completed
+
+		if (this.item instanceof TodoList) {
+			this.completed = this.subItems.length > 0 && this.item.IsCompleted()
+		} else {
+			this.completed = this.item.completed
+		}
+
+		if (this.completed != completedBefore) {
+			this.completedChange.emit()
 		}
 	}
 

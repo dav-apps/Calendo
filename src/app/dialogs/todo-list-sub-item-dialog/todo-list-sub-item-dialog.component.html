@@ -17,6 +17,7 @@
 				[disabled]="loading"
 				[errorMessage]="nameError"
 				(change)="nameTextfieldChange($event)"
+				(enter)="submit()"
 			></dav-textfield>
 		</div>
 	</form>

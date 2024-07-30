@@ -5,6 +5,7 @@
 >
 	<calendo-todo-item
 		[todo]="item"
+		(change)="checkCompleted()"
 		(delete)="hideTodoItem()"
 	></calendo-todo-item>
 </div>
@@ -21,7 +22,9 @@
 			</dav-icon-button>
 		</div>
 
-		<p>{{ item.name }}</p>
+		<p class="list-name" [class.strike-through]="completed">
+			{{ item.name }}
+		</p>
 
 		<div class="list-header-buttons">
 			<dav-icon-button
@@ -41,6 +44,7 @@
 		<calendo-todo-list-tree-item
 			[item]="subItem"
 			[level]="level + 1"
+			(completedChange)="checkCompleted()"
 			(moreButtonClick)="moreButtonClick.emit($event)"
 			(removeTodo)="removeTodo.emit($event)"
 		></calendo-todo-list-tree-item>

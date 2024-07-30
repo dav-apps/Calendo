@@ -78,6 +78,26 @@ export class TodoList {
 		await this.Save()
 	}
 
+	IsCompleted() {
+		let completed: boolean = true
+
+		for (let item of this.items) {
+			if (item instanceof Todo) {
+				if (!item.completed) {
+					completed = false
+					break
+				}
+			} else {
+				if (!item.IsCompleted()) {
+					completed = false
+					break
+				}
+			}
+		}
+
+		return completed
+	}
+
 	private async Save() {
 		let tableObject = await GetTableObject(this.uuid)
 

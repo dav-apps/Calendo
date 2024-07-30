@@ -4,8 +4,19 @@
 	gap: 8px;
 }
 
-.list-header > p {
+.list-name {
 	margin: 0;
+
+	/* Strike through styles */
+	--strike: 0;
+	background: linear-gradient(90deg, transparent, currentColor 0) no-repeat
+		right center / calc(var(--strike) * 100%) 1px;
+	transition: background-size 0.4s ease;
+}
+
+.list-name.strike-through {
+	--strike: 1; /* "1" means "true" (show the strike line) */
+	background-position-x: left;
 }
 
 .list-header-buttons {
