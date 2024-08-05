@@ -42,6 +42,11 @@ export class AppointmentsPageComponent {
 	createAppointmentDialogNameError: string = ""
 	//#endregion
 
+	//#region EditAppointmentDialog
+	@ViewChild("editAppointmentDialog")
+	editAppointmentDialog: AppointmentDialogComponent
+	//#endregion
+
 	//#region DeleteAppointmentDialog
 	@ViewChild("deleteAppointmentDialog")
 	deleteAppointmentDialog: DeleteAppointmentDialogComponent
@@ -139,7 +144,28 @@ export class AppointmentsPageComponent {
 			let i = appointmentDay.appointments.findIndex(
 				a => a.uuid == appointment.uuid
 			)
-			if (i != -1) appointmentDay.appointments.splice(i, 1)
+
+			if (i != -1) {
+				appointmentDay.appointments.splice(i, 1)
+				return
+			}
+		}
+
+		// Look for the appointment in all appointment days
+		let allAppointmentDays = [
+			...this.appointmentDays,
+			...this.oldAppointmentDays
+		]
+
+		for (let appointmentDay of allAppointmentDays) {
+			let i = appointmentDay.appointments.findIndex(
+				a => a.uuid == appointment.uuid
+			)
+
+			if (i != -1) {
+				appointmentDay.appointments.splice(i, 1)
+				break
+			}
 		}
 	}
 
@@ -182,6 +208,66 @@ export class AppointmentsPageComponent {
 
 		this.addAppointment(appointment)
 		this.createAppointmentDialog.hide()
+	}
+
+	async updateAppointment(event: {
+		name: string
+		date: DateTime
+		allDay: boolean
+		color: string
+		startTimeHour: number
+		startTimeMinute: number
+		endTimeHour: number
+		endTimeMinute: number
+	}) {
+		if (event.name.length == 0) {
+			this.editAppointmentDialog.nameError = "Bitte gib einen Namen ein"
+			return
+		}
+
+		let startTime = event.date.set({
+			hour: event.startTimeHour,
+			minute: event.startTimeMinute
+		})
+
+		let endTime = event.date.set({
+			hour: event.endTimeHour,
+			minute: event.endTimeMinute
+		})
+
+		let appointment = this.selectedAppointment
+
+		await appointment.Update(
+			event.name,
+			startTime.toUnixInteger(),
+			endTime.toUnixInteger(),
+			event.allDay,
+			event.color,
+			null
+		)
+
+		this.removeAppointment(appointment)
+		this.addAppointment(appointment)
+
+		this.editAppointmentDialog.hide()
+	}
+
+	showEditAppointmentDialog(appointment: Appointment) {
+		let startDate = DateTime.fromSeconds(appointment.start)
+		let endDate = DateTime.fromSeconds(appointment.end)
+
+		this.selectedAppointment = appointment
+		this.contextMenuVisible = false
+		this.editAppointmentDialog.name = appointment.name
+		this.editAppointmentDialog.date = startDate
+		this.editAppointmentDialog.selectedColor = appointment.color
+		this.editAppointmentDialog.allDay = appointment.allday
+		this.editAppointmentDialog.startTimeHour = startDate.hour
+		this.editAppointmentDialog.startTimeMinute = startDate.minute
+		this.editAppointmentDialog.endTimeHour = endDate.hour
+		this.editAppointmentDialog.endTimeMinute = endDate.minute
+
+		this.editAppointmentDialog.show()
 	}
 
 	showDeleteAppointmentDialog(appointment: Appointment) {

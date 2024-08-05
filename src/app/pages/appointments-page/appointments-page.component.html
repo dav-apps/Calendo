@@ -43,8 +43,7 @@
 	</div>
 
 	<!-- List of old appointments -->
-	@if (oldAppointmentDays.length > 0 &&
-	appointmentDays.length > 0) {
+	@if (oldAppointmentDays.length > 0 && appointmentDays.length > 0) {
 	<dav-header class="old-appointments-header">
 		{{ locale.oldAppointments }}
 	</dav-header>
@@ -92,7 +91,10 @@
 	[posY]="contextMenuPositionY"
 >
 	<!-- Edit -->
-	<dav-context-menu-item [value]="actionsLocale.edit">
+	<dav-context-menu-item
+		[value]="actionsLocale.edit"
+		(click)="showEditAppointmentDialog(selectedAppointment)"
+	>
 		<fa-icon slot="icon" [icon]="faEditLight"></fa-icon>
 	</dav-context-menu-item>
 
@@ -109,6 +111,12 @@
 	#createAppointmentDialog
 	[nameError]="createAppointmentDialogNameError"
 	(primaryButtonClick)="createAppointment($event)"
+></calendo-appointment-dialog>
+
+<calendo-appointment-dialog
+	#editAppointmentDialog
+	mode="edit"
+	(primaryButtonClick)="updateAppointment($event)"
 ></calendo-appointment-dialog>
 
 <calendo-delete-appointment-dialog
