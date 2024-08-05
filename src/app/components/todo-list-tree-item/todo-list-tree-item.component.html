@@ -40,7 +40,7 @@
 		class="items-container"
 		[@expandCollapse]="expanded ? 'expanded' : 'collapsed'"
 	>
-		@for (subItem of subItems; track item.uuid) {
+		@for (subItem of subItems; track subItem.uuid) {
 		<calendo-todo-list-tree-item
 			[item]="subItem"
 			[level]="level + 1"
