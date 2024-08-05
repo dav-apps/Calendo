@@ -4,8 +4,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core"
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome"
 import { ServiceWorkerModule } from "@angular/service-worker"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
-import { MatButtonModule } from "@angular/material/button"
-import { MatTreeModule } from "@angular/material/tree"
 import { DragulaModule } from "ng2-dragula"
 import { Environment } from "dav-js"
 import { environment } from "src/environments/environment"
@@ -93,8 +91,6 @@ import { SettingsService } from "./services/settings-service"
 				environment.environment == Environment.Production
 		}),
 		BrowserAnimationsModule,
-		MatButtonModule,
-		MatTreeModule,
 		DragulaModule.forRoot()
 	],
 	providers: [DataService, LocalizationService, SettingsService],
