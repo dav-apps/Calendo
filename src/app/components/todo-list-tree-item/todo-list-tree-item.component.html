@@ -38,6 +38,9 @@
 
 	<div
 		class="items-container"
+		dragula="TODOS"
+		[(dragulaModel)]="subItems"
+		(dragulaModelChange)="todoDragged($event)"
 		[@expandCollapse]="expanded ? 'expanded' : 'collapsed'"
 	>
 		@for (subItem of subItems; track subItem.uuid) {

@@ -105,4 +105,9 @@ export class TodoListTreeItemComponent {
 	chevronButtonClick() {
 		this.expanded = !this.expanded
 	}
+
+	todoDragged(event: (Todo | TodoList)[]) {
+		let todoList = this.item as TodoList
+		todoList.SetItems(event)
+	}
 }
