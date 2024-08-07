@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core"
+import {
+	Component,
+	Input,
+	Output,
+	EventEmitter,
+	ViewChild,
+	ElementRef
+} from "@angular/core"
 import { trigger, state, style, animate, transition } from "@angular/animations"
 import {
 	faPlus,
@@ -13,27 +20,6 @@ import { TodoList } from "src/app/models/TodoList"
 	templateUrl: "./todo-list-tree-item.component.html",
 	styleUrl: "./todo-list-tree-item.component.scss",
 	animations: [
-		trigger("expandCollapse", [
-			state(
-				"collapsed",
-				style({
-					transform: "translateY(-10px)",
-					opacity: 0,
-					height: 0,
-					marginBottom: 0,
-					visibility: "hidden"
-				})
-			),
-			state(
-				"expanded",
-				style({
-					transform: "",
-					opacity: 1
-				})
-			),
-			transition("expanded => collapsed", [animate("200ms 0s ease-in-out")]),
-			transition("collapsed => expanded", [animate("200ms 0s ease-in-out")])
-		]),
 		trigger("hide", [
 			state(
 				"hidden",
@@ -63,10 +49,13 @@ export class TodoListTreeItemComponent {
 	@Output() completedChange = new EventEmitter()
 	@Output() moreButtonClick = new EventEmitter()
 	@Output() removeTodo = new EventEmitter()
+	@ViewChild("itemsContainer")
+	itemsContainer: ElementRef<HTMLDivElement>
 	subItems: (Todo | TodoList)[] = []
 	hidden: boolean = false
-	expanded: boolean = false
+	expanded: boolean = true
 	completed: boolean = false
+	marginBottom: string = "0"
 
 	ngOnInit() {
 		if (this.item instanceof TodoList) {
@@ -104,6 +93,12 @@ export class TodoListTreeItemComponent {
 
 	chevronButtonClick() {
 		this.expanded = !this.expanded
+
+		if (this.expanded) {
+			this.marginBottom = "0"
+		} else {
+			this.marginBottom = `-${this.itemsContainer.nativeElement.clientHeight}px`
+		}
 	}
 
 	todoDragged(event: (Todo | TodoList)[]) {
