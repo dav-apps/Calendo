@@ -8,9 +8,9 @@ import {
 } from "@angular/core"
 import { trigger, state, style, animate, transition } from "@angular/animations"
 import {
-	faPlus,
 	faEllipsis,
-	faChevronRight
+	faChevronRight,
+	faArrowRight
 } from "@fortawesome/pro-light-svg-icons"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
@@ -41,14 +41,16 @@ import { TodoList } from "src/app/models/TodoList"
 	]
 })
 export class TodoListTreeItemComponent {
-	faPlus = faPlus
 	faEllipsis = faEllipsis
 	faChevronRight = faChevronRight
+	faArrowRight = faArrowRight
 	@Input() item: Todo | TodoList
 	@Input() level: number = 0
 	@Input() allowDragging: boolean = false
+	@Input() showMoreButton: boolean = false
 	@Output() completedChange = new EventEmitter()
 	@Output() optionsButtonClick = new EventEmitter()
+	@Output() moreButtonClick = new EventEmitter()
 	@Output() removeTodo = new EventEmitter()
 	@ViewChild("itemsContainer")
 	itemsContainer: ElementRef<HTMLDivElement>

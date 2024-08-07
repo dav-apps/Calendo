@@ -224,19 +224,14 @@ export class TodosPageComponent {
 		this.createTodoListDialog.hide()
 	}
 
-	// This is called when a todo list in the Sort By Groups mode was updated; Update all todo lists of the same object
-	TodoListUpdated(todoListUuid: string, todoGroup: string) {
-		/*
-		this.dataService.UpdateTodoListsOnSortByGroupTodoPage(
-			todoListUuid,
-			todoGroup
-		)
-		*/
-	}
-
 	todoDayMoreButtonClick(event: MouseEvent, todoDay: TodoDay) {
 		event.preventDefault()
 		this.dataService.contentContainer.scrollTo(0, 0)
 		this.router.navigate([todoDay.calendarDayPageLink])
+	}
+
+	todoListMoreButtonClick(item: TodoList) {
+		this.dataService.contentContainer.scrollTo(0, 0)
+		this.router.navigate(["todolist", item.uuid])
 	}
 }

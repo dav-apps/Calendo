@@ -27,12 +27,21 @@
 		</p>
 
 		<div class="list-header-buttons">
-			<dav-icon-button
-				size="xs"
-				(click)="optionsButtonClick.emit({ event: $event, item })"
-			>
-				<fa-icon [icon]="faEllipsis"></fa-icon>
-			</dav-icon-button>
+			@if (showMoreButton) {
+				<dav-icon-button
+					size="xs"
+					(click)="moreButtonClick.emit(item)"
+				>
+					<fa-icon [icon]="faArrowRight"></fa-icon>
+				</dav-icon-button>
+			} @else {
+				<dav-icon-button
+					size="xs"
+					(click)="optionsButtonClick.emit({ event: $event, item })"
+				>
+					<fa-icon [icon]="faEllipsis"></fa-icon>
+				</dav-icon-button>
+			}
 		</div>
 	</div>
 
@@ -52,6 +61,7 @@
 			[allowDragging]="allowDragging"
 			(completedChange)="checkCompleted()"
 			(optionsButtonClick)="optionsButtonClick.emit($event)"
+			(moreButtonClick)="moreButtonClick.emit($event)"
 			(removeTodo)="removeTodo.emit($event)"
 		></calendo-todo-list-tree-item>
 		}
