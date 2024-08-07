@@ -42,13 +42,13 @@ export class TodoListPageComponent {
 	addButtonContextMenuPositionY: number = 0
 	//#endregion
 
-	//#region MoreButtonContextMenu
-	@ViewChild("moreButtonContextMenu")
-	moreButtonContextMenu: ElementRef<ContextMenu>
-	moreButtonContextMenuVisible: boolean = false
-	moreButtonContextMenuPositionX: number = 0
-	moreButtonContextMenuPositionY: number = 0
-	moreButtonContextMenuSelectedItem: TodoList
+	//#region OptionsButtonContextMenu
+	@ViewChild("optionsButtonContextMenu")
+	optionsButtonContextMenu: ElementRef<ContextMenu>
+	optionsButtonContextMenuVisible: boolean = false
+	optionsButtonContextMenuPositionX: number = 0
+	optionsButtonContextMenuPositionY: number = 0
+	optionsButtonContextMenuSelectedItem: TodoList
 	//#endregion
 
 	//#region EditTodoListDialog
@@ -113,12 +113,12 @@ export class TodoListPageComponent {
 			!this.addButtonContextMenu.nativeElement.contains(
 				event.target as Node
 			) &&
-			!this.moreButtonContextMenu.nativeElement.contains(
+			!this.optionsButtonContextMenu.nativeElement.contains(
 				event.target as Node
 			)
 		) {
 			this.addButtonContextMenuVisible = false
-			this.moreButtonContextMenuVisible = false
+			this.optionsButtonContextMenuVisible = false
 		}
 	}
 
@@ -131,23 +131,23 @@ export class TodoListPageComponent {
 			this.addButtonContextMenuPositionY = event.detail.contextMenuPosition.y
 
 			this.addButtonContextMenuVisible = true
-			this.moreButtonContextMenuVisible = false
+			this.optionsButtonContextMenuVisible = false
 		}
 	}
 
-	moreButtonClick(e: { event: CustomEvent; item: TodoList }) {
-		if (this.moreButtonContextMenuVisible) {
-			this.moreButtonContextMenuVisible = false
+	optionsButtonClick(e: { event: CustomEvent; item: TodoList }) {
+		if (this.optionsButtonContextMenuVisible) {
+			this.optionsButtonContextMenuVisible = false
 		} else {
 			this.addItemDialogParent = e.item
-			this.moreButtonContextMenuSelectedItem = e.item
-			this.moreButtonContextMenuPositionX =
+			this.optionsButtonContextMenuSelectedItem = e.item
+			this.optionsButtonContextMenuPositionX =
 				e.event.detail.contextMenuPosition.x
-			this.moreButtonContextMenuPositionY =
+			this.optionsButtonContextMenuPositionY =
 				e.event.detail.contextMenuPosition.y
 
 			this.addButtonContextMenuVisible = false
-			this.moreButtonContextMenuVisible = true
+			this.optionsButtonContextMenuVisible = true
 		}
 	}
 
@@ -167,25 +167,25 @@ export class TodoListPageComponent {
 
 	showAddTodoDialog() {
 		this.addButtonContextMenuVisible = false
-		this.moreButtonContextMenuVisible = false
+		this.optionsButtonContextMenuVisible = false
 		this.addTodoDialog.show()
 	}
 
 	showAddTodoListDialog() {
 		this.addButtonContextMenuVisible = false
-		this.moreButtonContextMenuVisible = false
+		this.optionsButtonContextMenuVisible = false
 		this.addTodoListDialog.show()
 	}
 
 	showEditSubTodoListDialog() {
-		this.moreButtonContextMenuVisible = false
+		this.optionsButtonContextMenuVisible = false
 		this.editSubTodoListDialog.name =
-			this.moreButtonContextMenuSelectedItem.name
+			this.optionsButtonContextMenuSelectedItem.name
 		this.editSubTodoListDialog.show()
 	}
 
 	showDeleteSubTodoListDialog() {
-		this.moreButtonContextMenuVisible = false
+		this.optionsButtonContextMenuVisible = false
 		this.deleteSubTodoListDialog.show()
 	}
 
@@ -234,17 +234,17 @@ export class TodoListPageComponent {
 	}
 
 	async updateSubTodoList(event: { name: string }) {
-		await this.moreButtonContextMenuSelectedItem.Update(event.name)
+		await this.optionsButtonContextMenuSelectedItem.Update(event.name)
 		this.editSubTodoListDialog.hide()
 	}
 
 	async deleteSubTodoList() {
-		await this.moreButtonContextMenuSelectedItem.Delete()
+		await this.optionsButtonContextMenuSelectedItem.Delete()
 		this.removeItem(
-			this.moreButtonContextMenuSelectedItem.uuid,
+			this.optionsButtonContextMenuSelectedItem.uuid,
 			this.todoList
 		)
-		this.moreButtonContextMenuSelectedItem = null
+		this.optionsButtonContextMenuSelectedItem = null
 		this.deleteSubTodoListDialog.hide()
 	}
 

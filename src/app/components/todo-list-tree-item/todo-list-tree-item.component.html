@@ -29,7 +29,7 @@
 		<div class="list-header-buttons">
 			<dav-icon-button
 				size="xs"
-				(click)="moreButtonClick.emit({ event: $event, item })"
+				(click)="optionsButtonClick.emit({ event: $event, item })"
 			>
 				<fa-icon [icon]="faEllipsis"></fa-icon>
 			</dav-icon-button>
@@ -51,7 +51,7 @@
 			[level]="level + 1"
 			[allowDragging]="allowDragging"
 			(completedChange)="checkCompleted()"
-			(moreButtonClick)="moreButtonClick.emit($event)"
+			(optionsButtonClick)="optionsButtonClick.emit($event)"
 			(removeTodo)="removeTodo.emit($event)"
 		></calendo-todo-list-tree-item>
 		}

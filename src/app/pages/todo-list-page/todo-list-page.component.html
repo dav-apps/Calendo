@@ -32,7 +32,7 @@
 			#todoListTree
 			[todoList]="todoList"
 			[allowDragging]="true"
-			(moreButtonClick)="moreButtonClick($event)"
+			(optionsButtonClick)="optionsButtonClick($event)"
 			(removeTodo)="removeItem($event, todoList)"
 		></calendo-todo-list-tree>
 	</div>
@@ -60,10 +60,10 @@
 </dav-context-menu>
 
 <dav-context-menu
-	#moreButtonContextMenu
-	[visible]="moreButtonContextMenuVisible"
-	[posX]="moreButtonContextMenuPositionX"
-	[posY]="moreButtonContextMenuPositionY"
+	#optionsButtonContextMenu
+	[visible]="optionsButtonContextMenuVisible"
+	[posX]="optionsButtonContextMenuPositionX"
+	[posY]="optionsButtonContextMenuPositionY"
 >
 	<dav-context-menu-item
 		[value]="locale.addTodo"

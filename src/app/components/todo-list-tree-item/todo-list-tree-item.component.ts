@@ -48,7 +48,7 @@ export class TodoListTreeItemComponent {
 	@Input() level: number = 0
 	@Input() allowDragging: boolean = false
 	@Output() completedChange = new EventEmitter()
-	@Output() moreButtonClick = new EventEmitter()
+	@Output() optionsButtonClick = new EventEmitter()
 	@Output() removeTodo = new EventEmitter()
 	@ViewChild("itemsContainer")
 	itemsContainer: ElementRef<HTMLDivElement>
