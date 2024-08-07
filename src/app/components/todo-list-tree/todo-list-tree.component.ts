@@ -12,7 +12,7 @@ export class TodoListTreeComponent {
 	faPlus = faPlus
 	@Input() todoList: TodoList = new TodoList()
 	@Input() showRoot: boolean = false
-	@Input() readonly: boolean = false
+	@Input() allowDragging: boolean = false
 	@Output() moreButtonClick = new EventEmitter()
 	@Output() removeTodo = new EventEmitter()
 

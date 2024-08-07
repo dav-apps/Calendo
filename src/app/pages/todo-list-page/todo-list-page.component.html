@@ -31,6 +31,7 @@
 		<calendo-todo-list-tree
 			#todoListTree
 			[todoList]="todoList"
+			[allowDragging]="true"
 			(moreButtonClick)="moreButtonClick($event)"
 			(removeTodo)="removeItem($event, todoList)"
 		></calendo-todo-list-tree>

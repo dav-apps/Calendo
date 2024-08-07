@@ -46,6 +46,7 @@ export class TodoListTreeItemComponent {
 	faChevronRight = faChevronRight
 	@Input() item: Todo | TodoList
 	@Input() level: number = 0
+	@Input() allowDragging: boolean = false
 	@Output() completedChange = new EventEmitter()
 	@Output() moreButtonClick = new EventEmitter()
 	@Output() removeTodo = new EventEmitter()

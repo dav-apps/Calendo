@@ -1,14 +1,22 @@
+@if (showRoot) {
+<calendo-todo-list-tree-item
+	[item]="todoList"
+	[allowDragging]="allowDragging"
+></calendo-todo-list-tree-item>
+} @else {
 <div
 	class="container"
-	dragula="TODOS"
+	[dragula]="allowDragging ? 'TODOS' : null"
 	[(dragulaModel)]="todoList.items"
 	(dragulaModelChange)="todoDragged($event)"
 >
 	@for (item of todoList.items; track item.uuid) {
 	<calendo-todo-list-tree-item
 		[item]="item"
+		[allowDragging]="allowDragging"
 		(moreButtonClick)="moreButtonClick.emit($event)"
 		(removeTodo)="removeTodo.emit($event)"
 	></calendo-todo-list-tree-item>
 	}
 </div>
+}

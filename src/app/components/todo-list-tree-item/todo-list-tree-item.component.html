@@ -41,7 +41,7 @@
 		class="items-container"
 		[class.collapsed]="!expanded"
 		[style.marginBottom]="marginBottom"
-		dragula="TODOS"
+		[dragula]="allowDragging ? 'TODOS' : null"
 		[(dragulaModel)]="subItems"
 		(dragulaModelChange)="todoDragged($event)"
 	>
@@ -49,6 +49,7 @@
 		<calendo-todo-list-tree-item
 			[item]="subItem"
 			[level]="level + 1"
+			[allowDragging]="allowDragging"
 			(completedChange)="checkCompleted()"
 			(moreButtonClick)="moreButtonClick.emit($event)"
 			(removeTodo)="removeTodo.emit($event)"
