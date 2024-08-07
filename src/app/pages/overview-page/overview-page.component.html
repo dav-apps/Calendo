@@ -38,9 +38,9 @@
 					@for (todo of currentDay.todos; track todo.uuid) {
 					<calendo-todo-item [todo]="todo"></calendo-todo-item>
 					} @for (todoList of currentDay.todoLists; track todoList.uuid) {
-					<calendo-todo-list-item
+					<calendo-todo-list-tree
 						[todoList]="todoList"
-					></calendo-todo-list-item>
+					></calendo-todo-list-tree>
 					}
 
 					<li

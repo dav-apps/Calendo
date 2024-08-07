@@ -28,9 +28,14 @@
 		<!-- Sort by date -->
 		<div>
 			@for (todo of todosWithoutDate; track todo.uuid) {
-			<calendo-todo-item [todo]="todo"></calendo-todo-item>
+			<div class="todo-item-container">
+				<calendo-todo-item [todo]="todo"></calendo-todo-item>
+			</div>
 			} @for (todoList of todoListsWithoutDate; track todoList.uuid) {
-			<calendo-todo-list-item [todoList]="todoList"></calendo-todo-list-item>
+			<calendo-todo-list-tree
+				[todoList]="todoList"
+				[showRoot]="true"
+			></calendo-todo-list-tree>
 			}
 		</div>
 
@@ -53,11 +58,14 @@
 
 			<div class="todo-day-items">
 				@for (todo of todoDay.todos; track todo.uuid) {
-				<calendo-todo-item [todo]="todo"></calendo-todo-item>
+				<div class="todo-item-container">
+					<calendo-todo-item [todo]="todo"></calendo-todo-item>
+				</div>
 				} @for (todoList of todoDay.todoLists; track todoList.uuid) {
-				<calendo-todo-list-item
+				<calendo-todo-list-tree
 					[todoList]="todoList"
-				></calendo-todo-list-item>
+					[showRoot]="true"
+				></calendo-todo-list-tree>
 				}
 			</div>
 		</div>
@@ -65,12 +73,17 @@
 		<!-- Sort by group -->
 		<div class="">
 			@for (todo of todosWithoutGroup; track todo.uuid) {
-			<calendo-todo-item
-				[todo]="todo"
-				[showBadge]="false"
-			></calendo-todo-item>
+			<div class="todo-item-container">
+				<calendo-todo-item
+					[todo]="todo"
+					[showBadge]="false"
+				></calendo-todo-item>
+			</div>
 			} @for (todoList of todoListsWithoutGroup; track todoList.uuid) {
-			<calendo-todo-list-item [todoList]="todoList"></calendo-todo-list-item>
+			<calendo-todo-list-tree
+				[todoList]="todoList"
+				[showRoot]="true"
+			></calendo-todo-list-tree>
 			}
 		</div>
 
@@ -84,15 +97,18 @@
 
 			<div class="todo-day-items">
 				@for (todo of todoGroup.todos; track todo.uuid) {
-				<calendo-todo-item
-					[todo]="todo"
-					[showBadge]="false"
-				></calendo-todo-item>
+				<div class="todo-item-container">
+					<calendo-todo-item
+						[todo]="todo"
+						[showBadge]="false"
+					></calendo-todo-item>
+				</div>
 				} @for (todoList of todoGroup.todoLists; track todoList.uuid) {
-				<calendo-todo-list-item
+				<calendo-todo-list-tree
 					[todoList]="todoList"
+					[showRoot]="true"
 					(update)="TodoListUpdated(todoList.uuid, todoGroup.name)"
-				></calendo-todo-list-item>
+				></calendo-todo-list-tree>
 				}
 			</div>
 		</div>
