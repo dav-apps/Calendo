@@ -12,6 +12,7 @@ import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appoint
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { Appointment } from "src/app/models/Appointment"
+import { sortAppointments } from "src/app/utils"
 import { AppointmentDay } from "src/app/types"
 
 @Component({
@@ -104,7 +105,7 @@ export class AppointmentsPageComponent {
 			appointmentDay.appointments.push(appointment)
 
 			// Sort the appointments of the day
-			this.dataService.SortAppointmentsArray(appointmentDay.appointments)
+			sortAppointments(appointmentDay.appointments)
 		} else {
 			appointmentDays.push({
 				date: date.startOf("day"),

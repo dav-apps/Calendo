@@ -14,6 +14,7 @@ import { TodoDialogComponent } from "src/app/dialogs/todo-dialog/todo-dialog.com
 import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
+import { sortAppointments, sortTodos, sortTodoLists } from "src/app/utils"
 import { StartDay } from "src/app/types"
 
 @Component({
@@ -132,7 +133,7 @@ export class OverviewPageComponent {
 				this.currentDay.appointments.push(appointment)
 			}
 
-			this.dataService.SortAppointmentsArray(this.currentDay.appointments)
+			sortAppointments(this.currentDay.appointments)
 			return
 		}
 
@@ -150,7 +151,7 @@ export class OverviewPageComponent {
 				day.appointments.push(appointment)
 			}
 
-			this.dataService.SortAppointmentsArray(day.appointments)
+			sortAppointments(day.appointments)
 		} else {
 			// Create a new day
 			this.days.push({
@@ -205,7 +206,7 @@ export class OverviewPageComponent {
 				this.currentDay.todos.push(todo)
 			}
 
-			this.dataService.SortTodosArray(this.currentDay.todos)
+			sortTodos(this.currentDay.todos)
 			return
 		}
 
@@ -223,7 +224,7 @@ export class OverviewPageComponent {
 				day.todos.push(todo)
 			}
 
-			this.dataService.SortTodosArray(day.todos)
+			sortTodos(day.todos)
 		} else {
 			// Create a new day
 			this.days.push({
@@ -258,7 +259,7 @@ export class OverviewPageComponent {
 				this.currentDay.todoLists.push(todoList)
 			}
 
-			this.dataService.SortTodoListsArray(this.currentDay.todoLists)
+			sortTodoLists(this.currentDay.todoLists)
 			return
 		}
 
@@ -276,7 +277,7 @@ export class OverviewPageComponent {
 				day.todoLists.push(todoList)
 			}
 
-			this.dataService.SortTodoListsArray(day.todoLists)
+			sortTodoLists(day.todoLists)
 		} else {
 			// Create a new day
 			this.days.push({

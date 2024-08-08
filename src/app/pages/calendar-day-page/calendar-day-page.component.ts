@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
+import { Location } from "@angular/common"
 import { Router, ActivatedRoute } from "@angular/router"
 import { DateTime } from "luxon"
 import {
@@ -9,12 +10,12 @@ import { ContextMenu } from "dav-ui-components"
 import { AppointmentDialogComponent } from "src/app/dialogs/appointment-dialog/appointment-dialog.component"
 import { TodoDialogComponent } from "src/app/dialogs/todo-dialog/todo-dialog.component"
 import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
-import { DataService } from "src/app/services/data-service"
-import { LocalizationService } from "src/app/services/localization-service"
 import { Appointment } from "src/app/models/Appointment"
 import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
-import { Location } from "@angular/common"
+import { DataService } from "src/app/services/data-service"
+import { LocalizationService } from "src/app/services/localization-service"
+import { sortAppointments, sortTodos } from "src/app/utils"
 
 @Component({
 	templateUrl: "./calendar-day-page.component.html",
@@ -186,7 +187,7 @@ export class CalendarDayPageComponent {
 		)
 
 		this.appointments.push(appointment)
-		this.dataService.SortAppointmentsArray(this.appointments)
+		sortAppointments(this.appointments)
 
 		this.createAppointmentDialog.hide()
 	}
@@ -242,7 +243,7 @@ export class CalendarDayPageComponent {
 		)
 
 		this.todos.push(todo)
-		this.dataService.SortTodosArray(this.todos)
+		sortTodos(this.todos)
 
 		this.createTodoDialog.hide()
 	}

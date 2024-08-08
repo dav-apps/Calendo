@@ -6,7 +6,7 @@ import { TodoList, GetAllTodoLists, GetTodoList } from "../models/TodoList"
 import { Dav, PromiseHolder } from "dav-js"
 import * as DavUIComponents from "dav-ui-components"
 import { SettingsService } from "./settings-service"
-import { convertStringToTheme } from "src/app/utils"
+import { sortAppointments, convertStringToTheme } from "src/app/utils"
 import { Theme, TodoDay } from "src/app/types"
 import { themeKey, lightThemeKey, darkThemeKey } from "src/app/constants"
 
@@ -34,11 +34,11 @@ export class DataService {
 	//#endregion
 
 	constructor(private settingsService: SettingsService) {
-		this.LoadAllAppointments()
-		this.LoadAllTodos()
+		this.loadAllAppointments()
+		this.loadAllTodos()
 	}
 
-	async LoadAllAppointments() {
+	async loadAllAppointments() {
 		if (this.isLoadingAllAppointments) return
 		this.isLoadingAllAppointments = true
 
@@ -54,7 +54,7 @@ export class DataService {
 		this.appointmentsPromiseHolder.Resolve()
 	}
 
-	async LoadAllTodos() {
+	async loadAllTodos() {
 		if (this.isLoadingAllTodos) return
 		this.isLoadingAllTodos = true
 
@@ -63,6 +63,7 @@ export class DataService {
 
 		// Load todos
 		var todos = await GetAllTodos()
+
 		for (let todo of todos) {
 			this.allTodos.push(todo)
 		}
@@ -76,45 +77,6 @@ export class DataService {
 
 		this.isLoadingAllTodos = false
 		this.todosPromiseHolder.Resolve()
-	}
-
-	SortAppointmentsArray(appointments: Appointment[]) {
-		appointments.sort((a: Appointment, b: Appointment) => {
-			if (a.allday) return -1
-			if (b.allday) return 1
-
-			if (a.start < b.start) {
-				return -1
-			} else if (a.start > b.start) {
-				return 1
-			} else {
-				return 0
-			}
-		})
-	}
-
-	SortTodosArray(todos: Todo[]) {
-		todos.sort((a: Todo, b: Todo) => {
-			if (a.time < b.time) {
-				return -1
-			} else if (a.time > b.time) {
-				return 1
-			} else {
-				return 0
-			}
-		})
-	}
-
-	SortTodoListsArray(todoLists: TodoList[]) {
-		todoLists.sort((a: TodoList, b: TodoList) => {
-			if (a.time < b.time) {
-				return -1
-			} else if (a.time > b.time) {
-				return 1
-			} else {
-				return 0
-			}
-		})
 	}
 
 	SortTodoDays(todoDays: TodoDay[]) {
@@ -197,7 +159,7 @@ export class DataService {
 			}
 		}
 
-		this.SortAppointmentsArray(appointments)
+		sortAppointments(appointments)
 
 		return appointments
 	}
