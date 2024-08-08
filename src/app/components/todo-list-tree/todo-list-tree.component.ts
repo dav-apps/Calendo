@@ -13,6 +13,7 @@ export class TodoListTreeComponent {
 	@Input() todoList: TodoList = new TodoList()
 	@Input() showRoot: boolean = false
 	@Input() allowDragging: boolean = false
+	@Input() expanded: boolean = true
 	@Output() optionsButtonClick = new EventEmitter()
 	@Output() moreButtonClick = new EventEmitter()
 	@Output() removeTodo = new EventEmitter()

@@ -49,6 +49,7 @@ export class TodoListTreeItemComponent {
 	@Input() allowDragging: boolean = false
 	@Input() showOptionsButton: boolean = true
 	@Input() showMoreButton: boolean = false
+	@Input() expanded: boolean = true
 	@Output() completedChange = new EventEmitter()
 	@Output() optionsButtonClick = new EventEmitter()
 	@Output() moreButtonClick = new EventEmitter()
@@ -57,7 +58,6 @@ export class TodoListTreeItemComponent {
 	itemsContainer: ElementRef<HTMLDivElement>
 	subItems: (Todo | TodoList)[] = []
 	hidden: boolean = false
-	expanded: boolean = true
 	completed: boolean = false
 	marginBottom: string = "0"
 
@@ -67,6 +67,14 @@ export class TodoListTreeItemComponent {
 		}
 
 		this.checkCompleted()
+	}
+
+	ngAfterViewInit() {
+		setTimeout(() => {
+			if (!this.expanded && this.itemsContainer != null) {
+				this.marginBottom = `-${this.itemsContainer.nativeElement.clientHeight}px`
+			}
+		}, 1)
 	}
 
 	checkCompleted() {
