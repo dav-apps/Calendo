@@ -1,6 +1,6 @@
 import { Appointment } from "./models/Appointment"
 import { Todo } from "./models/Todo"
-import { TodoList } from "./models/TodoList"
+import { TodoList, GetTodoList } from "./models/TodoList"
 import { Theme } from "./types"
 import { lightThemeKey, darkThemeKey } from "./constants"
 
@@ -41,6 +41,39 @@ export function sortTodoLists(todoLists: TodoList[]) {
 			return 0
 		}
 	})
+}
+
+export async function getRootOfTodo(todo: Todo): Promise<TodoList> {
+	if (!todo.list) return null
+
+	let parent = await GetTodoList(todo.list)
+	if (!parent) return null
+
+	if (parent.list) {
+		// Get the parent of the parent
+		return await this.GetRootOfTodoList(parent)
+	} else {
+		return parent
+	}
+}
+
+export async function getRootOfTodoList(todoList: TodoList): Promise<TodoList> {
+	if (!todoList.list) return todoList
+
+	let parentUuid = todoList.list
+	let currentList: TodoList = todoList
+
+	while (parentUuid) {
+		currentList = await GetTodoList(parentUuid)
+
+		if (currentList) {
+			parentUuid = currentList.list
+		} else {
+			return null
+		}
+	}
+
+	return currentList
 }
 
 export function convertStringToTheme(value: string): Theme {

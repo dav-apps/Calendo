@@ -19,12 +19,13 @@ import {
 import { Dav, TableObject } from "dav-js"
 import * as DavUIComponents from "dav-ui-components"
 import { environment } from "../environments/environment"
-import { enUS } from "../locales/locales"
 import { DataService } from "./services/data-service"
 import { LocalizationService } from "./services/localization-service"
 import { ConvertTableObjectToAppointment } from "./models/Appointment"
 import { ConvertTableObjectToTodo } from "./models/Todo"
 import { TodoList, ConvertTableObjectToTodoList } from "./models/TodoList"
+import { getRootOfTodo, getRootOfTodoList } from "src/app/utils"
+import { enUS } from "src/locales/locales"
 
 @Component({
 	selector: "app-root",
@@ -165,7 +166,7 @@ export class AppComponent {
 
 			if (todo.list) {
 				// Update the root todo list of the todo
-				let root = await this.dataService.GetRootOfTodo(todo)
+				let root = await getRootOfTodo(todo)
 
 				if (root) {
 					// TODO: Reload todo list on current page
@@ -182,7 +183,7 @@ export class AppComponent {
 
 				if (todoList.list) {
 					// Get the root of the todo list
-					root = await this.dataService.GetRootOfTodoList(todoList)
+					root = await getRootOfTodoList(todoList)
 				} else {
 					root = todoList
 				}
@@ -209,7 +210,7 @@ export class AppComponent {
 
 			if (todo.list) {
 				// Update the root todo list of the todo
-				let root = await this.dataService.GetRootOfTodo(todo)
+				let root = await getRootOfTodo(todo)
 
 				if (root) {
 					// TODO: Remove todo list on current page
@@ -224,7 +225,7 @@ export class AppComponent {
 
 			if (todoList.list) {
 				// Update the root todo list
-				let root = await this.dataService.GetRootOfTodoList(todoList)
+				let root = await getRootOfTodoList(todoList)
 
 				if (root) {
 					// TODO: Remove todo list on current page

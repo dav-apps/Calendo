@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core"
 import { DateTime } from "luxon"
 import { Todo, GetAllTodos } from "../models/Todo"
 import { Appointment, GetAllAppointments } from "../models/Appointment"
-import { TodoList, GetAllTodoLists, GetTodoList } from "../models/TodoList"
+import { TodoList, GetAllTodoLists } from "../models/TodoList"
 import { Dav, PromiseHolder } from "dav-js"
 import * as DavUIComponents from "dav-ui-components"
 import { SettingsService } from "./settings-service"
@@ -162,46 +162,6 @@ export class DataService {
 		sortAppointments(appointments)
 
 		return appointments
-	}
-	//#endregion
-
-	//#region Helper methods
-	GetNotificationPermission(): NotificationPermission {
-		return Notification.permission
-	}
-
-	// Reload the todo lists in updatedTodoLists
-	async GetRootOfTodo(todo: Todo): Promise<TodoList> {
-		if (!todo.list) return null
-
-		let parent = await GetTodoList(todo.list)
-		if (!parent) return null
-
-		if (parent.list) {
-			// Get the parent of the parent
-			return await this.GetRootOfTodoList(parent)
-		} else {
-			return parent
-		}
-	}
-
-	async GetRootOfTodoList(todoList: TodoList): Promise<TodoList> {
-		if (!todoList.list) return todoList
-
-		let parentUuid = todoList.list
-		let currentList: TodoList = todoList
-
-		while (parentUuid) {
-			currentList = await GetTodoList(parentUuid)
-
-			if (currentList) {
-				parentUuid = currentList.list
-			} else {
-				return null
-			}
-		}
-
-		return currentList
 	}
 	//#endregion
 }
