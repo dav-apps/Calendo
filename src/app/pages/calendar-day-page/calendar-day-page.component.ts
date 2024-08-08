@@ -88,6 +88,7 @@ export class CalendarDayPageComponent {
 
 				this.appointments = this.dataService.getAppointmentsOfDay(this.date)
 				this.todos = this.dataService.getTodosOfDay(this.date)
+				this.todoLists = this.dataService.getTodoListsOfDay(this.date)
 			}
 		})
 	}
@@ -250,5 +251,10 @@ export class CalendarDayPageComponent {
 
 	goBack() {
 		this.location.back()
+	}
+
+	todoListMoreButtonClick(item: TodoList) {
+		this.dataService.contentContainer.scrollTo(0, 0)
+		this.router.navigate(["todolist", item.uuid])
 	}
 }

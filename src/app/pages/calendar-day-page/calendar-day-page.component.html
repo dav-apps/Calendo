@@ -56,9 +56,12 @@
 				} @for (todo of todos; track todo.uuid) {
 				<calendo-todo-item [todo]="todo"></calendo-todo-item>
 				} @for (todoList of todoLists; track todoList.uuid) {
-				<calendo-small-todo-list-item
+				<calendo-todo-list-tree
 					[todoList]="todoList"
-				></calendo-small-todo-list-item>
+					[showRoot]="true"
+					[expanded]="false"
+					(moreButtonClick)="todoListMoreButtonClick($event)"
+				></calendo-todo-list-tree>
 				}
 			</div>
 		</div>

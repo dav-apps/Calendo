@@ -122,7 +122,7 @@ export class DataService {
 	}
 
 	getAppointmentsOfDay(day: DateTime) {
-		var appointments: Appointment[] = []
+		let appointments: Appointment[] = []
 
 		for (let appointment of this.allAppointments) {
 			if (DateTime.fromSeconds(appointment.start).hasSame(day, "day")) {
@@ -136,7 +136,7 @@ export class DataService {
 	}
 
 	getTodosOfDay(day: DateTime, completed: boolean = false) {
-		var todos: Todo[] = []
+		let todos: Todo[] = []
 
 		for (let todo of this.allTodos) {
 			if (
@@ -148,5 +148,17 @@ export class DataService {
 		}
 
 		return todos
+	}
+
+	getTodoListsOfDay(day: DateTime) {
+		let todoLists: TodoList[] = []
+
+		for (let todoList of this.allTodoLists) {
+			if (DateTime.fromSeconds(todoList.time).hasSame(day, "day")) {
+				todoLists.push(todoList)
+			}
+		}
+
+		return todoLists
 	}
 }
