@@ -34,7 +34,7 @@
 				>
 					<fa-icon [icon]="faArrowRight"></fa-icon>
 				</dav-icon-button>
-			} @else {
+			} @else if (showOptionsButton) {
 				<dav-icon-button
 					size="xs"
 					(click)="optionsButtonClick.emit({ event: $event, item })"
@@ -59,6 +59,7 @@
 			[item]="subItem"
 			[level]="level + 1"
 			[allowDragging]="allowDragging"
+			[showOptionsButton]="showOptionsButton"
 			(completedChange)="checkCompleted()"
 			(optionsButtonClick)="optionsButtonClick.emit($event)"
 			(moreButtonClick)="moreButtonClick.emit($event)"

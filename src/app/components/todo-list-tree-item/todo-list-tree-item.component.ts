@@ -47,6 +47,7 @@ export class TodoListTreeItemComponent {
 	@Input() item: Todo | TodoList
 	@Input() level: number = 0
 	@Input() allowDragging: boolean = false
+	@Input() showOptionsButton: boolean = true
 	@Input() showMoreButton: boolean = false
 	@Output() completedChange = new EventEmitter()
 	@Output() optionsButtonClick = new EventEmitter()
