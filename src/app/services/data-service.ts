@@ -7,7 +7,7 @@ import { Dav, PromiseHolder } from "dav-js"
 import * as DavUIComponents from "dav-ui-components"
 import { SettingsService } from "./settings-service"
 import { sortAppointments, convertStringToTheme } from "src/app/utils"
-import { Theme, TodoDay } from "src/app/types"
+import { Theme } from "src/app/types"
 import { themeKey, lightThemeKey, darkThemeKey } from "src/app/constants"
 
 @Injectable()
@@ -36,59 +36,6 @@ export class DataService {
 	constructor(private settingsService: SettingsService) {
 		this.loadAllAppointments()
 		this.loadAllTodos()
-	}
-
-	async loadAllAppointments() {
-		if (this.isLoadingAllAppointments) return
-		this.isLoadingAllAppointments = true
-
-		this.allAppointments = []
-
-		var appointments = await GetAllAppointments()
-
-		for (let appointment of appointments) {
-			this.allAppointments.push(appointment)
-		}
-
-		this.isLoadingAllAppointments = false
-		this.appointmentsPromiseHolder.Resolve()
-	}
-
-	async loadAllTodos() {
-		if (this.isLoadingAllTodos) return
-		this.isLoadingAllTodos = true
-
-		this.allTodos = []
-		this.allTodoLists = []
-
-		// Load todos
-		var todos = await GetAllTodos()
-
-		for (let todo of todos) {
-			this.allTodos.push(todo)
-		}
-
-		// Load todo lists
-		let todoLists = await GetAllTodoLists()
-
-		for (let todoList of todoLists) {
-			this.allTodoLists.push(todoList)
-		}
-
-		this.isLoadingAllTodos = false
-		this.todosPromiseHolder.Resolve()
-	}
-
-	SortTodoDays(todoDays: TodoDay[]) {
-		todoDays.sort((a: TodoDay, b: TodoDay) => {
-			if (a.date < b.date) {
-				return -1
-			} else if (a.date > b.date) {
-				return 1
-			} else {
-				return 0
-			}
-		})
 	}
 
 	async loadTheme(theme?: Theme) {
@@ -133,9 +80,62 @@ export class DataService {
 		)
 	}
 
-	//#region CalendarPage
-	// Get the todos of the given day to show them on the calendar page
-	GetTodosOfDay(day: DateTime, completed: boolean = false) {
+	async loadAllAppointments() {
+		if (this.isLoadingAllAppointments) return
+		this.isLoadingAllAppointments = true
+
+		this.allAppointments = []
+
+		var appointments = await GetAllAppointments()
+
+		for (let appointment of appointments) {
+			this.allAppointments.push(appointment)
+		}
+
+		this.isLoadingAllAppointments = false
+		this.appointmentsPromiseHolder.Resolve()
+	}
+
+	async loadAllTodos() {
+		if (this.isLoadingAllTodos) return
+		this.isLoadingAllTodos = true
+
+		this.allTodos = []
+		this.allTodoLists = []
+
+		// Load todos
+		var todos = await GetAllTodos()
+
+		for (let todo of todos) {
+			this.allTodos.push(todo)
+		}
+
+		// Load todo lists
+		let todoLists = await GetAllTodoLists()
+
+		for (let todoList of todoLists) {
+			this.allTodoLists.push(todoList)
+		}
+
+		this.isLoadingAllTodos = false
+		this.todosPromiseHolder.Resolve()
+	}
+
+	getAppointmentsOfDay(day: DateTime) {
+		var appointments: Appointment[] = []
+
+		for (let appointment of this.allAppointments) {
+			if (DateTime.fromSeconds(appointment.start).hasSame(day, "day")) {
+				appointments.push(appointment)
+			}
+		}
+
+		sortAppointments(appointments)
+
+		return appointments
+	}
+
+	getTodosOfDay(day: DateTime, completed: boolean = false) {
 		var todos: Todo[] = []
 
 		for (let todo of this.allTodos) {
@@ -149,19 +149,4 @@ export class DataService {
 
 		return todos
 	}
-
-	GetAppointmentsOfDay(day: DateTime) {
-		var appointments: Appointment[] = []
-
-		for (let appointment of this.allAppointments) {
-			if (DateTime.fromSeconds(appointment.start).hasSame(day, "day")) {
-				appointments.push(appointment)
-			}
-		}
-
-		sortAppointments(appointments)
-
-		return appointments
-	}
-	//#endregion
 }

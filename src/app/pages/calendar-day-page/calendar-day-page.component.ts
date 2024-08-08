@@ -86,8 +86,8 @@ export class CalendarDayPageComponent {
 				this.title = this.date.toFormat("DDDD")
 				this.isDateBeforeToday = this.date < DateTime.now().startOf("day")
 
-				this.appointments = this.dataService.GetAppointmentsOfDay(this.date)
-				this.todos = this.dataService.GetTodosOfDay(this.date)
+				this.appointments = this.dataService.getAppointmentsOfDay(this.date)
+				this.todos = this.dataService.getTodosOfDay(this.date)
 			}
 		})
 	}

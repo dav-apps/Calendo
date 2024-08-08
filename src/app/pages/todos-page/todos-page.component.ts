@@ -13,6 +13,7 @@ import { TodoDialogComponent } from "src/app/dialogs/todo-dialog/todo-dialog.com
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { TodoDay, TodoGroup } from "src/app/types"
+import { sortTodoDays } from "src/app/utils"
 
 @Component({
 	templateUrl: "./todos-page.component.html",
@@ -113,7 +114,7 @@ export class TodosPageComponent {
 			}
 
 			// Sort the todoDays array
-			this.dataService.SortTodoDays(this.todoDays)
+			sortTodoDays(this.todoDays)
 		} else {
 			this.todosWithoutDate.push(todo)
 		}
@@ -168,7 +169,7 @@ export class TodosPageComponent {
 			}
 
 			// Sort the todoDays array
-			this.dataService.SortTodoDays(this.todoDays)
+			sortTodoDays(this.todoDays)
 		} else {
 			this.todoListsWithoutDate.push(todoList)
 		}

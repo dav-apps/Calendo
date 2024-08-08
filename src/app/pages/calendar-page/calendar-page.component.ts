@@ -233,8 +233,8 @@ export class CalendarPageComponent {
 				let label = currentDate.toFormat("d")
 				let isToday = today.hasSame(currentDate, "day")
 				let appointments =
-					this.dataService.GetAppointmentsOfDay(currentDate)
-				let todos = this.dataService.GetTodosOfDay(currentDate)
+					this.dataService.getAppointmentsOfDay(currentDate)
+				let todos = this.dataService.getTodosOfDay(currentDate)
 
 				currentWeek.days.push({
 					id,

@@ -1,7 +1,7 @@
 import { Appointment } from "./models/Appointment"
 import { Todo } from "./models/Todo"
 import { TodoList, GetTodoList } from "./models/TodoList"
-import { Theme } from "./types"
+import { Theme, TodoDay } from "./types"
 import { lightThemeKey, darkThemeKey } from "./constants"
 
 export function sortAppointments(appointments: Appointment[]) {
@@ -36,6 +36,18 @@ export function sortTodoLists(todoLists: TodoList[]) {
 		if (a.time < b.time) {
 			return -1
 		} else if (a.time > b.time) {
+			return 1
+		} else {
+			return 0
+		}
+	})
+}
+
+export function sortTodoDays(todoDays: TodoDay[]) {
+	todoDays.sort((a: TodoDay, b: TodoDay) => {
+		if (a.date < b.date) {
+			return -1
+		} else if (a.date > b.date) {
 			return 1
 		} else {
 			return 0
