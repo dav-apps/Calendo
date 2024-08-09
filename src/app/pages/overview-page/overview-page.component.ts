@@ -1,6 +1,12 @@
 import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
 import { Settings, DateTime } from "luxon"
-import { faPlus, faEdit, faTrash } from "@fortawesome/pro-light-svg-icons"
+import {
+	faPlus,
+	faEdit,
+	faTrash,
+	faCircleCheck,
+	faListCheck
+} from "@fortawesome/pro-light-svg-icons"
 import { ContextMenu } from "dav-ui-components"
 import { Appointment } from "src/app/models/Appointment"
 import { Todo } from "src/app/models/Todo"
@@ -23,6 +29,8 @@ export class OverviewPageComponent {
 	faPlus = faPlus
 	faEdit = faEdit
 	faTrash = faTrash
+	faCircleCheck = faCircleCheck
+	faListCheck = faListCheck
 	selectedAppointment: Appointment = null
 
 	currentWeekday: string = ""
@@ -37,12 +45,20 @@ export class OverviewPageComponent {
 	}
 	days: StartDay[] = []
 
-	//#region ContextMenu
-	@ViewChild("contextMenu")
-	contextMenu: ElementRef<ContextMenu>
-	contextMenuVisible: boolean = false
-	contextMenuPositionX: number = 0
-	contextMenuPositionY: number = 0
+	//#region TodoAddButtonContextMenu
+	@ViewChild("todoAddButtonContextMenu")
+	todoAddButtonContextMenu: ElementRef<ContextMenu>
+	todoAddButtonContextMenuVisible: boolean = false
+	todoAddButtonContextMenuPositionX: number = 0
+	todoAddButtonContextMenuPositionY: number = 0
+	//#endregion
+
+	//#region AppointmentContextMenu
+	@ViewChild("appointmentContextMenu")
+	appointmentContextMenu: ElementRef<ContextMenu>
+	appointmentContextMenuVisible: boolean = false
+	appointmentContextMenuPositionX: number = 0
+	appointmentContextMenuPositionY: number = 0
 	//#endregion
 
 	//#region CreateAppointmentDialog
@@ -58,6 +74,11 @@ export class OverviewPageComponent {
 	//#region CreateTodoDialog
 	@ViewChild("createTodoDialog")
 	createTodoDialog: TodoDialogComponent
+	//#endregion
+
+	//#region CreateTodoListDialog
+	@ViewChild("createTodoListDialog")
+	createTodoListDialog: TodoDialogComponent
 	//#endregion
 
 	//#region DeleteAppointmentDialog
@@ -94,8 +115,28 @@ export class OverviewPageComponent {
 
 	@HostListener("document:click", ["$event"])
 	documentClick(event: MouseEvent) {
-		if (!this.contextMenu.nativeElement.contains(event.target as Node)) {
-			this.contextMenuVisible = false
+		if (
+			!this.todoAddButtonContextMenu.nativeElement.contains(
+				event.target as Node
+			) &&
+			!this.appointmentContextMenu.nativeElement.contains(
+				event.target as Node
+			)
+		) {
+			this.todoAddButtonContextMenuVisible = false
+			this.appointmentContextMenuVisible = false
+		}
+	}
+
+	todoAddButtonClick(event: CustomEvent) {
+		if (this.todoAddButtonContextMenuVisible) {
+			this.todoAddButtonContextMenuVisible = false
+		} else {
+			this.todoAddButtonContextMenuPositionX =
+				event.detail.contextMenuPosition.x
+			this.todoAddButtonContextMenuPositionY =
+				event.detail.contextMenuPosition.y
+			this.todoAddButtonContextMenuVisible = true
 		}
 	}
 
@@ -106,10 +147,10 @@ export class OverviewPageComponent {
 		event.preventDefault()
 
 		this.selectedAppointment = appointment
-		this.contextMenuPositionX = event.pageX
-		this.contextMenuPositionY =
+		this.appointmentContextMenuPositionX = event.pageX
+		this.appointmentContextMenuPositionY =
 			event.pageY + this.dataService.contentContainer.scrollTop
-		this.contextMenuVisible = true
+		this.appointmentContextMenuVisible = true
 	}
 
 	addAppointment(appointment: Appointment) {
@@ -301,12 +342,18 @@ export class OverviewPageComponent {
 		})
 	}
 
+	showCreateAppointmentDialog() {
+		this.todoAddButtonContextMenuVisible = false
+		this.appointmentContextMenuVisible = false
+		this.createAppointmentDialog.show()
+	}
+
 	showEditAppointmentDialog(appointment: Appointment) {
 		let startDate = DateTime.fromSeconds(appointment.start)
 		let endDate = DateTime.fromSeconds(appointment.end)
 
 		this.selectedAppointment = appointment
-		this.contextMenuVisible = false
+		this.appointmentContextMenuVisible = false
 		this.editAppointmentDialog.name = appointment.name
 		this.editAppointmentDialog.date = startDate
 		this.editAppointmentDialog.selectedColor = appointment.color
@@ -321,7 +368,7 @@ export class OverviewPageComponent {
 
 	showDeleteAppointmentDialog(appointment: Appointment) {
 		this.selectedAppointment = appointment
-		this.contextMenuVisible = false
+		this.appointmentContextMenuVisible = false
 		this.deleteAppointmentDialog.show()
 	}
 
@@ -355,6 +402,22 @@ export class OverviewPageComponent {
 
 		this.addTodo(todo)
 		this.createTodoDialog.hide()
+	}
+
+	async createTodoList(event: {
+		name: string
+		date: DateTime
+		labels: string[]
+	}) {
+		let todoList = await TodoList.Create(
+			event.name,
+			event.date?.toUnixInteger(),
+			[],
+			event.labels
+		)
+
+		this.addTodoList(todoList)
+		this.createTodoListDialog.hide()
 	}
 
 	async createAppointment(event: {

@@ -33,7 +33,9 @@ const enDefaults = {
 	},
 	overviewPage: {
 		appointments: "Appointments",
-		todos: "Todos"
+		todos: "Todos",
+		createTodo: "Create todo",
+		createTodoList: "Create todo list"
 	},
 	todosPage: {
 		title: "Todos",
@@ -194,7 +196,9 @@ const deDefaults = {
 	},
 	overviewPage: {
 		appointments: "Termine",
-		todos: "Todos"
+		todos: "Todos",
+		createTodo: "Todo erstellen",
+		createTodoList: "Todo-Liste erstellen"
 	},
 	todosPage: {
 		title: "Todos",

@@ -9,7 +9,7 @@
 			<div class="today-header-container">
 				<h4>{{ locale.appointments }}</h4>
 
-				<dav-icon-button size="sm" (click)="createAppointmentDialog.show()">
+				<dav-icon-button size="sm" (click)="showCreateAppointmentDialog()">
 					<fa-icon [icon]="faPlus"></fa-icon>
 				</dav-icon-button>
 			</div>
@@ -32,7 +32,7 @@
 			<div class="today-header-container">
 				<h4>{{ locale.todos }}</h4>
 
-				<dav-icon-button size="sm">
+				<dav-icon-button size="sm" (click)="todoAddButtonClick($event)">
 					<fa-icon [icon]="faPlus"></fa-icon>
 				</dav-icon-button>
 			</div>
@@ -152,10 +152,33 @@
 </div>
 
 <dav-context-menu
-	#contextMenu
-	[visible]="contextMenuVisible"
-	[posX]="contextMenuPositionX"
-	[posY]="contextMenuPositionY"
+	#todoAddButtonContextMenu
+	[visible]="todoAddButtonContextMenuVisible"
+	[posX]="todoAddButtonContextMenuPositionX"
+	[posY]="todoAddButtonContextMenuPositionY"
+>
+	<dav-context-menu-item
+		[value]="locale.createTodo"
+		(click)="todoAddButtonContextMenuVisible = false; createTodoDialog.show()"
+	>
+		<fa-icon slot="icon" [icon]="faCircleCheck"></fa-icon>
+	</dav-context-menu-item>
+
+	<dav-context-menu-item
+		[value]="locale.createTodoList"
+		(click)="
+			todoAddButtonContextMenuVisible = false; createTodoListDialog.show()
+		"
+	>
+		<fa-icon slot="icon" [icon]="faListCheck"></fa-icon>
+	</dav-context-menu-item>
+</dav-context-menu>
+
+<dav-context-menu
+	#appointmentContextMenu
+	[visible]="appointmentContextMenuVisible"
+	[posX]="appointmentContextMenuPositionX"
+	[posY]="appointmentContextMenuPositionY"
 >
 	<!-- Edit -->
 	<dav-context-menu-item
@@ -188,6 +211,12 @@
 <calendo-todo-dialog
 	#createTodoDialog
 	(primaryButtonClick)="createTodo($event)"
+></calendo-todo-dialog>
+
+<calendo-todo-dialog
+	#createTodoListDialog
+	mode="createTodoList"
+	(primaryButtonClick)="createTodoList($event)"
 ></calendo-todo-dialog>
 
 <calendo-delete-appointment-dialog
