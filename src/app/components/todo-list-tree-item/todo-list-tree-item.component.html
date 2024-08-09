@@ -48,6 +48,7 @@
 	<div
 		#itemsContainer
 		class="items-container"
+		[class.loaded]="loaded"
 		[class.collapsed]="!expanded"
 		[style.marginBottom]="marginBottom"
 		[dragula]="allowDragging ? 'TODOS' : null"

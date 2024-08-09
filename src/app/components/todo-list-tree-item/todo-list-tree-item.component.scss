@@ -37,6 +37,9 @@
 	margin-left: 13px;
 	padding-left: 13px;
 	border-left: 1px solid rgb(var(--dav-color-outline-rgb), 0.15);
+}
+
+.items-container.loaded {
 	transition: 200ms;
 }
 

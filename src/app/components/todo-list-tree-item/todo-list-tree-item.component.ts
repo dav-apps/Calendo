@@ -59,6 +59,7 @@ export class TodoListTreeItemComponent {
 	subItems: (Todo | TodoList)[] = []
 	hidden: boolean = false
 	completed: boolean = false
+	loaded: boolean = false
 	marginBottom: string = "0"
 
 	ngOnInit() {
@@ -69,12 +70,16 @@ export class TodoListTreeItemComponent {
 		this.checkCompleted()
 	}
 
-	ngAfterViewInit() {
-		setTimeout(() => {
-			if (!this.expanded && this.itemsContainer != null) {
-				this.marginBottom = `-${this.itemsContainer.nativeElement.clientHeight}px`
-			}
-		}, 1)
+	async ngAfterViewInit() {
+		await new Promise(r => setTimeout(r, 1))
+
+		if (!this.expanded && this.itemsContainer != null) {
+			this.marginBottom = `-${this.itemsContainer.nativeElement.clientHeight}px`
+		}
+
+		// Set loaded class on items-container to enable CSS transitions
+		await new Promise(r => setTimeout(r, 100))
+		this.loaded = true
 	}
 
 	checkCompleted() {
