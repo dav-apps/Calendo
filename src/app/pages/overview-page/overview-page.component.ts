@@ -193,7 +193,7 @@ export class OverviewPageComponent {
 		if (todo.list != null) return
 
 		let date = DateTime.fromSeconds(todo.time)
-		if (date < DateTime.now()) return
+		if (date < DateTime.now().startOf("day")) return
 
 		if (date.hasSame(this.currentDay.date, "day")) {
 			let i = this.currentDay.todos.findIndex(t => t.uuid == todo.uuid)

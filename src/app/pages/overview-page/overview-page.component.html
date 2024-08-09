@@ -4,6 +4,39 @@
 		<h3 class="subhead">{{ currentDate }}</h3>
 	</div>
 
+	<div class="today-container">
+		<div class="today-appointments">
+			<h4>{{ locale.appointments }}</h4>
+
+			<div class="today-appointments-list">
+				@for (appointment of currentDay.appointments; track
+				appointment.uuid) {
+				<calendo-small-appointment-item
+					[appointment]="appointment"
+					[compact]="true"
+					(contextmenu)="
+						smallAppointmentItemContextMenu($event, appointment)
+					"
+				></calendo-small-appointment-item>
+				}
+			</div>
+		</div>
+
+		<div class="today-todos">
+			<h4>{{ locale.todos }}</h4>
+
+			<div class="today-todos-list">
+				@for (todo of currentDay.todos; track todo.uuid) {
+				<calendo-todo-item [todo]="todo"></calendo-todo-item>
+				} @for (todoList of currentDay.todoLists; track todoList.uuid) {
+				<calendo-todo-list-tree
+					[todoList]="todoList"
+				></calendo-todo-list-tree>
+				}
+			</div>
+		</div>
+	</div>
+
 	<div class="row mt-4">
 		<div class="card col-10 offset-1 col-md-4 mb-5 ms-depth-4">
 			<div class="card-body" style="padding-bottom: 0px">
