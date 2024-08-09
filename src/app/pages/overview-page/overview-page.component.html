@@ -49,64 +49,6 @@
 		</div>
 	</div>
 
-	<div class="row mt-4">
-		<div class="card col-10 offset-1 col-md-4 mb-5 ms-depth-4">
-			<div class="card-body" style="padding-bottom: 0px">
-				<h5 class="card-title">{{ locale.appointments }}</h5>
-				<ul class="list-group list-group-flush">
-					@for (appointment of currentDay.appointments; track
-					appointment.uuid) {
-					<calendo-appointment-item
-						[appointment]="appointment"
-						[showCompleted]="true"
-						(delete)="showDeleteAppointmentDialog(appointment)"
-					></calendo-appointment-item>
-					}
-
-					<li class="list-group-item" style="padding: 14px 0px 14px 5px">
-						<button
-							type="button"
-							class="btn btn-outline-primary btn-sm"
-							(click)="createAppointmentDialog.show()"
-						>
-							<fa-icon [icon]="faPlus"></fa-icon>
-						</button>
-					</li>
-				</ul>
-			</div>
-		</div>
-
-		<div class="card col-10 offset-1 col-md-4 offset-md-2 mb-5 ms-depth-4">
-			<div class="card-body" style="padding-bottom: 0px">
-				<h5 class="card-title">{{ locale.todos }}</h5>
-				<ul class="list-group list-group-flush">
-					@for (todo of currentDay.todos; track todo.uuid) {
-					<calendo-todo-item [todo]="todo"></calendo-todo-item>
-					} @for (todoList of currentDay.todoLists; track todoList.uuid) {
-					<calendo-todo-list-tree
-						[todoList]="todoList"
-					></calendo-todo-list-tree>
-					}
-
-					<li
-						class="list-group-item"
-						style="padding: 14px 0px 14px 5px"
-						ngbDropdown
-						placement="bottom-left"
-					>
-						<button
-							type="button"
-							class="btn btn-outline-primary btn-sm"
-							(click)="createTodoDialog.show()"
-						>
-							<fa-icon [icon]="faPlus"></fa-icon>
-						</button>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
 	<div class="container">
 		@for (day of days; track day.formattedDate) {
 		<div
