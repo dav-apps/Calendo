@@ -29,6 +29,12 @@
 	}
 }
 
+.today-header-container {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
 .today-appointments, .today-todos {
 	display: flex;
 	flex-direction: column;

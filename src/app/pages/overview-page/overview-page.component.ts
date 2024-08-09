@@ -1,10 +1,6 @@
 import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
 import { Settings, DateTime } from "luxon"
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
-import {
-	faEdit as faEditLight,
-	faTrash as faTrashLight
-} from "@fortawesome/pro-light-svg-icons"
+import { faPlus, faEdit, faTrash } from "@fortawesome/pro-light-svg-icons"
 import { ContextMenu } from "dav-ui-components"
 import { Appointment } from "src/app/models/Appointment"
 import { Todo } from "src/app/models/Todo"
@@ -25,8 +21,8 @@ export class OverviewPageComponent {
 	locale = this.localizationService.locale.overviewPage
 	actionsLocale = this.localizationService.locale.actions
 	faPlus = faPlus
-	faEditLight = faEditLight
-	faTrashLight = faTrashLight
+	faEdit = faEdit
+	faTrash = faTrash
 	selectedAppointment: Appointment = null
 
 	currentWeekday: string = ""

@@ -6,7 +6,13 @@
 
 	<div class="today-container">
 		<div class="today-appointments">
-			<h4>{{ locale.appointments }}</h4>
+			<div class="today-header-container">
+				<h4>{{ locale.appointments }}</h4>
+
+				<dav-icon-button size="sm" (click)="createAppointmentDialog.show()">
+					<fa-icon [icon]="faPlus"></fa-icon>
+				</dav-icon-button>
+			</div>
 
 			<div class="today-appointments-list">
 				@for (appointment of currentDay.appointments; track
@@ -23,7 +29,13 @@
 		</div>
 
 		<div class="today-todos">
-			<h4>{{ locale.todos }}</h4>
+			<div class="today-header-container">
+				<h4>{{ locale.todos }}</h4>
+
+				<dav-icon-button size="sm">
+					<fa-icon [icon]="faPlus"></fa-icon>
+				</dav-icon-button>
+			</div>
 
 			<div class="today-todos-list">
 				@for (todo of currentDay.todos; track todo.uuid) {
@@ -150,7 +162,7 @@
 		[value]="actionsLocale.edit"
 		(click)="showEditAppointmentDialog(selectedAppointment)"
 	>
-		<fa-icon slot="icon" [icon]="faEditLight"></fa-icon>
+		<fa-icon slot="icon" [icon]="faEdit"></fa-icon>
 	</dav-context-menu-item>
 
 	<!-- Delete -->
@@ -158,7 +170,7 @@
 		[value]="actionsLocale.delete"
 		(click)="showDeleteAppointmentDialog(selectedAppointment)"
 	>
-		<fa-icon slot="icon" [icon]="faTrashLight"></fa-icon>
+		<fa-icon slot="icon" [icon]="faTrash"></fa-icon>
 	</dav-context-menu-item>
 </dav-context-menu>
 
