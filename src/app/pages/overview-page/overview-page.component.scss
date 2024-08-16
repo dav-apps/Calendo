@@ -57,3 +57,24 @@
 .today-appointments-list {
 	width: 100%;
 }
+
+.days-container {
+	margin-top: 56px;
+}
+
+.day-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0 24px;
+}
+
+.day-headline {
+	font-size: 20px;
+	font-weight: 300;
+}
+
+.day-appointments-list {
+	width: 100%;
+	max-width: 300px;
+}

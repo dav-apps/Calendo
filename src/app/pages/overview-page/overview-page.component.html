@@ -49,44 +49,32 @@
 		</div>
 	</div>
 
-	<div class="container">
+	<div class="days-container">
 		@for (day of days; track day.formattedDate) {
-		<div
-			class="row py-4 ml-md-4 border-top"
-			[ngClass]="dataService.darkTheme ? 'border-dark' : ''"
-		>
-			<div class="col-3">
-				<h4 class="cursor">
-					{{ GetLargeDate(day.date) }}
-				</h4>
-				<p class="font-weight-light cursor">
-					{{ GetSmallDate(day.date) }}
-				</p>
-			</div>
-			<div
-				class="offset-1 col-8 offset-lg-0 col-lg-9 d-flex flex-column mt-1"
-			>
-				@for (appointment of day.appointments; track appointment.uuid) {
-				<div class="d-inline-flex">
-					<calendo-small-appointment-item
-						[appointment]="appointment"
-						(delete)="deleteAppointmentDialog.show()"
-						(contextmenu)="
-							smallAppointmentItemContextMenu($event, appointment)
-						"
-					></calendo-small-appointment-item>
-				</div>
-				}
+		<div class="day-container">
+			<p class="day-headline">{{ day.formattedDate }}</p>
 
-				<div class="d-flex flex-wrap">
-					@for (todo of day.todos; track todo.uuid) {
-					<calendo-small-todo-item [todo]="todo"></calendo-small-todo-item>
-					} @for (todoList of day.todoLists; track todoList.uuid) {
-					<calendo-small-todo-list-item
-						[todoList]="todoList"
-					></calendo-small-todo-list-item>
-					}
-				</div>
+			<div class="day-appointments-list">
+				@for (appointment of day.appointments; track
+				appointment.uuid) {
+				<calendo-small-appointment-item
+					[appointment]="appointment"
+					[compact]="true"
+					(contextmenu)="
+						smallAppointmentItemContextMenu($event, appointment)
+					"
+				></calendo-small-appointment-item>
+				}
+			</div>
+
+			<div class="day-todos-list">
+				@for (todo of day.todos; track todo.uuid) {
+				<calendo-todo-item [todo]="todo"></calendo-todo-item>
+				} @for (todoList of day.todoLists; track todoList.uuid) {
+				<calendo-todo-list-tree
+					[todoList]="todoList"
+				></calendo-todo-list-tree>
+				}
 			</div>
 		</div>
 		}
