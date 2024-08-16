@@ -18,14 +18,24 @@
 
 .today-container {
 	display: flex;
+	flex-direction: column;
+	align-items: center;
 	justify-content: space-evenly;
 	margin-top: 84px;
 	padding: 0 24px;
+	gap: 32px;
 
 	h4 {
 		font-size: 22px;
 		font-weight: 300;
 		margin: 0;
+	}
+}
+
+@media screen and (min-width: 730px) {
+	.today-container {
+		flex-direction: row;
+		gap: 0;
 	}
 }
 
@@ -41,6 +51,7 @@
 	align-items: center;
 	gap: 12px;
 	width: 30%;
+	max-width: 300px;
 }
 
 .today-appointments-list {
