@@ -38,7 +38,11 @@ export class OverviewPageComponent {
 
 	currentDay: StartDay = {
 		date: DateTime.now(),
-		formattedDate: DateTime.now().toFormat("DDDD"),
+		formattedDate: this.getFormattedDate(DateTime.now()),
+		shortTopFormattedDate: this.getShortTopFormattedDate(DateTime.now()),
+		shortBottomFormattedDate: this.getShortBottomFormattedDate(
+			DateTime.now()
+		),
 		appointments: [],
 		todos: [],
 		todoLists: []
@@ -174,7 +178,7 @@ export class OverviewPageComponent {
 			return
 		}
 
-		let formattedDate = date.toFormat("DDDD")
+		let formattedDate = this.getFormattedDate(date)
 		let day = this.days.find(day => day.formattedDate == formattedDate)
 
 		if (day != null) {
@@ -194,6 +198,8 @@ export class OverviewPageComponent {
 			this.days.push({
 				date,
 				formattedDate,
+				shortTopFormattedDate: this.getShortTopFormattedDate(date),
+				shortBottomFormattedDate: this.getShortBottomFormattedDate(date),
 				appointments: [appointment],
 				todos: [],
 				todoLists: []
@@ -204,7 +210,7 @@ export class OverviewPageComponent {
 		}
 	}
 
-	removeAppointment(appointment) {
+	removeAppointment(appointment: Appointment) {
 		let date = DateTime.fromSeconds(appointment.start)
 		if (date < DateTime.now().startOf("day")) return
 
@@ -217,7 +223,7 @@ export class OverviewPageComponent {
 			return
 		}
 
-		let formattedDate = date.toFormat("DDDD")
+		let formattedDate = this.getFormattedDate(date)
 		let day = this.days.find(day => day.formattedDate == formattedDate)
 
 		if (day != null) {
@@ -247,7 +253,7 @@ export class OverviewPageComponent {
 			return
 		}
 
-		let formattedDate = date.toFormat("DDDD")
+		let formattedDate = this.getFormattedDate(date)
 		let day = this.days.find(day => day.formattedDate == formattedDate)
 
 		if (day != null) {
@@ -267,6 +273,8 @@ export class OverviewPageComponent {
 			this.days.push({
 				date,
 				formattedDate,
+				shortTopFormattedDate: this.getShortTopFormattedDate(date),
+				shortBottomFormattedDate: this.getShortBottomFormattedDate(date),
 				appointments: [],
 				todos: [todo],
 				todoLists: []
@@ -300,7 +308,7 @@ export class OverviewPageComponent {
 			return
 		}
 
-		let formattedDate = date.toFormat("DDDD")
+		let formattedDate = this.getFormattedDate(date)
 		let day = this.days.find(day => day.formattedDate == formattedDate)
 
 		if (day != null) {
@@ -320,6 +328,8 @@ export class OverviewPageComponent {
 			this.days.push({
 				date,
 				formattedDate,
+				shortTopFormattedDate: this.getShortTopFormattedDate(date),
+				shortBottomFormattedDate: this.getShortBottomFormattedDate(date),
 				appointments: [],
 				todos: [],
 				todoLists: [todoList]
@@ -380,16 +390,16 @@ export class OverviewPageComponent {
 		this.selectedAppointment = null
 	}
 
-	GetLargeDate(date: DateTime): string {
-		let formatting = date.diffNow("days").days > 6 ? "D" : "EEEE"
-
-		return date.toFormat(formatting)
+	getFormattedDate(date: DateTime): string {
+		return date.toFormat("DDDD")
 	}
 
-	GetSmallDate(date: DateTime): string {
-		let formatting = date.diffNow("days").days > 6 ? "EEEE" : "D"
+	getShortTopFormattedDate(date: DateTime): string {
+		return date.toFormat(date.diffNow("days").days > 6 ? "D" : "EEEE")
+	}
 
-		return date.toFormat(formatting)
+	getShortBottomFormattedDate(date: DateTime): string {
+		return date.toFormat(date.diffNow("days").days > 6 ? "EEEE" : "D")
 	}
 
 	async createTodo(event: { name: string; date: DateTime; labels: string[] }) {

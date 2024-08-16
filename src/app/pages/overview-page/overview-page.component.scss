@@ -51,6 +51,7 @@
 	align-items: center;
 	gap: 12px;
 	width: 30%;
+	min-width: 200px;
 	max-width: 300px;
 }
 
@@ -59,6 +60,10 @@
 }
 
 .days-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 32px;
 	margin-top: 56px;
 }
 
@@ -66,12 +71,46 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	gap: 16px;
 	padding: 0 24px;
+}
+
+.day-headline-container {
+	display: none;
+
+	p {
+		margin: 0;
+	}
 }
 
 .day-headline {
 	font-size: 20px;
 	font-weight: 300;
+}
+
+.day-headline-mobile {
+	display: block;
+	font-size: 20px;
+	font-weight: 300;
+	margin: 0;
+}
+
+@media screen and (min-width: 730px) {
+	.day-container {
+		flex-direction: row;
+		align-items: start;
+		width: 100%;
+		max-width: 600px;
+		gap: 32px;
+	}
+
+	.day-headline-container {
+		display: block;
+	}
+
+	.day-headline-mobile {
+		display: none;
+	}
 }
 
 .day-appointments-list {

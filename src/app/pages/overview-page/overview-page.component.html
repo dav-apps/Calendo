@@ -52,11 +52,18 @@
 	<div class="days-container">
 		@for (day of days; track day.formattedDate) {
 		<div class="day-container">
-			<p class="day-headline">{{ day.formattedDate }}</p>
+			<div class="day-headline-container">
+				<p class="day-headline" [innerHTML]="day.shortTopFormattedDate"></p>
+				<p
+					class="day-headline"
+					[innerHTML]="day.shortBottomFormattedDate"
+				></p>
+			</div>
+
+			<p class="day-headline-mobile">{{ day.formattedDate }}</p>
 
 			<div class="day-appointments-list">
-				@for (appointment of day.appointments; track
-				appointment.uuid) {
+				@for (appointment of day.appointments; track appointment.uuid) {
 				<calendo-small-appointment-item
 					[appointment]="appointment"
 					[compact]="true"

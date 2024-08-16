@@ -12,6 +12,8 @@ export enum Theme {
 export interface StartDay {
 	date: DateTime
 	formattedDate: string
+	shortTopFormattedDate: string
+	shortBottomFormattedDate: string
 	appointments: Appointment[]
 	todos: Todo[]
 	todoLists: TodoList[]
