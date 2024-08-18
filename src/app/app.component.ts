@@ -33,7 +33,7 @@ import { enUS } from "src/locales/locales"
 	styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-	locale = enUS.navbar
+	locale = enUS.misc
 	faCircleUserSolid = faCircleUserSolid
 	faCircleUserRegular = faCircleUserRegular
 	faGearSolid = faGearSolid
@@ -63,7 +63,7 @@ export class AppComponent {
 		private router: Router,
 		private activatedRoute: ActivatedRoute
 	) {
-		this.locale = this.localizationService.locale.navbar
+		this.locale = this.localizationService.locale.misc
 		DavUIComponents.setLocale(this.dataService.locale)
 
 		this.router.events.forEach(data => {

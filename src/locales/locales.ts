@@ -1,36 +1,10 @@
 //#region en
 const enDefaults = {
-	navbar: {
-		overview: "Overview",
-		calendar: "Calendar",
-		todos: "Todos",
-		appointments: "Appointments"
-	},
-	todoListTree: {
-		newTodo: "Add Todo",
-		newTodoList: "Add Todo list",
-		add: "Add",
-		todoName: "Todo name",
-		todoListName: "Todo list name",
-		rename: "Rename",
-		delete: "Delete",
-		save: "Save"
-	},
 	overviewPage: {
 		appointments: "Appointments",
 		todos: "Todos",
 		createTodo: "Create todo",
 		createTodoList: "Create todo list"
-	},
-	todosPage: {
-		title: "Todos",
-		noTodos: "You have no todos",
-		createTodo: "Create todo",
-		createTodoList: "Create todo list"
-	},
-	appointmentsPage: {
-		title: "Appointments",
-		oldAppointments: "Past appointments"
 	},
 	calendarPage: {
 		todo: "Todo",
@@ -43,6 +17,16 @@ const enDefaults = {
 		createTodoList: "Create todo list",
 		noAppointments: "No appointments",
 		noTodos: "No todos"
+	},
+	appointmentsPage: {
+		title: "Appointments",
+		oldAppointments: "Past appointments"
+	},
+	todosPage: {
+		title: "Todos",
+		noTodos: "You have no todos",
+		createTodo: "Create todo",
+		createTodoList: "Create todo list"
 	},
 	todoListPage: {
 		addTodo: "Add Todo",
@@ -128,6 +112,12 @@ const enDefaults = {
 		cancel: "Cancel",
 		delete: "Delete",
 		logout: "Log out"
+	},
+	misc: {
+		overview: "Overview",
+		calendar: "Calendar",
+		todos: "Todos",
+		appointments: "Appointments"
 	}
 }
 
@@ -148,37 +138,11 @@ export var enAU = enDefaults
 
 //#region de
 const deDefaults = {
-	navbar: {
-		overview: "Übersicht",
-		calendar: "Kalender",
-		todos: "Todos",
-		appointments: "Termine"
-	},
-	todoListTree: {
-		newTodo: "Todo hinzufügen",
-		newTodoList: "Todo-Liste hinzufügen",
-		add: "Hinzufügen",
-		todoName: "Name des Todos",
-		todoListName: "Name der Todo-Liste",
-		rename: "Umbenennen",
-		delete: "Löschen",
-		save: "Speichern"
-	},
 	overviewPage: {
 		appointments: "Termine",
 		todos: "Todos",
 		createTodo: "Todo erstellen",
 		createTodoList: "Todo-Liste erstellen"
-	},
-	todosPage: {
-		title: "Todos",
-		noTodos: "Du hast keine Todos",
-		createTodo: "Todo erstellen",
-		createTodoList: "Todo-Liste erstellen"
-	},
-	appointmentsPage: {
-		title: "Termine",
-		oldAppointments: "Vergangene Termine"
 	},
 	calendarPage: {
 		todo: "Todo",
@@ -191,6 +155,16 @@ const deDefaults = {
 		createTodoList: "Todo-Liste erstellen",
 		noAppointments: "Keine Termine",
 		noTodos: "Keine Todos"
+	},
+	appointmentsPage: {
+		title: "Termine",
+		oldAppointments: "Vergangene Termine"
+	},
+	todosPage: {
+		title: "Todos",
+		noTodos: "Du hast keine Todos",
+		createTodo: "Todo erstellen",
+		createTodoList: "Todo-Liste erstellen"
 	},
 	todoListPage: {
 		addTodo: "Todo hinzufügen",
@@ -278,6 +252,12 @@ const deDefaults = {
 		cancel: "Abbrechen",
 		delete: "Löschen",
 		logout: "Abmelden"
+	},
+	misc: {
+		overview: "Übersicht",
+		calendar: "Kalender",
+		todos: "Todos",
+		appointments: "Termine"
 	}
 }
 
