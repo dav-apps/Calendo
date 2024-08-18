@@ -42,7 +42,7 @@
 				<dav-header
 					size="sm"
 					[addButtonVisible]="!isDateBeforeToday"
-					(addButtonClick)="createTodoDialog.show()"
+					(addButtonClick)="todoAddButtonClick($event)"
 				>
 					{{ locale.todos }}
 				</dav-header>
@@ -69,17 +69,40 @@
 </div>
 
 <dav-context-menu
-	#contextMenu
-	[visible]="contextMenuVisible"
-	[posX]="contextMenuPositionX"
-	[posY]="contextMenuPositionY"
+	#todoAddButtonContextMenu
+	[visible]="todoAddButtonContextMenuVisible"
+	[posX]="todoAddButtonContextMenuPositionX"
+	[posY]="todoAddButtonContextMenuPositionY"
+>
+	<dav-context-menu-item
+		[value]="locale.createTodo"
+		(click)="todoAddButtonContextMenuVisible = false; createTodoDialog.show()"
+	>
+		<fa-icon slot="icon" [icon]="faCircleCheck"></fa-icon>
+	</dav-context-menu-item>
+
+	<dav-context-menu-item
+		[value]="locale.createTodoList"
+		(click)="
+			todoAddButtonContextMenuVisible = false; createTodoListDialog.show()
+		"
+	>
+		<fa-icon slot="icon" [icon]="faListCheck"></fa-icon>
+	</dav-context-menu-item>
+</dav-context-menu>
+
+<dav-context-menu
+	#appointmentContextMenu
+	[visible]="appointmentContextMenuVisible"
+	[posX]="appointmentContextMenuPositionX"
+	[posY]="appointmentContextMenuPositionY"
 >
 	<!-- Edit -->
 	<dav-context-menu-item
 		[value]="actionsLocale.edit"
 		(click)="showEditAppointmentDialog(selectedAppointment)"
 	>
-		<fa-icon slot="icon" [icon]="faEditLight"></fa-icon>
+		<fa-icon slot="icon" [icon]="faEdit"></fa-icon>
 	</dav-context-menu-item>
 
 	<!-- Delete -->
@@ -87,7 +110,7 @@
 		[value]="actionsLocale.delete"
 		(click)="showDeleteAppointmentDialog(selectedAppointment)"
 	>
-		<fa-icon slot="icon" [icon]="faTrashLight"></fa-icon>
+		<fa-icon slot="icon" [icon]="faTrash"></fa-icon>
 	</dav-context-menu-item>
 </dav-context-menu>
 
@@ -108,6 +131,12 @@
 	[date]="date"
 	[saveDate]="true"
 	(primaryButtonClick)="createTodo($event)"
+></calendo-todo-dialog>
+
+<calendo-todo-dialog
+	#createTodoListDialog
+	mode="createTodoList"
+	(primaryButtonClick)="createTodoList($event)"
 ></calendo-todo-dialog>
 
 <calendo-delete-appointment-dialog

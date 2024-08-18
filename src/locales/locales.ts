@@ -54,8 +54,8 @@ const enDefaults = {
 	calendarDayPage: {
 		appointments: "Appointments",
 		todos: "Todos",
-		newTodo: "Add Todo",
-		newTodoList: "Add Todo list",
+		createTodo: "Create todo",
+		createTodoList: "Create todo list",
 		noAppointments: "No appointments",
 		noTodos: "No todos"
 	},
@@ -217,8 +217,8 @@ const deDefaults = {
 	calendarDayPage: {
 		appointments: "Termine",
 		todos: "Todos",
-		newTodo: "Todo hinzufügen",
-		newTodoList: "Todo-Liste hinzufügen",
+		createTodo: "Todo erstellen",
+		createTodoList: "Todo-Liste erstellen",
 		noAppointments: "Keine Termine",
 		noTodos: "Keine Todos"
 	},

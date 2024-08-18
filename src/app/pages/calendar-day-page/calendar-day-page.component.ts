@@ -3,8 +3,11 @@ import { Location } from "@angular/common"
 import { Router, ActivatedRoute } from "@angular/router"
 import { DateTime } from "luxon"
 import {
-	faEdit as faEditLight,
-	faTrash as faTrashLight
+	faPlus,
+	faEdit,
+	faTrash,
+	faCircleCheck,
+	faListCheck
 } from "@fortawesome/pro-light-svg-icons"
 import { ContextMenu } from "dav-ui-components"
 import { AppointmentDialogComponent } from "src/app/dialogs/appointment-dialog/appointment-dialog.component"
@@ -15,7 +18,7 @@ import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
-import { sortAppointments, sortTodos } from "src/app/utils"
+import { sortAppointments, sortTodos, sortTodoLists } from "src/app/utils"
 
 @Component({
 	templateUrl: "./calendar-day-page.component.html",
@@ -24,8 +27,11 @@ import { sortAppointments, sortTodos } from "src/app/utils"
 export class CalendarDayPageComponent {
 	locale = this.localizationService.locale.calendarDayPage
 	actionsLocale = this.localizationService.locale.actions
-	faEditLight = faEditLight
-	faTrashLight = faTrashLight
+	faPlus = faPlus
+	faEdit = faEdit
+	faTrash = faTrash
+	faCircleCheck = faCircleCheck
+	faListCheck = faListCheck
 	title: string = ""
 	date = DateTime.now().startOf("day")
 	isDateBeforeToday: boolean = false
@@ -34,12 +40,20 @@ export class CalendarDayPageComponent {
 	todoLists: TodoList[] = []
 	selectedAppointment: Appointment = null
 
-	//#region ContextMenu
-	@ViewChild("contextMenu")
-	contextMenu: ElementRef<ContextMenu>
-	contextMenuVisible: boolean = false
-	contextMenuPositionX: number = 0
-	contextMenuPositionY: number = 0
+	//#region TodoAddButtonContextMenu
+	@ViewChild("todoAddButtonContextMenu")
+	todoAddButtonContextMenu: ElementRef<ContextMenu>
+	todoAddButtonContextMenuVisible: boolean = false
+	todoAddButtonContextMenuPositionX: number = 0
+	todoAddButtonContextMenuPositionY: number = 0
+	//#endregion
+
+	//#region AppointmentContextMenu
+	@ViewChild("appointmentContextMenu")
+	appointmentContextMenu: ElementRef<ContextMenu>
+	appointmentContextMenuVisible: boolean = false
+	appointmentContextMenuPositionX: number = 0
+	appointmentContextMenuPositionY: number = 0
 	//#endregion
 
 	//#region CreateAppointmentDialog
@@ -55,6 +69,11 @@ export class CalendarDayPageComponent {
 	//#region CreateTodoDialog
 	@ViewChild("createTodoDialog")
 	createTodoDialog: TodoDialogComponent
+	//#endregion
+
+	//#region CreateTodoListDialog
+	@ViewChild("createTodoListDialog")
+	createTodoListDialog: TodoDialogComponent
 	//#endregion
 
 	//#region DeleteAppointmentDialog
@@ -95,8 +114,28 @@ export class CalendarDayPageComponent {
 
 	@HostListener("document:click", ["$event"])
 	documentClick(event: MouseEvent) {
-		if (!this.contextMenu.nativeElement.contains(event.target as Node)) {
-			this.contextMenuVisible = false
+		if (
+			!this.todoAddButtonContextMenu.nativeElement.contains(
+				event.target as Node
+			) &&
+			!this.appointmentContextMenu.nativeElement.contains(
+				event.target as Node
+			)
+		) {
+			this.todoAddButtonContextMenuVisible = false
+			this.appointmentContextMenuVisible = false
+		}
+	}
+
+	todoAddButtonClick(event: CustomEvent) {
+		if (this.todoAddButtonContextMenuVisible) {
+			this.todoAddButtonContextMenuVisible = false
+		} else {
+			this.todoAddButtonContextMenuPositionX =
+				event.detail.contextMenuPosition.x
+			this.todoAddButtonContextMenuPositionY =
+				event.detail.contextMenuPosition.y
+			this.todoAddButtonContextMenuVisible = true
 		}
 	}
 
@@ -107,10 +146,10 @@ export class CalendarDayPageComponent {
 		event.preventDefault()
 
 		this.selectedAppointment = appointment
-		this.contextMenuPositionX = event.pageX
-		this.contextMenuPositionY =
+		this.appointmentContextMenuPositionX = event.pageX
+		this.appointmentContextMenuPositionY =
 			event.pageY + this.dataService.contentContainer.scrollTop
-		this.contextMenuVisible = true
+		this.appointmentContextMenuVisible = true
 	}
 
 	removeAppointment(appointment: Appointment) {
@@ -123,7 +162,7 @@ export class CalendarDayPageComponent {
 		let endDate = DateTime.fromSeconds(appointment.end)
 
 		this.selectedAppointment = appointment
-		this.contextMenuVisible = false
+		this.appointmentContextMenuVisible = false
 		this.editAppointmentDialog.name = appointment.name
 		this.editAppointmentDialog.date = startDate
 		this.editAppointmentDialog.selectedColor = appointment.color
@@ -138,7 +177,7 @@ export class CalendarDayPageComponent {
 
 	showDeleteAppointmentDialog(appointment: Appointment) {
 		this.selectedAppointment = appointment
-		this.contextMenuVisible = false
+		this.appointmentContextMenuVisible = false
 		this.deleteAppointmentDialog.show()
 	}
 
@@ -247,6 +286,24 @@ export class CalendarDayPageComponent {
 		sortTodos(this.todos)
 
 		this.createTodoDialog.hide()
+	}
+
+	async createTodoList(event: {
+		name: string
+		date: DateTime
+		labels: string[]
+	}) {
+		let todoList = await TodoList.Create(
+			event.name,
+			event.date?.toUnixInteger(),
+			[],
+			event.labels
+		)
+
+		this.todoLists.push(todoList)
+		sortTodoLists(this.todoLists)
+
+		this.createTodoListDialog.hide()
 	}
 
 	goBack() {
