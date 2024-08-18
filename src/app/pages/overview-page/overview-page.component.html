@@ -49,6 +49,8 @@
 		</div>
 	</div>
 
+	<div class="divider"></div>
+
 	<div class="days-container">
 		@for (day of days; track day.formattedDate) {
 		<div class="day-container">
@@ -62,6 +64,7 @@
 
 			<p class="day-headline-mobile">{{ day.formattedDate }}</p>
 
+			@if (day.appointments.length > 0) {
 			<div class="day-appointments-list">
 				@for (appointment of day.appointments; track appointment.uuid) {
 				<calendo-small-appointment-item
@@ -73,7 +76,7 @@
 				></calendo-small-appointment-item>
 				}
 			</div>
-
+			} @if (day.todos.length > 0) {
 			<div class="day-todos-list">
 				@for (todo of day.todos; track todo.uuid) {
 				<calendo-todo-item [todo]="todo"></calendo-todo-item>
@@ -83,6 +86,7 @@
 				></calendo-todo-list-tree>
 				}
 			</div>
+			}
 		</div>
 		}
 	</div>

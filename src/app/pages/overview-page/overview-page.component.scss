@@ -1,3 +1,7 @@
+.container {
+	padding: 0 24px;
+}
+
 .head {
 	margin: 64px 0;
 }
@@ -22,8 +26,7 @@
 	align-items: center;
 	justify-content: space-evenly;
 	margin-top: 84px;
-	padding: 0 24px;
-	gap: 32px;
+	gap: 42px;
 
 	h4 {
 		font-size: 22px;
@@ -64,7 +67,6 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 32px;
-	margin-top: 56px;
 }
 
 .day-container {
@@ -100,7 +102,7 @@
 		flex-direction: row;
 		align-items: start;
 		width: 100%;
-		max-width: 600px;
+		max-width: 800px;
 		gap: 32px;
 	}
 
@@ -115,5 +117,11 @@
 
 .day-appointments-list {
 	width: 100%;
-	max-width: 300px;
+	max-width: 350px;
+}
+
+.divider {
+	width: 80%;
+	border-top: 1px solid rgba(var(--dav-color-outline-rgb), 0.4);
+	margin: 80px 10%;
 }
