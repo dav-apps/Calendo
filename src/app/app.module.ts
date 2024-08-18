@@ -24,7 +24,7 @@ import { TodoListPageComponent } from "./pages/todo-list-page/todo-list-page.com
 // Components
 import { AppComponent } from "./app.component"
 import { TodoItemComponent } from "./components/todo-item/todo-item.component"
-import { SmallAppointmentItemComponent } from "./components/small-appointment-item/small-appointment-item.component"
+import { AppointmentItemComponent } from "./components/appointment-item/appointment-item.component"
 import { TodoListTreeComponent } from "./components/todo-list-tree/todo-list-tree.component"
 import { TodoListTreeItemComponent } from "./components/todo-list-tree-item/todo-list-tree-item.component"
 
@@ -55,7 +55,7 @@ import { SettingsService } from "./services/settings-service"
 		// Components
 		AppComponent,
 		TodoItemComponent,
-		SmallAppointmentItemComponent,
+		AppointmentItemComponent,
 		TodoListTreeComponent,
 		TodoListTreeItemComponent,
 		// Dialogs

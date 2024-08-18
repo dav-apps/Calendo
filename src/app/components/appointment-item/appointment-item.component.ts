@@ -16,11 +16,11 @@ import { Appointment } from "src/app/models/Appointment"
 import { environment } from "src/environments/environment"
 
 @Component({
-	selector: "calendo-small-appointment-item",
-	templateUrl: "./small-appointment-item.component.html",
-	styleUrl: "./small-appointment-item.component.scss"
+	selector: "calendo-appointment-item",
+	templateUrl: "./appointment-item.component.html",
+	styleUrl: "./appointment-item.component.scss"
 })
-export class SmallAppointmentItemComponent {
+export class AppointmentItemComponent {
 	@Input() appointment: Appointment = new Appointment(
 		"",
 		"",

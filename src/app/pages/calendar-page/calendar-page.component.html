@@ -53,9 +53,9 @@
 					<div class="day-appointments-container">
 						@for (appointment of day.appointments; track appointment.uuid)
 						{
-						<calendo-small-appointment-item
+						<calendo-appointment-item
 							[appointment]="appointment"
-						></calendo-small-appointment-item>
+						></calendo-appointment-item>
 						}
 					</div>
 				</div>
@@ -91,9 +91,9 @@
 					<div class="day-appointments-container">
 						@for (appointment of day.appointments; track appointment.uuid)
 						{
-						<calendo-small-appointment-item
+						<calendo-appointment-item
 							[appointment]="appointment"
-						></calendo-small-appointment-item>
+						></calendo-appointment-item>
 						}
 					</div>
 					}

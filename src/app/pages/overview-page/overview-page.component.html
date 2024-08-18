@@ -17,13 +17,13 @@
 			<div class="today-appointments-list">
 				@for (appointment of currentDay.appointments; track
 				appointment.uuid) {
-				<calendo-small-appointment-item
+				<calendo-appointment-item
 					[appointment]="appointment"
 					[compact]="true"
 					(contextmenu)="
 						smallAppointmentItemContextMenu($event, appointment)
 					"
-				></calendo-small-appointment-item>
+				></calendo-appointment-item>
 				}
 			</div>
 		</div>
@@ -67,13 +67,13 @@
 			@if (day.appointments.length > 0) {
 			<div class="day-appointments-list">
 				@for (appointment of day.appointments; track appointment.uuid) {
-				<calendo-small-appointment-item
+				<calendo-appointment-item
 					[appointment]="appointment"
 					[compact]="true"
 					(contextmenu)="
 						smallAppointmentItemContextMenu($event, appointment)
 					"
-				></calendo-small-appointment-item>
+				></calendo-appointment-item>
 				}
 			</div>
 			} @if (day.todos.length > 0) {

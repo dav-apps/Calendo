@@ -24,14 +24,14 @@
 
 				<div class="appointment-items">
 					@for (appointment of appointments; track appointment.uuid) {
-					<calendo-small-appointment-item
+					<calendo-appointment-item
 						[appointment]="appointment"
 						[compact]="true"
 						(contextmenu)="
 							smallAppointmentItemContextMenu($event, appointment)
 						"
 						(delete)="deleteAppointmentDialog.show()"
-					></calendo-small-appointment-item>
+					></calendo-appointment-item>
 					}
 				</div>
 			</div>

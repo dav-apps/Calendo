@@ -29,13 +29,13 @@
 			<div class="appointment-day-items">
 				@for (appointment of appointmentDay.appointments; track
 				appointment.uuid) {
-				<calendo-small-appointment-item
+				<calendo-appointment-item
 					[appointment]="appointment"
 					[compact]="true"
 					(contextmenu)="
 						smallAppointmentItemContextMenu($event, appointment)
 					"
-				></calendo-small-appointment-item>
+				></calendo-appointment-item>
 				}
 			</div>
 		</div>
@@ -70,13 +70,13 @@
 			<div class="appointment-day-items">
 				@for (appointment of appointmentDay.appointments; track
 				appointment.uuid) {
-				<calendo-small-appointment-item
+				<calendo-appointment-item
 					[appointment]="appointment"
 					[compact]="true"
 					(contextmenu)="
 						smallAppointmentItemContextMenu($event, appointment)
 					"
-				></calendo-small-appointment-item>
+				></calendo-appointment-item>
 				}
 			</div>
 		</div>
