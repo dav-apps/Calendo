@@ -6,17 +6,6 @@ const enDefaults = {
 		todos: "Todos",
 		appointments: "Appointments"
 	},
-	setTodoGroups: {
-		addNewGroup: "Add a new group",
-		groupName: "Group name",
-		addExistingGroup: "Add existing group"
-	},
-	setName: {
-		name: "Name",
-		todoName: "Todo name",
-		todoListName: "Todo list name",
-		appointmentName: "Appointment name"
-	},
 	todoListTree: {
 		newTodo: "Add Todo",
 		newTodoList: "Add Todo list",
@@ -26,10 +15,6 @@ const enDefaults = {
 		rename: "Rename",
 		delete: "Delete",
 		save: "Save"
-	},
-	appointmentItem: {
-		edit: "Edit",
-		delete: "Delete"
 	},
 	overviewPage: {
 		appointments: "Appointments",
@@ -169,17 +154,6 @@ const deDefaults = {
 		todos: "Todos",
 		appointments: "Termine"
 	},
-	setTodoGroups: {
-		addNewGroup: "Neue Gruppe hinzufügen",
-		groupName: "Name der Gruppe",
-		addExistingGroup: "Bestehende Gruppe hinzufügen"
-	},
-	setName: {
-		name: "Name",
-		todoName: "Name des Todos",
-		todoListName: "Name der Todo-Liste",
-		appointmentName: "Name des Termins"
-	},
 	todoListTree: {
 		newTodo: "Todo hinzufügen",
 		newTodoList: "Todo-Liste hinzufügen",
@@ -189,10 +163,6 @@ const deDefaults = {
 		rename: "Umbenennen",
 		delete: "Löschen",
 		save: "Speichern"
-	},
-	appointmentItem: {
-		edit: "Bearbeiten",
-		delete: "Löschen"
 	},
 	overviewPage: {
 		appointments: "Termine",

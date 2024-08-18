@@ -23,13 +23,8 @@ import { TodoListPageComponent } from "./pages/todo-list-page/todo-list-page.com
 
 // Components
 import { AppComponent } from "./app.component"
-import { SmallTodoListItemComponent } from "./components/small-todo-list-item/small-todo-list-item.component"
 import { TodoItemComponent } from "./components/todo-item/todo-item.component"
-import { SmallTodoItemComponent } from "./components/small-todo-item/small-todo-item.component"
-import { AppointmentItemComponent } from "./components/appointment-item/appointment-item.component"
 import { SmallAppointmentItemComponent } from "./components/small-appointment-item/small-appointment-item.component"
-import { TodoGroupBadgeComponent } from "./components/todo-group-badge/todo-group-badge.component"
-import { SetTodoGroupsComponent } from "./components/set-todo-groups/set-todo-groups.component"
 import { TodoListTreeComponent } from "./components/todo-list-tree/todo-list-tree.component"
 import { TodoListTreeItemComponent } from "./components/todo-list-tree-item/todo-list-tree-item.component"
 
@@ -59,13 +54,8 @@ import { SettingsService } from "./services/settings-service"
 		TodoListPageComponent,
 		// Components
 		AppComponent,
-		SmallTodoListItemComponent,
 		TodoItemComponent,
-		SmallTodoItemComponent,
-		AppointmentItemComponent,
 		SmallAppointmentItemComponent,
-		TodoGroupBadgeComponent,
-		SetTodoGroupsComponent,
 		TodoListTreeComponent,
 		TodoListTreeItemComponent,
 		// Dialogs
