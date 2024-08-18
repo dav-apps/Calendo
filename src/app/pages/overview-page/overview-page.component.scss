@@ -3,6 +3,7 @@
 }
 
 .head {
+	color: var(--dav-color-on-surface);
 	margin: 64px 0;
 }
 
@@ -29,6 +30,7 @@
 	gap: 42px;
 
 	h4 {
+		color: var(--dav-color-on-surface);
 		font-size: 22px;
 		font-weight: 300;
 		margin: 0;
@@ -88,6 +90,7 @@
 .day-headline {
 	font-size: 20px;
 	font-weight: 300;
+	color: var(--dav-color-on-surface);
 }
 
 .day-headline-mobile {
@@ -95,6 +98,7 @@
 	font-size: 20px;
 	font-weight: 300;
 	margin: 0;
+	color: var(--dav-color-on-surface);
 }
 
 @media screen and (min-width: 730px) {

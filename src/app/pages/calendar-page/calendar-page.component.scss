@@ -19,6 +19,7 @@
 	margin: 0;
 	font-size: 26px;
 	font-weight: 300;
+	color: var(--dav-color-on-surface);
 }
 
 .weekday-labels-container {
@@ -36,6 +37,7 @@
 .weekday-label {
 	width: 100%;
 	text-align: center;
+	color: var(--dav-color-on-surface);
 }
 
 .desktop-calendar-container {
@@ -60,6 +62,7 @@
 	font-size: 22px;
 	font-weight: 300;
 	text-wrap: nowrap;
+	color: var(--dav-color-on-surface);
 }
 
 .mobile-month-label-border {
