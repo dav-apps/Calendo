@@ -1,7 +1,7 @@
 @if (!isItemTodoList(item)) {
 <div
 	[@hide]="hidden ? 'hidden' : 'visible'"
-	[style.marginLeft]="level == 0 ? '4px' : ''"
+	[style.marginLeft]="level == 0 ? '3px' : ''"
 >
 	<calendo-todo-item
 		[todo]="item"
@@ -10,7 +10,7 @@
 	></calendo-todo-item>
 </div>
 } @else {
-<div [style.marginLeft]="level > 0 ? '-4px' : ''">
+<div [style.marginLeft]="level > 0 ? '-3px' : ''">
 	<div class="list-header">
 		<div class="list-header-buttons">
 			<dav-icon-button size="xs" (click)="chevronButtonClick()">
