@@ -24,7 +24,7 @@
 
 .appointments-header-container,
 .todos-header-container {
-	margin-bottom: 8px;
+	margin-bottom: 12px;
 }
 
 .appointments-content-container,
@@ -39,13 +39,6 @@
 	align-items: start;
 	width: unset;
 	max-width: 100%;
-}
-
-.no-items-message {
-	font-style: italic;
-	font-weight: 100;
-	margin-top: 12px;
-	text-align: center;
 }
 
 .appointment-items {

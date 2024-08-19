@@ -449,6 +449,14 @@ body {
 	margin-bottom: 12px;
 }
 
+.no-items-message {
+	font-style: italic;
+	font-weight: 100;
+	margin: 0;
+	text-align: center;
+	color: var(--dav-color-on-surface);
+}
+
 // Animation classes
 .slide-up-in {
 	animation: slideUpIn 100ms cubic-bezier(0.1, 0.9, 0.2, 1) both,
@@ -551,26 +559,6 @@ body {
 	to {
 		transform: translate3d(48px, 0, 0);
 	}
-}
-
-.strikethrough {
-	position: relative;
-}
-
-.strikethrough:before {
-	position: absolute;
-	content: "";
-	left: 0;
-	top: 50%;
-	right: 0;
-	border-top: 1px solid;
-	border-color: inherit;
-
-	-webkit-transform: rotate(-5deg);
-	-moz-transform: rotate(-5deg);
-	-ms-transform: rotate(-5deg);
-	-o-transform: rotate(-5deg);
-	transform: rotate(-5deg);
 }
 
 // Custom Acrylic styles

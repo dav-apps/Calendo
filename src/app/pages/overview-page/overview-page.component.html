@@ -15,7 +15,11 @@
 			</div>
 
 			<div class="today-appointments-list">
-				@for (appointment of currentDay.appointments; track
+				@if (currentDay.appointments.length == 0) {
+				<p class="no-items-message">
+					{{ locale.noAppointments }}
+				</p>
+				} @for (appointment of currentDay.appointments; track
 				appointment.uuid) {
 				<calendo-appointment-item
 					[appointment]="appointment"
@@ -38,7 +42,12 @@
 			</div>
 
 			<div class="today-todos-list">
-				@for (todo of currentDay.todos; track todo.uuid) {
+				@if (currentDay.todos.length == 0 && currentDay.todoLists.length ==
+				0) {
+				<p class="no-items-message">
+					{{ locale.noTodos }}
+				</p>
+				} @for (todo of currentDay.todos; track todo.uuid) {
 				<calendo-todo-item [todo]="todo"></calendo-todo-item>
 				} @for (todoList of currentDay.todoLists; track todoList.uuid) {
 				<calendo-todo-list-tree
