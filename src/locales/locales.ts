@@ -115,6 +115,9 @@ const enDefaults = {
 		delete: "Delete",
 		logout: "Log out"
 	},
+	errors: {
+		nameMissing: "Please enter a name"
+	},
 	misc: {
 		overview: "Overview",
 		calendar: "Calendar",
@@ -256,6 +259,9 @@ const deDefaults = {
 		cancel: "Abbrechen",
 		delete: "Löschen",
 		logout: "Abmelden"
+	},
+	errors: {
+		nameMissing: "Bitte gib einen Namen ein"
 	},
 	misc: {
 		overview: "Übersicht",

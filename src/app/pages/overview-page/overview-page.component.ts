@@ -26,6 +26,7 @@ import { StartDay } from "src/app/types"
 export class OverviewPageComponent {
 	locale = this.localizationService.locale.overviewPage
 	actionsLocale = this.localizationService.locale.actions
+	errorsLocale = this.localizationService.locale.errors
 	faPlus = faPlus
 	faEdit = faEdit
 	faTrash = faTrash
@@ -441,7 +442,7 @@ export class OverviewPageComponent {
 		endTimeMinute: number
 	}) {
 		if (event.name.length == 0) {
-			this.createAppointmentDialog.nameError = "Bitte gib einen Namen ein"
+			this.createAppointmentDialog.nameError = this.errorsLocale.nameMissing
 			return
 		}
 
@@ -482,7 +483,7 @@ export class OverviewPageComponent {
 		endTimeMinute: number
 	}) {
 		if (event.name.length == 0) {
-			this.editAppointmentDialog.nameError = "Bitte gib einen Namen ein"
+			this.editAppointmentDialog.nameError = this.errorsLocale.nameMissing
 			return
 		}
 

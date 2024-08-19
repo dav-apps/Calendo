@@ -27,6 +27,7 @@ import { sortAppointments, sortTodos, sortTodoLists } from "src/app/utils"
 export class CalendarDayPageComponent {
 	locale = this.localizationService.locale.calendarDayPage
 	actionsLocale = this.localizationService.locale.actions
+	errorsLocale = this.localizationService.locale.errors
 	faPlus = faPlus
 	faEdit = faEdit
 	faTrash = faTrash
@@ -200,7 +201,7 @@ export class CalendarDayPageComponent {
 		endTimeMinute: number
 	}) {
 		if (event.name.length == 0) {
-			this.createAppointmentDialog.nameError = "Bitte gib einen Namen ein"
+			this.createAppointmentDialog.nameError = this.errorsLocale.nameMissing
 			return
 		}
 
@@ -243,7 +244,7 @@ export class CalendarDayPageComponent {
 		endTimeMinute: number
 	}) {
 		if (event.name.length == 0) {
-			this.editAppointmentDialog.nameError = "Bitte gib einen Namen ein"
+			this.editAppointmentDialog.nameError = this.errorsLocale.nameMissing
 			return
 		}
 

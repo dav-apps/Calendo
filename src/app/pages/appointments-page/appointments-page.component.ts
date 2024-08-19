@@ -22,6 +22,7 @@ import { AppointmentDay } from "src/app/types"
 export class AppointmentsPageComponent {
 	locale = this.localizationService.locale.appointmentsPage
 	actionsLocale = this.localizationService.locale.actions
+	errorsLocale = this.localizationService.locale.errors
 	faEditLight = faEditLight
 	faTrashLight = faTrashLight
 	faArrowRightLight = faArrowRightLight
@@ -181,7 +182,7 @@ export class AppointmentsPageComponent {
 		endTimeMinute: number
 	}) {
 		if (event.name.length == 0) {
-			this.createAppointmentDialog.nameError = "Bitte gib einen Namen ein"
+			this.createAppointmentDialog.nameError = this.errorsLocale.nameMissing
 			return
 		}
 
@@ -222,7 +223,7 @@ export class AppointmentsPageComponent {
 		endTimeMinute: number
 	}) {
 		if (event.name.length == 0) {
-			this.editAppointmentDialog.nameError = "Bitte gib einen Namen ein"
+			this.editAppointmentDialog.nameError = this.errorsLocale.nameMissing
 			return
 		}
 
