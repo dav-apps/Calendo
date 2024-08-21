@@ -186,7 +186,22 @@ export class TodoListPageComponent {
 
 	showDeleteSubTodoListDialog() {
 		this.optionsButtonContextMenuVisible = false
-		this.deleteSubTodoListDialog.show()
+
+		if (this.optionsButtonContextMenuSelectedItem.items.length == 0) {
+			// Delete the todo list immediately
+			this.deleteSubTodoList()
+		} else {
+			this.deleteSubTodoListDialog.show()
+		}
+	}
+
+	showDeleteTodoListDialog() {
+		if (this.todoList.items.length == 0) {
+			// Delete the todo list immediately
+			this.deleteTodoList()
+		} else {
+			this.deleteTodoListDialog.show()
+		}
 	}
 
 	async updateTodoList(event: {
