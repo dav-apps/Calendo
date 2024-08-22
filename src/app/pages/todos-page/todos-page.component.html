@@ -7,21 +7,11 @@
 		{{ locale.title }}
 	</dav-header>
 
-	<!--
-	<p
-		class="no-items-message font-weight-light text-center mt-3"
-		*ngIf="
-			dataService.todosWithoutDate.todos.length == 0 &&
-			dataService.todosWithoutDate.todoLists.length == 0 &&
-			dataService.todoDays.length == 0 &&
-			dataService.todosWithoutGroup.length == 0 &&
-			dataService.todoListsWithoutGroup.length == 0 &&
-			dataService.todoGroups.length == 0
-		"
-	>
-		{{ locale.noTodos }}
-	</p>
-	-->
+	@if (todosWithoutDate.length == 0 && todoListsWithoutDate.length == 0 &&
+	todoDays.length == 0 && todosWithoutGroup.length == 0 &&
+	todoListsWithoutGroup.length == 0 && todoGroups.length == 0) {
+	<p class="no-items-message">{{ locale.noTodos }}</p>
+	}
 
 	<div class="todos-list">
 		@if (dataService.sortTodosByDate) { @if (todosWithoutDate.length > 0) {

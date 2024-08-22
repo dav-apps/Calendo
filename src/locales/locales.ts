@@ -17,12 +17,13 @@ const enDefaults = {
 		todos: "Todos",
 		createTodo: "Create todo",
 		createTodoList: "Create todo list",
-		noAppointments: "No appointments",
-		noTodos: "No todos"
+		noAppointments: "No appointments on this day",
+		noTodos: "No todos on this day"
 	},
 	appointmentsPage: {
 		title: "Appointments",
-		oldAppointments: "Past appointments"
+		oldAppointments: "Past appointments",
+		noAppointments: "You have no appointments"
 	},
 	todosPage: {
 		title: "Todos",
@@ -160,12 +161,13 @@ const deDefaults = {
 		todos: "Todos",
 		createTodo: "Todo erstellen",
 		createTodoList: "Todo-Liste erstellen",
-		noAppointments: "Keine Termine",
-		noTodos: "Keine Todos"
+		noAppointments: "Keine Termine für diesen Tag",
+		noTodos: "Keine Todos für diesen Tag"
 	},
 	appointmentsPage: {
 		title: "Termine",
-		oldAppointments: "Vergangene Termine"
+		oldAppointments: "Vergangene Termine",
+		noAppointments: "Du hast keine Termine"
 	},
 	todosPage: {
 		title: "Todos",

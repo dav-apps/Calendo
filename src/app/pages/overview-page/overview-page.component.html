@@ -58,7 +58,9 @@
 		</div>
 	</div>
 
+	@if (days.length > 0) {
 	<div class="divider"></div>
+	}
 
 	<div class="days-container">
 		@for (day of days; track day.formattedDate) {

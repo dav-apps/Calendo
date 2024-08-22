@@ -7,6 +7,10 @@
 		{{ locale.title }}
 	</dav-header>
 
+	@if (appointmentDays.length == 0 && oldAppointmentDays.length == 0) {
+	<p class="no-items-message">{{ locale.noAppointments }}</p>
+	}
+
 	<!-- List of future appointments -->
 	<div class="appointment-list">
 		@for (appointmentDay of appointmentDays; track
