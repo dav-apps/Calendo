@@ -227,6 +227,10 @@ export class TodosPageComponent {
 		this.createTodoListDialog.hide()
 	}
 
+	sortButtonClick() {
+		this.dataService.sortTodosByDate = !this.dataService.sortTodosByDate
+	}
+
 	todoDayMoreButtonClick(event: MouseEvent, todoDay: TodoDay) {
 		event.preventDefault()
 		this.dataService.contentContainer.scrollTo(0, 0)

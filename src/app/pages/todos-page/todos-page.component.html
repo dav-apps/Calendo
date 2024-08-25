@@ -6,7 +6,7 @@
 	>
 		{{ locale.title }}
 
-		<dav-icon-button slot="icons" size="sm">
+		<dav-icon-button slot="icons" size="sm" (click)="sortButtonClick()">
 			<fa-icon [icon]="faArrowUpArrowDown"></fa-icon>
 		</dav-icon-button>
 	</dav-header>
@@ -35,8 +35,9 @@
 			}
 		</div>
 
+		@if (todoDays.length > 0) {
 		<div class="divider"></div>
-		} @for (todoDay of todoDays; track todoDay.formattedDate) {
+		} } @for (todoDay of todoDays; track todoDay.formattedDate) {
 		<div class="todo-day">
 			<div class="todo-day-header-container">
 				<h4>
@@ -69,7 +70,8 @@
 		</div>
 		} } @else {
 		<!-- Sort by group -->
-		<div class="">
+		@if (todosWithoutGroup.length > 0) {
+		<div>
 			@for (todo of todosWithoutGroup; track todo.uuid) {
 			<div class="todo-item-container">
 				<calendo-todo-item
@@ -87,7 +89,9 @@
 			}
 		</div>
 
-		@for (todoGroup of todoGroups; track todoGroup.name) {
+		@if (todoGroups.length > 0) {
+		<div class="divider"></div>
+		} } @for (todoGroup of todoGroups; track todoGroup.name) {
 		<div class="todo-day">
 			<div class="todo-day-header-container">
 				<h4>
