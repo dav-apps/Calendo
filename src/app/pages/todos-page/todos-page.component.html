@@ -5,6 +5,10 @@
 		(addButtonClick)="addButtonClick($event)"
 	>
 		{{ locale.title }}
+
+		<dav-icon-button slot="icons" size="sm">
+			<fa-icon [icon]="faArrowUpArrowDown"></fa-icon>
+		</dav-icon-button>
 	</dav-header>
 
 	@if (todosWithoutDate.length == 0 && todoListsWithoutDate.length == 0 &&
@@ -44,7 +48,7 @@
 					[href]="todoDay.calendarDayPageLink"
 					(click)="todoDayMoreButtonClick($event, todoDay)"
 				>
-					<fa-icon [icon]="faArrowRightLight"></fa-icon>
+					<fa-icon [icon]="faArrowRight"></fa-icon>
 				</dav-icon-button>
 			</div>
 
@@ -123,14 +127,14 @@
 		[value]="locale.createTodo"
 		(click)="addButtonContextMenuVisible = false; createTodoDialog.show()"
 	>
-		<fa-icon slot="icon" [icon]="faCircleCheckLight"></fa-icon>
+		<fa-icon slot="icon" [icon]="faCircleCheck"></fa-icon>
 	</dav-context-menu-item>
 
 	<dav-context-menu-item
 		[value]="locale.createTodoList"
 		(click)="addButtonContextMenuVisible = false; createTodoListDialog.show()"
 	>
-		<fa-icon slot="icon" [icon]="faListCheckLight"></fa-icon>
+		<fa-icon slot="icon" [icon]="faListCheck"></fa-icon>
 	</dav-context-menu-item>
 </dav-context-menu>
 

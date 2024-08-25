@@ -2,9 +2,10 @@ import { Component, ElementRef, ViewChild, HostListener } from "@angular/core"
 import { Router } from "@angular/router"
 import { DateTime } from "luxon"
 import {
-	faCircleCheck as faCircleCheckLight,
-	faListCheck as faListCheckLight,
-	faArrowRight as faArrowRightLight
+	faCircleCheck,
+	faListCheck,
+	faArrowRight,
+	faArrowUpArrowDown
 } from "@fortawesome/pro-light-svg-icons"
 import { ContextMenu } from "dav-ui-components"
 import { Todo } from "src/app/models/Todo"
@@ -21,9 +22,10 @@ import { sortTodoDays } from "src/app/utils"
 })
 export class TodosPageComponent {
 	locale = this.localizationService.locale.todosPage
-	faCircleCheckLight = faCircleCheckLight
-	faListCheckLight = faListCheckLight
-	faArrowRightLight = faArrowRightLight
+	faCircleCheck = faCircleCheck
+	faListCheck = faListCheck
+	faArrowRight = faArrowRight
+	faArrowUpArrowDown = faArrowUpArrowDown
 	todosWithoutDate: Todo[] = []
 	todoListsWithoutDate: TodoList[] = []
 	todoDays: TodoDay[] = []
