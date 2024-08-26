@@ -1,8 +1,5 @@
 @if (!isItemTodoList(item)) {
-<div
-	[@hide]="hidden ? 'hidden' : 'visible'"
-	[style.marginLeft]="level == 0 ? '3px' : ''"
->
+<div [style.marginLeft]="level == 0 ? '3px' : ''">
 	<calendo-todo-item
 		[todo]="item"
 		(change)="checkCompleted()"

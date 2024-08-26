@@ -6,7 +6,6 @@ import {
 	ViewChild,
 	ElementRef
 } from "@angular/core"
-import { trigger, state, style, animate, transition } from "@angular/animations"
 import {
 	faEllipsis,
 	faChevronRight,
@@ -18,27 +17,7 @@ import { TodoList } from "src/app/models/TodoList"
 @Component({
 	selector: "calendo-todo-list-tree-item",
 	templateUrl: "./todo-list-tree-item.component.html",
-	styleUrl: "./todo-list-tree-item.component.scss",
-	animations: [
-		trigger("hide", [
-			state(
-				"hidden",
-				style({
-					transform: "translateY(-10px)",
-					opacity: 0,
-					height: 0
-				})
-			),
-			state(
-				"visible",
-				style({
-					transform: "",
-					opacity: 1
-				})
-			),
-			transition("visible => hidden", [animate("200ms 0s ease-in-out")])
-		])
-	]
+	styleUrl: "./todo-list-tree-item.component.scss"
 })
 export class TodoListTreeItemComponent {
 	faEllipsis = faEllipsis
@@ -57,7 +36,6 @@ export class TodoListTreeItemComponent {
 	@ViewChild("itemsContainer")
 	itemsContainer: ElementRef<HTMLDivElement>
 	subItems: (Todo | TodoList)[] = []
-	hidden: boolean = false
 	completed: boolean = false
 	loaded: boolean = false
 	marginBottom: string = "0"
@@ -101,8 +79,6 @@ export class TodoListTreeItemComponent {
 	}
 
 	hideTodoItem() {
-		this.hidden = true
-
 		setTimeout(() => {
 			this.removeTodo.emit(this.item.uuid)
 		}, 250)

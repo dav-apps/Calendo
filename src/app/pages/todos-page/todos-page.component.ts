@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild, HostListener } from "@angular/core"
 import { Router } from "@angular/router"
+import { trigger, state, style, animate, transition } from "@angular/animations"
 import { DateTime } from "luxon"
 import {
 	faCircleCheck,
@@ -18,7 +19,27 @@ import { sortTodoDays } from "src/app/utils"
 
 @Component({
 	templateUrl: "./todos-page.component.html",
-	styleUrl: "./todos-page.component.scss"
+	styleUrl: "./todos-page.component.scss",
+	animations: [
+		trigger("hide", [
+			state(
+				"hidden",
+				style({
+					transform: "translateY(-10px)",
+					opacity: 0,
+					height: 0
+				})
+			),
+			state(
+				"visible",
+				style({
+					transform: "",
+					opacity: 1
+				})
+			),
+			transition("visible => hidden", [animate("200ms 0s ease-in-out")])
+		])
+	]
 })
 export class TodosPageComponent {
 	locale = this.localizationService.locale.todosPage
