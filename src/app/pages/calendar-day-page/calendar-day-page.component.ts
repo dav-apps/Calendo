@@ -276,6 +276,11 @@ export class CalendarDayPageComponent {
 	}
 
 	async createTodo(event: { name: string; date: DateTime; labels: string[] }) {
+		if (event.name.length == 0) {
+			this.createTodoDialog.nameError = this.errorsLocale.nameMissing
+			return
+		}
+
 		let todo = await Todo.Create(
 			event.name,
 			false,
@@ -294,6 +299,11 @@ export class CalendarDayPageComponent {
 		date: DateTime
 		labels: string[]
 	}) {
+		if (event.name.length == 0) {
+			this.createTodoListDialog.nameError = this.errorsLocale.nameMissing
+			return
+		}
+
 		let todoList = await TodoList.Create(
 			event.name,
 			event.date?.toUnixInteger(),

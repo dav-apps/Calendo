@@ -43,6 +43,7 @@ import { sortTodoDays } from "src/app/utils"
 })
 export class TodosPageComponent {
 	locale = this.localizationService.locale.todosPage
+	errorsLocale = this.localizationService.locale.errors
 	faCircleCheck = faCircleCheck
 	faListCheck = faListCheck
 	faArrowRight = faArrowRight
@@ -221,6 +222,11 @@ export class TodosPageComponent {
 	}
 
 	async createTodo(event: { name: string; date: DateTime; labels: string[] }) {
+		if (event.name.length == 0) {
+			this.createTodoDialog.nameError = this.errorsLocale.nameMissing
+			return
+		}
+
 		let todo = await Todo.Create(
 			event.name,
 			false,
@@ -237,6 +243,11 @@ export class TodosPageComponent {
 		date: DateTime
 		labels: string[]
 	}) {
+		if (event.name.length == 0) {
+			this.createTodoListDialog.nameError = this.errorsLocale.nameMissing
+			return
+		}
+
 		let todoList = await TodoList.Create(
 			event.name,
 			event.date?.toUnixInteger(),
