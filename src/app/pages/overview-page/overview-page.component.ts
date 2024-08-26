@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
+import { Router } from "@angular/router"
 import { Settings, DateTime } from "luxon"
 import {
 	faPlus,
@@ -93,7 +94,8 @@ export class OverviewPageComponent {
 
 	constructor(
 		public dataService: DataService,
-		private localizationService: LocalizationService
+		private localizationService: LocalizationService,
+		private router: Router
 	) {
 		Settings.defaultLocale = navigator.language
 
@@ -429,6 +431,9 @@ export class OverviewPageComponent {
 
 		this.addTodoList(todoList)
 		this.createTodoListDialog.hide()
+
+		// Navigate to TodoListPage
+		this.router.navigate(["todolist", todoList.uuid])
 	}
 
 	async createAppointment(event: {

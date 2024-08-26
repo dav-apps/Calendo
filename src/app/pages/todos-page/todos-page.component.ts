@@ -246,6 +246,9 @@ export class TodosPageComponent {
 
 		this.addTodoList(todoList)
 		this.createTodoListDialog.hide()
+
+		// Navigate to TodoListPage
+		this.router.navigate(["todolist", todoList.uuid])
 	}
 
 	sortButtonClick() {
