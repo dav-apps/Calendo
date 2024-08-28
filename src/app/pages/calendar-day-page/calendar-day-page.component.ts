@@ -182,6 +182,22 @@ export class CalendarDayPageComponent {
 		this.deleteAppointmentDialog.show()
 	}
 
+	showCreateTodoDialog() {
+		this.todoAddButtonContextMenuVisible = false
+
+		this.createTodoDialog.saveDate = true
+		this.createTodoDialog.date = this.date
+		this.createTodoDialog.show()
+	}
+
+	showCreateTodoListDialog() {
+		this.todoAddButtonContextMenuVisible = false
+
+		this.createTodoListDialog.saveDate = true
+		this.createTodoListDialog.date = this.date
+		this.createTodoListDialog.show()
+	}
+
 	async deleteAppointment() {
 		this.deleteAppointmentDialog.hide()
 		this.removeAppointment(this.selectedAppointment)
