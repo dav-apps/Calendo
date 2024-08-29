@@ -239,9 +239,8 @@ export class OverviewPageComponent {
 		if (todo.list != null) return
 
 		let date = DateTime.fromSeconds(todo.time)
-		if (date < DateTime.now().startOf("day")) return
 
-		if (date.hasSame(this.currentDay.date, "day")) {
+		if (todo.time == 0 || date.hasSame(this.currentDay.date, "day")) {
 			let i = this.currentDay.todos.findIndex(t => t.uuid == todo.uuid)
 
 			if (i != -1) {
@@ -255,6 +254,8 @@ export class OverviewPageComponent {
 			sortTodos(this.currentDay.todos)
 			return
 		}
+
+		if (date < DateTime.now()) return
 
 		let formattedDate = this.getFormattedDate(date)
 		let day = this.days.find(day => day.formattedDate == formattedDate)
@@ -292,9 +293,8 @@ export class OverviewPageComponent {
 		if (todoList.list != null) return
 
 		let date = DateTime.fromSeconds(todoList.time)
-		if (date < DateTime.now()) return
 
-		if (date.hasSame(this.currentDay.date, "day")) {
+		if (todoList.time == 0 || date.hasSame(this.currentDay.date, "day")) {
 			let i = this.currentDay.todoLists.findIndex(
 				t => t.uuid == todoList.uuid
 			)
@@ -310,6 +310,8 @@ export class OverviewPageComponent {
 			sortTodoLists(this.currentDay.todoLists)
 			return
 		}
+
+		if (date < DateTime.now()) return
 
 		let formattedDate = this.getFormattedDate(date)
 		let day = this.days.find(day => day.formattedDate == formattedDate)
@@ -414,7 +416,7 @@ export class OverviewPageComponent {
 		let todo = await Todo.Create(
 			event.name,
 			false,
-			event.date.toUnixInteger(),
+			event.date?.toUnixInteger(),
 			event.labels
 		)
 
@@ -525,5 +527,10 @@ export class OverviewPageComponent {
 
 		this.addAppointment(appointment)
 		this.editAppointmentDialog.hide()
+	}
+
+	todoListMoreButtonClick(item: TodoList) {
+		this.dataService.contentContainer.scrollTo(0, 0)
+		this.router.navigate(["todolist", item.uuid])
 	}
 }
