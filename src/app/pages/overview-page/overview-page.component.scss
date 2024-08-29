@@ -81,16 +81,20 @@
 
 .day-headline-container {
 	display: none;
-
-	p {
-		margin: 0;
-	}
 }
 
-.day-headline {
+.day-headline-top {
 	font-size: 20px;
+	font-weight: 500;
+	color: var(--dav-color-on-surface);
+	margin: 0 0 4px 0;
+}
+
+.day-headline-bottom {
+	font-size: 16px;
 	font-weight: 300;
 	color: var(--dav-color-on-surface);
+	margin: 0;
 }
 
 .day-headline-mobile {

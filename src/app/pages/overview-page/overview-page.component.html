@@ -66,9 +66,9 @@
 		@for (day of days; track day.formattedDate) {
 		<div class="day-container">
 			<div class="day-headline-container">
-				<p class="day-headline" [innerHTML]="day.shortTopFormattedDate"></p>
+				<p class="day-headline-top" [innerHTML]="day.shortTopFormattedDate"></p>
 				<p
-					class="day-headline"
+					class="day-headline-bottom"
 					[innerHTML]="day.shortBottomFormattedDate"
 				></p>
 			</div>
