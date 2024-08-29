@@ -40,6 +40,7 @@
 @media screen and (min-width: 730px) {
 	.today-container {
 		flex-direction: row;
+		align-items: start;
 		gap: 0;
 	}
 }
@@ -132,4 +133,8 @@
 	width: 80%;
 	border-top: 1px solid rgba(var(--dav-color-outline-rgb), 0.4);
 	margin: 80px 10%;
+}
+
+.todo-item-container {
+	margin-left: 3px;
 }
