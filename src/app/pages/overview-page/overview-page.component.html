@@ -71,7 +71,10 @@
 		@for (day of days; track day.formattedDate) {
 		<div class="day-container">
 			<div class="day-headline-container">
-				<p class="day-headline-top" [innerHTML]="day.shortTopFormattedDate"></p>
+				<p
+					class="day-headline-top"
+					[innerHTML]="day.shortTopFormattedDate"
+				></p>
 				<p
 					class="day-headline-bottom"
 					[innerHTML]="day.shortBottomFormattedDate"
@@ -80,7 +83,6 @@
 
 			<p class="day-headline-mobile">{{ day.formattedDate }}</p>
 
-			@if (day.appointments.length > 0) {
 			<div class="day-appointments-list">
 				@for (appointment of day.appointments; track appointment.uuid) {
 				<calendo-appointment-item
@@ -92,17 +94,20 @@
 				></calendo-appointment-item>
 				}
 			</div>
-			} @if (day.todos.length > 0) {
 			<div class="day-todos-list">
 				@for (todo of day.todos; track todo.uuid) {
-				<calendo-todo-item [todo]="todo"></calendo-todo-item>
+				<div class="todo-item-container">
+					<calendo-todo-item [todo]="todo"></calendo-todo-item>
+				</div>
 				} @for (todoList of day.todoLists; track todoList.uuid) {
 				<calendo-todo-list-tree
 					[todoList]="todoList"
+					[showRoot]="true"
+					[expanded]="false"
+					(moreButtonClick)="todoListMoreButtonClick($event)"
 				></calendo-todo-list-tree>
 				}
 			</div>
-			}
 		</div>
 		}
 	</div>
