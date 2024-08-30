@@ -142,9 +142,11 @@ export class AppComponent {
 	//#region dav-js callback functions
 	async UpdateAllOfTable(tableId: number) {
 		if (tableId === environment.appointmentTableId) {
-			await this.dataService.loadAllAppointments()
+			this.dataService.appointmentsChanged = true
+		} else if (tableId == environment.todoTableId) {
+			this.dataService.todosChanged = true
 		} else if (tableId === environment.todoListTableId) {
-			await this.dataService.loadAllTodos()
+			this.dataService.todoListsChanged = true
 		}
 	}
 

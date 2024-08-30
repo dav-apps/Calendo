@@ -17,25 +17,31 @@ export class DataService {
 	userPromiseHolder = new PromiseHolder()
 	appointmentsPromiseHolder = new PromiseHolder()
 	todosPromiseHolder = new PromiseHolder()
+	todoListsPromiseHolder = new PromiseHolder()
 	updateInstalled: boolean = false
 
 	allAppointments: Appointment[] = []
 	allTodos: Todo[] = []
 	allTodoLists: TodoList[] = []
+	appointmentsChanged: boolean = true
+	todosChanged: boolean = true
+	todoListsChanged: boolean = true
 
 	//#region All pages
 	sortTodosByDate: boolean = true
 	isMobile: boolean = false
 	darkTheme: boolean = false
 	contentContainer: HTMLDivElement = null
-	isLoadingAllAppointments: boolean = false // If true, LoadAllAppointments is currently running
+	isLoadingAllAppointments: boolean = false
 	isLoadingAllTodos: boolean = false
+	isLoadingAllTodoLists: boolean = false
 	updatedTodoLists: string[] = []
 	//#endregion
 
 	constructor(private settingsService: SettingsService) {
 		this.loadAllAppointments()
 		this.loadAllTodos()
+		this.loadAllTodoLists()
 	}
 
 	async loadTheme(theme?: Theme) {
@@ -80,7 +86,7 @@ export class DataService {
 		)
 	}
 
-	async loadAllAppointments() {
+	private async loadAllAppointments() {
 		if (this.isLoadingAllAppointments) return
 		this.isLoadingAllAppointments = true
 
@@ -93,15 +99,15 @@ export class DataService {
 		}
 
 		this.isLoadingAllAppointments = false
+		this.appointmentsChanged = false
 		this.appointmentsPromiseHolder.Resolve()
 	}
 
-	async loadAllTodos() {
+	private async loadAllTodos() {
 		if (this.isLoadingAllTodos) return
 		this.isLoadingAllTodos = true
 
 		this.allTodos = []
-		this.allTodoLists = []
 
 		// Load todos
 		var todos = await GetAllTodos()
@@ -110,6 +116,17 @@ export class DataService {
 			this.allTodos.push(todo)
 		}
 
+		this.isLoadingAllTodos = false
+		this.todosChanged = false
+		this.todosPromiseHolder.Resolve()
+	}
+
+	private async loadAllTodoLists() {
+		if (this.isLoadingAllTodoLists) return
+		this.isLoadingAllTodoLists = true
+
+		this.allTodoLists = []
+
 		// Load todo lists
 		let todoLists = await GetAllTodoLists()
 
@@ -117,8 +134,9 @@ export class DataService {
 			this.allTodoLists.push(todoList)
 		}
 
-		this.isLoadingAllTodos = false
-		this.todosPromiseHolder.Resolve()
+		this.isLoadingAllTodoLists = false
+		this.todoListsChanged = false
+		this.todoListsPromiseHolder.Resolve()
 	}
 
 	getAppointmentsOfDay(day: DateTime) {
