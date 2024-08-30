@@ -89,7 +89,9 @@ export class TodoListPageComponent {
 		private location: Location
 	) {}
 
-	ngOnInit() {
+	async ngOnInit() {
+		await this.dataService.loadTodoLists()
+
 		this.route.params.subscribe(async param => {
 			let list = await GetTodoList(param.uuid)
 
@@ -220,6 +222,7 @@ export class TodoListPageComponent {
 		)
 
 		this.editTodoListDialog.hide()
+		this.dataService.todoListsChanged = true
 	}
 
 	async addTodo(event: { name: string }) {
@@ -233,6 +236,7 @@ export class TodoListPageComponent {
 
 		await this.addItemDialogParent.AddItem(todo)
 		this.addTodoDialog.hide()
+		this.dataService.todoListsChanged = true
 	}
 
 	async addTodoList(event: { name: string }) {
@@ -246,11 +250,13 @@ export class TodoListPageComponent {
 
 		await this.addItemDialogParent.AddItem(todoList)
 		this.addTodoListDialog.hide()
+		this.dataService.todoListsChanged = true
 	}
 
 	async updateSubTodoList(event: { name: string }) {
 		await this.optionsButtonContextMenuSelectedItem.Update(event.name)
 		this.editSubTodoListDialog.hide()
+		this.dataService.todoListsChanged = true
 	}
 
 	async deleteSubTodoList() {
@@ -261,10 +267,12 @@ export class TodoListPageComponent {
 		)
 		this.optionsButtonContextMenuSelectedItem = null
 		this.deleteSubTodoListDialog.hide()
+		this.dataService.todoListsChanged = true
 	}
 
 	async deleteTodoList() {
 		await this.todoList.Delete()
+		this.dataService.todoListsChanged = true
 		this.goBack()
 	}
 

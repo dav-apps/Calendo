@@ -91,8 +91,11 @@ export class CalendarDayPageComponent {
 	) {}
 
 	async ngOnInit() {
-		await this.dataService.appointmentsPromiseHolder.AwaitResult()
-		await this.dataService.todosPromiseHolder.AwaitResult()
+		await Promise.all([
+			this.dataService.loadAppointments(),
+			this.dataService.loadTodos(),
+			this.dataService.loadTodoLists()
+		])
 
 		this.activatedRoute.params.subscribe(param => {
 			let year = Number(param.year)
@@ -107,7 +110,7 @@ export class CalendarDayPageComponent {
 				this.isDateBeforeToday = this.date < DateTime.now().startOf("day")
 
 				this.appointments = this.dataService.getAppointmentsOfDay(this.date)
-				this.todos = this.dataService.getTodosOfDay(this.date)
+				this.todos = this.dataService.getTodosOfDay(this.date, true)
 				this.todoLists = this.dataService.getTodoListsOfDay(this.date)
 			}
 		})
@@ -204,6 +207,7 @@ export class CalendarDayPageComponent {
 
 		await this.selectedAppointment.Delete()
 		this.selectedAppointment = null
+		this.dataService.appointmentsChanged = true
 	}
 
 	async createAppointment(event: {
@@ -247,6 +251,8 @@ export class CalendarDayPageComponent {
 		sortAppointments(this.appointments)
 
 		this.createAppointmentDialog.hide()
+
+		this.dataService.appointmentsChanged = true
 	}
 
 	async updateAppointment(event: {
@@ -289,6 +295,8 @@ export class CalendarDayPageComponent {
 		if (i != -1) this.appointments[i] = appointment
 
 		this.editAppointmentDialog.hide()
+
+		this.dataService.appointmentsChanged = true
 	}
 
 	async createTodo(event: { name: string; date: DateTime; labels: string[] }) {
@@ -308,6 +316,8 @@ export class CalendarDayPageComponent {
 		sortTodos(this.todos)
 
 		this.createTodoDialog.hide()
+
+		this.dataService.todosChanged = true
 	}
 
 	async createTodoList(event: {
@@ -331,6 +341,8 @@ export class CalendarDayPageComponent {
 		sortTodoLists(this.todoLists)
 
 		this.createTodoListDialog.hide()
+
+		this.dataService.todoListsChanged = true
 
 		// Navigate to TodoListPage
 		this.router.navigate(["todolist", todoList.uuid])

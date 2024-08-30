@@ -80,7 +80,10 @@ export class TodosPageComponent {
 	) {}
 
 	async ngOnInit() {
-		await this.dataService.todosPromiseHolder.AwaitResult()
+		await Promise.all([
+			this.dataService.loadTodos(),
+			this.dataService.loadTodoLists()
+		])
 
 		for (let todo of this.dataService.allTodos) {
 			this.addTodo(todo)
@@ -236,6 +239,8 @@ export class TodosPageComponent {
 
 		this.addTodo(todo)
 		this.createTodoDialog.hide()
+
+		this.dataService.todosChanged = true
 	}
 
 	async createTodoList(event: {
@@ -257,6 +262,8 @@ export class TodosPageComponent {
 
 		this.addTodoList(todoList)
 		this.createTodoListDialog.hide()
+
+		this.dataService.todoListsChanged = true
 
 		// Navigate to TodoListPage
 		this.router.navigate(["todolist", todoList.uuid])

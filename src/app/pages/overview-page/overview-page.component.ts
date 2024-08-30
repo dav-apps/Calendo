@@ -104,8 +104,11 @@ export class OverviewPageComponent {
 	}
 
 	async ngOnInit() {
-		await this.dataService.appointmentsPromiseHolder.AwaitResult()
-		await this.dataService.todosPromiseHolder.AwaitResult()
+		await Promise.all([
+			this.dataService.loadAppointments(),
+			this.dataService.loadTodos(),
+			this.dataService.loadTodoLists()
+		])
 
 		for (let appointment of this.dataService.allAppointments) {
 			this.addAppointment(appointment)
@@ -393,6 +396,7 @@ export class OverviewPageComponent {
 
 		await this.selectedAppointment.Delete()
 		this.selectedAppointment = null
+		this.dataService.appointmentsChanged = true
 	}
 
 	getFormattedDate(date: DateTime): string {
@@ -422,6 +426,8 @@ export class OverviewPageComponent {
 
 		this.addTodo(todo)
 		this.createTodoDialog.hide()
+
+		this.dataService.todosChanged = true
 	}
 
 	async createTodoList(event: {
@@ -443,6 +449,8 @@ export class OverviewPageComponent {
 
 		this.addTodoList(todoList)
 		this.createTodoListDialog.hide()
+
+		this.dataService.todoListsChanged = true
 
 		// Navigate to TodoListPage
 		this.router.navigate(["todolist", todoList.uuid])
@@ -487,6 +495,8 @@ export class OverviewPageComponent {
 
 		this.addAppointment(appointment)
 		this.createAppointmentDialog.hide()
+
+		this.dataService.appointmentsChanged = true
 	}
 
 	async updateAppointment(event: {
@@ -527,6 +537,8 @@ export class OverviewPageComponent {
 
 		this.addAppointment(appointment)
 		this.editAppointmentDialog.hide()
+
+		this.dataService.appointmentsChanged = true
 	}
 
 	todoListMoreButtonClick(item: TodoList) {

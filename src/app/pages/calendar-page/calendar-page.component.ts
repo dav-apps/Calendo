@@ -47,7 +47,11 @@ export class CalendarPageComponent {
 	}
 
 	async ngOnInit() {
-		await this.dataService.appointmentsPromiseHolder.AwaitResult()
+		await Promise.all([
+			this.dataService.loadAppointments(),
+			this.dataService.loadTodos(),
+			this.dataService.loadTodoLists()
+		])
 
 		let params = this.activatedRoute.snapshot.params
 		let year = Number(params.year)

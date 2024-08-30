@@ -61,7 +61,7 @@ export class AppointmentsPageComponent {
 	) {}
 
 	async ngOnInit() {
-		await this.dataService.appointmentsPromiseHolder.AwaitResult()
+		await this.dataService.loadAppointments()
 
 		for (let appointment of this.dataService.allAppointments) {
 			this.addAppointment(appointment)
@@ -210,6 +210,8 @@ export class AppointmentsPageComponent {
 
 		this.addAppointment(appointment)
 		this.createAppointmentDialog.hide()
+
+		this.dataService.appointmentsChanged = true
 	}
 
 	async updateAppointment(event: {
@@ -252,6 +254,8 @@ export class AppointmentsPageComponent {
 		this.addAppointment(appointment)
 
 		this.editAppointmentDialog.hide()
+
+		this.dataService.appointmentsChanged = true
 	}
 
 	showEditAppointmentDialog(appointment: Appointment) {
@@ -284,6 +288,7 @@ export class AppointmentsPageComponent {
 
 		await this.selectedAppointment.Delete()
 		this.selectedAppointment = null
+		this.dataService.appointmentsChanged = true
 	}
 
 	appointmentDayMoreButtonClick(

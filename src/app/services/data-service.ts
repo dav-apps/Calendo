@@ -86,6 +86,30 @@ export class DataService {
 		)
 	}
 
+	async loadAppointments() {
+		await this.appointmentsPromiseHolder.AwaitResult()
+
+		if (this.appointmentsChanged) {
+			await this.loadAllAppointments()
+		}
+	}
+
+	async loadTodos() {
+		await this.todosPromiseHolder.AwaitResult()
+
+		if (this.todosChanged) {
+			await this.loadAllTodos()
+		}
+	}
+
+	async loadTodoLists() {
+		await this.todoListsPromiseHolder.AwaitResult()
+
+		if (this.todoListsChanged) {
+			await this.loadAllTodoLists()
+		}
+	}
+
 	private async loadAllAppointments() {
 		if (this.isLoadingAllAppointments) return
 		this.isLoadingAllAppointments = true
