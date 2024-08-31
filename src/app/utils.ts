@@ -1,6 +1,6 @@
 import { Appointment } from "./models/Appointment"
 import { Todo } from "./models/Todo"
-import { TodoList, GetTodoList } from "./models/TodoList"
+import { TodoList } from "./models/TodoList"
 import { Theme, TodoDay } from "./types"
 import { lightThemeKey, darkThemeKey } from "./constants"
 
@@ -55,30 +55,33 @@ export function sortTodoDays(todoDays: TodoDay[]) {
 	})
 }
 
-export async function getRootOfTodo(todo: Todo): Promise<TodoList> {
-	if (!todo.list) return null
+export function getRootOfTodo(todo: Todo, allTodoLists: TodoList[]): TodoList {
+	if (todo.list == null) return null
 
-	let parent = await GetTodoList(todo.list)
-	if (!parent) return null
+	let parent = allTodoLists.find(t => t.uuid == todo.list)
+	if (parent == null) return null
 
-	if (parent.list) {
+	if (parent.list != null) {
 		// Get the parent of the parent
-		return await this.GetRootOfTodoList(parent)
+		return this.GetRootOfTodoList(parent)
 	} else {
 		return parent
 	}
 }
 
-export async function getRootOfTodoList(todoList: TodoList): Promise<TodoList> {
+export function getRootOfTodoList(
+	todoList: TodoList,
+	allTodoLists: TodoList[]
+): TodoList {
 	if (!todoList.list) return todoList
 
 	let parentUuid = todoList.list
 	let currentList: TodoList = todoList
 
-	while (parentUuid) {
-		currentList = await GetTodoList(parentUuid)
+	while (parentUuid != null) {
+		currentList = allTodoLists.find(t => t.uuid == parentUuid)
 
-		if (currentList) {
+		if (currentList != null) {
 			parentUuid = currentList.list
 		} else {
 			return null
