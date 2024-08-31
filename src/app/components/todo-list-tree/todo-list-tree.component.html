@@ -6,6 +6,7 @@
 	[showMoreButton]="true"
 	[expanded]="expanded"
 	(moreButtonClick)="moreButtonClick.emit($event)"
+	(removeTodo)="dataService.todoListsChanged = true; removeTodo.emit($event)"
 ></calendo-todo-list-tree-item>
 } @else {
 <div
@@ -20,7 +21,7 @@
 		[allowDragging]="allowDragging"
 		[expanded]="expanded"
 		(optionsButtonClick)="optionsButtonClick.emit($event)"
-		(removeTodo)="removeTodo.emit($event)"
+		(removeTodo)="dataService.todoListsChanged = true; removeTodo.emit($event)"
 	></calendo-todo-list-tree-item>
 	}
 </div>

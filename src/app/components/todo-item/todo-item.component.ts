@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core"
 import { trigger, state, style, animate, transition } from "@angular/animations"
-import { Todo } from "src/app/models/Todo"
 import { faTimes } from "@fortawesome/pro-light-svg-icons"
+import { Todo } from "src/app/models/Todo"
+import { DataService } from "src/app/services/data-service"
 
 @Component({
 	selector: "calendo-todo-item",
@@ -36,6 +37,8 @@ export class TodoItemComponent {
 	@Output() delete = new EventEmitter()
 	hidden: boolean = false
 
+	constructor(private dataService: DataService) {}
+
 	async checkboxChange(event: CustomEvent) {
 		await this.todo.SetCompleted(event.detail.checked)
 		this.change.emit()
@@ -43,6 +46,8 @@ export class TodoItemComponent {
 
 	deleteTodo() {
 		this.hidden = true
+		this.dataService.todosChanged = true
+
 		this.todo.Delete()
 		this.delete.emit()
 	}

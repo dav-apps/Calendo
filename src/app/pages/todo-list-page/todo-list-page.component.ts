@@ -83,7 +83,7 @@ export class TodoListPageComponent {
 	//#endregion
 
 	constructor(
-		private dataService: DataService,
+		public dataService: DataService,
 		private localizationService: LocalizationService,
 		private route: ActivatedRoute,
 		private location: Location

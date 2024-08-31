@@ -33,7 +33,9 @@
 			[todoList]="todoList"
 			[allowDragging]="true"
 			(optionsButtonClick)="optionsButtonClick($event)"
-			(removeTodo)="removeItem($event, todoList)"
+			(removeTodo)="
+				dataService.todoListsChanged = true; removeItem($event, todoList)
+			"
 		></calendo-todo-list-tree>
 	</div>
 </div>
