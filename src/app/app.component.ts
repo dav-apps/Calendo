@@ -21,10 +21,6 @@ import * as DavUIComponents from "dav-ui-components"
 import { environment } from "../environments/environment"
 import { DataService } from "./services/data-service"
 import { LocalizationService } from "./services/localization-service"
-import { ConvertTableObjectToAppointment } from "./models/Appointment"
-import { ConvertTableObjectToTodo } from "./models/Todo"
-import { TodoList, ConvertTableObjectToTodoList } from "./models/TodoList"
-import { getRootOfTodo, getRootOfTodoList } from "src/app/utils"
 import { enUS } from "src/locales/locales"
 
 @Component({
@@ -111,13 +107,11 @@ export class AppComponent {
 			},
 			callbacks: {
 				UpdateAllOfTable: (tableId: number) =>
-					this.UpdateAllOfTable(tableId),
-				UpdateTableObject: (
-					tableObject: TableObject,
-					downloaded: boolean
-				) => this.UpdateTableObject(tableObject, downloaded),
+					this.updateAllOfTable(tableId),
+				UpdateTableObject: (tableObject: TableObject) =>
+					this.updateTableObject(tableObject),
 				DeleteTableObject: (tableObject: TableObject) =>
-					this.DeleteTableObject(tableObject),
+					this.updateTableObject(tableObject),
 				UserLoaded: () => this.userLoaded()
 			}
 		})
@@ -140,101 +134,25 @@ export class AppComponent {
 	}
 
 	//#region dav-js callback functions
-	async UpdateAllOfTable(tableId: number) {
+	async updateAllOfTable(tableId: number) {
 		if (tableId === environment.appointmentTableId) {
 			this.dataService.appointmentsChanged = true
 		} else if (tableId == environment.todoTableId) {
 			this.dataService.todosChanged = true
+			this.dataService.todoListsChanged = true
 		} else if (tableId === environment.todoListTableId) {
 			this.dataService.todoListsChanged = true
 		}
 	}
 
-	async UpdateTableObject(
-		tableObject: TableObject,
-		downloaded: boolean = false
-	) {
+	async updateTableObject(tableObject: TableObject) {
 		if (tableObject.TableId == environment.appointmentTableId) {
-			// Update appointment
-			var appointment = ConvertTableObjectToAppointment(tableObject)
-
-			if (appointment) {
-				// TODO: Reload appointment on current page
-			}
+			this.dataService.appointmentsChanged = true
 		} else if (tableObject.TableId == environment.todoTableId) {
-			// Update todo
-			var todo = ConvertTableObjectToTodo(tableObject)
-			if (!todo) return
-
-			if (todo.list) {
-				// Update the root todo list of the todo
-				let root = await getRootOfTodo(todo)
-
-				if (root) {
-					// TODO: Reload todo list on current page
-				}
-			} else {
-				// TODO: Reload todo on current page
-			}
+			this.dataService.todosChanged = true
+			this.dataService.todoListsChanged = true
 		} else if (tableObject.TableId == environment.todoListTableId) {
-			// Update todo list
-			let todoList = await ConvertTableObjectToTodoList(tableObject)
-
-			if (todoList) {
-				let root: TodoList = null
-
-				if (todoList.list) {
-					// Get the root of the todo list
-					root = await getRootOfTodoList(todoList)
-				} else {
-					root = todoList
-				}
-
-				if (root) {
-					// TODO: Reload todo list on current page
-				}
-			}
-		}
-	}
-
-	async DeleteTableObject(tableObject: TableObject) {
-		if (tableObject.TableId == environment.appointmentTableId) {
-			// Remove appointment
-			var appointment = ConvertTableObjectToAppointment(tableObject)
-
-			if (appointment) {
-				// TODO: Remove appointment on current page
-			}
-		} else if (tableObject.TableId == environment.todoTableId) {
-			// Remove todo
-			var todo = ConvertTableObjectToTodo(tableObject)
-			if (!todo) return
-
-			if (todo.list) {
-				// Update the root todo list of the todo
-				let root = await getRootOfTodo(todo)
-
-				if (root) {
-					// TODO: Remove todo list on current page
-				}
-			} else {
-				// TODO: Remove todo on current page
-			}
-		} else if (tableObject.TableId == environment.todoListTableId) {
-			// Remove todo list
-			let todoList = await ConvertTableObjectToTodoList(tableObject)
-			if (!todoList) return
-
-			if (todoList.list) {
-				// Update the root todo list
-				let root = await getRootOfTodoList(todoList)
-
-				if (root) {
-					// TODO: Remove todo list on current page
-				}
-			} else {
-				// TODO: Remove todo list on current page
-			}
+			this.dataService.todoListsChanged = true
 		}
 	}
 
