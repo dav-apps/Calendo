@@ -6,7 +6,11 @@ import { TodoList, GetAllTodoLists } from "../models/TodoList"
 import { Dav, PromiseHolder } from "dav-js"
 import * as DavUIComponents from "dav-ui-components"
 import { SettingsService } from "./settings-service"
-import { sortAppointments, convertStringToTheme } from "src/app/utils"
+import {
+	sortAppointments,
+	getRootOfTodo,
+	convertStringToTheme
+} from "src/app/utils"
 import { Theme } from "src/app/types"
 import { themeKey, lightThemeKey, darkThemeKey } from "src/app/constants"
 
@@ -177,13 +181,25 @@ export class DataService {
 		return appointments
 	}
 
-	getTodosOfDay(day: DateTime, completed: boolean = false) {
+	getTodosOfDay(
+		day: DateTime,
+		includeCompleted: boolean = false,
+		includeSubItems: boolean = false
+	) {
 		let todos: Todo[] = []
 
 		for (let todo of this.allTodos) {
+			let parent: Todo | TodoList = todo
+
+			if (includeSubItems && todo.list != null) {
+				// Get the top parent list of the todo
+				let root = getRootOfTodo(todo, this.allTodoLists)
+				if (root != null) parent = root
+			}
+
 			if (
-				DateTime.fromSeconds(todo.time).hasSame(day, "day") &&
-				(completed || !todo.completed)
+				DateTime.fromSeconds(parent.time).hasSame(day, "day") &&
+				(includeCompleted || !todo.completed)
 			) {
 				todos.push(todo)
 			}
