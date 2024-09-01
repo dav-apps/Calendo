@@ -68,6 +68,7 @@ export class TodoDialogComponent {
 
 	nameTextfieldChange(event: Event) {
 		this.name = (event as CustomEvent).detail.value
+		this.nameError = ""
 	}
 
 	calendarChange(event: CustomEvent) {

@@ -116,6 +116,7 @@ export class AppointmentDialogComponent {
 
 	nameTextfieldChange(event: Event) {
 		this.name = (event as CustomEvent).detail.value
+		this.nameError = ""
 	}
 
 	colorDropdownChange(event: CustomEvent) {

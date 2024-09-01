@@ -25,6 +25,7 @@ import { LocalizationService } from "src/app/services/localization-service"
 export class TodoListPageComponent {
 	locale = this.localizationService.locale.todoListPage
 	actionsLocale = this.localizationService.locale.actions
+	errorsLocale = this.localizationService.locale.errors
 	faCircleCheck = faCircleCheck
 	faListCheck = faListCheck
 	faEdit = faEdit
@@ -226,6 +227,11 @@ export class TodoListPageComponent {
 	}
 
 	async addTodo(event: { name: string }) {
+		if (event.name.length == 0) {
+			this.addTodoDialog.nameError = this.errorsLocale.nameMissing
+			return
+		}
+
 		let todo = await Todo.Create(
 			event.name,
 			false,
@@ -240,6 +246,11 @@ export class TodoListPageComponent {
 	}
 
 	async addTodoList(event: { name: string }) {
+		if (event.name.length == 0) {
+			this.addTodoListDialog.nameError = this.errorsLocale.nameMissing
+			return
+		}
+
 		let todoList = await TodoList.Create(
 			event.name,
 			null,
