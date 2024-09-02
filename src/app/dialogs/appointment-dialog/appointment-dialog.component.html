@@ -19,12 +19,14 @@
 				(change)="nameTextfieldChange($event)"
 			></dav-textfield>
 
-			<dav-dropdown
-				[options]="colorDropdownOptions"
-				[selectedKey]="colorDropdownSelectedKey"
-				compact
-				(change)="colorDropdownChange($event)"
-			></dav-dropdown>
+			<div class="color-dropdown-container">
+				<dav-dropdown
+					[options]="colorDropdownOptions"
+					[selectedKey]="colorDropdownSelectedKey"
+					compact
+					(change)="colorDropdownChange($event)"
+				></dav-dropdown>
+			</div>
 		</div>
 
 		<div class="date-container">

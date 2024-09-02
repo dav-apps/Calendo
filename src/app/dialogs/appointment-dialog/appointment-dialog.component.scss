@@ -1,8 +1,11 @@
 .name-color-container {
 	display: flex;
-	align-items: flex-end;
 	justify-content: center;
 	gap: 8px;
+}
+
+.color-dropdown-container {
+	margin-top: 25px;
 }
 
 .date-container {
