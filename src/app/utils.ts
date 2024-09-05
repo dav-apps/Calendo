@@ -63,7 +63,7 @@ export function getRootOfTodo(todo: Todo, allTodoLists: TodoList[]): TodoList {
 
 	if (parent.list != null) {
 		// Get the parent of the parent
-		return this.GetRootOfTodoList(parent)
+		return getRootOfTodoList(parent, allTodoLists)
 	} else {
 		return parent
 	}

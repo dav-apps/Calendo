@@ -31,7 +31,9 @@
 			</div>
 
 			<div class="appointment-day-items">
-				@for (appointment of appointmentDay.appointments; track
+				@if (appointmentDay.appointments.length == 0) {
+				<p class="no-items-message">{{ locale.noAppointmentsForDay }}</p>
+				} @for (appointment of appointmentDay.appointments; track
 				appointment.uuid) {
 				<calendo-appointment-item
 					[appointment]="appointment"
@@ -72,7 +74,9 @@
 			</div>
 
 			<div class="appointment-day-items">
-				@for (appointment of appointmentDay.appointments; track
+				@if (appointmentDay.appointments.length == 0) {
+				<p class="no-items-message">{{ locale.noAppointmentsForDay }}</p>
+				} @for (appointment of appointmentDay.appointments; track
 				appointment.uuid) {
 				<calendo-appointment-item
 					[appointment]="appointment"

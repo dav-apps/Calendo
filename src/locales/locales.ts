@@ -23,7 +23,8 @@ const enDefaults = {
 	appointmentsPage: {
 		title: "Appointments",
 		oldAppointments: "Past appointments",
-		noAppointments: "You have no appointments"
+		noAppointments: "You have no appointments",
+		noAppointmentsForDay: "No appointments for this day"
 	},
 	todosPage: {
 		title: "Todos",
@@ -167,7 +168,8 @@ const deDefaults = {
 	appointmentsPage: {
 		title: "Termine",
 		oldAppointments: "Vergangene Termine",
-		noAppointments: "Du hast keine Termine"
+		noAppointments: "Du hast keine Termine",
+		noAppointmentsForDay: "Keine Termine für diesen Tag"
 	},
 	todosPage: {
 		title: "Todos",
