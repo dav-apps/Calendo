@@ -120,7 +120,7 @@ export class AppointmentDialogComponent {
 	}
 
 	colorDropdownChange(event: CustomEvent) {
-		this.selectedColor = event.detail.key
+		this.colorDropdownSelectedKey = event.detail.key
 	}
 
 	calendarChange(event: CustomEvent) {
@@ -143,7 +143,7 @@ export class AppointmentDialogComponent {
 
 	submit() {
 		let i = this.colorDropdownOptions.findIndex(
-			o => o.key == this.selectedColor
+			o => o.key == this.colorDropdownSelectedKey
 		)
 
 		let color = this.colorDropdownOptions[0].value
