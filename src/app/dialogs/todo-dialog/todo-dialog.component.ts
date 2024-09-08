@@ -26,7 +26,7 @@ export class TodoDialogComponent {
 	@Input() name: string = ""
 	@Input() nameError: string = ""
 	@Input() date: DateTime = DateTime.now()
-	@Input() saveDate: boolean = false
+	@Input() saveDate: boolean = true
 	@Input() labels: string[] = []
 	@Output() primaryButtonClick = new EventEmitter()
 	@ViewChild("dialog") dialog: ElementRef<Dialog>

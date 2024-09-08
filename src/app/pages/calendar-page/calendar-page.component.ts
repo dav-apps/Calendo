@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from "@angular/core"
+import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
 import { Router, ActivatedRoute } from "@angular/router"
 import { Settings, DateTime } from "luxon"
 import { DataService } from "src/app/services/data-service"
@@ -94,17 +94,17 @@ export class CalendarPageComponent {
 		window.addEventListener("calendarpage-scrolltop", () => {
 			this.scrollToCurrentDate(true)
 		})
-
-		this.container.nativeElement.addEventListener(
-			"mousewheel",
-			(event: WheelEvent) => this.onScroll(event)
-		)
 	}
 
 	async ngAfterViewInit() {
 		await this.scrollToCurrentDate()
 	}
 
+	ngOnDestroy() {
+		window.removeAllListeners("calendarpage-scrolltop")
+	}
+
+	@HostListener("window:wheel", ["$event"])
 	onScroll(event: WheelEvent) {
 		if (window.innerWidth < 730) return
 
@@ -112,6 +112,18 @@ export class CalendarPageComponent {
 			this.showNextMonth()
 		} else {
 			this.showPreviousMonth()
+		}
+	}
+
+	@HostListener("window:keydown", ["$event"])
+	async onKeyDown(event: KeyboardEvent) {
+		switch (event.code) {
+			case "ArrowLeft": // Left arrow key
+				this.showPreviousMonth()
+				break
+			case "ArrowRight": // Right arrow key
+				this.showNextMonth()
+				break
 		}
 	}
 
