@@ -82,20 +82,20 @@
 					<a
 						class="day-label"
 						[class.today-mobile]="day.today"
+						[style.marginTop]="
+							day.appointments.length > 0 || day.todos.length > 0
+								? '3px'
+								: ''
+						"
 						[href]="getCalendarDayPageLink(day.date)"
 						(click)="navigateToDay($event, day.date)"
 					>
 						{{ day.label }}
-					</a>
 
-					<div class="day-appointments-container">
-						@for (appointment of day.appointments; track appointment.uuid)
-						{
-						<calendo-appointment-item
-							[appointment]="appointment"
-						></calendo-appointment-item>
+						@if (day.appointments.length > 0 || day.todos.length > 0) {
+						<div class="mobile-day-label-indicator"></div>
 						}
-					</div>
+					</a>
 					}
 				</div>
 				}

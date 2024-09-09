@@ -63,6 +63,7 @@
 	font-weight: 300;
 	text-wrap: nowrap;
 	color: var(--dav-color-on-surface);
+	margin: 0;
 }
 
 .mobile-month-label-border {
@@ -94,6 +95,7 @@
 
 .day-label {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	border-radius: 6px;
@@ -125,6 +127,14 @@
 
 .day-appointments-container {
 	display: none;
+}
+
+.mobile-day-label-indicator {
+	height: 4px;
+	width: 4px;
+	margin-top: 2px;
+	border-radius: 50%;
+	background-color: var(--dav-color-primary);
 }
 
 @media screen and (min-width: 730px) {
