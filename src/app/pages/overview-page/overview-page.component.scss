@@ -120,6 +120,11 @@
 		gap: 32px;
 	}
 
+	.day-container.single-column {
+		grid-template-columns: 120px 1fr;
+		max-width: 500px;
+	}
+
 	.day-headline-container {
 		display: block;
 	}

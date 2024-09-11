@@ -50,6 +50,8 @@ export class OverviewPageComponent {
 		todoLists: []
 	}
 	days: StartDay[] = []
+	showAppointmentsColumn: boolean = true
+	showTodosColumn: boolean = true
 
 	//#region TodoAddButtonContextMenu
 	@ViewChild("todoAddButtonContextMenu")
@@ -121,6 +123,9 @@ export class OverviewPageComponent {
 		for (let todoList of this.dataService.allTodoLists) {
 			this.addTodoList(todoList)
 		}
+
+		this.updateShowAppointmentsColumn()
+		this.updateShowTodosColumn()
 	}
 
 	@HostListener("document:click", ["$event"])
@@ -348,6 +353,26 @@ export class OverviewPageComponent {
 		}
 	}
 
+	removeTodo(todo: Todo) {
+		let date = DateTime.fromSeconds(todo.time)
+		if (date < DateTime.now().startOf("day")) return
+
+		if (date.hasSame(this.currentDay.date, "day")) {
+			let i = this.currentDay.todos.findIndex(a => a.uuid == todo.uuid)
+
+			if (i != -1) this.currentDay.todos.splice(i, 1)
+			return
+		}
+
+		let formattedDate = this.getFormattedDate(date)
+		let day = this.days.find(day => day.formattedDate == formattedDate)
+
+		if (day != null) {
+			let i = day.todos.findIndex(a => a.uuid == todo.uuid)
+			if (i != -1) day.todos.splice(i, 1)
+		}
+	}
+
 	sortDays() {
 		this.days.sort((a: StartDay, b: StartDay) => {
 			if (a.date < b.date) {
@@ -396,7 +421,14 @@ export class OverviewPageComponent {
 
 		await this.selectedAppointment.Delete()
 		this.selectedAppointment = null
+
+		this.updateShowAppointmentsColumn()
 		this.dataService.appointmentsChanged = true
+	}
+
+	todoDeleted(todo: Todo) {
+		this.removeTodo(todo)
+		this.updateShowTodosColumn()
 	}
 
 	getFormattedDate(date: DateTime): string {
@@ -427,6 +459,7 @@ export class OverviewPageComponent {
 		this.addTodo(todo)
 		this.createTodoDialog.hide()
 
+		this.updateShowTodosColumn()
 		this.dataService.todosChanged = true
 	}
 
@@ -496,6 +529,7 @@ export class OverviewPageComponent {
 		this.addAppointment(appointment)
 		this.createAppointmentDialog.hide()
 
+		this.updateShowAppointmentsColumn()
 		this.dataService.appointmentsChanged = true
 	}
 
@@ -539,6 +573,28 @@ export class OverviewPageComponent {
 		this.editAppointmentDialog.hide()
 
 		this.dataService.appointmentsChanged = true
+	}
+
+	updateShowAppointmentsColumn() {
+		for (let day of this.days) {
+			if (day.appointments.length > 0) {
+				this.showAppointmentsColumn = true
+				return
+			}
+		}
+
+		this.showAppointmentsColumn = false
+	}
+
+	updateShowTodosColumn() {
+		for (let day of this.days) {
+			if (day.todos.length > 0 || day.todoLists.length > 0) {
+				this.showTodosColumn = true
+				return
+			}
+		}
+
+		this.showTodosColumn = false
 	}
 
 	todoListMoreButtonClick(item: TodoList) {
