@@ -81,18 +81,23 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 16px;
-	padding: 0 24px;
 }
 
 .day-headline-container {
 	display: none;
 }
 
-.day-headline-top {
-	font-size: 20px;
-	font-weight: 500;
-	color: var(--dav-color-on-surface);
-	margin: 0 0 4px 0;
+.day-headline-top-container {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+
+	h4 {
+		font-size: 20px;
+		font-weight: 500;
+		color: var(--dav-color-on-surface);
+		margin: 0 0 4px 0;
+	}
 }
 
 .day-headline-bottom {
@@ -122,7 +127,7 @@
 		align-items: start;
 		width: 80%;
 		max-width: 800px;
-		gap: 32px;
+		gap: 64px;
 	}
 
 	.day-container.single-column {
@@ -144,6 +149,7 @@
 	flex-direction: column;
 	gap: 4px;
 	width: 100%;
+	min-width: 250px;
 	max-width: 350px;
 }
 

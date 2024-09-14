@@ -74,10 +74,21 @@
 			[class.single-column]="!showAppointmentsColumn || !showTodosColumn"
 		>
 			<div class="day-headline-container">
-				<p
-					class="day-headline-top"
-					[innerHTML]="day.shortTopFormattedDate"
-				></p>
+				<div class="day-headline-top-container">
+					<h4
+						class="day-headline-top"
+						[innerHTML]="day.shortTopFormattedDate"
+					></h4>
+
+					<dav-icon-button
+						size="xs"
+						[href]="day.calendarDayPageLink"
+						(click)="startDayMoreButtonClick($event, day)"
+					>
+						<fa-icon [icon]="faArrowRight"></fa-icon>
+					</dav-icon-button>
+				</div>
+
 				<p
 					class="day-headline-bottom"
 					[innerHTML]="day.shortBottomFormattedDate"
