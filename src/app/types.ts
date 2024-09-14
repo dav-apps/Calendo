@@ -14,6 +14,7 @@ export interface StartDay {
 	formattedDate: string
 	shortTopFormattedDate: string
 	shortBottomFormattedDate: string
+	calendarDayPageLink: string
 	appointments: Appointment[]
 	todos: Todo[]
 	todoLists: TodoList[]

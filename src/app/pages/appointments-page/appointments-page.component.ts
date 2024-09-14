@@ -1,11 +1,7 @@
 import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
 import { Router } from "@angular/router"
 import { DateTime } from "luxon"
-import {
-	faEdit as faEditLight,
-	faTrash as faTrashLight,
-	faArrowRight as faArrowRightLight
-} from "@fortawesome/pro-light-svg-icons"
+import { faEdit, faTrash, faArrowRight } from "@fortawesome/pro-light-svg-icons"
 import { ContextMenu } from "dav-ui-components"
 import { AppointmentDialogComponent } from "src/app/dialogs/appointment-dialog/appointment-dialog.component"
 import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
@@ -23,9 +19,9 @@ export class AppointmentsPageComponent {
 	locale = this.localizationService.locale.appointmentsPage
 	actionsLocale = this.localizationService.locale.actions
 	errorsLocale = this.localizationService.locale.errors
-	faEditLight = faEditLight
-	faTrashLight = faTrashLight
-	faArrowRightLight = faArrowRightLight
+	faEdit = faEdit
+	faTrash = faTrash
+	faArrowRight = faArrowRight
 	appointmentDays: AppointmentDay[] = []
 	oldAppointmentDays: AppointmentDay[] = []
 	selectedAppointment: Appointment = null

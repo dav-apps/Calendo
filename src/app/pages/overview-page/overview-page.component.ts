@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
 import { Router } from "@angular/router"
 import { Settings, DateTime } from "luxon"
 import {
+	faArrowRight,
 	faPlus,
 	faEdit,
 	faTrash,
@@ -28,6 +29,7 @@ export class OverviewPageComponent {
 	locale = this.localizationService.locale.overviewPage
 	actionsLocale = this.localizationService.locale.actions
 	errorsLocale = this.localizationService.locale.errors
+	faArrowRight = faArrowRight
 	faPlus = faPlus
 	faEdit = faEdit
 	faTrash = faTrash
@@ -45,6 +47,7 @@ export class OverviewPageComponent {
 		shortBottomFormattedDate: this.getShortBottomFormattedDate(
 			DateTime.now()
 		),
+		calendarDayPageLink: "",
 		appointments: [],
 		todos: [],
 		todoLists: []
@@ -211,6 +214,7 @@ export class OverviewPageComponent {
 				formattedDate,
 				shortTopFormattedDate: this.getShortTopFormattedDate(date),
 				shortBottomFormattedDate: this.getShortBottomFormattedDate(date),
+				calendarDayPageLink: `calendar/${date.year}/${date.month}/${date.day}`,
 				appointments: [appointment],
 				todos: [],
 				todoLists: []
@@ -287,6 +291,7 @@ export class OverviewPageComponent {
 				formattedDate,
 				shortTopFormattedDate: this.getShortTopFormattedDate(date),
 				shortBottomFormattedDate: this.getShortBottomFormattedDate(date),
+				calendarDayPageLink: `calendar/${date.year}/${date.month}/${date.day}`,
 				appointments: [],
 				todos: [todo],
 				todoLists: []
@@ -343,6 +348,7 @@ export class OverviewPageComponent {
 				formattedDate,
 				shortTopFormattedDate: this.getShortTopFormattedDate(date),
 				shortBottomFormattedDate: this.getShortBottomFormattedDate(date),
+				calendarDayPageLink: `calendar/${date.year}/${date.month}/${date.day}`,
 				appointments: [],
 				todos: [],
 				todoLists: [todoList]
@@ -595,6 +601,12 @@ export class OverviewPageComponent {
 		}
 
 		this.showTodosColumn = false
+	}
+
+	startDayMoreButtonClick(event: MouseEvent, startDay: StartDay) {
+		event.preventDefault()
+		this.dataService.contentContainer.scrollTo(0, 0)
+		this.router.navigate([startDay.calendarDayPageLink])
 	}
 
 	todoListMoreButtonClick(item: TodoList) {

@@ -26,7 +26,7 @@
 					[href]="appointmentDay.calendarDayPageLink"
 					(click)="appointmentDayMoreButtonClick($event, appointmentDay)"
 				>
-					<fa-icon [icon]="faArrowRightLight"></fa-icon>
+					<fa-icon [icon]="faArrowRight"></fa-icon>
 				</dav-icon-button>
 			</div>
 
@@ -69,7 +69,7 @@
 					[href]="appointmentDay.calendarDayPageLink"
 					(click)="appointmentDayMoreButtonClick($event, appointmentDay)"
 				>
-					<fa-icon [icon]="faArrowRightLight"></fa-icon>
+					<fa-icon [icon]="faArrowRight"></fa-icon>
 				</dav-icon-button>
 			</div>
 
@@ -103,7 +103,7 @@
 		[value]="actionsLocale.edit"
 		(click)="showEditAppointmentDialog(selectedAppointment)"
 	>
-		<fa-icon slot="icon" [icon]="faEditLight"></fa-icon>
+		<fa-icon slot="icon" [icon]="faEdit"></fa-icon>
 	</dav-context-menu-item>
 
 	<!-- Delete -->
@@ -111,7 +111,7 @@
 		[value]="actionsLocale.delete"
 		(click)="showDeleteAppointmentDialog(selectedAppointment)"
 	>
-		<fa-icon slot="icon" [icon]="faTrashLight"></fa-icon>
+		<fa-icon slot="icon" [icon]="faTrash"></fa-icon>
 	</dav-context-menu-item>
 </dav-context-menu>
 

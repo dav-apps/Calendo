@@ -84,7 +84,17 @@
 				></p>
 			</div>
 
-			<p class="day-headline-mobile">{{ day.formattedDate }}</p>
+			<div class="day-headline-mobile-container">
+				<h4 class="day-headline-mobile">{{ day.formattedDate }}</h4>
+
+				<dav-icon-button
+					size="sm"
+					[href]="day.calendarDayPageLink"
+					(click)="startDayMoreButtonClick($event, day)"
+				>
+					<fa-icon [icon]="faArrowRight"></fa-icon>
+				</dav-icon-button>
+			</div>
 
 			@if (showAppointmentsColumn) {
 			<div class="day-appointments-list">
