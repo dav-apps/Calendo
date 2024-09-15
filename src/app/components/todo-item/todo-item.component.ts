@@ -51,4 +51,15 @@ export class TodoItemComponent {
 		this.todo.Delete()
 		this.delete.emit()
 	}
+
+	getBadgeColor(i: number) {
+		switch (i) {
+			case 0:
+				return "primary"
+			case 1:
+				return "secondary"
+			default:
+				return "tertiary"
+		}
+	}
 }
