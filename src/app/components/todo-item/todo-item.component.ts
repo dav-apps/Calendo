@@ -32,7 +32,7 @@ import { DataService } from "src/app/services/data-service"
 export class TodoItemComponent {
 	faTimes = faTimes
 	@Input() todo: Todo = new Todo()
-	@Input() showBadge: boolean = true
+	@Input() showBadges: boolean = true
 	@Output() change = new EventEmitter()
 	@Output() delete = new EventEmitter()
 	hidden: boolean = false

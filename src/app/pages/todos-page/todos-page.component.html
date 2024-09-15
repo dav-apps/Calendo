@@ -76,7 +76,7 @@
 			<div class="todo-item-container">
 				<calendo-todo-item
 					[todo]="todo"
-					[showBadge]="false"
+					[showBadges]="false"
 				></calendo-todo-item>
 			</div>
 			} @for (todoList of todoListsWithoutGroup; track todoList.uuid) {
@@ -104,7 +104,7 @@
 				<div class="todo-item-container">
 					<calendo-todo-item
 						[todo]="todo"
-						[showBadge]="false"
+						[showBadges]="false"
 					></calendo-todo-item>
 				</div>
 				} @for (todoList of todoGroup.todoLists; track todoList.uuid) {

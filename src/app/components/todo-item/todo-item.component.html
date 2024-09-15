@@ -10,7 +10,7 @@
 	<dav-icon-button size="xs" (click)="deleteTodo()">
 		<fa-icon [icon]="faTimes"></fa-icon>
 	</dav-icon-button>
-	} @if (todo.groups.length > 0) {
+	} @if (todo.groups.length > 0 && showBadges) {
 	<div class="badges-container">
 		@for (group of todo.groups; track group; let i = $index) {
 		<dav-badge
