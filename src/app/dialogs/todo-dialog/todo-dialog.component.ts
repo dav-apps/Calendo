@@ -83,6 +83,17 @@ export class TodoDialogComponent {
 		this.label = (event as CustomEvent).detail.value
 	}
 
+	getBadgeColor(i: number) {
+		switch (i) {
+			case 0:
+				return "primary"
+			case 1:
+				return "secondary"
+			default:
+				return "tertiary"
+		}
+	}
+
 	addLabel() {
 		let label = this.label
 		this.label = ""

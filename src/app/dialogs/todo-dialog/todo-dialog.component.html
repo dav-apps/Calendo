@@ -38,18 +38,28 @@
 			<dav-textfield
 				[value]="label"
 				label="Label hinzufügen"
+				[disabled]="labels.length > 2"
 				(change)="labelTextfieldChange($event)"
 			></dav-textfield>
 
-			<dav-icon-button size="sm" shape="square" (click)="addLabel()">
+			<dav-icon-button
+				size="sm"
+				shape="square"
+				[disabled]="labels.length > 2"
+				(click)="addLabel()"
+			>
 				<fa-icon [icon]="faPlus"></fa-icon>
 			</dav-icon-button>
 		</div>
 
 		@if (labels.length > 0) {
 		<div class="labels-container">
-			@for (label of labels; track label) {
-			<dav-badge tonal color="secondary" (click)="removeLabel(label)">
+			@for (label of labels; track label; let i = $index) {
+			<dav-badge
+				tonal
+				[color]="getBadgeColor(i)"
+				(click)="removeLabel(label)"
+			>
 				{{ label }}
 			</dav-badge>
 			}
