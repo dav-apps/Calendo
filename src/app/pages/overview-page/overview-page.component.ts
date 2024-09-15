@@ -239,11 +239,23 @@ export class OverviewPageComponent {
 		}
 
 		let formattedDate = this.getFormattedDate(date)
-		let day = this.days.find(day => day.formattedDate == formattedDate)
+		let i = this.days.findIndex(day => day.formattedDate == formattedDate)
+		if (i == -1) return
 
-		if (day != null) {
-			let i = day.appointments.findIndex(a => a.uuid == appointment.uuid)
-			if (i != -1) day.appointments.splice(i, 1)
+		let day = this.days[i]
+
+		let j = day.appointments.findIndex(a => a.uuid == appointment.uuid)
+		if (j == -1) return
+
+		day.appointments.splice(j, 1)
+
+		if (
+			day.appointments.length == 0 &&
+			day.todos.length == 0 &&
+			day.todoLists.length == 0
+		) {
+			// Remove the day
+			this.days.splice(i, 1)
 		}
 	}
 
@@ -371,11 +383,23 @@ export class OverviewPageComponent {
 		}
 
 		let formattedDate = this.getFormattedDate(date)
-		let day = this.days.find(day => day.formattedDate == formattedDate)
+		let i = this.days.findIndex(day => day.formattedDate == formattedDate)
+		if (i == -1) return
 
-		if (day != null) {
-			let i = day.todos.findIndex(a => a.uuid == todo.uuid)
-			if (i != -1) day.todos.splice(i, 1)
+		let day = this.days[i]
+
+		let j = day.todos.findIndex(a => a.uuid == todo.uuid)
+		if (j == -1) return
+
+		day.todos.splice(j, 1)
+
+		if (
+			day.appointments.length == 0 &&
+			day.todos.length == 0 &&
+			day.todoLists.length == 0
+		) {
+			// Remove the day
+			this.days.splice(i, 1)
 		}
 	}
 
