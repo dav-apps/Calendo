@@ -1,6 +1,11 @@
 import { Injectable } from "@angular/core"
 import * as localforage from "localforage"
-import { settingsThemeKey, settingsThemeDefault } from "src/app/constants"
+import {
+	settingsThemeKey,
+	settingsThemeDefault,
+	settingsSortTodosByDateKey,
+	settingsSortTodosByDateDefault
+} from "src/app/constants"
 
 @Injectable()
 export class SettingsService {
@@ -16,6 +21,20 @@ export class SettingsService {
 
 	async getTheme(): Promise<string> {
 		return this.getSetting<string>(settingsThemeKey, settingsThemeDefault)
+	}
+	//#endregion
+
+	//#region Sort todos by date
+	async setSortTodosByDate(value: boolean) {
+		await localforage.setItem(settingsSortTodosByDateKey, value)
+		this.cache[settingsSortTodosByDateKey] = value
+	}
+
+	async getSortTodosByDate(): Promise<boolean> {
+		return this.getSetting<boolean>(
+			settingsSortTodosByDateKey,
+			settingsSortTodosByDateDefault
+		)
 	}
 	//#endregion
 

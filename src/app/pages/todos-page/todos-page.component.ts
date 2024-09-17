@@ -14,6 +14,7 @@ import { TodoList } from "src/app/models/TodoList"
 import { TodoDialogComponent } from "src/app/dialogs/todo-dialog/todo-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
+import { SettingsService } from "src/app/services/settings-service"
 import { TodoDay, TodoGroup } from "src/app/types"
 import { sortTodoDays } from "src/app/utils"
 
@@ -48,6 +49,7 @@ export class TodosPageComponent {
 	faListCheck = faListCheck
 	faArrowRight = faArrowRight
 	faArrowUpArrowDown = faArrowUpArrowDown
+	sortTodosByDate: boolean = true
 	todosWithoutDate: Todo[] = []
 	todoListsWithoutDate: TodoList[] = []
 	todoDays: TodoDay[] = []
@@ -76,10 +78,13 @@ export class TodosPageComponent {
 	constructor(
 		public dataService: DataService,
 		private localizationService: LocalizationService,
+		private settingsService: SettingsService,
 		private router: Router
 	) {}
 
 	async ngOnInit() {
+		this.sortTodosByDate = await this.settingsService.getSortTodosByDate()
+
 		await Promise.all([
 			this.dataService.loadTodos(),
 			this.dataService.loadTodoLists()
@@ -270,7 +275,8 @@ export class TodosPageComponent {
 	}
 
 	sortButtonClick() {
-		this.dataService.sortTodosByDate = !this.dataService.sortTodosByDate
+		this.sortTodosByDate = !this.sortTodosByDate
+		this.settingsService.setSortTodosByDate(this.sortTodosByDate)
 	}
 
 	todoDayMoreButtonClick(event: MouseEvent, todoDay: TodoDay) {

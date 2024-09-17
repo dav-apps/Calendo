@@ -18,7 +18,7 @@
 	}
 
 	<div class="todos-list">
-		@if (dataService.sortTodosByDate) { @if (todosWithoutDate.length > 0) {
+		@if (sortTodosByDate) { @if (todosWithoutDate.length > 0) {
 		<!-- Sort by date -->
 		<div>
 			@for (todo of todosWithoutDate; track todo.uuid) {

@@ -32,7 +32,6 @@ export class DataService {
 	todoListsChanged: boolean = true
 
 	//#region All pages
-	sortTodosByDate: boolean = true
 	isMobile: boolean = false
 	darkTheme: boolean = false
 	contentContainer: HTMLDivElement = null

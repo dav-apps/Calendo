@@ -8,10 +8,12 @@ export const systemThemeKey = "system"
 
 //#region settings keys
 export const settingsThemeKey = "settings-theme"
+export const settingsSortTodosByDateKey = "settings-sortTodosByDate"
 //#endregion
 
 //#region settings default values
 export const settingsThemeDefault = systemThemeKey
+export const settingsSortTodosByDateDefault = true
 //#endregion
 
 //#region DateTime formats
