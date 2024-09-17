@@ -151,16 +151,14 @@
 >
 	<dav-context-menu-item
 		[value]="locale.createTodo"
-		(click)="todoAddButtonContextMenuVisible = false; createTodoDialog.show()"
+		(click)="showCreateTodoDialog()"
 	>
 		<fa-icon slot="icon" [icon]="faCircleCheck"></fa-icon>
 	</dav-context-menu-item>
 
 	<dav-context-menu-item
 		[value]="locale.createTodoList"
-		(click)="
-			todoAddButtonContextMenuVisible = false; createTodoListDialog.show()
-		"
+		(click)="showCreateTodoListDialog()"
 	>
 		<fa-icon slot="icon" [icon]="faListCheck"></fa-icon>
 	</dav-context-menu-item>

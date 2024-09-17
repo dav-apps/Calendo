@@ -9,7 +9,7 @@
 				<dav-header
 					size="sm"
 					[addButtonVisible]="!isDateBeforeToday"
-					(addButtonClick)="createAppointmentDialog.show()"
+					(addButtonClick)="showCreateAppointmentDialog()"
 				>
 					{{ locale.appointments }}
 				</dav-header>
@@ -116,7 +116,6 @@
 
 <calendo-appointment-dialog
 	#createAppointmentDialog
-	[date]="date"
 	(primaryButtonClick)="createAppointment($event)"
 ></calendo-appointment-dialog>
 
@@ -128,8 +127,6 @@
 
 <calendo-todo-dialog
 	#createTodoDialog
-	[date]="date"
-	[saveDate]="true"
 	(primaryButtonClick)="createTodo($event)"
 ></calendo-todo-dialog>
 

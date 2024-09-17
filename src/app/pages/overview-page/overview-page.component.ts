@@ -415,9 +415,27 @@ export class OverviewPageComponent {
 		})
 	}
 
+	showCreateTodoDialog() {
+		this.todoAddButtonContextMenuVisible = false
+		this.appointmentContextMenuVisible = false
+
+		this.createTodoDialog.reset()
+		this.createTodoDialog.show()
+	}
+
+	showCreateTodoListDialog() {
+		this.todoAddButtonContextMenuVisible = false
+		this.appointmentContextMenuVisible = false
+
+		this.createTodoListDialog.reset()
+		this.createTodoListDialog.show()
+	}
+
 	showCreateAppointmentDialog() {
 		this.todoAddButtonContextMenuVisible = false
 		this.appointmentContextMenuVisible = false
+
+		this.createAppointmentDialog.reset()
 		this.createAppointmentDialog.show()
 	}
 

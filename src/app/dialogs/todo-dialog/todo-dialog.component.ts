@@ -23,13 +23,13 @@ export class TodoDialogComponent {
 	@Input() loading: boolean = false
 	@Input() mode: "createTodo" | "createTodoList" | "editTodoList" =
 		"createTodo"
-	@Input() name: string = ""
-	@Input() nameError: string = ""
-	@Input() date: DateTime = DateTime.now()
-	@Input() saveDate: boolean = true
-	@Input() labels: string[] = []
 	@Output() primaryButtonClick = new EventEmitter()
 	@ViewChild("dialog") dialog: ElementRef<Dialog>
+	name: string = ""
+	nameError: string = ""
+	date: DateTime = DateTime.now()
+	saveDate: boolean = true
+	labels: string[] = []
 	visible: boolean = false
 	headline: string = this.locale.createTodoHeadline
 	label: string = ""
@@ -44,17 +44,23 @@ export class TodoDialogComponent {
 		document.body.removeChild(this.dialog.nativeElement)
 	}
 
+	reset() {
+		this.name = ""
+		this.nameError = ""
+		this.date = DateTime.now()
+		this.saveDate = true
+		this.labels = []
+	}
+
 	show() {
 		switch (this.mode) {
 			case "createTodoList":
-				this.name = ""
 				this.headline = this.locale.createTodoListHeadline
 				break
 			case "editTodoList":
 				this.headline = this.locale.editTodoListHeadline
 				break
 			default:
-				this.name = ""
 				this.headline = this.locale.createTodoHeadline
 				break
 		}

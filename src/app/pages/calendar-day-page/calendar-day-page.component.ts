@@ -161,6 +161,12 @@ export class CalendarDayPageComponent {
 		if (i != -1) this.appointments.splice(i, 1)
 	}
 
+	showCreateAppointmentDialog() {
+		this.createAppointmentDialog.reset()
+		this.createAppointmentDialog.date = this.date
+		this.createAppointmentDialog.show()
+	}
+
 	showEditAppointmentDialog(appointment: Appointment) {
 		let startDate = DateTime.fromSeconds(appointment.start)
 		let endDate = DateTime.fromSeconds(appointment.end)
@@ -187,7 +193,9 @@ export class CalendarDayPageComponent {
 
 	showCreateTodoDialog() {
 		this.todoAddButtonContextMenuVisible = false
+		this.appointmentContextMenuVisible = false
 
+		this.createTodoDialog.reset()
 		this.createTodoDialog.saveDate = true
 		this.createTodoDialog.date = this.date
 		this.createTodoDialog.show()
@@ -195,7 +203,9 @@ export class CalendarDayPageComponent {
 
 	showCreateTodoListDialog() {
 		this.todoAddButtonContextMenuVisible = false
+		this.appointmentContextMenuVisible = false
 
+		this.createTodoListDialog.reset()
 		this.createTodoListDialog.saveDate = true
 		this.createTodoListDialog.date = this.date
 		this.createTodoListDialog.show()

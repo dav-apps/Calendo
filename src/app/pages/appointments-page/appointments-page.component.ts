@@ -254,6 +254,11 @@ export class AppointmentsPageComponent {
 		this.dataService.appointmentsChanged = true
 	}
 
+	showCreateAppointmentDialog() {
+		this.createAppointmentDialog.reset()
+		this.createAppointmentDialog.show()
+	}
+
 	showEditAppointmentDialog(appointment: Appointment) {
 		let startDate = DateTime.fromSeconds(appointment.start)
 		let endDate = DateTime.fromSeconds(appointment.end)

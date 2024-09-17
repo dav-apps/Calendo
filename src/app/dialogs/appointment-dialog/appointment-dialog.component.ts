@@ -19,19 +19,19 @@ import { randomNumber } from "src/app/utils"
 export class AppointmentDialogComponent {
 	locale = this.localizationService.locale.dialogs.appointmentDialog
 	actionsLocale = this.localizationService.locale.actions
-	@Input() name: string = ""
-	@Input() nameError: string = ""
-	@Input() date: DateTime = DateTime.now()
-	@Input() selectedColor: string = ""
-	@Input() allDay: boolean = true
-	@Input() startTimeHour: number = 14
-	@Input() startTimeMinute: number = 0
-	@Input() endTimeHour: number = 15
-	@Input() endTimeMinute: number = 0
 	@Input() loading: boolean = false
 	@Input() mode: "create" | "edit" = "create"
 	@Output() primaryButtonClick = new EventEmitter()
 	@ViewChild("dialog") dialog: ElementRef<Dialog>
+	name: string = ""
+	nameError: string = ""
+	date: DateTime = DateTime.now()
+	selectedColor: string = ""
+	allDay: boolean = true
+	startTimeHour: number = 14
+	startTimeMinute: number = 0
+	endTimeHour: number = 15
+	endTimeMinute: number = 0
 	visible: boolean = false
 	colorDropdownSelectedKey: string = ""
 
@@ -90,23 +90,21 @@ export class AppointmentDialogComponent {
 		document.body.removeChild(this.dialog.nativeElement)
 	}
 
+	reset() {
+		this.name = ""
+		this.nameError = ""
+		this.date = DateTime.now()
+		this.allDay = true
+		this.startTimeHour = 14
+		this.startTimeMinute = 0
+		this.endTimeHour = 15
+		this.endTimeMinute = 0
+
+		this.selectColor()
+	}
+
 	show() {
-		if (this.selectedColor.length == 0) {
-			// Select a random color
-			let i = randomNumber(0, this.colorDropdownOptions.length - 1)
-			this.colorDropdownSelectedKey = this.colorDropdownOptions[i].key
-		} else {
-			let i = this.colorDropdownOptions.findIndex(
-				option =>
-					option.key == this.selectedColor ||
-					option.value == this.selectedColor
-			)
-
-			if (i != -1) {
-				this.colorDropdownSelectedKey = this.colorDropdownOptions[i].key
-			}
-		}
-
+		this.selectColor()
 		this.visible = true
 	}
 
@@ -162,5 +160,23 @@ export class AppointmentDialogComponent {
 			endTimeHour: this.endTimeHour,
 			endTimeMinute: this.endTimeMinute
 		})
+	}
+
+	private selectColor() {
+		if (this.selectedColor.length == 0) {
+			// Select a random color
+			let i = randomNumber(0, this.colorDropdownOptions.length - 1)
+			this.colorDropdownSelectedKey = this.colorDropdownOptions[i].key
+		} else {
+			let i = this.colorDropdownOptions.findIndex(
+				option =>
+					option.key == this.selectedColor ||
+					option.value == this.selectedColor
+			)
+
+			if (i != -1) {
+				this.colorDropdownSelectedKey = this.colorDropdownOptions[i].key
+			}
+		}
 	}
 }

@@ -229,6 +229,18 @@ export class TodosPageComponent {
 		}
 	}
 
+	showCreateTodoDialog() {
+		this.addButtonContextMenuVisible = false
+		this.createTodoDialog.reset()
+		this.createTodoDialog.show()
+	}
+
+	showCreateTodoListDialog() {
+		this.addButtonContextMenuVisible = false
+		this.createTodoListDialog.reset()
+		this.createTodoListDialog.show()
+	}
+
 	async createTodo(event: { name: string; date: DateTime; labels: string[] }) {
 		if (event.name.length == 0) {
 			this.createTodoDialog.nameError = this.errorsLocale.nameMissing
