@@ -22,7 +22,7 @@
 
 		<div class="date-container">
 			<dav-checkbox
-				label="Datum speichern"
+				[label]="locale.saveDateCheckboxLabel"
 				[checked]="saveDate"
 				(change)="saveDateCheckboxChange($event)"
 			></dav-checkbox>
@@ -37,7 +37,7 @@
 		<div class="label-input-container">
 			<dav-textfield
 				[value]="label"
-				label="Label hinzufügen"
+				[label]="locale.labelTextfieldLabel"
 				[disabled]="labels.length > 2"
 				(change)="labelTextfieldChange($event)"
 			></dav-textfield>

@@ -38,7 +38,7 @@
 
 		<div class="time-container">
 			<dav-checkbox
-				label="Ganztägig"
+				[label]="locale.allDayCheckboxLabel"
 				[checked]="allDay"
 				(change)="allDayCheckboxChange($event)"
 			></dav-checkbox>

@@ -80,7 +80,8 @@ const enDefaults = {
 		appointmentDialog: {
 			createHeadline: "Create appointment",
 			editHeadline: "Edit appointment",
-			nameTextfieldLabel: "Name"
+			nameTextfieldLabel: "Name",
+			allDayCheckboxLabel: "All day"
 		},
 		deleteAppointmentDialog: {
 			headline: "Delete appointment",
@@ -90,7 +91,9 @@ const enDefaults = {
 			createTodoHeadline: "Create todo",
 			createTodoListHeadline: "Create todo list",
 			editTodoListHeadline: "Edit todo list",
-			nameTextfieldLabel: "Name"
+			nameTextfieldLabel: "Name",
+			saveDateCheckboxLabel: "Save date",
+			labelTextfieldLabel: "Add label"
 		},
 		todoListSubItemDialog: {
 			addTodoHeadline: "Add todo",
@@ -226,7 +229,8 @@ const deDefaults = {
 		appointmentDialog: {
 			createHeadline: "Termin erstellen",
 			editHeadline: "Termin bearbeiten",
-			nameTextfieldLabel: "Name"
+			nameTextfieldLabel: "Name",
+			allDayCheckboxLabel: "Ganztägig"
 		},
 		deleteAppointmentDialog: {
 			headline: "Termin löschen",
@@ -237,7 +241,9 @@ const deDefaults = {
 			createTodoHeadline: "Todo erstellen",
 			createTodoListHeadline: "Todo-Liste erstellen",
 			editTodoListHeadline: "Todo-Liste bearbeiten",
-			nameTextfieldLabel: "Name"
+			nameTextfieldLabel: "Name",
+			saveDateCheckboxLabel: "Datum speichern",
+			labelTextfieldLabel: "Label hinzufügen"
 		},
 		todoListSubItemDialog: {
 			addTodoHeadline: "Todo hinzufügen",
