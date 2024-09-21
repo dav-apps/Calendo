@@ -104,17 +104,6 @@ export class CalendarPageComponent {
 		window.removeAllListeners("calendarpage-scrolltop")
 	}
 
-	@HostListener("window:wheel", ["$event"])
-	onScroll(event: WheelEvent) {
-		if (window.innerWidth < 730) return
-
-		if (event.deltaY > 0) {
-			this.showNextMonth()
-		} else {
-			this.showPreviousMonth()
-		}
-	}
-
 	@HostListener("window:keydown", ["$event"])
 	async onKeyDown(event: KeyboardEvent) {
 		switch (event.code) {
