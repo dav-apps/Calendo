@@ -18,7 +18,8 @@
 	}
 
 	<div class="todos-list">
-		@if (sortTodosByDate) { @if (todosWithoutDate.length > 0) {
+		@if (sortTodosByDate) { @if (todosWithoutDate.length > 0 ||
+		todoListsWithoutDate.length > 0) {
 		<!-- Sort by date -->
 		<div>
 			@for (todo of todosWithoutDate; track todo.uuid) {
@@ -70,7 +71,7 @@
 		</div>
 		} } @else {
 		<!-- Sort by group -->
-		@if (todosWithoutGroup.length > 0) {
+		@if (todosWithoutGroup.length > 0 || todoListsWithoutGroup.length > 0) {
 		<div>
 			@for (todo of todosWithoutGroup; track todo.uuid) {
 			<div class="todo-item-container">
