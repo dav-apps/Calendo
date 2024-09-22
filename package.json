@@ -31,7 +31,7 @@
     "@material/material-color-utilities": "^0.3.0",
     "core-js": "^2.5.4",
     "dav-js": "git+https://github.com/dav-apps/dav-js.git#v2.7.2",
-    "dav-ui-components": "git+https://github.com/dav-apps/dav-ui-components.git#dev",
+    "dav-ui-components": "git+https://github.com/dav-apps/dav-ui-components.git#v1.4",
     "localforage": "^1.10.0",
     "luxon": "^3.5.0",
     "ng2-dragula": "^5.1.0",
