@@ -32,9 +32,10 @@ export class AppointmentDialogComponent {
 	startTimeMinute: number = 0
 	endTimeHour: number = 15
 	endTimeMinute: number = 0
+	activateReminder: boolean = true
 	visible: boolean = false
 	colorDropdownSelectedKey: string = ""
-
+	reminderDropdownSelectedKey: string = "3600"
 	colorDropdownOptions: DropdownOption[] = [
 		// Falu red
 		{
@@ -79,8 +80,21 @@ export class AppointmentDialogComponent {
 			type: DropdownOptionType.color
 		}
 	]
+	reminderDropdownOptions: DropdownOption[] = []
 
-	constructor(private localizationService: LocalizationService) {}
+	constructor(private localizationService: LocalizationService) {
+		if (this.reminderDropdownOptions.length == 0) {
+			for (let reminderOption of Object.values(
+				this.locale.reminderOptions
+			)) {
+				this.reminderDropdownOptions.push({
+					key: reminderOption.key.toString(),
+					value: reminderOption.value,
+					type: DropdownOptionType.option
+				})
+			}
+		}
+	}
 
 	ngAfterViewInit() {
 		document.body.appendChild(this.dialog.nativeElement)
@@ -99,6 +113,8 @@ export class AppointmentDialogComponent {
 		this.startTimeMinute = 0
 		this.endTimeHour = 15
 		this.endTimeMinute = 0
+		this.activateReminder = true
+		this.reminderDropdownSelectedKey = "3600"
 
 		this.selectColor()
 	}
@@ -137,6 +153,14 @@ export class AppointmentDialogComponent {
 	endTimePickerChange(event: CustomEvent) {
 		this.endTimeHour = event.detail.hour
 		this.endTimeMinute = event.detail.minute
+	}
+
+	reminderCheckboxChange(event: CustomEvent) {
+		this.activateReminder = event.detail.checked
+	}
+
+	reminderDropdownChange(event: CustomEvent) {
+		this.reminderDropdownSelectedKey = event.detail.key
 	}
 
 	submit() {

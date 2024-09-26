@@ -81,7 +81,70 @@ const enDefaults = {
 			createHeadline: "Create appointment",
 			editHeadline: "Edit appointment",
 			nameTextfieldLabel: "Name",
-			allDayCheckboxLabel: "All day"
+			allDayCheckboxLabel: "All day",
+			reminderCheckboxLabel: "Activate reminder",
+			reminderOptions: {
+				minutes0: {
+					key: 0,
+					value: "0 minutes before"
+				},
+				minutes15: {
+					key: 900,
+					value: "15 minutes before"
+				},
+				minutes30: {
+					key: 1800,
+					value: "30 minutes before"
+				},
+				hour1: {
+					key: 3600,
+					value: "1 hour before"
+				},
+				hours2: {
+					key: 7200,
+					value: "2 hours before"
+				},
+				hours3: {
+					key: 10800,
+					value: "3 hours before"
+				},
+				hours6: {
+					key: 21600,
+					value: "6 hours before"
+				},
+				hours12: {
+					key: 43200,
+					value: "12 hours before"
+				},
+				day1: {
+					key: 86400,
+					value: "1 day before"
+				},
+				day2: {
+					key: 172800,
+					value: "2 days before"
+				},
+				day3: {
+					key: 259200,
+					value: "3 days before"
+				},
+				day4: {
+					key: 345600,
+					value: "4 days before"
+				},
+				day5: {
+					key: 432000,
+					value: "5 days before"
+				},
+				day6: {
+					key: 518400,
+					value: "6 days before"
+				},
+				week1: {
+					key: 604800,
+					value: "1 week before"
+				}
+			}
 		},
 		deleteAppointmentDialog: {
 			headline: "Delete appointment",
@@ -230,7 +293,70 @@ const deDefaults = {
 			createHeadline: "Termin erstellen",
 			editHeadline: "Termin bearbeiten",
 			nameTextfieldLabel: "Name",
-			allDayCheckboxLabel: "Ganztägig"
+			allDayCheckboxLabel: "Ganztägig",
+			reminderCheckboxLabel: "Erinnerung aktivieren",
+			reminderOptions: {
+				minutes0: {
+					key: 0,
+					value: "0 Minuten vorher"
+				},
+				minutes15: {
+					key: 900,
+					value: "15 Minuten vorher"
+				},
+				minutes30: {
+					key: 1800,
+					value: "30 Minuten vorher"
+				},
+				hour1: {
+					key: 3600,
+					value: "1 Stunde vorher"
+				},
+				hours2: {
+					key: 7200,
+					value: "2 Stunden vorher"
+				},
+				hours3: {
+					key: 10800,
+					value: "3 Stunden vorher"
+				},
+				hours6: {
+					key: 21600,
+					value: "6 Stunden vorher"
+				},
+				hours12: {
+					key: 43200,
+					value: "12 Stunden vorher"
+				},
+				day1: {
+					key: 86400,
+					value: "1 Tag vorher"
+				},
+				day2: {
+					key: 172800,
+					value: "2 Tage vorher"
+				},
+				day3: {
+					key: 259200,
+					value: "3 Tage vorher"
+				},
+				day4: {
+					key: 345600,
+					value: "4 Tage vorher"
+				},
+				day5: {
+					key: 432000,
+					value: "5 Tage vorher"
+				},
+				day6: {
+					key: 518400,
+					value: "6 Tage vorher"
+				},
+				week1: {
+					key: 604800,
+					value: "1 Woche vorher"
+				}
+			}
 		},
 		deleteAppointmentDialog: {
 			headline: "Termin löschen",

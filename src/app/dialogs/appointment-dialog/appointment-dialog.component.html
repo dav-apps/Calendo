@@ -59,5 +59,21 @@
 				></dav-time-picker>
 			</div>
 		</div>
+
+		<div class="reminder-container">
+			<dav-checkbox
+				[label]="locale.reminderCheckboxLabel"
+				[checked]="activateReminder"
+				(change)="reminderCheckboxChange($event)"
+			></dav-checkbox>
+
+			<dav-dropdown
+				[options]="reminderDropdownOptions"
+				[selectedKey]="reminderDropdownSelectedKey"
+				position="top"
+				[disabled]="!activateReminder"
+				(change)="reminderDropdownChange($event)"
+			></dav-dropdown>
+		</div>
 	</form>
 </dav-dialog>
