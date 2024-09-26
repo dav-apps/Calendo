@@ -546,6 +546,8 @@ export class OverviewPageComponent {
 		startTimeMinute: number
 		endTimeHour: number
 		endTimeMinute: number
+		activateReminder: boolean
+		reminderSecondsBefore: number
 	}) {
 		if (event.name.length == 0) {
 			this.createAppointmentDialog.nameError = this.errorsLocale.nameMissing

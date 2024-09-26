@@ -8,6 +8,7 @@ import {
 } from "@angular/core"
 import { DateTime } from "luxon"
 import { Dialog, DropdownOption, DropdownOptionType } from "dav-ui-components"
+import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { randomNumber } from "src/app/utils"
 
@@ -82,7 +83,10 @@ export class AppointmentDialogComponent {
 	]
 	reminderDropdownOptions: DropdownOption[] = []
 
-	constructor(private localizationService: LocalizationService) {
+	constructor(
+		public dataService: DataService,
+		private localizationService: LocalizationService
+	) {
 		if (this.reminderDropdownOptions.length == 0) {
 			for (let reminderOption of Object.values(
 				this.locale.reminderOptions
@@ -182,7 +186,10 @@ export class AppointmentDialogComponent {
 			startTimeHour: this.startTimeHour,
 			startTimeMinute: this.startTimeMinute,
 			endTimeHour: this.endTimeHour,
-			endTimeMinute: this.endTimeMinute
+			endTimeMinute: this.endTimeMinute,
+			activateReminder:
+				this.activateReminder && this.dataService.dav.isLoggedIn,
+			reminderSecondsBefore: Number(this.reminderDropdownSelectedKey)
 		})
 	}
 
