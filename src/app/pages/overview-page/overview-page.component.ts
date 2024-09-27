@@ -446,9 +446,14 @@ export class OverviewPageComponent {
 		this.createAppointmentDialog.show()
 	}
 
-	showEditAppointmentDialog(appointment: Appointment) {
+	async showEditAppointmentDialog(appointment: Appointment) {
 		let startDate = DateTime.fromSeconds(appointment.start)
 		let endDate = DateTime.fromSeconds(appointment.end)
+		let notification: Notification = null
+
+		if (appointment.notificationUuid != null) {
+			notification = await GetNotification(appointment.notificationUuid)
+		}
 
 		this.selectedAppointment = appointment
 		this.appointmentContextMenuVisible = false
@@ -460,6 +465,15 @@ export class OverviewPageComponent {
 		this.editAppointmentDialog.startTimeMinute = startDate.minute
 		this.editAppointmentDialog.endTimeHour = endDate.hour
 		this.editAppointmentDialog.endTimeMinute = endDate.minute
+		this.editAppointmentDialog.activateReminder = notification != null
+
+		if (notification != null) {
+			this.editAppointmentDialog.reminderDropdownSelectedKey = (
+				startDate.toUnixInteger() - notification.Time
+			).toString()
+		} else {
+			this.editAppointmentDialog.reminderDropdownSelectedKey = "3600"
+		}
 
 		this.editAppointmentDialog.show()
 	}
