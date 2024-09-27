@@ -1,3 +1,4 @@
+import { DateTime } from "luxon"
 import { Appointment } from "./models/Appointment"
 import { Todo } from "./models/Todo"
 import { TodoList } from "./models/TodoList"
@@ -111,4 +112,21 @@ export function bytesToGigabytesText(bytes: number, rounding: number): string {
 
 export function randomNumber(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+export function getNotificationPermission(): NotificationPermission {
+	return Notification.permission
+}
+
+export function generateAppointmentNotificationBody(
+	start: DateTime,
+	end: DateTime,
+	allDay: boolean,
+	fullDayEventString: string
+): string {
+	if (allDay) {
+		return `${fullDayEventString}, ${start.toFormat("DDD")}`
+	} else {
+		return `${start.toFormat("T")} - ${end.toFormat("T")}`
+	}
 }

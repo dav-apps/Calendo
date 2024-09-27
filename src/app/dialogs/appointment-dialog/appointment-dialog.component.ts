@@ -10,7 +10,7 @@ import { DateTime } from "luxon"
 import { Dialog, DropdownOption, DropdownOptionType } from "dav-ui-components"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
-import { randomNumber } from "src/app/utils"
+import { randomNumber, getNotificationPermission } from "src/app/utils"
 
 @Component({
 	selector: "calendo-appointment-dialog",
@@ -33,6 +33,7 @@ export class AppointmentDialogComponent {
 	startTimeMinute: number = 0
 	endTimeHour: number = 15
 	endTimeMinute: number = 0
+	showActivateReminderOption: boolean = false
 	activateReminder: boolean = true
 	visible: boolean = false
 	colorDropdownSelectedKey: string = ""
@@ -87,7 +88,17 @@ export class AppointmentDialogComponent {
 		public dataService: DataService,
 		private localizationService: LocalizationService
 	) {
-		if (this.reminderDropdownOptions.length == 0) {
+		// Check if push is supported
+		this.showActivateReminderOption =
+			"serviceWorker" in navigator &&
+			"PushManager" in window &&
+			this.dataService.dav.isLoggedIn &&
+			getNotificationPermission() != "denied"
+
+		if (
+			this.reminderDropdownOptions.length == 0 &&
+			this.showActivateReminderOption
+		) {
 			for (let reminderOption of Object.values(
 				this.locale.reminderOptions
 			)) {
@@ -188,7 +199,7 @@ export class AppointmentDialogComponent {
 			endTimeHour: this.endTimeHour,
 			endTimeMinute: this.endTimeMinute,
 			activateReminder:
-				this.activateReminder && this.dataService.dav.isLoggedIn,
+				this.activateReminder && this.showActivateReminderOption,
 			reminderSecondsBefore: Number(this.reminderDropdownSelectedKey)
 		})
 	}

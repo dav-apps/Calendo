@@ -62,7 +62,7 @@
 			</div>
 		</div>
 
-		@if (dataService.dav.isLoggedIn) {
+		@if (showActivateReminderOption) {
 		<div class="reminder-container">
 			<dav-checkbox
 				[label]="locale.reminderCheckboxLabel"

@@ -9,6 +9,7 @@ import {
 	faCircleCheck,
 	faListCheck
 } from "@fortawesome/pro-light-svg-icons"
+import { Notification, GetNotification, SetupWebPushSubscription } from "dav-js"
 import { ContextMenu } from "dav-ui-components"
 import { Appointment } from "src/app/models/Appointment"
 import { Todo } from "src/app/models/Todo"
@@ -18,7 +19,12 @@ import { TodoDialogComponent } from "src/app/dialogs/todo-dialog/todo-dialog.com
 import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appointment-dialog/delete-appointment-dialog.component"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
-import { sortAppointments, sortTodos, sortTodoLists } from "src/app/utils"
+import {
+	sortAppointments,
+	sortTodos,
+	sortTodoLists,
+	generateAppointmentNotificationBody
+} from "src/app/utils"
 import { StartDay } from "src/app/types"
 
 @Component({
@@ -29,6 +35,7 @@ export class OverviewPageComponent {
 	locale = this.localizationService.locale.overviewPage
 	actionsLocale = this.localizationService.locale.actions
 	errorsLocale = this.localizationService.locale.errors
+	miscLocale = this.localizationService.locale.misc
 	faArrowRight = faArrowRight
 	faPlus = faPlus
 	faEdit = faEdit
@@ -568,12 +575,37 @@ export class OverviewPageComponent {
 			endTime = endTime.plus({ days: 1 })
 		}
 
+		let notificationUuid = null
+
+		if (event.activateReminder && (await SetupWebPushSubscription())) {
+			let reminderTime = startTime.minus({
+				seconds: event.reminderSecondsBefore
+			})
+
+			// Create the notification
+			let notification = new Notification({
+				Time: reminderTime.toUnixInteger(),
+				Interval: 0,
+				Title: event.name,
+				Body: generateAppointmentNotificationBody(
+					startTime,
+					endTime,
+					event.allDay,
+					this.miscLocale.fullDayEvent
+				)
+			})
+
+			await notification.Save()
+			notificationUuid = notification.Uuid
+		}
+
 		let appointment = await Appointment.Create(
 			event.name,
 			startTime.toUnixInteger(),
 			endTime.toUnixInteger(),
 			event.allDay,
-			event.color
+			event.color,
+			notificationUuid
 		)
 
 		this.addAppointment(appointment)

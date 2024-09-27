@@ -190,7 +190,8 @@ const enDefaults = {
 		overview: "Overview",
 		calendar: "Calendar",
 		todos: "Todos",
-		appointments: "Appointments"
+		appointments: "Appointments",
+		fullDayEvent: "Full day event"
 	}
 }
 
@@ -403,7 +404,8 @@ const deDefaults = {
 		overview: "Übersicht",
 		calendar: "Kalender",
 		todos: "Todos",
-		appointments: "Termine"
+		appointments: "Termine",
+		fullDayEvent: "Ganztägiger Termin"
 	}
 }
 
