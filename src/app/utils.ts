@@ -4,7 +4,7 @@ import { Appointment } from "./models/Appointment"
 import { Todo } from "./models/Todo"
 import { TodoList } from "./models/TodoList"
 import { AppointmentDialogComponent } from "./dialogs/appointment-dialog/appointment-dialog.component"
-import { Theme, TodoDay } from "./types"
+import { Theme, TodoDay, AppointmentDialogEventData } from "./types"
 import { lightThemeKey, darkThemeKey } from "./constants"
 
 export function sortAppointments(appointments: Appointment[]) {
@@ -164,4 +164,77 @@ export async function showEditAppointmentDialog(
 	}
 
 	editAppointmentDialog.show()
+}
+
+export async function updateAppointment(
+	event: AppointmentDialogEventData,
+	appointment: Appointment,
+	fullDayEventString: string
+) {
+	let startTime = event.date.set({
+		hour: event.startTimeHour,
+		minute: event.startTimeMinute
+	})
+
+	let endTime = event.date.set({
+		hour: event.endTimeHour,
+		minute: event.endTimeMinute
+	})
+
+	let notification: DavNotification = null
+
+	if (appointment.notificationUuid != null) {
+		notification = await GetNotification(appointment.notificationUuid)
+	}
+
+	if (!event.activateReminder && notification != null) {
+		await notification.Delete()
+		notification = null
+	} else if (event.activateReminder) {
+		let reminderTime = startTime.minus({
+			seconds: event.reminderSecondsBefore
+		})
+
+		if (appointment.notificationUuid == null) {
+			// Create a new notification
+			notification = new DavNotification({
+				Time: reminderTime.toUnixInteger(),
+				Interval: 0,
+				Title: event.name,
+				Body: generateAppointmentNotificationBody(
+					startTime,
+					endTime,
+					event.allDay,
+					fullDayEventString
+				)
+			})
+
+			await notification.Save()
+		} else if (notification != null) {
+			// Update the existing notification
+			notification = await GetNotification(appointment.notificationUuid)
+
+			if (notification != null) {
+				notification.Title = event.name
+				notification.Time = reminderTime.toUnixInteger()
+				notification.Body = generateAppointmentNotificationBody(
+					startTime,
+					endTime,
+					event.allDay,
+					fullDayEventString
+				)
+
+				await notification.Save()
+			}
+		}
+	}
+
+	await appointment.Update(
+		event.name,
+		startTime.toUnixInteger(),
+		endTime.toUnixInteger(),
+		event.allDay,
+		event.color,
+		notification?.Uuid
+	)
 }

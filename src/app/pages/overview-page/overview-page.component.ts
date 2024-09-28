@@ -9,7 +9,7 @@ import {
 	faCircleCheck,
 	faListCheck
 } from "@fortawesome/pro-light-svg-icons"
-import { Notification, GetNotification, SetupWebPushSubscription } from "dav-js"
+import { Notification } from "dav-js"
 import { ContextMenu } from "dav-ui-components"
 import { Appointment } from "src/app/models/Appointment"
 import { Todo } from "src/app/models/Todo"
@@ -24,7 +24,8 @@ import {
 	sortTodos,
 	sortTodoLists,
 	generateAppointmentNotificationBody,
-	showEditAppointmentDialog
+	showEditAppointmentDialog,
+	updateAppointment
 } from "src/app/utils"
 import {
 	StartDay,
@@ -600,73 +601,8 @@ export class OverviewPageComponent {
 			return
 		}
 
-		let startTime = event.date.set({
-			hour: event.startTimeHour,
-			minute: event.startTimeMinute
-		})
-
-		let endTime = event.date.set({
-			hour: event.endTimeHour,
-			minute: event.endTimeMinute
-		})
-
 		let appointment = this.selectedAppointment
-		let notification: Notification = null
-
-		if (appointment.notificationUuid != null) {
-			notification = await GetNotification(appointment.notificationUuid)
-		}
-
-		if (!event.activateReminder && notification != null) {
-			await notification.Delete()
-			notification = null
-		} else if (event.activateReminder && (await SetupWebPushSubscription())) {
-			let reminderTime = startTime.minus({
-				seconds: event.reminderSecondsBefore
-			})
-
-			if (appointment.notificationUuid == null) {
-				// Create a new notification
-				notification = new Notification({
-					Time: reminderTime.toUnixInteger(),
-					Interval: 0,
-					Title: event.name,
-					Body: generateAppointmentNotificationBody(
-						startTime,
-						endTime,
-						event.allDay,
-						this.miscLocale.fullDayEvent
-					)
-				})
-
-				await notification.Save()
-			} else if (notification != null) {
-				// Update the existing notification
-				notification = await GetNotification(appointment.notificationUuid)
-
-				if (notification != null) {
-					notification.Title = event.name
-					notification.Time = reminderTime.toUnixInteger()
-					notification.Body = generateAppointmentNotificationBody(
-						startTime,
-						endTime,
-						event.allDay,
-						this.miscLocale.fullDayEvent
-					)
-
-					await notification.Save()
-				}
-			}
-		}
-
-		await appointment.Update(
-			event.name,
-			startTime.toUnixInteger(),
-			endTime.toUnixInteger(),
-			event.allDay,
-			event.color,
-			notification?.Uuid
-		)
+		await updateAppointment(event, appointment, this.miscLocale.fullDayEvent)
 
 		this.addAppointment(appointment)
 		this.editAppointmentDialog.hide()

@@ -22,7 +22,8 @@ import {
 	sortAppointments,
 	sortTodos,
 	sortTodoLists,
-	showEditAppointmentDialog
+	showEditAppointmentDialog,
+	updateAppointment
 } from "src/app/utils"
 import { AppointmentDialogEventData, TodoDialogEventData } from "src/app/types"
 
@@ -34,6 +35,7 @@ export class CalendarDayPageComponent {
 	locale = this.localizationService.locale.calendarDayPage
 	actionsLocale = this.localizationService.locale.actions
 	errorsLocale = this.localizationService.locale.errors
+	miscLocale = this.localizationService.locale.misc
 	faPlus = faPlus
 	faEdit = faEdit
 	faTrash = faTrash
@@ -257,26 +259,8 @@ export class CalendarDayPageComponent {
 			return
 		}
 
-		let startTime = event.date.set({
-			hour: event.startTimeHour,
-			minute: event.startTimeMinute
-		})
-
-		let endTime = event.date.set({
-			hour: event.endTimeHour,
-			minute: event.endTimeMinute
-		})
-
 		let appointment = this.selectedAppointment
-
-		await appointment.Update(
-			event.name,
-			startTime.toUnixInteger(),
-			endTime.toUnixInteger(),
-			event.allDay,
-			event.color,
-			null
-		)
+		await updateAppointment(event, appointment, this.miscLocale.fullDayEvent)
 
 		let i = this.appointments.findIndex(a => a.uuid == appointment.uuid)
 		if (i != -1) this.appointments[i] = appointment

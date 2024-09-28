@@ -8,7 +8,11 @@ import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appoint
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { Appointment } from "src/app/models/Appointment"
-import { sortAppointments, showEditAppointmentDialog } from "src/app/utils"
+import {
+	sortAppointments,
+	showEditAppointmentDialog,
+	updateAppointment
+} from "src/app/utils"
 import { AppointmentDay, AppointmentDialogEventData } from "src/app/types"
 
 @Component({
@@ -19,6 +23,7 @@ export class AppointmentsPageComponent {
 	locale = this.localizationService.locale.appointmentsPage
 	actionsLocale = this.localizationService.locale.actions
 	errorsLocale = this.localizationService.locale.errors
+	miscLocale = this.localizationService.locale.misc
 	faEdit = faEdit
 	faTrash = faTrash
 	faArrowRight = faArrowRight
@@ -207,26 +212,8 @@ export class AppointmentsPageComponent {
 			return
 		}
 
-		let startTime = event.date.set({
-			hour: event.startTimeHour,
-			minute: event.startTimeMinute
-		})
-
-		let endTime = event.date.set({
-			hour: event.endTimeHour,
-			minute: event.endTimeMinute
-		})
-
 		let appointment = this.selectedAppointment
-
-		await appointment.Update(
-			event.name,
-			startTime.toUnixInteger(),
-			endTime.toUnixInteger(),
-			event.allDay,
-			event.color,
-			null
-		)
+		await updateAppointment(event, appointment, this.miscLocale.fullDayEvent)
 
 		this.removeAppointment(appointment)
 		this.addAppointment(appointment)
