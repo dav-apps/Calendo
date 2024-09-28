@@ -88,7 +88,11 @@ export class AppointmentDialogComponent {
 	constructor(
 		public dataService: DataService,
 		private localizationService: LocalizationService
-	) {
+	) {}
+
+	async ngOnInit() {
+		await this.dataService.userPromiseHolder.AwaitResult()
+
 		// Check if push is supported
 		this.showActivateReminderOption =
 			"serviceWorker" in navigator &&
