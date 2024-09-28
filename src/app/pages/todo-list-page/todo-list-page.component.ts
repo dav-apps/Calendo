@@ -17,6 +17,7 @@ import { Todo } from "src/app/models/Todo"
 import { TodoList, GetTodoList } from "src/app/models/TodoList"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
+import { TodoDialogEventData } from "src/app/types"
 
 @Component({
 	templateUrl: "./todo-list-page.component.html",
@@ -211,11 +212,7 @@ export class TodoListPageComponent {
 		}
 	}
 
-	async updateTodoList(event: {
-		name: string
-		date: DateTime
-		labels: string[]
-	}) {
+	async updateTodoList(event: TodoDialogEventData) {
 		if (event.date != null) {
 			this.date = DateTime.fromSeconds(this.todoList.time).toFormat("DD")
 		}

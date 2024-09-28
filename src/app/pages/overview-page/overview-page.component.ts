@@ -26,7 +26,11 @@ import {
 	generateAppointmentNotificationBody,
 	showEditAppointmentDialog
 } from "src/app/utils"
-import { StartDay, AppointmentDialogEventData } from "src/app/types"
+import {
+	StartDay,
+	AppointmentDialogEventData,
+	TodoDialogEventData
+} from "src/app/types"
 
 @Component({
 	templateUrl: "./overview-page.component.html",
@@ -488,7 +492,7 @@ export class OverviewPageComponent {
 		return date.toFormat(date.diffNow("days").days > 6 ? "EEEE" : "D")
 	}
 
-	async createTodo(event: { name: string; date: DateTime; labels: string[] }) {
+	async createTodo(event: TodoDialogEventData) {
 		if (event.name.length == 0) {
 			this.createTodoDialog.nameError = this.errorsLocale.nameMissing
 			return
@@ -508,11 +512,7 @@ export class OverviewPageComponent {
 		this.dataService.todosChanged = true
 	}
 
-	async createTodoList(event: {
-		name: string
-		date: DateTime
-		labels: string[]
-	}) {
+	async createTodoList(event: TodoDialogEventData) {
 		if (event.name.length == 0) {
 			this.createTodoListDialog.nameError = this.errorsLocale.nameMissing
 			return

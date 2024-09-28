@@ -15,7 +15,7 @@ import { TodoDialogComponent } from "src/app/dialogs/todo-dialog/todo-dialog.com
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { SettingsService } from "src/app/services/settings-service"
-import { TodoDay, TodoGroup } from "src/app/types"
+import { TodoDay, TodoGroup, TodoDialogEventData } from "src/app/types"
 import { sortTodoDays } from "src/app/utils"
 
 @Component({
@@ -241,7 +241,7 @@ export class TodosPageComponent {
 		this.createTodoListDialog.show()
 	}
 
-	async createTodo(event: { name: string; date: DateTime; labels: string[] }) {
+	async createTodo(event: TodoDialogEventData) {
 		if (event.name.length == 0) {
 			this.createTodoDialog.nameError = this.errorsLocale.nameMissing
 			return
@@ -260,11 +260,7 @@ export class TodosPageComponent {
 		this.dataService.todosChanged = true
 	}
 
-	async createTodoList(event: {
-		name: string
-		date: DateTime
-		labels: string[]
-	}) {
+	async createTodoList(event: TodoDialogEventData) {
 		if (event.name.length == 0) {
 			this.createTodoListDialog.nameError = this.errorsLocale.nameMissing
 			return

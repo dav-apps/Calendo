@@ -24,7 +24,7 @@ import {
 	sortTodoLists,
 	showEditAppointmentDialog
 } from "src/app/utils"
-import { AppointmentDialogEventData } from "src/app/types"
+import { AppointmentDialogEventData, TodoDialogEventData } from "src/app/types"
 
 @Component({
 	templateUrl: "./calendar-day-page.component.html",
@@ -286,7 +286,7 @@ export class CalendarDayPageComponent {
 		this.dataService.appointmentsChanged = true
 	}
 
-	async createTodo(event: { name: string; date: DateTime; labels: string[] }) {
+	async createTodo(event: TodoDialogEventData) {
 		if (event.name.length == 0) {
 			this.createTodoDialog.nameError = this.errorsLocale.nameMissing
 			return
@@ -307,11 +307,7 @@ export class CalendarDayPageComponent {
 		this.dataService.todosChanged = true
 	}
 
-	async createTodoList(event: {
-		name: string
-		date: DateTime
-		labels: string[]
-	}) {
+	async createTodoList(event: TodoDialogEventData) {
 		if (event.name.length == 0) {
 			this.createTodoListDialog.nameError = this.errorsLocale.nameMissing
 			return

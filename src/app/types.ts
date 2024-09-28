@@ -73,3 +73,9 @@ export interface AppointmentDialogEventData {
 	activateReminder: boolean
 	reminderSecondsBefore: number
 }
+
+export interface TodoDialogEventData {
+	name: string
+	date: DateTime
+	labels: string[]
+}

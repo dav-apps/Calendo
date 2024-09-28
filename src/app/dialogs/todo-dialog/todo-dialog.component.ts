@@ -10,6 +10,7 @@ import { DateTime } from "luxon"
 import { faPlus } from "@fortawesome/pro-light-svg-icons"
 import { Dialog } from "dav-ui-components"
 import { LocalizationService } from "src/app/services/localization-service"
+import { TodoDialogEventData } from "src/app/types"
 
 @Component({
 	selector: "calendo-todo-dialog",
@@ -23,7 +24,7 @@ export class TodoDialogComponent {
 	@Input() loading: boolean = false
 	@Input() mode: "createTodo" | "createTodoList" | "editTodoList" =
 		"createTodo"
-	@Output() primaryButtonClick = new EventEmitter()
+	@Output() primaryButtonClick = new EventEmitter<TodoDialogEventData>()
 	@ViewChild("dialog") dialog: ElementRef<Dialog>
 	name: string = ""
 	nameError: string = ""
