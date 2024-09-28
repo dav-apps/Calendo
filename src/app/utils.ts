@@ -1,7 +1,9 @@
 import { DateTime } from "luxon"
+import { Notification as DavNotification, GetNotification } from "dav-js"
 import { Appointment } from "./models/Appointment"
 import { Todo } from "./models/Todo"
 import { TodoList } from "./models/TodoList"
+import { AppointmentDialogComponent } from "./dialogs/appointment-dialog/appointment-dialog.component"
 import { Theme, TodoDay } from "./types"
 import { lightThemeKey, darkThemeKey } from "./constants"
 
@@ -129,4 +131,37 @@ export function generateAppointmentNotificationBody(
 	} else {
 		return `${start.toFormat("T")} - ${end.toFormat("T")}`
 	}
+}
+
+export async function showEditAppointmentDialog(
+	appointment: Appointment,
+	editAppointmentDialog: AppointmentDialogComponent
+) {
+	let startDate = DateTime.fromSeconds(appointment.start)
+	let endDate = DateTime.fromSeconds(appointment.end)
+	let notification: DavNotification = null
+
+	if (appointment.notificationUuid != null) {
+		notification = await GetNotification(appointment.notificationUuid)
+	}
+
+	editAppointmentDialog.name = appointment.name
+	editAppointmentDialog.date = startDate
+	editAppointmentDialog.selectedColor = appointment.color
+	editAppointmentDialog.allDay = appointment.allday
+	editAppointmentDialog.startTimeHour = startDate.hour
+	editAppointmentDialog.startTimeMinute = startDate.minute
+	editAppointmentDialog.endTimeHour = endDate.hour
+	editAppointmentDialog.endTimeMinute = endDate.minute
+	editAppointmentDialog.activateReminder = notification != null
+
+	if (notification != null) {
+		editAppointmentDialog.reminderDropdownSelectedKey = (
+			startDate.toUnixInteger() - notification.Time
+		).toString()
+	} else {
+		editAppointmentDialog.reminderDropdownSelectedKey = "3600"
+	}
+
+	editAppointmentDialog.show()
 }

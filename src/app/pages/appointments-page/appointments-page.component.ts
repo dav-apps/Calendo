@@ -8,7 +8,7 @@ import { DeleteAppointmentDialogComponent } from "src/app/dialogs/delete-appoint
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { Appointment } from "src/app/models/Appointment"
-import { sortAppointments } from "src/app/utils"
+import { sortAppointments, showEditAppointmentDialog } from "src/app/utils"
 import { AppointmentDay } from "src/app/types"
 
 @Component({
@@ -260,21 +260,10 @@ export class AppointmentsPageComponent {
 	}
 
 	showEditAppointmentDialog(appointment: Appointment) {
-		let startDate = DateTime.fromSeconds(appointment.start)
-		let endDate = DateTime.fromSeconds(appointment.end)
-
 		this.selectedAppointment = appointment
 		this.contextMenuVisible = false
-		this.editAppointmentDialog.name = appointment.name
-		this.editAppointmentDialog.date = startDate
-		this.editAppointmentDialog.selectedColor = appointment.color
-		this.editAppointmentDialog.allDay = appointment.allday
-		this.editAppointmentDialog.startTimeHour = startDate.hour
-		this.editAppointmentDialog.startTimeMinute = startDate.minute
-		this.editAppointmentDialog.endTimeHour = endDate.hour
-		this.editAppointmentDialog.endTimeMinute = endDate.minute
 
-		this.editAppointmentDialog.show()
+		showEditAppointmentDialog(appointment, this.editAppointmentDialog)
 	}
 
 	showDeleteAppointmentDialog(appointment: Appointment) {

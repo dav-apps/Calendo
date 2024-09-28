@@ -23,7 +23,8 @@ import {
 	sortAppointments,
 	sortTodos,
 	sortTodoLists,
-	generateAppointmentNotificationBody
+	generateAppointmentNotificationBody,
+	showEditAppointmentDialog
 } from "src/app/utils"
 import { StartDay } from "src/app/types"
 
@@ -447,35 +448,10 @@ export class OverviewPageComponent {
 	}
 
 	async showEditAppointmentDialog(appointment: Appointment) {
-		let startDate = DateTime.fromSeconds(appointment.start)
-		let endDate = DateTime.fromSeconds(appointment.end)
-		let notification: Notification = null
-
-		if (appointment.notificationUuid != null) {
-			notification = await GetNotification(appointment.notificationUuid)
-		}
-
 		this.selectedAppointment = appointment
 		this.appointmentContextMenuVisible = false
-		this.editAppointmentDialog.name = appointment.name
-		this.editAppointmentDialog.date = startDate
-		this.editAppointmentDialog.selectedColor = appointment.color
-		this.editAppointmentDialog.allDay = appointment.allday
-		this.editAppointmentDialog.startTimeHour = startDate.hour
-		this.editAppointmentDialog.startTimeMinute = startDate.minute
-		this.editAppointmentDialog.endTimeHour = endDate.hour
-		this.editAppointmentDialog.endTimeMinute = endDate.minute
-		this.editAppointmentDialog.activateReminder = notification != null
 
-		if (notification != null) {
-			this.editAppointmentDialog.reminderDropdownSelectedKey = (
-				startDate.toUnixInteger() - notification.Time
-			).toString()
-		} else {
-			this.editAppointmentDialog.reminderDropdownSelectedKey = "3600"
-		}
-
-		this.editAppointmentDialog.show()
+		await showEditAppointmentDialog(appointment, this.editAppointmentDialog)
 	}
 
 	showDeleteAppointmentDialog(appointment: Appointment) {

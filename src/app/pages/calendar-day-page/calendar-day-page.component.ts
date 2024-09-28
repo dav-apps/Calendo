@@ -18,7 +18,12 @@ import { Todo } from "src/app/models/Todo"
 import { TodoList } from "src/app/models/TodoList"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
-import { sortAppointments, sortTodos, sortTodoLists } from "src/app/utils"
+import {
+	sortAppointments,
+	sortTodos,
+	sortTodoLists,
+	showEditAppointmentDialog
+} from "src/app/utils"
 
 @Component({
 	templateUrl: "./calendar-day-page.component.html",
@@ -167,22 +172,11 @@ export class CalendarDayPageComponent {
 		this.createAppointmentDialog.show()
 	}
 
-	showEditAppointmentDialog(appointment: Appointment) {
-		let startDate = DateTime.fromSeconds(appointment.start)
-		let endDate = DateTime.fromSeconds(appointment.end)
-
+	async showEditAppointmentDialog(appointment: Appointment) {
 		this.selectedAppointment = appointment
 		this.appointmentContextMenuVisible = false
-		this.editAppointmentDialog.name = appointment.name
-		this.editAppointmentDialog.date = startDate
-		this.editAppointmentDialog.selectedColor = appointment.color
-		this.editAppointmentDialog.allDay = appointment.allday
-		this.editAppointmentDialog.startTimeHour = startDate.hour
-		this.editAppointmentDialog.startTimeMinute = startDate.minute
-		this.editAppointmentDialog.endTimeHour = endDate.hour
-		this.editAppointmentDialog.endTimeMinute = endDate.minute
 
-		this.editAppointmentDialog.show()
+		await showEditAppointmentDialog(appointment, this.editAppointmentDialog)
 	}
 
 	showDeleteAppointmentDialog(appointment: Appointment) {
