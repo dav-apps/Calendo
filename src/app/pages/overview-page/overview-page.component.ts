@@ -9,7 +9,6 @@ import {
 	faCircleCheck,
 	faListCheck
 } from "@fortawesome/pro-light-svg-icons"
-import { Notification } from "dav-js"
 import { ContextMenu } from "dav-ui-components"
 import { Appointment } from "src/app/models/Appointment"
 import { Todo } from "src/app/models/Todo"
@@ -23,8 +22,8 @@ import {
 	sortAppointments,
 	sortTodos,
 	sortTodoLists,
-	generateAppointmentNotificationBody,
 	showEditAppointmentDialog,
+	createAppointment,
 	updateAppointment
 } from "src/app/utils"
 import {
@@ -541,51 +540,9 @@ export class OverviewPageComponent {
 			return
 		}
 
-		let startTime = event.date.set({
-			hour: event.startTimeHour,
-			minute: event.startTimeMinute
-		})
-
-		let endTime = event.date.set({
-			hour: event.endTimeHour,
-			minute: event.endTimeMinute
-		})
-
-		if (endTime < startTime) {
-			endTime = endTime.plus({ days: 1 })
-		}
-
-		let notificationUuid = null
-
-		if (event.activateReminder && (await SetupWebPushSubscription())) {
-			let reminderTime = startTime.minus({
-				seconds: event.reminderSecondsBefore
-			})
-
-			// Create the notification
-			let notification = new Notification({
-				Time: reminderTime.toUnixInteger(),
-				Interval: 0,
-				Title: event.name,
-				Body: generateAppointmentNotificationBody(
-					startTime,
-					endTime,
-					event.allDay,
-					this.miscLocale.fullDayEvent
-				)
-			})
-
-			await notification.Save()
-			notificationUuid = notification.Uuid
-		}
-
-		let appointment = await Appointment.Create(
-			event.name,
-			startTime.toUnixInteger(),
-			endTime.toUnixInteger(),
-			event.allDay,
-			event.color,
-			notificationUuid
+		let appointment = await createAppointment(
+			event,
+			this.miscLocale.fullDayEvent
 		)
 
 		this.addAppointment(appointment)

@@ -11,6 +11,7 @@ import { Appointment } from "src/app/models/Appointment"
 import {
 	sortAppointments,
 	showEditAppointmentDialog,
+	createAppointment,
 	updateAppointment
 } from "src/app/utils"
 import { AppointmentDay, AppointmentDialogEventData } from "src/app/types"
@@ -178,26 +179,9 @@ export class AppointmentsPageComponent {
 			return
 		}
 
-		let startTime = event.date.set({
-			hour: event.startTimeHour,
-			minute: event.startTimeMinute
-		})
-
-		let endTime = event.date.set({
-			hour: event.endTimeHour,
-			minute: event.endTimeMinute
-		})
-
-		if (endTime < startTime) {
-			endTime = endTime.plus({ days: 1 })
-		}
-
-		let appointment = await Appointment.Create(
-			event.name,
-			startTime.toUnixInteger(),
-			endTime.toUnixInteger(),
-			event.allDay,
-			event.color
+		let appointment = await createAppointment(
+			event,
+			this.miscLocale.fullDayEvent
 		)
 
 		this.addAppointment(appointment)

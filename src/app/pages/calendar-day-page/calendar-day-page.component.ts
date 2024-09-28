@@ -23,6 +23,7 @@ import {
 	sortTodos,
 	sortTodoLists,
 	showEditAppointmentDialog,
+	createAppointment,
 	updateAppointment
 } from "src/app/utils"
 import { AppointmentDialogEventData, TodoDialogEventData } from "src/app/types"
@@ -223,33 +224,15 @@ export class CalendarDayPageComponent {
 			return
 		}
 
-		let startTime = event.date.set({
-			hour: event.startTimeHour,
-			minute: event.startTimeMinute
-		})
-
-		let endTime = event.date.set({
-			hour: event.endTimeHour,
-			minute: event.endTimeMinute
-		})
-
-		if (endTime < startTime) {
-			endTime = endTime.plus({ days: 1 })
-		}
-
-		let appointment = await Appointment.Create(
-			event.name,
-			startTime.toUnixInteger(),
-			endTime.toUnixInteger(),
-			event.allDay,
-			event.color
+		let appointment = await createAppointment(
+			event,
+			this.miscLocale.fullDayEvent
 		)
 
 		this.appointments.push(appointment)
 		sortAppointments(this.appointments)
 
 		this.createAppointmentDialog.hide()
-
 		this.dataService.appointmentsChanged = true
 	}
 

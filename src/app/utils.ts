@@ -1,5 +1,9 @@
 import { DateTime } from "luxon"
-import { Notification as DavNotification, GetNotification } from "dav-js"
+import {
+	Notification as DavNotification,
+	GetNotification,
+	SetupWebPushSubscription
+} from "dav-js"
 import { Appointment } from "./models/Appointment"
 import { Todo } from "./models/Todo"
 import { TodoList } from "./models/TodoList"
@@ -164,6 +168,58 @@ export async function showEditAppointmentDialog(
 	}
 
 	editAppointmentDialog.show()
+}
+
+export async function createAppointment(
+	event: AppointmentDialogEventData,
+	fullDayEventString: string
+) {
+	let startTime = event.date.set({
+		hour: event.startTimeHour,
+		minute: event.startTimeMinute
+	})
+
+	let endTime = event.date.set({
+		hour: event.endTimeHour,
+		minute: event.endTimeMinute
+	})
+
+	if (endTime < startTime) {
+		endTime = endTime.plus({ days: 1 })
+	}
+
+	let notificationUuid = null
+
+	if (event.activateReminder && (await SetupWebPushSubscription())) {
+		let reminderTime = startTime.minus({
+			seconds: event.reminderSecondsBefore
+		})
+
+		// Create the notification
+		let notification = new DavNotification({
+			Time: reminderTime.toUnixInteger(),
+			Interval: 0,
+			Title: event.name,
+			Body: generateAppointmentNotificationBody(
+				startTime,
+				endTime,
+				event.allDay,
+				fullDayEventString
+			)
+		})
+
+		await notification.Save()
+		notificationUuid = notification.Uuid
+	}
+
+	return await Appointment.Create(
+		event.name,
+		startTime.toUnixInteger(),
+		endTime.toUnixInteger(),
+		event.allDay,
+		event.color,
+		notificationUuid
+	)
 }
 
 export async function updateAppointment(
