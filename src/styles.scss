@@ -441,6 +441,12 @@ body {
 	margin-bottom: calc(env(safe-area-inset-bottom));
 }
 
+@media screen and (max-width: 729px) {
+	::-webkit-scrollbar-track {
+		margin-bottom: calc(env(safe-area-inset-bottom) + 80px);
+	}
+}
+
 .hidden {
 	display: none;
 }
