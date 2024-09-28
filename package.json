@@ -30,7 +30,7 @@
     "@fortawesome/pro-solid-svg-icons": "^6.6.0",
     "@material/material-color-utilities": "^0.3.0",
     "core-js": "^2.5.4",
-    "dav-js": "git+https://github.com/dav-apps/dav-js.git#v2.7.2",
+    "dav-js": "git+https://github.com/dav-apps/dav-js.git#dev",
     "dav-ui-components": "git+https://github.com/dav-apps/dav-ui-components.git#v1.4",
     "localforage": "^1.10.0",
     "luxon": "^3.5.0",
@@ -55,9 +55,9 @@
   "overrides": {
     "ng2-dragula": {
       "@types/dragula": "^3.7.3",
-      "@angular/animations": "18.2.5",
-      "@angular/common": "18.2.5",
-      "@angular/core": "18.2.5"
+      "@angular/animations": "^18.2.5",
+      "@angular/common": "^18.2.5",
+      "@angular/core": "^18.2.5"
     }
   }
 }
