@@ -191,9 +191,17 @@ export async function createAppointment(
 	let notificationUuid = null
 
 	if (event.activateReminder && (await SetupWebPushSubscription())) {
-		let reminderTime = startTime.minus({
-			seconds: event.reminderSecondsBefore
-		})
+		let reminderTime = startTime
+
+		if (event.allDay) {
+			reminderTime = startTime.startOf("day").minus({
+				seconds: event.reminderSecondsBefore
+			})
+		} else {
+			reminderTime = startTime.minus({
+				seconds: event.reminderSecondsBefore
+			})
+		}
 
 		// Create the notification
 		let notification = new DavNotification({
