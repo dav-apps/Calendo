@@ -16,7 +16,7 @@ import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { SettingsService } from "src/app/services/settings-service"
 import { TodoDay, TodoGroup, TodoDialogEventData } from "src/app/types"
-import { sortTodoDays } from "src/app/utils"
+import { sortTodoDays, createTodo } from "src/app/utils"
 
 @Component({
 	templateUrl: "./todos-page.component.html",
@@ -45,6 +45,7 @@ import { sortTodoDays } from "src/app/utils"
 export class TodosPageComponent {
 	locale = this.localizationService.locale.todosPage
 	errorsLocale = this.localizationService.locale.errors
+	miscLocale = this.localizationService.locale.misc
 	faCircleCheck = faCircleCheck
 	faListCheck = faListCheck
 	faArrowRight = faArrowRight
@@ -247,12 +248,7 @@ export class TodosPageComponent {
 			return
 		}
 
-		let todo = await Todo.Create(
-			event.name,
-			false,
-			event.date?.toUnixInteger(),
-			event.labels
-		)
+		let todo = await createTodo(event, this.miscLocale.todoNotificationTitle)
 
 		this.addTodo(todo)
 		this.createTodoDialog.hide()

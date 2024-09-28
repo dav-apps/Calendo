@@ -24,7 +24,8 @@ import {
 	sortTodoLists,
 	showEditAppointmentDialog,
 	createAppointment,
-	updateAppointment
+	updateAppointment,
+	createTodo
 } from "src/app/utils"
 import {
 	StartDay,
@@ -498,12 +499,7 @@ export class OverviewPageComponent {
 			return
 		}
 
-		let todo = await Todo.Create(
-			event.name,
-			false,
-			event.date?.toUnixInteger(),
-			event.labels
-		)
+		let todo = await createTodo(event, this.miscLocale.todoNotificationTitle)
 
 		this.addTodo(todo)
 		this.createTodoDialog.hide()

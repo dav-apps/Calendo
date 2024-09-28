@@ -9,7 +9,9 @@ import {
 import { DateTime } from "luxon"
 import { faPlus } from "@fortawesome/pro-light-svg-icons"
 import { Dialog } from "dav-ui-components"
+import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
+import { getNotificationPermission } from "src/app/utils"
 import { TodoDialogEventData } from "src/app/types"
 
 @Component({
@@ -30,12 +32,29 @@ export class TodoDialogComponent {
 	nameError: string = ""
 	date: DateTime = DateTime.now()
 	saveDate: boolean = true
+	showActivateReminderOption: boolean = false
+	activateReminder: boolean = true
 	labels: string[] = []
 	visible: boolean = false
 	headline: string = this.locale.createTodoHeadline
 	label: string = ""
 
-	constructor(private localizationService: LocalizationService) {}
+	constructor(
+		private dataService: DataService,
+		private localizationService: LocalizationService
+	) {}
+
+	async ngOnInit() {
+		await this.dataService.userPromiseHolder.AwaitResult()
+
+		// Check if push is supported
+		this.showActivateReminderOption =
+			this.mode == "createTodo" &&
+			"serviceWorker" in navigator &&
+			"PushManager" in window &&
+			this.dataService.dav.isLoggedIn &&
+			getNotificationPermission() != "denied"
+	}
 
 	ngAfterViewInit() {
 		document.body.appendChild(this.dialog.nativeElement)
@@ -50,6 +69,7 @@ export class TodoDialogComponent {
 		this.nameError = ""
 		this.date = DateTime.now()
 		this.saveDate = true
+		this.activateReminder = true
 		this.labels = []
 	}
 
@@ -84,6 +104,10 @@ export class TodoDialogComponent {
 
 	saveDateCheckboxChange(event: CustomEvent) {
 		this.saveDate = event.detail.checked
+	}
+
+	activateReminderCheckboxChange(event: CustomEvent) {
+		this.activateReminder = event.detail.checked
 	}
 
 	labelTextfieldChange(event: Event) {
@@ -122,6 +146,10 @@ export class TodoDialogComponent {
 		this.primaryButtonClick.emit({
 			name: this.name,
 			date: this.saveDate ? this.date : null,
+			activateReminder:
+				this.saveDate &&
+				this.showActivateReminderOption &&
+				this.activateReminder,
 			labels: this.labels
 		})
 	}

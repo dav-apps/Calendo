@@ -156,6 +156,7 @@ const enDefaults = {
 			editTodoListHeadline: "Edit todo list",
 			nameTextfieldLabel: "Name",
 			saveDateCheckboxLabel: "Save date",
+			reminderCheckboxLabel: "Activate reminder",
 			labelTextfieldLabel: "Add label"
 		},
 		todoListSubItemDialog: {
@@ -191,7 +192,8 @@ const enDefaults = {
 		calendar: "Calendar",
 		todos: "Todos",
 		appointments: "Appointments",
-		fullDayEvent: "Full day event"
+		fullDayEvent: "Full day event",
+		todoNotificationTitle: "Don't forget..."
 	}
 }
 
@@ -370,6 +372,7 @@ const deDefaults = {
 			editTodoListHeadline: "Todo-Liste bearbeiten",
 			nameTextfieldLabel: "Name",
 			saveDateCheckboxLabel: "Datum speichern",
+			reminderCheckboxLabel: "Erinnerung aktivieren",
 			labelTextfieldLabel: "Label hinzufügen"
 		},
 		todoListSubItemDialog: {
@@ -405,7 +408,8 @@ const deDefaults = {
 		calendar: "Kalender",
 		todos: "Todos",
 		appointments: "Termine",
-		fullDayEvent: "Ganztägiger Termin"
+		fullDayEvent: "Ganztägiger Termin",
+		todoNotificationTitle: "Nicht vergessen..."
 	}
 }
 

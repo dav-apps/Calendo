@@ -77,5 +77,6 @@ export interface AppointmentDialogEventData {
 export interface TodoDialogEventData {
 	name: string
 	date: DateTime
+	activateReminder: boolean
 	labels: string[]
 }

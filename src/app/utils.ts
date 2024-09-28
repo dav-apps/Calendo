@@ -8,7 +8,12 @@ import { Appointment } from "./models/Appointment"
 import { Todo } from "./models/Todo"
 import { TodoList } from "./models/TodoList"
 import { AppointmentDialogComponent } from "./dialogs/appointment-dialog/appointment-dialog.component"
-import { Theme, TodoDay, AppointmentDialogEventData } from "./types"
+import {
+	Theme,
+	TodoDay,
+	AppointmentDialogEventData,
+	TodoDialogEventData
+} from "./types"
 import { lightThemeKey, darkThemeKey } from "./constants"
 
 export function sortAppointments(appointments: Appointment[]) {
@@ -299,6 +304,33 @@ export async function updateAppointment(
 		endTime.toUnixInteger(),
 		event.allDay,
 		event.color,
+		notification?.Uuid
+	)
+}
+
+export async function createTodo(
+	event: TodoDialogEventData,
+	todoNotificationTitleString: string
+) {
+	let notification: DavNotification = null
+
+	if (event.activateReminder && (await SetupWebPushSubscription())) {
+		let reminderTime = event.date.set({ hour: 10, minute: 0, second: 0 })
+
+		notification = new DavNotification({
+			Time: reminderTime.toUnixInteger(),
+			Interval: 0,
+			Title: todoNotificationTitleString,
+			Body: event.name
+		})
+	}
+
+	return await Todo.Create(
+		event.name,
+		false,
+		event.date?.toUnixInteger(),
+		event.labels,
+		null,
 		notification?.Uuid
 	)
 }

@@ -86,7 +86,7 @@ export class AppointmentDialogComponent {
 	reminderDropdownOptions: DropdownOption[] = []
 
 	constructor(
-		public dataService: DataService,
+		private dataService: DataService,
 		private localizationService: LocalizationService
 	) {}
 

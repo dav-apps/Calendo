@@ -32,6 +32,15 @@
 				[disabled]="!saveDate"
 				(change)="calendarChange($event)"
 			></dav-calendar>
+
+			@if (showActivateReminderOption) {
+			<dav-checkbox
+				[label]="locale.reminderCheckboxLabel"
+				[checked]="activateReminder"
+				[disabled]="!saveDate"
+				(change)="activateReminderCheckboxChange($event)"
+			></dav-checkbox>
+			}
 		</div>
 
 		<div class="label-input-container">
