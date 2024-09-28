@@ -638,6 +638,8 @@ export class OverviewPageComponent {
 		startTimeMinute: number
 		endTimeHour: number
 		endTimeMinute: number
+		activateReminder: boolean
+		reminderSecondsBefore: number
 	}) {
 		if (event.name.length == 0) {
 			this.editAppointmentDialog.nameError = this.errorsLocale.nameMissing
@@ -655,6 +657,53 @@ export class OverviewPageComponent {
 		})
 
 		let appointment = this.selectedAppointment
+		let notification: Notification = null
+
+		if (appointment.notificationUuid != null) {
+			notification = await GetNotification(appointment.notificationUuid)
+		}
+
+		if (!event.activateReminder && notification != null) {
+			await notification.Delete()
+			notification = null
+		} else if (event.activateReminder && (await SetupWebPushSubscription())) {
+			let reminderTime = startTime.minus({
+				seconds: event.reminderSecondsBefore
+			})
+
+			if (appointment.notificationUuid == null) {
+				// Create a new notification
+				notification = new Notification({
+					Time: reminderTime.toUnixInteger(),
+					Interval: 0,
+					Title: event.name,
+					Body: generateAppointmentNotificationBody(
+						startTime,
+						endTime,
+						event.allDay,
+						this.miscLocale.fullDayEvent
+					)
+				})
+
+				await notification.Save()
+			} else if (notification != null) {
+				// Update the existing notification
+				notification = await GetNotification(appointment.notificationUuid)
+
+				if (notification != null) {
+					notification.Title = event.name
+					notification.Time = reminderTime.toUnixInteger()
+					notification.Body = generateAppointmentNotificationBody(
+						startTime,
+						endTime,
+						event.allDay,
+						this.miscLocale.fullDayEvent
+					)
+
+					await notification.Save()
+				}
+			}
+		}
 
 		await appointment.Update(
 			event.name,
@@ -662,7 +711,7 @@ export class OverviewPageComponent {
 			endTime.toUnixInteger(),
 			event.allDay,
 			event.color,
-			null
+			notification?.Uuid
 		)
 
 		this.addAppointment(appointment)

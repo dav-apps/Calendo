@@ -109,15 +109,9 @@ export class Appointment {
 				name: environment.appointmentAllDayKey,
 				value: this.allday.toString()
 			},
-			{ name: environment.appointmentColorKey, value: this.color }
+			{ name: environment.appointmentColorKey, value: this.color },
+			{ name: environment.notificationUuidKey, value: this.notificationUuid }
 		]
-
-		if (this.notificationUuid) {
-			properties.push({
-				name: environment.notificationUuidKey,
-				value: this.notificationUuid
-			})
-		}
 
 		await tableObject.SetPropertyValues(properties)
 	}
