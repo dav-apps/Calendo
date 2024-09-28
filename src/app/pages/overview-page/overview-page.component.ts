@@ -26,7 +26,7 @@ import {
 	generateAppointmentNotificationBody,
 	showEditAppointmentDialog
 } from "src/app/utils"
-import { StartDay } from "src/app/types"
+import { StartDay, AppointmentDialogEventData } from "src/app/types"
 
 @Component({
 	templateUrl: "./overview-page.component.html",
@@ -534,18 +534,7 @@ export class OverviewPageComponent {
 		this.router.navigate(["todolist", todoList.uuid])
 	}
 
-	async createAppointment(event: {
-		name: string
-		date: DateTime
-		allDay: boolean
-		color: string
-		startTimeHour: number
-		startTimeMinute: number
-		endTimeHour: number
-		endTimeMinute: number
-		activateReminder: boolean
-		reminderSecondsBefore: number
-	}) {
+	async createAppointment(event: AppointmentDialogEventData) {
 		if (event.name.length == 0) {
 			this.createAppointmentDialog.nameError = this.errorsLocale.nameMissing
 			return
@@ -605,18 +594,7 @@ export class OverviewPageComponent {
 		this.dataService.appointmentsChanged = true
 	}
 
-	async updateAppointment(event: {
-		name: string
-		date: DateTime
-		allDay: boolean
-		color: string
-		startTimeHour: number
-		startTimeMinute: number
-		endTimeHour: number
-		endTimeMinute: number
-		activateReminder: boolean
-		reminderSecondsBefore: number
-	}) {
+	async updateAppointment(event: AppointmentDialogEventData) {
 		if (event.name.length == 0) {
 			this.editAppointmentDialog.nameError = this.errorsLocale.nameMissing
 			return

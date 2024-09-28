@@ -9,7 +9,7 @@ import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { Appointment } from "src/app/models/Appointment"
 import { sortAppointments, showEditAppointmentDialog } from "src/app/utils"
-import { AppointmentDay } from "src/app/types"
+import { AppointmentDay, AppointmentDialogEventData } from "src/app/types"
 
 @Component({
 	templateUrl: "./appointments-page.component.html",
@@ -167,16 +167,7 @@ export class AppointmentsPageComponent {
 		}
 	}
 
-	async createAppointment(event: {
-		name: string
-		date: DateTime
-		allDay: boolean
-		color: string
-		startTimeHour: number
-		startTimeMinute: number
-		endTimeHour: number
-		endTimeMinute: number
-	}) {
+	async createAppointment(event: AppointmentDialogEventData) {
 		if (event.name.length == 0) {
 			this.createAppointmentDialog.nameError = this.errorsLocale.nameMissing
 			return
@@ -210,16 +201,7 @@ export class AppointmentsPageComponent {
 		this.dataService.appointmentsChanged = true
 	}
 
-	async updateAppointment(event: {
-		name: string
-		date: DateTime
-		allDay: boolean
-		color: string
-		startTimeHour: number
-		startTimeMinute: number
-		endTimeHour: number
-		endTimeMinute: number
-	}) {
+	async updateAppointment(event: AppointmentDialogEventData) {
 		if (event.name.length == 0) {
 			this.editAppointmentDialog.nameError = this.errorsLocale.nameMissing
 			return

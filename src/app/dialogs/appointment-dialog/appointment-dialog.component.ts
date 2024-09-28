@@ -11,6 +11,7 @@ import { Dialog, DropdownOption, DropdownOptionType } from "dav-ui-components"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { randomNumber, getNotificationPermission } from "src/app/utils"
+import { AppointmentDialogEventData } from "src/app/types"
 
 @Component({
 	selector: "calendo-appointment-dialog",
@@ -22,7 +23,7 @@ export class AppointmentDialogComponent {
 	actionsLocale = this.localizationService.locale.actions
 	@Input() loading: boolean = false
 	@Input() mode: "create" | "edit" = "create"
-	@Output() primaryButtonClick = new EventEmitter()
+	@Output() primaryButtonClick = new EventEmitter<AppointmentDialogEventData>()
 	@ViewChild("dialog") dialog: ElementRef<Dialog>
 	name: string = ""
 	nameError: string = ""

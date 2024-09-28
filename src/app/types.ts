@@ -60,3 +60,16 @@ export interface TodoGroup {
 	todos: Todo[]
 	todoLists: TodoList[]
 }
+
+export interface AppointmentDialogEventData {
+	name: string
+	date: DateTime
+	allDay: boolean
+	color: string
+	startTimeHour: number
+	startTimeMinute: number
+	endTimeHour: number
+	endTimeMinute: number
+	activateReminder: boolean
+	reminderSecondsBefore: number
+}
