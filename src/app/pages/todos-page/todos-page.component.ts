@@ -208,7 +208,7 @@ export class TodosPageComponent {
 					formattedDate,
 					calendarDayPageLink: `calendar/${date.year}/${date.month}/${date.day}`,
 					todos: [],
-					todoLists: []
+					todoLists: [todoList]
 				})
 			}
 
