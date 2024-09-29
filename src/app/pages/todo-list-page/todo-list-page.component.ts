@@ -107,7 +107,7 @@ export class TodoListPageComponent {
 			this.todoList.groups = list.groups
 			this.todoList.list = list.list
 			this.todoList.items = list.items
-			this.date = DateTime.fromSeconds(this.todoList.time).toFormat("DD")
+			this.date = DateTime.fromSeconds(this.todoList.time).toFormat("DDD")
 		})
 	}
 
