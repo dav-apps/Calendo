@@ -90,7 +90,7 @@ export class CalendarPageComponent {
 				this.loadPreviousMonth()
 
 				this.monthAddedTimeoutRunning = true
-				setTimeout(() => (this.monthAddedTimeoutRunning = false), 100)
+				setTimeout(() => (this.monthAddedTimeoutRunning = false), 500)
 			} else if (scrollTop > scrollEnd - distance) {
 				// Bottom scroll position
 				this.loadNextMonth()
