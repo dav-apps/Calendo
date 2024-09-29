@@ -4,6 +4,7 @@ import {
 	GetNotification,
 	SetupWebPushSubscription
 } from "dav-js"
+import { Toast } from "dav-ui-components"
 import { Appointment } from "./models/Appointment"
 import { Todo } from "./models/Todo"
 import { TodoList } from "./models/TodoList"
@@ -333,4 +334,12 @@ export async function createTodo(
 		null,
 		notification?.Uuid
 	)
+}
+
+export async function showToast(text: string, paddingBottom: number) {
+	// Show toast
+	let toast = document.createElement("dav-toast")
+	toast.text = text
+	toast.paddingBottom = paddingBottom
+	Toast.show(toast)
 }

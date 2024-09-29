@@ -4,6 +4,7 @@ export const themeKey = "theme"
 export const lightThemeKey = "light"
 export const darkThemeKey = "dark"
 export const systemThemeKey = "system"
+export const smallWindowMaxSize = 729
 //#endregion
 
 //#region settings keys

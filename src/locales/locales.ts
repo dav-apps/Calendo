@@ -194,7 +194,9 @@ const enDefaults = {
 		todos: "Todos",
 		appointments: "Appointments",
 		fullDayEvent: "Full day event",
-		todoNotificationTitle: "Don't forget..."
+		todoNotificationTitle: "Don't forget...",
+		createAppointmentToastText: "Appointment was created successfully",
+		createTodoToastText: "Todo was created successfully"
 	}
 }
 
@@ -411,7 +413,9 @@ const deDefaults = {
 		todos: "Todos",
 		appointments: "Termine",
 		fullDayEvent: "Ganztägiger Termin",
-		todoNotificationTitle: "Nicht vergessen..."
+		todoNotificationTitle: "Nicht vergessen...",
+		createAppointmentToastText: "Termin wurde erfolgreich erstellt",
+		createTodoToastText: "Todo wurde erfolgreich erstellt"
 	}
 }
 

@@ -25,7 +25,8 @@ import {
 	showEditAppointmentDialog,
 	createAppointment,
 	updateAppointment,
-	createTodo
+	createTodo,
+	showToast
 } from "src/app/utils"
 import {
 	StartDay,
@@ -506,6 +507,11 @@ export class OverviewPageComponent {
 
 		this.updateShowTodosColumn()
 		this.dataService.todosChanged = true
+
+		showToast(
+			this.miscLocale.createTodoToastText,
+			this.dataService.isMobile ? 80 : 0
+		)
 	}
 
 	async createTodoList(event: TodoDialogEventData) {
@@ -546,6 +552,11 @@ export class OverviewPageComponent {
 
 		this.updateShowAppointmentsColumn()
 		this.dataService.appointmentsChanged = true
+
+		showToast(
+			this.miscLocale.createAppointmentToastText,
+			this.dataService.isMobile ? 80 : 0
+		)
 	}
 
 	async updateAppointment(event: AppointmentDialogEventData) {

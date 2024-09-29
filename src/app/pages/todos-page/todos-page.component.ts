@@ -16,7 +16,7 @@ import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { SettingsService } from "src/app/services/settings-service"
 import { TodoDay, TodoGroup, TodoDialogEventData } from "src/app/types"
-import { sortTodoDays, createTodo } from "src/app/utils"
+import { sortTodoDays, createTodo, showToast } from "src/app/utils"
 
 @Component({
 	templateUrl: "./todos-page.component.html",
@@ -254,6 +254,11 @@ export class TodosPageComponent {
 		this.createTodoDialog.hide()
 
 		this.dataService.todosChanged = true
+
+		showToast(
+			this.miscLocale.createTodoToastText,
+			this.dataService.isMobile ? 80 : 0
+		)
 	}
 
 	async createTodoList(event: TodoDialogEventData) {

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from "@angular/core"
+import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
 import { Router, ActivatedRoute, NavigationStart } from "@angular/router"
 import {
 	faCircleUser as faCircleUserSolid,
@@ -21,6 +21,7 @@ import * as DavUIComponents from "dav-ui-components"
 import { environment } from "../environments/environment"
 import { DataService } from "./services/data-service"
 import { LocalizationService } from "./services/localization-service"
+import { smallWindowMaxSize } from "src/app/constants"
 import { enUS } from "src/locales/locales"
 
 @Component({
@@ -90,6 +91,7 @@ export class AppComponent {
 	}
 
 	async ngOnInit() {
+		this.setSize()
 		this.dataService.loadTheme()
 
 		// Initialize dav
@@ -119,6 +121,11 @@ export class AppComponent {
 
 	ngAfterViewInit() {
 		this.dataService.contentContainer = this.contentContainer.nativeElement
+	}
+
+	@HostListener("window:resize")
+	setSize() {
+		this.dataService.isMobile = window.innerWidth <= smallWindowMaxSize
 	}
 
 	navigateToPage(path: string) {

@@ -12,7 +12,8 @@ import {
 	sortAppointments,
 	showEditAppointmentDialog,
 	createAppointment,
-	updateAppointment
+	updateAppointment,
+	showToast
 } from "src/app/utils"
 import { AppointmentDay, AppointmentDialogEventData } from "src/app/types"
 
@@ -188,6 +189,11 @@ export class AppointmentsPageComponent {
 		this.createAppointmentDialog.hide()
 
 		this.dataService.appointmentsChanged = true
+
+		showToast(
+			this.miscLocale.createAppointmentToastText,
+			this.dataService.isMobile ? 80 : 0
+		)
 	}
 
 	async updateAppointment(event: AppointmentDialogEventData) {
