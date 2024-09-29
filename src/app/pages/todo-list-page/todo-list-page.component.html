@@ -20,8 +20,8 @@
 		</p>
 		} @if (todoList.groups.length > 0) {
 		<div class="labels-container">
-			@for (group of todoList.groups; track group) {
-			<dav-badge tonal color="secondary">{{ group }}</dav-badge>
+			@for (group of todoList.groups; track group; let i = $index) {
+			<dav-badge tonal [color]="getBadgeColor(i)">{{ group }}</dav-badge>
 			}
 		</div>
 		}

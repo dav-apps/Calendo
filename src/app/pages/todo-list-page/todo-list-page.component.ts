@@ -310,4 +310,15 @@ export class TodoListPageComponent {
 			}
 		}
 	}
+
+	getBadgeColor(i: number) {
+		switch (i) {
+			case 0:
+				return "primary"
+			case 1:
+				return "secondary"
+			default:
+				return "tertiary"
+		}
+	}
 }
