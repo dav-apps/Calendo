@@ -1,5 +1,9 @@
 <div class="navbar acrylic">
-	<a class="navbar-header" routerLink="/">
+	<a
+		class="navbar-header"
+		routerLink="/"
+		(click)="navigateToOverviewPage($event)"
+	>
 		<img src="/assets/icons/icon-72x72.png" width="60" height="60" />
 		<span>Calendo</span>
 	</a>
@@ -8,28 +12,28 @@
 		<dav-tab-bar>
 			<dav-tab-bar-item
 				[active]="startTabActive"
-				(click)="navigateToPage('/')"
+				(click)="navigateToOverviewPage()"
 			>
 				{{ locale.overview }}
 			</dav-tab-bar-item>
 
 			<dav-tab-bar-item
 				[active]="calendarTabActive"
-				(click)="navigateToPage('calendar')"
+				(click)="navigateToCalendarPage()"
 			>
 				{{ locale.calendar }}
 			</dav-tab-bar-item>
 
 			<dav-tab-bar-item
 				[active]="appointmentsTabActive"
-				(click)="navigateToPage('appointments')"
+				(click)="navigateToAppointmentsPage()"
 			>
 				{{ locale.appointments }}
 			</dav-tab-bar-item>
 
 			<dav-tab-bar-item
 				[active]="todosTabActive"
-				(click)="navigateToPage('todos')"
+				(click)="navigateToTodosPage()"
 			>
 				{{ locale.todos }}
 			</dav-tab-bar-item>
@@ -78,7 +82,7 @@
 	<dav-navigation-bar>
 		<dav-navigation-bar-item
 			[active]="startTabActive"
-			(click)="navigateToPage('/')"
+			(click)="navigateToOverviewPage()"
 		>
 			@if (startTabActive) {
 			<fa-icon slot="icon" [icon]="faHouseSolid"></fa-icon>
@@ -91,7 +95,7 @@
 
 		<dav-navigation-bar-item
 			[active]="calendarTabActive"
-			(click)="calendarTabClick()"
+			(click)="navigateToCalendarPage()"
 		>
 			@if (calendarTabActive) {
 			<fa-icon slot="icon" [icon]="faCalendarSolid"></fa-icon>
@@ -104,7 +108,7 @@
 
 		<dav-navigation-bar-item
 			[active]="appointmentsTabActive"
-			(click)="navigateToPage('appointments')"
+			(click)="navigateToAppointmentsPage()"
 		>
 			@if (appointmentsTabActive) {
 			<fa-icon slot="icon" [icon]="faCalendarsSolid"></fa-icon>
@@ -117,7 +121,7 @@
 
 		<dav-navigation-bar-item
 			[active]="todosTabActive"
-			(click)="navigateToPage('todos')"
+			(click)="navigateToTodosPage()"
 		>
 			@if (todosTabActive) {
 			<fa-icon slot="icon" [icon]="faSquareCheckSolid"></fa-icon>

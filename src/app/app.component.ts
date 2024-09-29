@@ -132,11 +132,43 @@ export class AppComponent {
 		this.router.navigate([path])
 	}
 
-	calendarTabClick() {
+	navigateToOverviewPage(event?: PointerEvent) {
+		if (event != null) {
+			event.preventDefault()
+		}
+
+		if (this.router.url == "/") {
+			window.dispatchEvent(new Event("overviewpage-scrolltop"))
+		} else {
+			this.navigateToPage("/")
+			this.dataService.contentContainer.scrollTop = 0
+		}
+	}
+
+	navigateToCalendarPage() {
 		if (this.router.url == "/calendar") {
 			window.dispatchEvent(new Event("calendarpage-scrolltop"))
 		} else {
 			this.navigateToPage("calendar")
+			this.dataService.contentContainer.scrollTop = 0
+		}
+	}
+
+	navigateToAppointmentsPage() {
+		if (this.router.url == "/appointments") {
+			window.dispatchEvent(new Event("appointmentspage-scrolltop"))
+		} else {
+			this.navigateToPage("appointments")
+			this.dataService.contentContainer.scrollTop = 0
+		}
+	}
+
+	navigateToTodosPage() {
+		if (this.router.url == "/todos") {
+			window.dispatchEvent(new Event("todospage-scrolltop"))
+		} else {
+			this.navigateToPage("todos")
+			this.dataService.contentContainer.scrollTop = 0
 		}
 	}
 

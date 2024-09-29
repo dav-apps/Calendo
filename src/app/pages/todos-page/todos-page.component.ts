@@ -98,6 +98,13 @@ export class TodosPageComponent {
 		for (let todoList of this.dataService.allTodoLists) {
 			this.addTodoList(todoList)
 		}
+
+		window.addEventListener("todospage-scrolltop", () => {
+			this.dataService.contentContainer.scrollTo({
+				top: 0,
+				behavior: "smooth"
+			})
+		})
 	}
 
 	@HostListener("document:click", ["$event"])

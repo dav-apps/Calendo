@@ -143,6 +143,13 @@ export class OverviewPageComponent {
 
 		this.updateShowAppointmentsColumn()
 		this.updateShowTodosColumn()
+
+		window.addEventListener("overviewpage-scrolltop", () => {
+			this.dataService.contentContainer.scrollTo({
+				top: 0,
+				behavior: "smooth"
+			})
+		})
 	}
 
 	@HostListener("document:click", ["$event"])

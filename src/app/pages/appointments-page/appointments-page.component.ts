@@ -69,6 +69,13 @@ export class AppointmentsPageComponent {
 		for (let appointment of this.dataService.allAppointments) {
 			this.addAppointment(appointment)
 		}
+
+		window.addEventListener("appointmentspage-scrolltop", () => {
+			this.dataService.contentContainer.scrollTo({
+				top: 0,
+				behavior: "smooth"
+			})
+		})
 	}
 
 	@HostListener("document:click", ["$event"])
