@@ -116,10 +116,12 @@ export class OverviewPageComponent {
 		private localizationService: LocalizationService,
 		private router: Router
 	) {
-		Settings.defaultLocale = navigator.language
-
-		this.currentWeekday = DateTime.now().toFormat("EEEE")
-		this.currentDate = DateTime.now().toFormat("DDD")
+		this.currentWeekday = DateTime.now().toFormat("EEEE", {
+			locale: this.dataService.locale
+		})
+		this.currentDate = DateTime.now().toFormat("DDD", {
+			locale: this.dataService.locale
+		})
 	}
 
 	async ngOnInit() {
@@ -490,15 +492,21 @@ export class OverviewPageComponent {
 	}
 
 	getFormattedDate(date: DateTime): string {
-		return date.toFormat("DDDD")
+		return date.toFormat("DDDD", {
+			locale: this.dataService.locale
+		})
 	}
 
 	getShortTopFormattedDate(date: DateTime): string {
-		return date.toFormat(date.diffNow("days").days > 6 ? "D" : "EEEE")
+		return date.toFormat(date.diffNow("days").days > 6 ? "D" : "EEEE", {
+			locale: this.dataService.locale
+		})
 	}
 
 	getShortBottomFormattedDate(date: DateTime): string {
-		return date.toFormat(date.diffNow("days").days > 6 ? "EEEE" : "D")
+		return date.toFormat(date.diffNow("days").days > 6 ? "EEEE" : "D", {
+			locale: this.dataService.locale
+		})
 	}
 
 	async createTodo(event: TodoDialogEventData) {

@@ -132,7 +132,9 @@ export class TodosPageComponent {
 		// Sort by date
 		if (todo.time != 0) {
 			let date = DateTime.fromSeconds(todo.time)
-			let formattedDate = date.toFormat("DDDD")
+			let formattedDate = date.toFormat("DDDD", {
+				locale: this.dataService.locale
+			})
 
 			// Check if the date already exists in the todoDays array
 			let todoDay = this.todoDays.find(
@@ -188,7 +190,9 @@ export class TodosPageComponent {
 		// Sort by date
 		if (todoList.time != 0) {
 			let date = DateTime.fromSeconds(todoList.time)
-			let formattedDate = date.toFormat("DDDD")
+			let formattedDate = date.toFormat("DDDD", {
+				locale: this.dataService.locale
+			})
 
 			// Check if the date already exists in the todoDays array
 			let todoDay = this.todoDays.find(

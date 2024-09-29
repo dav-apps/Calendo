@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
 import { Router, ActivatedRoute } from "@angular/router"
-import { Settings, DateTime } from "luxon"
+import { DateTime } from "luxon"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons"
@@ -43,9 +43,7 @@ export class CalendarPageComponent {
 		private localizationService: LocalizationService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute
-	) {
-		Settings.defaultLocale = navigator.language
-	}
+	) {}
 
 	async ngOnInit() {
 		await Promise.all([
@@ -217,7 +215,9 @@ export class CalendarPageComponent {
 
 	loadMonth(date: DateTime, position: "start" | "end" = "end") {
 		// Check if the given month is already loaded
-		let monthLabel = date.toFormat(monthLabelFormat)
+		let monthLabel = date.toFormat(monthLabelFormat, {
+			locale: this.dataService.locale
+		})
 		let month = this.months.find(m => m.label == monthLabel)
 		if (month != null) return
 
@@ -241,7 +241,9 @@ export class CalendarPageComponent {
 
 			for (let i = 0; i < 7; i++) {
 				let id = crypto.randomUUID()
-				let label = currentDate.toFormat("d")
+				let label = currentDate.toFormat("d", {
+					locale: this.dataService.locale
+				})
 				let isToday = today.hasSame(currentDate, "day")
 				let appointments =
 					this.dataService.getAppointmentsOfDay(currentDate)

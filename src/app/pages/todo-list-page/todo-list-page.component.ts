@@ -107,7 +107,9 @@ export class TodoListPageComponent {
 			this.todoList.groups = list.groups
 			this.todoList.list = list.list
 			this.todoList.items = list.items
-			this.date = DateTime.fromSeconds(this.todoList.time).toFormat("DDD")
+			this.date = DateTime.fromSeconds(this.todoList.time).toFormat("DDD", {
+				locale: this.dataService.locale
+			})
 		})
 	}
 
@@ -214,7 +216,9 @@ export class TodoListPageComponent {
 
 	async updateTodoList(event: TodoDialogEventData) {
 		if (event.date != null) {
-			this.date = DateTime.fromSeconds(this.todoList.time).toFormat("DD")
+			this.date = DateTime.fromSeconds(this.todoList.time).toFormat("DD", {
+				locale: this.dataService.locale
+			})
 		}
 
 		await this.todoList.Update(

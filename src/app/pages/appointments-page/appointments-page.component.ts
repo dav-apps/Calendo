@@ -100,7 +100,9 @@ export class AppointmentsPageComponent {
 
 	addAppointment(appointment: Appointment) {
 		let date = DateTime.fromSeconds(appointment.start)
-		let formattedDate = date.toFormat("DDDD")
+		let formattedDate = date.toFormat("DDDD", {
+			locale: this.dataService.locale
+		})
 		let isOld = date < DateTime.now()
 
 		// Check if the appointment is already in appointmentDays or oldAppointmentDays
@@ -140,7 +142,9 @@ export class AppointmentsPageComponent {
 
 	removeAppointment(appointment: Appointment) {
 		let date = DateTime.fromSeconds(appointment.start)
-		let formattedDate = date.toFormat("DDDD")
+		let formattedDate = date.toFormat("DDDD", {
+			locale: this.dataService.locale
+		})
 		let isOld = date < DateTime.now()
 
 		// Check if the appointment is in appointmentDays or oldAppointmentDays

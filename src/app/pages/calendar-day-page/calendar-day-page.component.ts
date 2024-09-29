@@ -117,7 +117,9 @@ export class CalendarDayPageComponent {
 				this.router.navigate(["/"])
 			} else {
 				this.date = DateTime.now().set({ year, month, day })
-				this.title = this.date.toFormat("DDDD")
+				this.title = this.date.toFormat("DDDD", {
+					locale: this.dataService.locale
+				})
 				this.isDateBeforeToday = this.date < DateTime.now().startOf("day")
 
 				this.appointments = this.dataService.getAppointmentsOfDay(this.date)
