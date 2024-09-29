@@ -41,6 +41,7 @@ const enDefaults = {
 		headline: "Save your calendar and access it from anywhere",
 		benefit1: "Access the same calendar on all your devices",
 		benefit2: "Make sure your todos and appointments don't get lost",
+		benefit3: "Enable notifications for appointments and todos",
 		login: "Log in",
 		logout: "Log out",
 		signup: "Sign up",
@@ -256,6 +257,7 @@ const deDefaults = {
 		benefit1: "Nutze den gleichen Kalender auf all deinen Geräten",
 		benefit2:
 			"Stelle sicher, dass deine Termine und Todos nicht verloren gehen",
+		benefit3: "Schalte Benachrichtigungen für Termine und Todos frei",
 		login: "Anmelden",
 		logout: "Abmelden",
 		signup: "Registrieren",
