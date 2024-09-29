@@ -33,6 +33,7 @@ export class CalendarPageComponent {
 	isLoadingNextMonth: boolean = false
 	loadNextMonthAgain: boolean = false
 	todayLabelMobile: HTMLElement = null
+	monthAddedTimeoutRunning: boolean = false
 
 	@ViewChild("container")
 	container: ElementRef<HTMLDivElement>
@@ -77,14 +78,19 @@ export class CalendarPageComponent {
 		)
 
 		this.dataService.contentContainer.addEventListener("scroll", () => {
-			const distance = 1000
+			const distance = 2000
 			let scrollTop = this.dataService.contentContainer.scrollTop
 			let scrollEnd =
 				this.dataService.contentContainer.scrollHeight - window.innerHeight
 
 			if (scrollTop < distance) {
+				if (this.monthAddedTimeoutRunning) return
+
 				// Top scroll position
 				this.loadPreviousMonth()
+
+				this.monthAddedTimeoutRunning
+				setTimeout(() => (this.monthAddedTimeoutRunning = false), 100)
 			} else if (scrollTop > scrollEnd - distance) {
 				// Bottom scroll position
 				this.loadNextMonth()
@@ -201,9 +207,9 @@ export class CalendarPageComponent {
 	}
 
 	loadMonths() {
-		let date = this.currentDate.minus({ months: 4 })
+		let date = this.currentDate.minus({ months: 9 })
 
-		for (let i = 0; i < 9; i++) {
+		for (let i = 0; i < 19; i++) {
 			this.loadMonth(date)
 			date = date.plus({ months: 1 })
 		}
