@@ -1,7 +1,7 @@
 {
 	"name": "Calendo",
 	"short_name": "Calendo",
-	"description": "Calendo is a simple app for managing your schedule. You can organize your appointments, manage your todos and group todos by topic.",
+	"description": "Calendo is your all-in-one app for appointments, todos, and timely reminders!",
 	"theme_color": "#1976d2",
 	"background_color": "#1976d2",
 	"display": "standalone",

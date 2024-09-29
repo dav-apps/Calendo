@@ -1,6 +1,24 @@
 # Calendo
 
-Calendo is a simple app for managing your schedule. You can organize your appointments, manage your todos and group todos by topic.
+Calendo is your all-in-one app for appointments, todos, and timely reminders!
+
+📅 Create Appointments & Todos\
+Easily set up and manage tasks and events in one place.
+
+👁️ Overview at a Glance\
+Quickly view all future events and tasks in a simple, streamlined interface.
+
+🗓️ Calendar View\
+See all your upcoming appointments and todos in a clear, organized calendar.
+
+🏷️ Label Sorting\
+Sort your todos by customizable labels for better organization.
+
+⏰ Reminders\
+Get push notifications to remind you of important appointments and tasks.
+
+☁ Seamlessly sync across devices\
+Log in with your dav Account to effortlessly synchronize your appointments and todos across all your devices.
 
 <img src="https://am3pap001files.storage.live.com/y4mPN4OlJMsO_x61MKzYES1KZERoWY9PzQCHiy7CN2ru38dr8iskUkrdEegp_0APNTQ_uThDl9e2Dc_3ywdDPOyE4MI9GSR2lDWgn9TKbWsiIgGbzs7vyTyCK5XvM_luhW8H9nYBGMbC8YE32mQmDG_vAP8SHT9R1Xj27ELlIfB7GjZ0D2HkOYCpRkZU6ocFczs?width=824&height=1540&cropmode=none" alt="Calendo Screenshot" width="320" />
 
