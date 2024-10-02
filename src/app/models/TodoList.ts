@@ -204,6 +204,7 @@ export async function ConvertTableObjectToTodoList(
 	let timeString = tableObject.GetPropertyValue(
 		environment.todoListTimeKey
 	) as string
+
 	if (timeString != null) {
 		time = +timeString
 	}
@@ -212,6 +213,7 @@ export async function ConvertTableObjectToTodoList(
 	let todosString = tableObject.GetPropertyValue(
 		environment.todoListTodosKey
 	) as string
+
 	if (todosString != null) {
 		for (let uuid of todosString.split(",")) {
 			// Get the todo from the local storage
@@ -229,6 +231,7 @@ export async function ConvertTableObjectToTodoList(
 	let todoListsString = tableObject.GetPropertyValue(
 		environment.todoListTodoListsKey
 	) as string
+
 	if (todoListsString != null) {
 		for (let uuid of todoListsString.split(",")) {
 			// Get the todo list from the local storage
@@ -246,8 +249,11 @@ export async function ConvertTableObjectToTodoList(
 	let itemsString = tableObject.GetPropertyValue(
 		environment.todoListItemsKey
 	) as string
+
 	if (itemsString != null) {
 		for (let uuid of itemsString.split(",")) {
+			if (uuid == tableObject.Uuid) continue
+
 			// Get the todo or todo list from local storage
 			let itemTableObject = await GetTableObject(uuid)
 			if (!itemTableObject) continue
