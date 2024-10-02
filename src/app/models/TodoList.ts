@@ -191,10 +191,19 @@ export async function GetTodoList(uuid: string): Promise<TodoList> {
 }
 
 export async function ConvertTableObjectToTodoList(
-	tableObject: TableObject
+	tableObject: TableObject,
+	itemUuidsStack: string[] = []
 ): Promise<TodoList> {
-	if (!tableObject || tableObject.TableId != environment.todoListTableId)
+	if (
+		tableObject == null ||
+		tableObject.TableId != environment.todoListTableId
+	) {
 		return null
+	}
+
+	if (!itemUuidsStack.includes(tableObject.Uuid)) {
+		itemUuidsStack.push(tableObject.Uuid)
+	}
 
 	let name = tableObject.GetPropertyValue(
 		environment.todoListNameKey
@@ -218,12 +227,10 @@ export async function ConvertTableObjectToTodoList(
 		for (let uuid of todosString.split(",")) {
 			// Get the todo from the local storage
 			let todoTableObject = await GetTableObject(uuid)
-			if (!todoTableObject) continue
+			if (todoTableObject == null) continue
 
 			let todo = ConvertTableObjectToTodo(todoTableObject)
-			if (todo) {
-				todos.push(todo)
-			}
+			if (todo != null) todos.push(todo)
 		}
 	}
 
@@ -236,12 +243,13 @@ export async function ConvertTableObjectToTodoList(
 		for (let uuid of todoListsString.split(",")) {
 			// Get the todo list from the local storage
 			let todoListTableObject = await GetTableObject(uuid)
-			if (!todoListTableObject) continue
+			if (todoListTableObject == null) continue
 
-			let todoList = await ConvertTableObjectToTodoList(todoListTableObject)
-			if (todoList) {
-				todoLists.push(todoList)
-			}
+			let todoList = await ConvertTableObjectToTodoList(
+				todoListTableObject,
+				itemUuidsStack
+			)
+			if (todoList != null) todoLists.push(todoList)
 		}
 	}
 
@@ -252,18 +260,21 @@ export async function ConvertTableObjectToTodoList(
 
 	if (itemsString != null) {
 		for (let uuid of itemsString.split(",")) {
-			if (uuid == tableObject.Uuid) continue
+			if (itemUuidsStack.includes(uuid)) continue
 
 			// Get the todo or todo list from local storage
 			let itemTableObject = await GetTableObject(uuid)
-			if (!itemTableObject) continue
+			if (itemTableObject == null) continue
 
 			if (itemTableObject.TableId == environment.todoTableId) {
 				let todo = ConvertTableObjectToTodo(itemTableObject)
-				if (todo) items.push(todo)
+				if (todo != null) items.push(todo)
 			} else if (itemTableObject.TableId == environment.todoListTableId) {
-				let todoList = await ConvertTableObjectToTodoList(itemTableObject)
-				if (todoList) items.push(todoList)
+				let todoList = await ConvertTableObjectToTodoList(
+					itemTableObject,
+					itemUuidsStack
+				)
+				if (todoList != null) items.push(todoList)
 			}
 		}
 	}
@@ -276,6 +287,7 @@ export async function ConvertTableObjectToTodoList(
 	let groupsString = tableObject.GetPropertyValue(
 		environment.todoListGroupsKey
 	) as string
+
 	if (groupsString) {
 		for (let group of groupsString.split(",")) {
 			groups.push(group)
@@ -288,5 +300,6 @@ export async function ConvertTableObjectToTodoList(
 
 	let todoList = new TodoList(name, time, items, groups, list)
 	todoList.uuid = tableObject.Uuid
+
 	return todoList
 }
