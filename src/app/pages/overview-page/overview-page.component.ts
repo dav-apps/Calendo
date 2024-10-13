@@ -287,7 +287,11 @@ export class OverviewPageComponent {
 
 		let date = DateTime.fromSeconds(todo.time)
 
-		if (todo.time == 0 || date.hasSame(this.currentDay.date, "day")) {
+		if (
+			todo.time == 0 ||
+			date.hasSame(this.currentDay.date, "day") ||
+			date < this.currentDay.date
+		) {
 			let i = this.currentDay.todos.findIndex(t => t.uuid == todo.uuid)
 
 			if (i != -1) {
@@ -342,7 +346,11 @@ export class OverviewPageComponent {
 
 		let date = DateTime.fromSeconds(todoList.time)
 
-		if (todoList.time == 0 || date.hasSame(this.currentDay.date, "day")) {
+		if (
+			todoList.time == 0 ||
+			date.hasSame(this.currentDay.date, "day") ||
+			date < this.currentDay.date
+		) {
 			let i = this.currentDay.todoLists.findIndex(
 				t => t.uuid == todoList.uuid
 			)
