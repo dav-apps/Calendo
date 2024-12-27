@@ -18,7 +18,8 @@ import { environment } from "src/environments/environment"
 @Component({
 	selector: "calendo-appointment-item",
 	templateUrl: "./appointment-item.component.html",
-	styleUrl: "./appointment-item.component.scss"
+	styleUrl: "./appointment-item.component.scss",
+	standalone: false
 })
 export class AppointmentItemComponent {
 	@Input() appointment: Appointment = new Appointment(

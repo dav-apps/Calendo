@@ -10,7 +10,8 @@ import { LocalizationService } from "src/app/services/localization-service"
 
 @Component({
 	selector: "calendo-delete-appointment-dialog",
-	templateUrl: "./delete-appointment-dialog.component.html"
+	templateUrl: "./delete-appointment-dialog.component.html",
+	standalone: false
 })
 export class DeleteAppointmentDialogComponent {
 	locale = this.localizationService.locale.dialogs.deleteAppointmentDialog

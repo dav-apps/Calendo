@@ -19,7 +19,8 @@ import { AppointmentDay, AppointmentDialogEventData } from "src/app/types"
 
 @Component({
 	templateUrl: "./appointments-page.component.html",
-	styleUrl: "./appointments-page.component.scss"
+	styleUrl: "./appointments-page.component.scss",
+	standalone: false
 })
 export class AppointmentsPageComponent {
 	locale = this.localizationService.locale.appointmentsPage

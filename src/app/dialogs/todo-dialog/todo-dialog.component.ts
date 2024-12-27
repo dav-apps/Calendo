@@ -17,7 +17,8 @@ import { TodoDialogEventData } from "src/app/types"
 @Component({
 	selector: "calendo-todo-dialog",
 	templateUrl: "./todo-dialog.component.html",
-	styleUrl: "./todo-dialog.component.scss"
+	styleUrl: "./todo-dialog.component.scss",
+	standalone: false
 })
 export class TodoDialogComponent {
 	locale = this.localizationService.locale.dialogs.todoDialog

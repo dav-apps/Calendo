@@ -21,7 +21,8 @@ import { TodoDialogEventData } from "src/app/types"
 
 @Component({
 	templateUrl: "./todo-list-page.component.html",
-	styleUrl: "./todo-list-page.component.scss"
+	styleUrl: "./todo-list-page.component.scss",
+	standalone: false
 })
 export class TodoListPageComponent {
 	locale = this.localizationService.locale.todoListPage

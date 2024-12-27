@@ -13,7 +13,8 @@ import { monthLabelFormat } from "src/app/constants"
 
 @Component({
 	templateUrl: "./calendar-page.component.html",
-	styleUrl: "./calendar-page.component.scss"
+	styleUrl: "./calendar-page.component.scss",
+	standalone: false
 })
 export class CalendarPageComponent {
 	locale = this.localizationService.locale.calendarPage

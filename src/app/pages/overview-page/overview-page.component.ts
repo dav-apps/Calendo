@@ -36,7 +36,8 @@ import {
 
 @Component({
 	templateUrl: "./overview-page.component.html",
-	styleUrl: "./overview-page.component.scss"
+	styleUrl: "./overview-page.component.scss",
+	standalone: false
 })
 export class OverviewPageComponent {
 	locale = this.localizationService.locale.overviewPage

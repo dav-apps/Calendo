@@ -17,7 +17,8 @@ import { TodoList } from "src/app/models/TodoList"
 @Component({
 	selector: "calendo-todo-list-tree-item",
 	templateUrl: "./todo-list-tree-item.component.html",
-	styleUrl: "./todo-list-tree-item.component.scss"
+	styleUrl: "./todo-list-tree-item.component.scss",
+	standalone: false
 })
 export class TodoListTreeItemComponent {
 	faEllipsis = faEllipsis

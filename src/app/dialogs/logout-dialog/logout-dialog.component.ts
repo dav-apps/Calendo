@@ -10,7 +10,8 @@ import { LocalizationService } from "src/app/services/localization-service"
 
 @Component({
 	selector: "calendo-logout-dialog",
-	templateUrl: "./logout-dialog.component.html"
+	templateUrl: "./logout-dialog.component.html",
+	standalone: false
 })
 export class LogoutDialogComponent {
 	locale = this.localizationService.locale.dialogs.logoutDialog

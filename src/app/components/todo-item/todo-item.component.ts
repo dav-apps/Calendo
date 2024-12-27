@@ -27,7 +27,8 @@ import { DataService } from "src/app/services/data-service"
 			),
 			transition("visible => hidden", [animate("200ms 0s ease-in-out")])
 		])
-	]
+	],
+	standalone: false
 })
 export class TodoItemComponent {
 	faTimes = faTimes

@@ -9,7 +9,8 @@ import { environment } from "src/environments/environment"
 
 @Component({
 	templateUrl: "./user-page.component.html",
-	styleUrl: "./user-page.component.scss"
+	styleUrl: "./user-page.component.scss",
+	standalone: false
 })
 export class UserPageComponent {
 	locale = this.localizationService.locale.userPage

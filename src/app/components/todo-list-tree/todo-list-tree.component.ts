@@ -7,7 +7,8 @@ import { DataService } from "src/app/services/data-service"
 @Component({
 	selector: "calendo-todo-list-tree",
 	templateUrl: "./todo-list-tree.component.html",
-	styleUrl: "./todo-list-tree.component.scss"
+	styleUrl: "./todo-list-tree.component.scss",
+	standalone: false
 })
 export class TodoListTreeComponent {
 	faPlus = faPlus

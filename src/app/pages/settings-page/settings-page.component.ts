@@ -14,7 +14,8 @@ import {
 
 @Component({
 	templateUrl: "./settings-page.component.html",
-	styleUrl: "./settings-page.component.scss"
+	styleUrl: "./settings-page.component.scss",
+	standalone: false
 })
 export class SettingsPageComponent {
 	locale = this.localizationService.locale.settingsPage

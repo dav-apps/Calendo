@@ -32,7 +32,8 @@ import { AppointmentDialogEventData, TodoDialogEventData } from "src/app/types"
 
 @Component({
 	templateUrl: "./calendar-day-page.component.html",
-	styleUrl: "./calendar-day-page.component.scss"
+	styleUrl: "./calendar-day-page.component.scss",
+	standalone: false
 })
 export class CalendarDayPageComponent {
 	locale = this.localizationService.locale.calendarDayPage

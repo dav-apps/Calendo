@@ -10,7 +10,8 @@ import { LocalizationService } from "src/app/services/localization-service"
 
 @Component({
 	selector: "calendo-delete-todo-list-dialog",
-	templateUrl: "./delete-todo-list-dialog.component.html"
+	templateUrl: "./delete-todo-list-dialog.component.html",
+	standalone: false
 })
 export class DeleteTodoListDialogComponent {
 	locale = this.localizationService.locale.dialogs.deleteTodoListDialog

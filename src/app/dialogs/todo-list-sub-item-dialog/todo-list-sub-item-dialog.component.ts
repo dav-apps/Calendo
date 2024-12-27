@@ -11,7 +11,8 @@ import { LocalizationService } from "src/app/services/localization-service"
 
 @Component({
 	selector: "calendo-todo-list-sub-item-dialog",
-	templateUrl: "./todo-list-sub-item-dialog.component.html"
+	templateUrl: "./todo-list-sub-item-dialog.component.html",
+	standalone: false
 })
 export class TodoListSubItemDialogComponent {
 	locale = this.localizationService.locale.dialogs.todoListSubItemDialog

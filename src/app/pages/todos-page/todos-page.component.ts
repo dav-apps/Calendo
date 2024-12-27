@@ -40,7 +40,8 @@ import { sortTodoDays, createTodo, showToast } from "src/app/utils"
 			),
 			transition("visible => hidden", [animate("200ms 0s ease-in-out")])
 		])
-	]
+	],
+	standalone: false
 })
 export class TodosPageComponent {
 	locale = this.localizationService.locale.todosPage

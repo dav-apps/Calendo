@@ -26,7 +26,8 @@ import { smallWindowMaxSize } from "src/app/constants"
 @Component({
 	selector: "app-root",
 	templateUrl: "./app.component.html",
-	styleUrls: ["./app.component.scss"]
+	styleUrl: "./app.component.scss",
+	standalone: false
 })
 export class AppComponent {
 	locale = this.localizationService.locale.misc

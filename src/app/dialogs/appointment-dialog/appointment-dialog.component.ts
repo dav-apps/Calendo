@@ -16,7 +16,8 @@ import { AppointmentDialogEventData } from "src/app/types"
 @Component({
 	selector: "calendo-appointment-dialog",
 	templateUrl: "./appointment-dialog.component.html",
-	styleUrl: "./appointment-dialog.component.scss"
+	styleUrl: "./appointment-dialog.component.scss",
+	standalone: false
 })
 export class AppointmentDialogComponent {
 	locale = this.localizationService.locale.dialogs.appointmentDialog
