@@ -10,7 +10,7 @@ export class LocalizationService {
 		this.locale = this.getLocale(this.dataService.locale)
 	}
 
-	getLocale(language?: string) {
+	private getLocale(language?: string) {
 		if (language == null) return locales.enUS
 
 		const locale = language.toLowerCase()

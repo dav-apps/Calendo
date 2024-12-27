@@ -22,7 +22,6 @@ import { environment } from "../environments/environment"
 import { DataService } from "./services/data-service"
 import { LocalizationService } from "./services/localization-service"
 import { smallWindowMaxSize } from "src/app/constants"
-import { enUS } from "src/locales/locales"
 
 @Component({
 	selector: "app-root",
@@ -30,7 +29,7 @@ import { enUS } from "src/locales/locales"
 	styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-	locale = enUS.misc
+	locale = this.localizationService.locale.misc
 	faCircleUserSolid = faCircleUserSolid
 	faCircleUserRegular = faCircleUserRegular
 	faGearSolid = faGearSolid
@@ -60,7 +59,6 @@ export class AppComponent {
 		private router: Router,
 		private activatedRoute: ActivatedRoute
 	) {
-		this.locale = this.localizationService.locale.misc
 		DavUIComponents.setLocale(this.dataService.locale)
 
 		this.router.events.forEach(data => {
