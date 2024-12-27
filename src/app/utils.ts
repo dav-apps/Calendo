@@ -324,6 +324,8 @@ export async function createTodo(
 			Title: todoNotificationTitleString,
 			Body: event.name
 		})
+
+		await notification.Save()
 	}
 
 	return await Todo.Create(
