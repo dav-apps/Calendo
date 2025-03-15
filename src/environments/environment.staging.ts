@@ -3,7 +3,7 @@ import { Environment } from "dav-js"
 export const environment = {
 	environment: Environment.Staging,
 	apiKey: "gHgHKRbIjdguCM4cv5481hdiF5hZGWZ4x12Ur-7v",
-	websiteUrl: "https://dav-website-staging-o3oot.ondigitalocean.app/",
+	websiteUrl: "https://dav-website-staging-knsy9.ondigitalocean.app/",
 	appId: 5,
 	todoListTableId: 13,
 	todoTableId: 10,
