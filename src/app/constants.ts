@@ -7,6 +7,12 @@ export const systemThemeKey = "system"
 export const smallWindowMaxSize = 729
 //#endregion
 
+//#region dav keys
+export const todoTableName = "Todo"
+export const todoListTableName = "TodoList"
+export const appointmentTableName = "Appointment"
+//#endregion
+
 //#region settings keys
 export const settingsThemeKey = "settings-theme"
 export const settingsSortTodosByDateKey = "settings-sortTodosByDate"

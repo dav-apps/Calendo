@@ -21,7 +21,12 @@ import * as DavUIComponents from "dav-ui-components"
 import { environment } from "../environments/environment"
 import { DataService } from "./services/data-service"
 import { LocalizationService } from "./services/localization-service"
-import { smallWindowMaxSize } from "src/app/constants"
+import {
+	smallWindowMaxSize,
+	todoTableName,
+	todoListTableName,
+	appointmentTableName
+} from "src/app/constants"
 
 @Component({
 	selector: "app-root",
@@ -97,11 +102,7 @@ export class AppComponent {
 		new Dav({
 			environment: environment.environment,
 			appId: environment.appId,
-			tableIds: [
-				environment.todoTableId,
-				environment.todoListTableId,
-				environment.appointmentTableId
-			],
+			tableNames: [todoTableName, todoListTableName, appointmentTableName],
 			notificationOptions: {
 				icon: "/assets/icons/icon-192x192.png",
 				badge: "/assets/icons/badge-128x128.png"
