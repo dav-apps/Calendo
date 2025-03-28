@@ -1,6 +1,6 @@
 {
   "name": "calendo",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Calendo is your all-in-one app for appointments, todos, and timely reminders!",
   "scripts": {
     "ng": "ng",
