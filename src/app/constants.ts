@@ -5,6 +5,8 @@ export const lightThemeKey = "light"
 export const darkThemeKey = "dark"
 export const systemThemeKey = "system"
 export const smallWindowMaxSize = 729
+export const nameMaxLength = 80
+export const notificationTitleMaxLength = 40
 //#endregion
 
 //#region dav keys

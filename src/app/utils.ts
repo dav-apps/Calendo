@@ -15,7 +15,11 @@ import {
 	AppointmentDialogEventData,
 	TodoDialogEventData
 } from "./types"
-import { lightThemeKey, darkThemeKey } from "./constants"
+import {
+	notificationTitleMaxLength,
+	lightThemeKey,
+	darkThemeKey
+} from "./constants"
 
 export function sortAppointments(appointments: Appointment[]) {
 	appointments.sort((a: Appointment, b: Appointment) => {
@@ -126,6 +130,12 @@ export function randomNumber(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+export function shortenString(str: string, maxLength: number): string {
+	if (str.length <= maxLength) return str
+
+	return str.slice(0, maxLength - 1).trim() + "…"
+}
+
 export function getNotificationPermission(): NotificationPermission {
 	return Notification.permission
 }
@@ -213,7 +223,7 @@ export async function createAppointment(
 		let notification = new DavNotification({
 			Time: reminderTime.toUnixInteger(),
 			Interval: 0,
-			Title: event.name,
+			Title: shortenString(event.name, notificationTitleMaxLength),
 			Body: generateAppointmentNotificationBody(
 				startTime,
 				endTime,
@@ -270,7 +280,7 @@ export async function updateAppointment(
 			notification = new DavNotification({
 				Time: reminderTime.toUnixInteger(),
 				Interval: 0,
-				Title: event.name,
+				Title: shortenString(event.name, notificationTitleMaxLength),
 				Body: generateAppointmentNotificationBody(
 					startTime,
 					endTime,
@@ -285,7 +295,10 @@ export async function updateAppointment(
 			notification = await GetNotification(appointment.notificationUuid)
 
 			if (notification != null) {
-				notification.Title = event.name
+				notification.Title = shortenString(
+					event.name,
+					notificationTitleMaxLength
+				)
 				notification.Time = reminderTime.toUnixInteger()
 				notification.Body = generateAppointmentNotificationBody(
 					startTime,
