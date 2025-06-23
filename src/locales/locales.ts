@@ -187,7 +187,8 @@ const enDefaults = {
 		logout: "Log out"
 	},
 	errors: {
-		nameMissing: "Please enter a name"
+		nameMissing: "Please enter a name",
+		nameTooLong: "The name is too long"
 	},
 	misc: {
 		overview: "Overview",
@@ -407,7 +408,8 @@ const deDefaults = {
 		logout: "Abmelden"
 	},
 	errors: {
-		nameMissing: "Bitte gib einen Namen ein"
+		nameMissing: "Bitte gib einen Namen ein",
+		nameTooLong: "Der Name ist zu lang"
 	},
 	misc: {
 		overview: "Übersicht",

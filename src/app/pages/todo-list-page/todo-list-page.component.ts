@@ -18,6 +18,7 @@ import { TodoList, GetTodoList } from "src/app/models/TodoList"
 import { DataService } from "src/app/services/data-service"
 import { LocalizationService } from "src/app/services/localization-service"
 import { TodoDialogEventData } from "src/app/types"
+import { nameMaxLength } from "src/app/constants"
 
 @Component({
 	templateUrl: "./todo-list-page.component.html",
@@ -236,6 +237,9 @@ export class TodoListPageComponent {
 		if (event.name.length == 0) {
 			this.addTodoDialog.nameError = this.errorsLocale.nameMissing
 			return
+		} else if (event.name.length > nameMaxLength) {
+			this.addTodoDialog.nameError = this.errorsLocale.nameTooLong
+			return
 		}
 
 		let todo = await Todo.Create(
@@ -254,6 +258,9 @@ export class TodoListPageComponent {
 	async addTodoList(event: { name: string }) {
 		if (event.name.length == 0) {
 			this.addTodoListDialog.nameError = this.errorsLocale.nameMissing
+			return
+		} else if (event.name.length > nameMaxLength) {
+			this.addTodoListDialog.nameError = this.errorsLocale.nameTooLong
 			return
 		}
 

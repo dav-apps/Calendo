@@ -17,6 +17,7 @@ import { LocalizationService } from "src/app/services/localization-service"
 import { SettingsService } from "src/app/services/settings-service"
 import { TodoDay, TodoGroup, TodoDialogEventData } from "src/app/types"
 import { sortTodoDays, createTodo, showToast } from "src/app/utils"
+import { nameMaxLength } from "src/app/constants"
 
 @Component({
 	templateUrl: "./todos-page.component.html",
@@ -258,6 +259,9 @@ export class TodosPageComponent {
 		if (event.name.length == 0) {
 			this.createTodoDialog.nameError = this.errorsLocale.nameMissing
 			return
+		} else if (event.name.length > nameMaxLength) {
+			this.createTodoDialog.nameError = this.errorsLocale.nameTooLong
+			return
 		}
 
 		let todo = await createTodo(event, this.miscLocale.todoNotificationTitle)
@@ -276,6 +280,9 @@ export class TodosPageComponent {
 	async createTodoList(event: TodoDialogEventData) {
 		if (event.name.length == 0) {
 			this.createTodoListDialog.nameError = this.errorsLocale.nameMissing
+			return
+		} else if (event.name.length > nameMaxLength) {
+			this.createTodoListDialog.nameError = this.errorsLocale.nameTooLong
 			return
 		}
 

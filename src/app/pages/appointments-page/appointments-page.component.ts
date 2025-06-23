@@ -16,6 +16,7 @@ import {
 	showToast
 } from "src/app/utils"
 import { AppointmentDay, AppointmentDialogEventData } from "src/app/types"
+import { nameMaxLength } from "src/app/constants"
 
 @Component({
 	templateUrl: "./appointments-page.component.html",
@@ -190,6 +191,9 @@ export class AppointmentsPageComponent {
 		if (event.name.length == 0) {
 			this.createAppointmentDialog.nameError = this.errorsLocale.nameMissing
 			return
+		} else if (event.name.length > nameMaxLength) {
+			this.createAppointmentDialog.nameError = this.errorsLocale.nameTooLong
+			return
 		}
 
 		let appointment = await createAppointment(
@@ -211,6 +215,9 @@ export class AppointmentsPageComponent {
 	async updateAppointment(event: AppointmentDialogEventData) {
 		if (event.name.length == 0) {
 			this.editAppointmentDialog.nameError = this.errorsLocale.nameMissing
+			return
+		} else if (event.name.length > nameMaxLength) {
+			this.editAppointmentDialog.nameError = this.errorsLocale.nameTooLong
 			return
 		}
 

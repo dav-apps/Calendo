@@ -29,6 +29,7 @@ import {
 	showToast
 } from "src/app/utils"
 import { AppointmentDialogEventData, TodoDialogEventData } from "src/app/types"
+import { nameMaxLength } from "src/app/constants"
 
 @Component({
 	templateUrl: "./calendar-day-page.component.html",
@@ -227,6 +228,9 @@ export class CalendarDayPageComponent {
 		if (event.name.length == 0) {
 			this.createAppointmentDialog.nameError = this.errorsLocale.nameMissing
 			return
+		} else if (event.name.length > nameMaxLength) {
+			this.createAppointmentDialog.nameError = this.errorsLocale.nameTooLong
+			return
 		}
 
 		let appointment = await createAppointment(
@@ -250,6 +254,9 @@ export class CalendarDayPageComponent {
 		if (event.name.length == 0) {
 			this.editAppointmentDialog.nameError = this.errorsLocale.nameMissing
 			return
+		} else if (event.name.length > nameMaxLength) {
+			this.editAppointmentDialog.nameError = this.errorsLocale.nameTooLong
+			return
 		}
 
 		let appointment = this.selectedAppointment
@@ -266,6 +273,9 @@ export class CalendarDayPageComponent {
 	async createTodo(event: TodoDialogEventData) {
 		if (event.name.length == 0) {
 			this.createTodoDialog.nameError = this.errorsLocale.nameMissing
+			return
+		} else if (event.name.length > nameMaxLength) {
+			this.createTodoDialog.nameError = this.errorsLocale.nameTooLong
 			return
 		}
 
@@ -286,6 +296,9 @@ export class CalendarDayPageComponent {
 	async createTodoList(event: TodoDialogEventData) {
 		if (event.name.length == 0) {
 			this.createTodoListDialog.nameError = this.errorsLocale.nameMissing
+			return
+		} else if (event.name.length > nameMaxLength) {
+			this.createTodoListDialog.nameError = this.errorsLocale.nameTooLong
 			return
 		}
 
