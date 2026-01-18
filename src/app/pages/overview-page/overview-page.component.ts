@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, HostListener } from "@angular/core"
 import { Router } from "@angular/router"
-import { Settings, DateTime } from "luxon"
+import { DateTime } from "luxon"
 import {
 	faArrowRight,
 	faPlus,
