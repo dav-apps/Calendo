@@ -206,7 +206,14 @@ export async function createAppointment(
 
 	let notificationUuid = null
 
-	if (event.activateReminder && (await SetupWebPushSubscription())) {
+	if (event.activateReminder) {
+		// Register for web push where the engine supports it, but do not let
+		// the outcome decide whether the reminder exists: the notification is
+		// scheduled server-side and clients without a PushManager (the Snap
+		// wrapper, for one) deliver it themselves. updateAppointment below
+		// already creates notifications unconditionally.
+		await SetupWebPushSubscription()
+
 		let reminderTime = startTime
 
 		if (event.allDay) {
@@ -328,7 +335,11 @@ export async function createTodo(
 ) {
 	let notification: DavNotification = null
 
-	if (event.activateReminder && (await SetupWebPushSubscription())) {
+	if (event.activateReminder) {
+		// See createAppointment: the push subscription is best effort, the
+		// notification itself must not depend on it.
+		await SetupWebPushSubscription()
+
 		let reminderTime = event.date.set({ hour: 10, minute: 0, second: 0 })
 
 		notification = new DavNotification({
