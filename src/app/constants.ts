@@ -1,5 +1,5 @@
 //#region Other constants
-export const version = "1.0.7"
+export const version = "1.0.8"
 export const themeKey = "theme"
 export const lightThemeKey = "light"
 export const darkThemeKey = "dark"
