@@ -94,10 +94,12 @@ export class AppointmentDialogComponent {
 	async ngOnInit() {
 		await this.dataService.userPromiseHolder.AwaitResult()
 
-		// Check if push is supported
+		// A reminder is a notification scheduled on the server and belongs to
+		// the account, not to this device, so it must not depend on whether
+		// this engine can receive web push. Clients without a PushManager
+		// (the Snap wrapper, for one) deliver it their own way.
 		this.showActivateReminderOption =
 			"serviceWorker" in navigator &&
-			"PushManager" in window &&
 			this.dataService.dav.isLoggedIn &&
 			getNotificationPermission() != "denied"
 

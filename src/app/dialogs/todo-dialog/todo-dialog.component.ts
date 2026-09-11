@@ -48,11 +48,11 @@ export class TodoDialogComponent {
 	async ngOnInit() {
 		await this.dataService.userPromiseHolder.AwaitResult()
 
-		// Check if push is supported
+		// See appointment-dialog: the reminder is scheduled on the server and
+		// belongs to the account, so web push support must not gate it.
 		this.showActivateReminderOption =
 			this.mode == "createTodo" &&
 			"serviceWorker" in navigator &&
-			"PushManager" in window &&
 			this.dataService.dav.isLoggedIn &&
 			getNotificationPermission() != "denied"
 	}
